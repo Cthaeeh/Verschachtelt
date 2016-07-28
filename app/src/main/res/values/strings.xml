@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Verschachtelt</string>
+    <string name="button_game_start">Show Game Activity</string>
 </resources>
