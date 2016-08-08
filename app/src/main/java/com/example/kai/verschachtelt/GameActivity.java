@@ -1,5 +1,6 @@
 package com.example.kai.verschachtelt;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
@@ -8,7 +9,7 @@ import android.support.v7.app.AppCompatActivity;
  * This class is for showing the chessBoard and sorrounding UI-Elements
  *
  */
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
