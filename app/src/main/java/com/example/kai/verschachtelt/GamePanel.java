@@ -16,6 +16,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     private MainThread thread;
     private Background background;
 
+    //Resolution of Background Image
+    public static final int WIDTH = 1080;
+    public static final int HEIGHT = 1920;
+
     public GamePanel(Context context){
         super(context);
 
@@ -64,6 +68,17 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public void draw(Canvas canvas){
         super.draw(canvas);
-        background.draw(canvas);
+
+        int test = canvas.getHeight();
+
+        final float scaleFactorX = canvas.getWidth()/(WIDTH*1.f);
+        final float scaleFactorY = canvas.getHeight()/(HEIGHT*1.f);
+
+        if(canvas !=null) {
+            final int savedState = canvas.save();
+            canvas.scale(scaleFactorX, scaleFactorY);
+            background.draw(canvas);
+            canvas.restoreToCount(savedState);
+        }
     }
 }
