@@ -16,6 +16,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     private MainThread thread;
     private Background background;
     private ChessBoardGraphic chessBoardGraphic;
+    private ChessManGraphic chessManGraphic;
 
     //The position of the touch/ for development
     private int xTouch = 0;
@@ -40,6 +41,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
         background = new Background(BitmapFactory.decodeResource(getResources(),R.drawable.test_background));
         chessBoardGraphic = new ChessBoardGraphic();
+        chessManGraphic = new ChessManGraphic();
 
         thread.setRunning(true);
         thread.start();
@@ -53,7 +55,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         boolean retry = true;
-        while (retry){
+        while (retry){                      //Sometimes killing the thread doesnt work so retry it
             try {thread.setRunning(false);
                  thread.join();
             }catch (InterruptedException e){
@@ -69,7 +71,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         yTouch = (int)event.getY();
         return super.onTouchEvent(event);
     }
-    public void update(double avgFPS){
+    public void update(double avgFPS){          //Show some dev info
         background.update(String.valueOf(avgFPS)+" fps " + String.valueOf(xTouch)+"|" +String.valueOf(yTouch) );
     }
     @Override
@@ -89,7 +91,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
             //Draw all the components that dont need scaling (scale them self)
             chessBoardGraphic.draw(canvas);
-            // TODO: 08.08.2016 figureGraphics.draw(canvas) Die Figuren zeichnen
+            chessManGraphic.draw(canvas);
         }
     }
 }

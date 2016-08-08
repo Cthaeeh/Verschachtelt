@@ -25,7 +25,7 @@ public class ChessBoardGraphic {
 
         canvasWidth = canvas.getWidth();
         canvasHeight = canvas.getHeight();
-        float[] pts = getLinePts();
+        float[] pts = getLinePts();             //Starting and end Points of all Lines
         Rect[]  rects = getRects();
 
         canvas.drawLines(pts,paint);
@@ -33,9 +33,8 @@ public class ChessBoardGraphic {
         for(int i = 0; i<32;i++){
             canvas.drawRect(rects[i],paint);
         }
-
-
     }
+
     //Calculate all Rectangulars of the Chessboard that need to be filled with color
     //Ugly code ahead ;)
     private Rect[] getRects() {

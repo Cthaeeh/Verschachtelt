@@ -14,7 +14,7 @@ public class GameActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(new GamePanel(this));
+        setContentView(new GamePanel(this));            //Instead of an XML File just the GamePanel
     }
 
 }

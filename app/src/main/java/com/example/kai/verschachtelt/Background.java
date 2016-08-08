@@ -10,8 +10,8 @@ import android.graphics.Paint;
 public class Background {
 
     private Bitmap image;
-    private int x,y;
-    private String info;
+    private int x,y;        //Position of Background
+    private String info;    //Dev info to display
     private Paint paint;
 
     public Background(Bitmap res){
@@ -23,8 +23,9 @@ public class Background {
     public void update(String info){
         this.info = info;
     }
+
     public void draw(Canvas canvas){
         canvas.drawBitmap(image,x,y,null);
-        canvas.drawText(info,10.f,40.f,paint);
+        canvas.drawText(info,10.f,40.f,paint);  //Draw info in upper left edge
     }
 }

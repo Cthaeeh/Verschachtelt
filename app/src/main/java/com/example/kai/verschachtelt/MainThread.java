@@ -8,9 +8,9 @@ import android.view.SurfaceHolder;
  * Created by Kai on 08.08.2016.
  */
 public class MainThread extends Thread{
-    private int FPS = 30;
+    private int FPS = 30;                   //FPS Cap
     private double averageFPS;
-    private SurfaceHolder surfaceHolder;
+    private final SurfaceHolder surfaceHolder;
     private GamePanel gamePanel;
     private boolean running;
     public static Canvas canvas;
@@ -28,7 +28,7 @@ public class MainThread extends Thread{
         long waitTime;
         long totalTime =0;
         int frameCount = 0;
-        long targetTime = 1000/FPS; //Time on Gameloop takes (one frame is displayed)
+        long targetTime = 1000/FPS; //Time one Gameloop takes (one frame is displayed) (z.B. 33ms when FPS is 30)
 
         while(running){
             startTime = System.nanoTime();
@@ -49,8 +49,8 @@ public class MainThread extends Thread{
                     catch (Exception e){e.printStackTrace();}
                 }
             }
-            timeItTookMillis = (System.nanoTime()-startTime)/1000000;
-            waitTime = targetTime -timeItTookMillis;
+            timeItTookMillis = (System.nanoTime()-startTime)/1000000;   //actual time it took to calculate the frame
+            waitTime = targetTime -timeItTookMillis;                    //to cap the FPS we need to wait
 
             try{
                 this.sleep(waitTime);
@@ -58,7 +58,7 @@ public class MainThread extends Thread{
             }
             totalTime += System.nanoTime()-startTime;
             frameCount++;
-            if(frameCount == FPS){
+            if(frameCount == FPS){                                      //After hopefully 1 sek
                 averageFPS = 1000/((totalTime/frameCount)/1000000);
                 frameCount = 0;
                 totalTime = 0;
