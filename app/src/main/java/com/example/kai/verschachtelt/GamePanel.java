@@ -17,6 +17,10 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     private Background background;
     private ChessBoardGraphic chessBoardGraphic;
 
+    //The position of the touch/ for development
+    private int xTouch = 0;
+    private int yTouch = 0;
+
     //Resolution of Background Image
     public static final int WIDTH = 1080;
     public static final int HEIGHT = 1920;
@@ -61,11 +65,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public boolean onTouchEvent (MotionEvent event){
-
+        xTouch = (int)event.getX();
+        yTouch = (int)event.getY();
         return super.onTouchEvent(event);
     }
     public void update(double avgFPS){
-        background.update(avgFPS);
+        background.update(String.valueOf(avgFPS)+" fps " + String.valueOf(xTouch)+"|" +String.valueOf(yTouch) );
     }
     @Override
     public void draw(Canvas canvas){
@@ -79,11 +84,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
             final int savedState = canvas.save();       //This has to be done so is scales only one time (for now)
             canvas.scale(scaleFactorX, scaleFactorY);
 
-            //Draw all the components
             background.draw(canvas);
-            chessBoardGraphic.draw(canvas);
-            //// TODO: 08.08.2016 figureGraphics.draw(canvas) Die Figuren zeichnen
             canvas.restoreToCount(savedState);
+
+            //Draw all the components that dont need scaling (scale them self)
+            chessBoardGraphic.draw(canvas);
+            // TODO: 08.08.2016 figureGraphics.draw(canvas) Die Figuren zeichnen
         }
     }
 }

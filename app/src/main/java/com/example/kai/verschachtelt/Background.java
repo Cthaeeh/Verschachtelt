@@ -11,7 +11,7 @@ public class Background {
 
     private Bitmap image;
     private int x,y;
-    private double avgFPS;
+    private String info;
     private Paint paint;
 
     public Background(Bitmap res){
@@ -20,11 +20,11 @@ public class Background {
         paint.setTextSize(40.f);
     }
 
-    public void update(double avgFPS){
-        this.avgFPS = avgFPS;
+    public void update(String info){
+        this.info = info;
     }
     public void draw(Canvas canvas){
         canvas.drawBitmap(image,x,y,null);
-        canvas.drawText(String.valueOf(avgFPS)+" fps",10.f,40.f,paint);
+        canvas.drawText(info,10.f,40.f,paint);
     }
 }
