@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 
 /**
  * Created by Kai on 28.07.2016.
- * This class is for showing the chessBoard and sorrounding UI-Elements
+ * This class is for showing the chessBoard and sorounding UI-Elements
  *
  */
 public class GameActivity extends Activity {

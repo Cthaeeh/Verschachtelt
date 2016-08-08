@@ -15,6 +15,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     private MainThread thread;
     private Background background;
+    private ChessBoardGraphic chessBoardGraphic;
 
     //Resolution of Background Image
     public static final int WIDTH = 1080;
@@ -34,6 +35,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
 
         background = new Background(BitmapFactory.decodeResource(getResources(),R.drawable.test_background));
+        chessBoardGraphic = new ChessBoardGraphic();
 
         thread.setRunning(true);
         thread.start();
@@ -62,22 +64,25 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
         return super.onTouchEvent(event);
     }
-    public void update(){
-        background.update();
+    public void update(double avgFPS){
+        background.update(avgFPS);
     }
     @Override
     public void draw(Canvas canvas){
         super.draw(canvas);
 
-        int test = canvas.getHeight();
-
+        //Calculate Scale Factors
         final float scaleFactorX = canvas.getWidth()/(WIDTH*1.f);
         final float scaleFactorY = canvas.getHeight()/(HEIGHT*1.f);
 
         if(canvas !=null) {
-            final int savedState = canvas.save();
+            final int savedState = canvas.save();       //This has to be done so is scales only one time (for now)
             canvas.scale(scaleFactorX, scaleFactorY);
+
+            //Draw all the components
             background.draw(canvas);
+            chessBoardGraphic.draw(canvas);
+            //// TODO: 08.08.2016 figureGraphics.draw(canvas) Die Figuren zeichnen
             canvas.restoreToCount(savedState);
         }
     }

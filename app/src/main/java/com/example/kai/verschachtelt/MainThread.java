@@ -38,7 +38,7 @@ public class MainThread extends Thread{
             try {
                 canvas = this.surfaceHolder.lockCanvas();
                 synchronized (surfaceHolder){
-                    this.gamePanel.update();
+                    this.gamePanel.update(averageFPS);  //Just for the development process to see if FPS is ok
                     this.gamePanel.draw(canvas);
                 }
             }catch (Exception e){
