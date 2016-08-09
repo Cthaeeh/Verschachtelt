@@ -8,11 +8,12 @@ import android.view.MotionEvent;
  */
 public class TouchInputHandler {
 
-    private ChessBoardSimple chessBoardSimple;
+    private ChessBoardComplex board;
     private float squareSize;
 
+
     public TouchInputHandler(){
-        chessBoardSimple = new ChessBoardSimple();
+        board = new ChessBoardComplex();
     }
 
     public void processTouchEvent(MotionEvent event){
@@ -20,34 +21,39 @@ public class TouchInputHandler {
         float x = event.getX();
         float y = event.getY();
         Integer position = getPositionOnBoard(x,y);
-        if(position==-1) chessBoardSimple.resetFrames();         //If you touch outside the chessBoardSimple all frames are reseted.
+        if(position==-1) board.resetFrames();         //If you touch outside the board all frames are reseted.
         else{
             handleTouchOnSquare(position);
         }
     }
 
     private void handleTouchOnSquare(Integer position) {
-        if(chessBoardSimple.getSquareStateAt(position)== ChessBoardSimple.SquareState.NORMAL) {    //A normal square was touched -> select it.
-            chessBoardSimple.setSquareStateAt(position, ChessBoardSimple.SquareState.SELECTED);
-
+        if(board.getSquareStateAt(position)== ChessBoardSimple.SquareState.NORMAL) {    //A normal square was touched -> select it.
+            board.resetFrames();
+            board.setSquareStateAt(position, ChessBoardSimple.SquareState.SELECTED);
+            board.setMoveFrom(position);
             return;
         }
-        if(chessBoardSimple.getSquareStateAt(position)== ChessBoardSimple.SquareState.SELECTED) {    //A selected square was touched -> deselect it -> normal again.
-            chessBoardSimple.setSquareStateAt(position, ChessBoardSimple.SquareState.NORMAL);
-
+        if(board.getSquareStateAt(position)== ChessBoardSimple.SquareState.SELECTED) {    //A selected square was touched -> deselect it -> normal again.
+            board.setSquareStateAt(position, ChessBoardSimple.SquareState.NORMAL);
+            board.setMoveFrom(-1);
             return;
         }
-        if(chessBoardSimple.getSquareStateAt(position)== ChessBoardSimple.SquareState.POSSIBLE){
+        if(board.getSquareStateAt(position)== ChessBoardSimple.SquareState.POSSIBLE){
+            board.moveTo(position);
+            board.resetFrames();
             return;
         }
-        if(chessBoardSimple.getSquareStateAt(position)== ChessBoardSimple.SquareState.POSSIBLE_KILL){
+        if(board.getSquareStateAt(position)== ChessBoardSimple.SquareState.POSSIBLE_KILL){
+            board.moveTo(position);
+            board.resetFrames();
             return;
         }
     }
 
 
     /**
-     * Translate the exact touch position on the canvas to a square on the chessBoardSimple.
+     * Translate the exact touch position on the canvas to a square on the board.
      * Or if outside return null
      * @param x
      * @param y
@@ -61,7 +67,7 @@ public class TouchInputHandler {
     }
 
     public ChessBoardSimple getChessBoardState() {
-        return chessBoardSimple;
+        return board;
     }
 
 }

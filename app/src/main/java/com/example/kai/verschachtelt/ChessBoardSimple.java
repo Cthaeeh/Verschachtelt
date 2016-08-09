@@ -7,8 +7,8 @@ package com.example.kai.verschachtelt;
  */
 public class ChessBoardSimple {
 
-    private ChessMan[] board;
-    private SquareState[] boardRepresentingStates;
+    protected ChessMan[] board;
+    protected SquareState[] boardRepresentingStates;
 
     public void resetFrames() {
         for(int i =0;i<64;i++){
