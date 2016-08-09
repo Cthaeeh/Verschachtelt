@@ -8,6 +8,7 @@ package com.example.kai.verschachtelt;
 public class ChessBoard {
 
     private chessMan[] board;
+    private squareState[] boardRepresentingStates;
 
     /**
         Representation of all chess man as enums
@@ -17,9 +18,26 @@ public class ChessBoard {
         BLACK_ROOK,  BLACK_KNIGHT,  BLACK_BISHOP,  BLACK_QUEEN,  BLACK_KING,  BLACK_PAWN
     }
 
+    /**
+     * Representation of the states of a square. E.g it can be selected, it is possible to move there from a selected field ...
+     */
+    public enum squareState{
+        NORMAL,SELECTED,POSSIBLE,POSSIBLE_KILL
+    }
+
     public ChessBoard (){
         board = new chessMan[64];
         board = getStandartSetup();
+        boardRepresentingStates = new squareState[64];
+        boardRepresentingStates = getNormalState();
+    }
+
+    private squareState[] getNormalState() {
+        squareState[] allSquareStates = new squareState[64];
+        for (int i =0;i<64;i++){
+            allSquareStates[i]=squareState.NORMAL;
+        }
+        return allSquareStates;
     }
 
     private chessMan[] getStandartSetup(){
@@ -38,5 +56,8 @@ public class ChessBoard {
     }
     public chessMan getChessManAt(int x, int y){
         return board[x+8*y];
+    }
+    public squareState getSquareStateAt(int position){
+        return boardRepresentingStates[position];
     }
 }
