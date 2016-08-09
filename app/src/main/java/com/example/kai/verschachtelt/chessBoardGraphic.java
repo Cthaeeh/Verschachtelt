@@ -1,6 +1,7 @@
 package com.example.kai.verschachtelt;
 
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
@@ -27,9 +28,10 @@ public class ChessBoardGraphic {
         canvasHeight = canvas.getHeight();
         float[] pts = getLinePts();             //Starting and end Points of all Lines
         Rect[]  rects = getRects();
-
+        paint.setColor(Color.BLACK);
         canvas.drawLines(pts,paint);
         paint.setStyle(Paint.Style.FILL);
+        paint.setColor(Color.LTGRAY);
         for(int i = 0; i<32;i++){
             canvas.drawRect(rects[i],paint);
         }

@@ -65,7 +65,6 @@ public class MainThread extends Thread{
                 System.out.println(averageFPS);
             }
         }
-
     }
 
     public void setRunning(boolean running){
