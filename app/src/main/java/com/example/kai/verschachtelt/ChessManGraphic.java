@@ -9,10 +9,10 @@ import android.graphics.Paint;
  * Created by Kai on 08.08.2016.
  * This class is for drawing the chess pieces (and maybe a colored frame around them)
  */
-public class ChessManGraphic {
+public class ChessmanGraphic {
 
-    private int stepWidth;                              //The length / width of a square on the board.
-    private final int STROKE_WIDTH = 4;                 //The thickness of the frame around a square in hundredth of stepWidth.
+    private int squareSize;                              //The length / width of a square on the board.
+    private final int STROKE_WIDTH = 4;                 //The thickness of the frame around a square in hundredth of squareSize.
     private final int normalFrameColor = Color.BLACK;   //TODO get this somehow from the ressources, either by passing it through from activity or passing the context.
     private final int selectedSquareFrameColor = Color.BLUE;
     private final int possibleMoveFrameColor = Color.GREEN;
@@ -24,52 +24,50 @@ public class ChessManGraphic {
                     imageBlackRook, imageBlackKnight, imageBlackBishop, imageBlackQueen, imageBlackKing, imageBlackPawn;
     private final int cropSize = 92;    //The length/width of the section containing the chessman to be cropped out. Only applies to the now used image ressource.
 
-    private ChessBoard chessBoard;
+    private ChessBoardSimple chessBoardSimple;
 
-    public ChessManGraphic(Bitmap res){
+    public ChessmanGraphic(Bitmap res){
         paint = new Paint();
         paint.setStyle(Paint.Style.STROKE);
         extractImages(res);
 
-        chessBoard = new ChessBoard();
+        chessBoardSimple = new ChessBoardSimple();
     }
 
-    public void update(){
-
+    public void update(ChessBoardSimple chessboard){
+        this.chessBoardSimple = chessboard;
     }
 
     public void draw(Canvas canvas){
-        int devideIndipendentStrokeWidth = (stepWidth/100)*STROKE_WIDTH;    //stepwidth is screen size sensitive -> deviceIndependentStrokewith is now as well.
+        squareSize = GamePanel.squareSize;                                    //length/width of a square of the chess board. Kind of global variable. Muste be changed.
+        int devideIndipendentStrokeWidth = (squareSize /100)*STROKE_WIDTH;    //stepwidth is screen size sensitive -> deviceIndependentStrokewith is now as well.
         paint.setStrokeWidth(devideIndipendentStrokeWidth);
-
-        calculateStepWidth(canvas.getWidth(),canvas.getHeight());           //The canvas size could have changed so we have to recalculate stepwidth.
-
         //draw all pieces, and their frames
         for(int i = 0;i < 64; i++){
-            if(chessBoard.getSquareStateAt(i)==ChessBoard.squareState.POSSIBLE){    //If you can move to this square highlight it.
+            if(chessBoardSimple.getSquareStateAt(i)== ChessBoardSimple.SquareState.POSSIBLE){    //If you can move to this square highlight it.
                 int x = getX(i);
                 int y = getY(i);
                 paint.setColor(possibleMoveFrameColor);                             //Special Color for this type pf square.
                 canvas.drawRect(x+devideIndipendentStrokeWidth/2,y+devideIndipendentStrokeWidth/2,
-                        x+stepWidth-devideIndipendentStrokeWidth/2,y+stepWidth-devideIndipendentStrokeWidth/2,paint);
+                        x+ squareSize -devideIndipendentStrokeWidth/2,y+ squareSize -devideIndipendentStrokeWidth/2,paint);
             }
-            if(chessBoard.getChessManAt(i)!=null){
+            if(chessBoardSimple.getChessManAt(i)!=null){
                 int x = getX(i);
                 int y = getY(i);
-                canvas.drawBitmap(getChessManImage(chessBoard.getChessManAt(i)),x,y,null);
+                canvas.drawBitmap(getChessManImage(chessBoardSimple.getChessManAt(i)),x,y,null);
                 paint.setStrokeWidth(devideIndipendentStrokeWidth);
                 //Draw a matching frame arround the current square
-                if(chessBoard.getSquareStateAt(i)==ChessBoard.squareState.NORMAL)paint.setColor(normalFrameColor);
-                if(chessBoard.getSquareStateAt(i)==ChessBoard.squareState.SELECTED)paint.setColor(selectedSquareFrameColor);
-                if(chessBoard.getSquareStateAt(i)==ChessBoard.squareState.POSSIBLE_KILL)paint.setColor(possibleMoveFrameColor);
+                if(chessBoardSimple.getSquareStateAt(i)== ChessBoardSimple.SquareState.NORMAL)paint.setColor(normalFrameColor);
+                if(chessBoardSimple.getSquareStateAt(i)== ChessBoardSimple.SquareState.SELECTED)paint.setColor(selectedSquareFrameColor);
+                if(chessBoardSimple.getSquareStateAt(i)== ChessBoardSimple.SquareState.POSSIBLE_KILL)paint.setColor(killMoveFrameColor);
                 canvas.drawRect(x+devideIndipendentStrokeWidth/2,y+devideIndipendentStrokeWidth/2,
-                                x+stepWidth-devideIndipendentStrokeWidth/2,y+stepWidth-devideIndipendentStrokeWidth/2,paint);
+                                x+ squareSize -devideIndipendentStrokeWidth/2,y+ squareSize -devideIndipendentStrokeWidth/2,paint);
             }
         }
     }
     //Calculate the X position on the screen where a chessPiece must be drawn.
     private int getX(int position){
-        int x = stepWidth + (position%8)*stepWidth;
+        int x = squareSize + (position%8)* squareSize;
         return x;
     }
 
@@ -77,29 +75,24 @@ public class ChessManGraphic {
      * Calculate the Y position on the screen where a chessPiece must be drawn.
      */
     private int getY(int position){
-        int y = stepWidth + (position/8)*stepWidth;
+        int y = squareSize + (position/8)* squareSize;
         return y;
     }
 
-    private void calculateStepWidth(int canvasWidth,int canvasHeight){
-        if(canvasHeight<canvasWidth){ stepWidth = canvasHeight/10;
-        }else{ stepWidth = canvasWidth/10;}
-    }
-
-    private Bitmap getChessManImage(ChessBoard.chessMan chessMan){
-        if(chessMan == ChessBoard.chessMan.WHITE_ROOK)return imageWhiteRook;
-        if(chessMan == ChessBoard.chessMan.WHITE_KNIGHT)return imageWhiteKnight;
-        if(chessMan == ChessBoard.chessMan.WHITE_BISHOP)return imageWhiteBishop;
-        if(chessMan == ChessBoard.chessMan.WHITE_QUEEN)return imageWhiteQueen;
-        if(chessMan == ChessBoard.chessMan.WHITE_KING)return imageWhiteKing;
-        if(chessMan == ChessBoard.chessMan.WHITE_PAWN)return imageWhitePawn;
+    private Bitmap getChessManImage(ChessBoardSimple.ChessMan ChessMan){
+        if(ChessMan == ChessBoardSimple.ChessMan.WHITE_ROOK)return imageWhiteRook;
+        if(ChessMan == ChessBoardSimple.ChessMan.WHITE_KNIGHT)return imageWhiteKnight;
+        if(ChessMan == ChessBoardSimple.ChessMan.WHITE_BISHOP)return imageWhiteBishop;
+        if(ChessMan == ChessBoardSimple.ChessMan.WHITE_QUEEN)return imageWhiteQueen;
+        if(ChessMan == ChessBoardSimple.ChessMan.WHITE_KING)return imageWhiteKing;
+        if(ChessMan == ChessBoardSimple.ChessMan.WHITE_PAWN)return imageWhitePawn;
         //Black chessman
-        if(chessMan == ChessBoard.chessMan.BLACK_ROOK)  return imageBlackRook;
-        if(chessMan == ChessBoard.chessMan.BLACK_KNIGHT)return imageBlackKnight;
-        if(chessMan == ChessBoard.chessMan.BLACK_BISHOP)return imageBlackBishop;
-        if(chessMan == ChessBoard.chessMan.BLACK_QUEEN) return imageBlackQueen;
-        if(chessMan == ChessBoard.chessMan.BLACK_KING)  return imageBlackKing;
-        if(chessMan == ChessBoard.chessMan.BLACK_PAWN)  return imageBlackPawn;
+        if(ChessMan == ChessBoardSimple.ChessMan.BLACK_ROOK)  return imageBlackRook;
+        if(ChessMan == ChessBoardSimple.ChessMan.BLACK_KNIGHT)return imageBlackKnight;
+        if(ChessMan == ChessBoardSimple.ChessMan.BLACK_BISHOP)return imageBlackBishop;
+        if(ChessMan == ChessBoardSimple.ChessMan.BLACK_QUEEN) return imageBlackQueen;
+        if(ChessMan == ChessBoardSimple.ChessMan.BLACK_KING)  return imageBlackKing;
+        if(ChessMan == ChessBoardSimple.ChessMan.BLACK_PAWN)  return imageBlackPawn;
         return null;
     }
 
@@ -121,4 +114,5 @@ public class ChessManGraphic {
         imageWhiteKing = Bitmap.createBitmap(imageChessmen,0,      265  ,cropSize,cropSize);
         imageWhitePawn = Bitmap.createBitmap(imageChessmen,960-cropSize , 265  ,cropSize,cropSize);
     }
+
 }

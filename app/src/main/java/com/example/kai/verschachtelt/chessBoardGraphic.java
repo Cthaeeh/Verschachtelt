@@ -11,25 +11,25 @@ import android.graphics.Rect;
 public class ChessBoardGraphic {
 
     private Paint paint;
-    private int canvasWidth,canvasHeight;
+    private float squareSize;              //length and width of a field of the board
 
     public ChessBoardGraphic(){
         paint = new Paint();
+        paint.setStrokeWidth(3);
     }
 
     public void update(){
 
     }
     public void draw(Canvas canvas){
-        paint.setStrokeWidth(3);
-        paint.setStyle(Paint.Style.STROKE);
-
-        canvasWidth = canvas.getWidth();
-        canvasHeight = canvas.getHeight();
+        squareSize = GamePanel.squareSize;      //Very ugly must be changed ! TODO find a better solution than this
         float[] pts = getLinePts();             //Starting and end Points of all Lines
-        Rect[]  rects = getRects();
+        Rect[]  rects = getRects();             //All rectangulars around squares that must be filled with color.
+
+        paint.setStyle(Paint.Style.STROKE);
         paint.setColor(Color.BLACK);
         canvas.drawLines(pts,paint);
+
         paint.setStyle(Paint.Style.FILL);
         paint.setColor(Color.LTGRAY);
         for(int i = 0; i<32;i++){
@@ -41,24 +41,18 @@ public class ChessBoardGraphic {
     //Ugly code ahead ;)
     private Rect[] getRects() {
         Rect[] rects = new Rect[32];//
-        float stepWidth;              //length and width of a field of the board
-        int   rectCount = 0;          //Just a counter to go through the array
 
-        if(canvasHeight<canvasWidth){
-            stepWidth = canvasHeight/10;
-        }else{
-            stepWidth = canvasWidth/10;
-        }
+        int   rectCount = 0;          //Just a counter to go through the array
 
         for(int i = 0;i < 32; i++){
             int x = (i%4)*2;
             int y = (i/4);
             if((i/4)%2==0)x++;
 
-            int left =  (int) (stepWidth + x*stepWidth);
-            int top  =  (int) (stepWidth + y*stepWidth);
-            int right = (int) (left+stepWidth);
-            int bottom = (int) (top+stepWidth);
+            int left =  (int) (squareSize + x* squareSize);
+            int top  =  (int) (squareSize + y* squareSize);
+            int right = (int) (left+ squareSize);
+            int bottom = (int) (top+ squareSize);
 
             rects[i] = new Rect(left,top,right,bottom);
         }
@@ -71,40 +65,35 @@ public class ChessBoardGraphic {
     //Ugly code ahead ;)
     private float[] getLinePts() {
         float[] pts = new float[72];//8*8 fields so 9+9=18 lines. To define a line it needs 4 values -> 18*4=72
-        float stepWidth;            //length and width of a field of the board
         int   ptCount = 0;          //Just a counter to go through the array
 
-        if(canvasHeight<canvasWidth){
-            stepWidth = canvasHeight/10;
-        }else{
-            stepWidth = canvasWidth/10;
-        }
         //vertical lines
         for(int x=1;x<10;x++){
             int y = 1;
-            pts[ptCount]=x*stepWidth;
+            pts[ptCount]=x*squareSize;
             ptCount++;
-            pts[ptCount]=y*stepWidth;
+            pts[ptCount]=y*squareSize;
             ptCount++;
             y = 9;
-            pts[ptCount]=x*stepWidth;
+            pts[ptCount]=x*squareSize;
             ptCount++;
-            pts[ptCount]=y*stepWidth;
+            pts[ptCount]=y*squareSize;
             ptCount++;
         }
         //horizontal lines
         for(int y=1;y<10;y++){
             int x = 1;
-            pts[ptCount]=x*stepWidth;
+            pts[ptCount]=x*squareSize;
             ptCount++;
-            pts[ptCount]=y*stepWidth;
+            pts[ptCount]=y*squareSize;
             ptCount++;
             x = 9;
-            pts[ptCount]=x*stepWidth;
+            pts[ptCount]=x*squareSize;
             ptCount++;
-            pts[ptCount]=y*stepWidth;
+            pts[ptCount]=y*squareSize;
             ptCount++;
         }
         return pts;
     }
+
 }

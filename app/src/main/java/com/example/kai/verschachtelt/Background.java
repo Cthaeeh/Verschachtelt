@@ -9,6 +9,8 @@ import android.graphics.Paint;
  */
 public class Background {
 
+    //TODO implement CanvasShapeChange, so it doesnt fuck up in landscape mode
+
     private Bitmap image;
     private int x,y;        //Position of Background
     private String info;    //Dev info to display
