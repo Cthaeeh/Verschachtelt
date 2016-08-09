@@ -3,12 +3,12 @@ package com.example.kai.verschachtelt;
 /**
  * Created by Kai on 09.08.2016.
  * A Class for representing the chess board outside of the AI-Part.
- * No Chess Logic, Graphics here.
+ * No Chess Logic,no Graphics here.
  */
 public class ChessBoardSimple {
 
-    protected ChessMan[] board;
-    protected SquareState[] boardRepresentingStates;
+    protected ChessMan[] board;                         //where are the pieces on the board?
+    protected SquareState[] boardRepresentingStates;    //marks (e.g frames )for selected chessman.
 
     public void resetFrames() {
         for(int i =0;i<64;i++){
@@ -60,6 +60,7 @@ public class ChessBoardSimple {
                                     ChessMan.BLACK_ROOK, ChessMan.BLACK_KNIGHT, ChessMan.BLACK_BISHOP, ChessMan.BLACK_QUEEN, ChessMan.BLACK_KING, ChessMan.BLACK_BISHOP, ChessMan.BLACK_KNIGHT, ChessMan.BLACK_ROOK};
         return standartBoard;
     }
+
     public ChessMan getChessManAt(int position){
         return board[position];
     }

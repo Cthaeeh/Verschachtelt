@@ -27,24 +27,29 @@ public class TouchInputHandler {
         }
     }
 
+    /**
+     * passes the position that was touched to a ComplexChessBoard.
+     * Depending on the state of the touched square a chessman is selected, deselected, moves
+     * @param position
+     */
     private void handleTouchOnSquare(Integer position) {
         if(board.getSquareStateAt(position)== ChessBoardSimple.SquareState.NORMAL) {    //A normal square was touched -> select it.
-            board.resetFrames();
-            board.setSquareStateAt(position, ChessBoardSimple.SquareState.SELECTED);
+            board.resetFrames();                                                        //Deselect other Squares
+            board.setSquareStateAt(position, ChessBoardSimple.SquareState.SELECTED);    //Select the square
             board.setMoveFrom(position);
             return;
         }
-        if(board.getSquareStateAt(position)== ChessBoardSimple.SquareState.SELECTED) {    //A selected square was touched -> deselect it -> normal again.
+        if(board.getSquareStateAt(position)== ChessBoardSimple.SquareState.SELECTED) {  //A selected square was touched -> deselect it -> all squares normal again.
             board.setSquareStateAt(position, ChessBoardSimple.SquareState.NORMAL);
-            board.setMoveFrom(-1);
+            board.setMoveFrom(-1);                                                      //We have nowhere to move from.
             return;
         }
-        if(board.getSquareStateAt(position)== ChessBoardSimple.SquareState.POSSIBLE){
-            board.moveTo(position);
+        if(board.getSquareStateAt(position)== ChessBoardSimple.SquareState.POSSIBLE){   //If a chessman is selected and there is a square where it can move
+            board.moveTo(position);                                                     //Move there.
             board.resetFrames();
             return;
         }
-        if(board.getSquareStateAt(position)== ChessBoardSimple.SquareState.POSSIBLE_KILL){
+        if(board.getSquareStateAt(position)== ChessBoardSimple.SquareState.POSSIBLE_KILL){  //same as above
             board.moveTo(position);
             board.resetFrames();
             return;
@@ -61,7 +66,7 @@ public class TouchInputHandler {
      */
     private int getPositionOnBoard(float x,float y){
         if(x<squareSize || y < squareSize || x > squareSize*9 || y > squareSize*9) return -1; //Touch event was not on the chess Board.
-        int position = (int) (((int)(x-squareSize)/(int)(squareSize))+(8*((int)(y-squareSize)/(int)squareSize)));
+        int position = (int) (((int)(x-squareSize)/(int)(squareSize))+(8*((int)(y-squareSize)/(int)squareSize)));//Translate to Position on Board
         return position;
 
     }

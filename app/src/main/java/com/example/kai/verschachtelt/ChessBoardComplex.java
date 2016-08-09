@@ -5,7 +5,7 @@ package com.example.kai.verschachtelt;
  * This class extends the normal Chessboard class and adds basic move funtionality, possible move functionality.
  */
 public class ChessBoardComplex extends ChessBoardSimple{
-    private int moveFrom = -1;
+    private int moveFrom = -1;  //position to move a chessman from. By default no real position.
 
     public void setMoveFrom(int position) {
         moveFrom = position;
@@ -46,7 +46,7 @@ public class ChessBoardComplex extends ChessBoardSimple{
     }
 
     private void markPossibleRookMoves() {
-        for(int i=0;i<64;i++){
+        for(int i=0;i<64;i++){                                      //Nested if statements TODO remove nested if statements
             if(i!=moveFrom){
                 if(i%8==moveFrom%8){
                     boardRepresentingStates[i]=SquareState.POSSIBLE;
@@ -61,7 +61,7 @@ public class ChessBoardComplex extends ChessBoardSimple{
     }
 
     public void moveTo(int position){
-        if(moveFrom>=0){
+        if(moveFrom>=0){                    //If we try to move from a legit position
             board[position]=board[moveFrom];//Set the chessman to its new position.
             board[moveFrom]=null;           //Remove the chessman from its originally square.
         }

@@ -9,6 +9,10 @@ import android.view.SurfaceView;
 
 /**
  * Created by Kai on 28.07.2016.
+ * This class allows to draw on a canvas, pass the canvas to other classes and react to Touch Events.
+ * It starts or kills the Mainthread, which itselfs calls the draw and update on the canvas 30 times per sek.
+ * It creates all necessary classes for drawing the Game(Background, ChessBoardGraphic,ChessManGraphic)
+ * When it registrates a touch event it uses a TouchnInputHandler Object to change the Game accordingly.
  */
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
@@ -17,11 +21,12 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     private Background background;
     private ChessBoardGraphic chessBoardGraphic;
     private ChessmanGraphic chessmanGraphic;
-    public static int squareSize;
+    public static int squareSize;               //The only global variable kind of. It represents the length and width of a square on the board.
 
     //The position of the touch/ for development
     private int xTouch = 0;
     private int yTouch = 0;
+
     private TouchInputHandler touchInputHandler;
 
     //Resolution of Background Image
@@ -41,7 +46,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-
         background = new Background(BitmapFactory.decodeResource(getResources(),R.drawable.test_background));
         chessBoardGraphic = new ChessBoardGraphic();
         chessmanGraphic = new ChessmanGraphic(BitmapFactory.decodeResource(getResources(),R.drawable.chess_man_symbols));
@@ -72,7 +76,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     public boolean onTouchEvent (MotionEvent event){
         xTouch = (int)event.getX();
         yTouch = (int)event.getY();
-        touchInputHandler.processTouchEvent(event);
+        touchInputHandler.processTouchEvent(event);//Pass it to the touchInputHandler, so the logic is encapsuled.
         return super.onTouchEvent(event);
     }
     public void update(double avgFPS){
