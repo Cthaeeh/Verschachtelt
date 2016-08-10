@@ -31,7 +31,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     private int xTouch = 0;
     private int yTouch = 0;
 
-    private TouchInputHandler touchInputHandler;
+    private InputHandler inputHandler;
 
     //Resolution of Background Image
     public static final int WIDTH = 1080;
@@ -45,7 +45,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
         thread = new MainThread(getHolder(),this);
         setFocusable(true);
-        touchInputHandler = new TouchInputHandler();
+        inputHandler = new InputHandler();
     }
 
     @Override
@@ -80,14 +80,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     public boolean onTouchEvent (MotionEvent event){
         xTouch = (int)event.getX();
         yTouch = (int)event.getY();
-        touchInputHandler.processTouchEvent(event);//Pass it to the touchInputHandler, so the logic is encapsuled.
+        inputHandler.processTouchEvent(event);//Pass it to the inputHandler, so the logic is encapsuled.
         return super.onTouchEvent(event);
     }
     public void update(double avgFPS){
         //Show some dev info
         background.update(String.valueOf(avgFPS)+" fps " + String.valueOf(xTouch)+"|" +String.valueOf(yTouch) );
-
-        chessmanGraphic.update(touchInputHandler.getChessBoardState());
+        chessmanGraphic.update(inputHandler.getChessBoardState());
     }
 
     @Override

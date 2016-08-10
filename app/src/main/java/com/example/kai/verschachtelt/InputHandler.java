@@ -9,13 +9,13 @@ import com.example.kai.verschachtelt.chessLogic.ChessBoardSimple;
  * Created by Kai on 09.08.2016.
  * This class is for handling touch events and translate them to chess specific squares, moves
  */
-public class TouchInputHandler {
+public class InputHandler {
 
     private ChessBoardComplex board;
     private float squareSize;
 
 
-    public TouchInputHandler(){
+    public InputHandler(){
         board = new ChessBoardComplex();
     }
 
