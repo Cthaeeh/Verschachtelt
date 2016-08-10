@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Verschachtelt</string>
-    <string name="button_game_start">Show Game Activity</string>
+    <string name="button_chess_game_vsAI">Chess Game vs AI</string>
+    <string name="button_chess_game_PvP">Chess Game Player vs Player</string>
+    <string name="button_select_puzzle">Chess Puzzles</string>
+    <string name="button_start_AIgame">Start Game!</string>
+
+    <string name="puzzle_selection_headline">Select a Puzzle!</string>
 </resources>

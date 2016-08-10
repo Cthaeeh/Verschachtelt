@@ -1,8 +1,10 @@
-package com.example.kai.verschachtelt;
+package com.example.kai.verschachtelt.activitys;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+
+import com.example.kai.verschachtelt.GamePanel;
 
 /**
  * Created by Kai on 28.07.2016.
