@@ -7,38 +7,31 @@ package com.example.kai.verschachtelt.chessLogic;
  */
 public class ChessBoardSimple {
 
-    protected ChessMan[] board;                         //where are the pieces on the board?
-    protected SquareState[] boardRepresentingStates;    //marks (e.g frames )for selected chessman.
+    protected Chessman[] board;                         //where are the pieces on the board?
+    protected SquareState[] squareStates;    //marks (e.g frames )for selected chessman.
 
     public void resetFrames() {
         for(int i =0;i<64;i++){
-            boardRepresentingStates[i]=SquareState.NORMAL;
+            squareStates[i]=SquareState.NORMAL;
         }
     }
 
     public void setSquareStateAt(int position,SquareState squareState){
-        boardRepresentingStates[position]=squareState;
-    }
-    /**
-        Representation of all chess man as enums
-     **/
-    public enum ChessMan {
-        WHITE_ROOK,  WHITE_KNIGHT,  WHITE_BISHOP,  WHITE_QUEEN,  WHITE_KING,  WHITE_PAWN,
-        BLACK_ROOK,  BLACK_KNIGHT,  BLACK_BISHOP,  BLACK_QUEEN,  BLACK_KING,  BLACK_PAWN
+        squareStates[position]=squareState;
     }
 
     /**
-     * Representation of the states of a square. E.g it can be selected, it is possible to move there from a selected field ...
+     * Representation of the states of a squareStates. E.g it can be selected, it is possible to move there from a selected field ...
      */
     public enum SquareState {
         NORMAL,SELECTED,POSSIBLE,POSSIBLE_KILL
     }
 
     public ChessBoardSimple(){
-        board = new ChessMan[64];
+        board = new Chessman[64];
         board = getStandartSetup();
-        boardRepresentingStates = new SquareState[64];
-        boardRepresentingStates = getNormalState();
+        squareStates = new SquareState[64];
+        squareStates = getNormalState();
     }
 
     private SquareState[] getNormalState() {
@@ -49,25 +42,20 @@ public class ChessBoardSimple {
         return allSquareStates;
     }
 
-    private ChessMan[] getStandartSetup(){
-        ChessMan[] standartBoard = {ChessMan.WHITE_ROOK, ChessMan.WHITE_KNIGHT, ChessMan.WHITE_BISHOP, ChessMan.WHITE_QUEEN, ChessMan.WHITE_KING, ChessMan.WHITE_BISHOP, ChessMan.WHITE_KNIGHT, ChessMan.WHITE_ROOK,
-                                    ChessMan.WHITE_PAWN, ChessMan.WHITE_PAWN  , ChessMan.WHITE_PAWN  , ChessMan.WHITE_PAWN , ChessMan.WHITE_PAWN, ChessMan.WHITE_PAWN  , ChessMan.WHITE_PAWN  , ChessMan.WHITE_PAWN,
-                                    null               ,null                 ,null                 ,null                ,null               ,null                 ,null                 ,null,
-                                    null               ,null                 ,null                 ,null                ,null               ,null                 ,null                 ,null,
-                                    null               ,null                 ,null                 ,null                ,null               ,null                 ,null                 ,null,
-                                    null               ,null                 ,null                 ,null                ,null               ,null                 ,null                 ,null,
-                                    ChessMan.BLACK_PAWN, ChessMan.BLACK_PAWN  , ChessMan.BLACK_PAWN  , ChessMan.BLACK_PAWN , ChessMan.BLACK_PAWN, ChessMan.BLACK_PAWN  , ChessMan.BLACK_PAWN  , ChessMan.BLACK_PAWN,
-                                    ChessMan.BLACK_ROOK, ChessMan.BLACK_KNIGHT, ChessMan.BLACK_BISHOP, ChessMan.BLACK_QUEEN, ChessMan.BLACK_KING, ChessMan.BLACK_BISHOP, ChessMan.BLACK_KNIGHT, ChessMan.BLACK_ROOK};
+    private Chessman[] getStandartSetup(){
+        Chessman[] standartBoard = Chessman.getStandartSetup();
         return standartBoard;
     }
 
-    public ChessMan getChessManAt(int position){
+    public Chessman getChessManAt(int position){
         return board[position];
     }
-    public ChessMan getChessManAt(int x, int y){
+
+    public Chessman getChessManAt(int x, int y){
         return board[x+8*y];
     }
+
     public SquareState getSquareStateAt(int position){
-        return boardRepresentingStates[position];
+        return squareStates[position];
     }
 }
