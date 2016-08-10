@@ -1,4 +1,4 @@
-package com.example.kai.verschachtelt;
+package com.example.kai.verschachtelt.chessLogic;
 
 /**
  * Created by Kai on 09.08.2016.

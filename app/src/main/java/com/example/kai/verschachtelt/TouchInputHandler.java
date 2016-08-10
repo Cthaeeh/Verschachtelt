@@ -2,6 +2,9 @@ package com.example.kai.verschachtelt;
 
 import android.view.MotionEvent;
 
+import com.example.kai.verschachtelt.chessLogic.ChessBoardComplex;
+import com.example.kai.verschachtelt.chessLogic.ChessBoardSimple;
+
 /**
  * Created by Kai on 09.08.2016.
  * This class is for handling touch events and translate them to chess specific squares, moves
@@ -36,21 +39,22 @@ public class TouchInputHandler {
         if(board.getSquareStateAt(position)== ChessBoardSimple.SquareState.NORMAL) {    //A normal square was touched -> select it.
             board.resetFrames();                                                        //Deselect other Squares
             board.setSquareStateAt(position, ChessBoardSimple.SquareState.SELECTED);    //Select the square
-            board.setMoveFrom(position);
+            board.handleSquareSelection(position);
             return;
         }
         if(board.getSquareStateAt(position)== ChessBoardSimple.SquareState.SELECTED) {  //A selected square was touched -> deselect it -> all squares normal again.
             board.setSquareStateAt(position, ChessBoardSimple.SquareState.NORMAL);
-            board.setMoveFrom(-1);                                                      //We have nowhere to move from.
+            board.handleSquareSelection(-1);                                            //We have nowhere to move from.
+            board.resetFrames();
             return;
         }
         if(board.getSquareStateAt(position)== ChessBoardSimple.SquareState.POSSIBLE){   //If a chessman is selected and there is a square where it can move
-            board.moveTo(position);                                                     //Move there.
+            board.handleMove(position);                                                     //Move there.
             board.resetFrames();
             return;
         }
         if(board.getSquareStateAt(position)== ChessBoardSimple.SquareState.POSSIBLE_KILL){  //same as above
-            board.moveTo(position);
+            board.handleMove(position);
             board.resetFrames();
             return;
         }

@@ -1,4 +1,4 @@
-package com.example.kai.verschachtelt;
+package com.example.kai.verschachtelt.graphics;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -9,7 +9,7 @@ import android.graphics.Paint;
  */
 public class Background {
 
-    //TODO implement CanvasShapeChange, so it doesnt fuck up in landscape mode
+    //TODO somehow react to a change from portrait to landscape mode
 
     private Bitmap image;
     private int x,y;        //Position of Background

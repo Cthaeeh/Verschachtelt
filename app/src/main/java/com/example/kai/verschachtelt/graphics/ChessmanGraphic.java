@@ -1,9 +1,12 @@
-package com.example.kai.verschachtelt;
+package com.example.kai.verschachtelt.graphics;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+
+import com.example.kai.verschachtelt.chessLogic.ChessBoardSimple;
+import com.example.kai.verschachtelt.GamePanel;
 
 /**
  * Created by Kai on 08.08.2016.
@@ -13,7 +16,7 @@ public class ChessmanGraphic {
 
     private int squareSize;                              //The length / width of a square on the board.
     private final int STROKE_WIDTH = 4;                 //The thickness of the frame around a square in hundredth of squareSize.
-    private final int normalFrameColor = Color.BLACK;   //TODO get this somehow from the ressources, either by passing it through from activity or passing the context.
+    private final int normalFrameColor = Color.BLACK;   //TODO get this somehow from the resources, either by passing it through from activity or passing the context.
     private final int selectedSquareFrameColor = Color.BLUE;
     private final int possibleMoveFrameColor = Color.GREEN;
     private final int killMoveFrameColor = Color.RED;

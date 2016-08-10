@@ -7,6 +7,10 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.example.kai.verschachtelt.graphics.Background;
+import com.example.kai.verschachtelt.graphics.ChessBoardGraphic;
+import com.example.kai.verschachtelt.graphics.ChessmanGraphic;
+
 /**
  * Created by Kai on 28.07.2016.
  * This class allows to draw on a canvas, pass the canvas to other classes and react to Touch Events.
@@ -82,6 +86,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     public void update(double avgFPS){
         //Show some dev info
         background.update(String.valueOf(avgFPS)+" fps " + String.valueOf(xTouch)+"|" +String.valueOf(yTouch) );
+
         chessmanGraphic.update(touchInputHandler.getChessBoardState());
     }
 

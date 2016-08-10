@@ -1,12 +1,15 @@
-package com.example.kai.verschachtelt;
+package com.example.kai.verschachtelt.graphics;
 
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 
+import com.example.kai.verschachtelt.GamePanel;
+
 /**
  * Created by Kai on 08.08.2016.
+ * This class is for drawing the chess board on the canvas.
  */
 public class ChessBoardGraphic {
 
