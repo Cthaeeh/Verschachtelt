@@ -26,23 +26,15 @@ public class InputHandler {
     }
 
     /**
-     * passes the position that was touched to a ComplexChessBoard.
-     * Depending on the state of the touched squareStates a chessman is selected, deselected, moves
-     * @param position
-     */
-
-
-
-    /**
      * Translate the exact touch position on the canvas to a squareStates on the board.
      * Or if outside return null
-     * @param x
-     * @param y
+     * @param x     xPosition on canvas
+     * @param y     yPosition on canvas
      * @return  an Integer representing the squareStates on the chess Board
      */
     private int getPositionOnBoard(float x,float y){
         if(x<squareSize || y < squareSize || x > squareSize*9 || y > squareSize*9) return -1; //Touch event was not on the chess Board.
-        int position = (int) (((int)(x-squareSize)/(int)(squareSize))+(8*((int)(y-squareSize)/(int)squareSize)));//Translate to Position on Board
+        int position = (((int)(x-squareSize)/(int)(squareSize))+(8*((int)(y-squareSize)/(int)squareSize)));//Translate to Position on Board
         return position;
 
     }

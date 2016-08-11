@@ -3,7 +3,7 @@ package com.example.kai.verschachtelt.chessLogic;
 
 /**
  * Created by Kai on 10.08.2016.
- * this class contains all move possibilitys. But no collision detection
+ * this class can look for a selectedPosition, where the chessman on the this position can move to.
  */
 public class RuleBook {
 
@@ -15,6 +15,7 @@ public class RuleBook {
         this.selectedPosition = selectedPosition;
         getPieceSpecificMoves();
         removeFriendlyFireMoves();
+        //Check collisions for chessman that arent horses.
         if(board[selectedPosition].getPiece()!= Chessman.Piece.KNIGHT)collisionDetection();
 
         return possibleMoves;

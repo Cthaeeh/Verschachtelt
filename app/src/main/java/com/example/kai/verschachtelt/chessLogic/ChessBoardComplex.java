@@ -2,16 +2,20 @@ package com.example.kai.verschachtelt.chessLogic;
 
 /**
  * Created by Kai on 09.08.2016.
- * This class extends the normal Chessboard class and adds basic move funtionality, possible move functionality.
+ * This class extends the normal Chessboard class and adds basic move functionality, possible move functionality.
  */
 public class ChessBoardComplex extends ChessBoardSimple {
     private int selectedPosition = -1;                                  //position to move a chessman from. By default no real position.
     private RuleBook ruleBook = new RuleBook(board);
     private boolean[] possibleDestinations = new boolean[64];   //It is either possible to move there or not.
 
+    public ChessBoardComplex(){
+        super();
+    }
+
     /**
-     * If the user selected a squareStates this is saved in selectedPosition and possible Destinations are marked.
-     * @param position
+     * If the user selected a square this is saved in selectedPosition and possible Destinations are marked.
+     * @param position  where the user touched.
      */
     public void handleSquareSelection(int position) {
         selectedPosition = position;
@@ -21,10 +25,27 @@ public class ChessBoardComplex extends ChessBoardSimple {
         }
     }
 
-    public void handleMove(int position){
+    /**
+     * If there is a selectedPosition we can directly move the chessman on that square to position.
+     * @param position  The position to move to.
+     */
+    public void handleMoveTo(int position){
         if(selectedPosition >=0){                    //If we try to move from a legit position
             board[position]=board[selectedPosition];//Set the chessman to its new position.
             board[selectedPosition]=null;           //Remove the chessman from its originally squareStates.
+        }
+        resetFrames();
+    }
+
+    /**
+     * The Chessboard will rearrange the chessman.
+     * @param from  where to move from.
+     * @param to    where to move to.
+     */
+    public void handleMoveFromTo(int from, int to) {
+        if(selectedPosition >=0 && board[from]!=null){//If we try to move from a legit position
+            board[to]=board[from];                    //Set the chessman to its new position.
+            board[from]=null;                         //Remove the chessman from its originally squareStates.
         }
         resetFrames();
     }
@@ -44,4 +65,9 @@ public class ChessBoardComplex extends ChessBoardSimple {
             if(possibleDestinations[i]&&board[i]!=null) squareStates[i]=SquareState.POSSIBLE_KILL;
         }
     }
+
+    public int getSelectedPosition(){
+        return selectedPosition;
+    }
+
 }

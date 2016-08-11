@@ -22,7 +22,7 @@ import com.example.kai.verschachtelt.graphics.ChessmanGraphic;
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     private MainThread thread;
-    private ChessGame game;
+    protected ChessGame game;
 
     private Background background;
     private ChessBoardGraphic chessBoardGraphic;
@@ -33,7 +33,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     private int xTouch = 0;
     private int yTouch = 0;
 
-    private InputHandler inputHandler;
+    protected InputHandler inputHandler;
 
     //Resolution of Background Image
     public static final int WIDTH = 1080;
@@ -86,6 +86,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         inputHandler.processTouchEvent(event);//Pass it to the inputHandler, so the logic is encapsuled.
         return super.onTouchEvent(event);
     }
+
     public void update(double avgFPS){
         //Show some dev info
         background.update(String.valueOf(avgFPS)+" fps " + String.valueOf(xTouch)+"|" +String.valueOf(yTouch) );
@@ -100,22 +101,20 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         final float scaleFactorX = canvas.getWidth()/(WIDTH*1.f);
         final float scaleFactorY = canvas.getHeight()/(HEIGHT*1.f);
 
-        if(canvas !=null) {
-            final int savedState = canvas.save();       //This has to be done so is scales only one time (for now)
-            canvas.scale(scaleFactorX, scaleFactorY);
+        final int savedState = canvas.save();       //This has to be done so is scales only one time (for now)
+        canvas.scale(scaleFactorX, scaleFactorY);
 
-            background.draw(canvas);
-            canvas.restoreToCount(savedState);
+        background.draw(canvas);
+        canvas.restoreToCount(savedState);
 
-            if(canvas.getHeight()<canvas.getWidth()) {
+        if(canvas.getHeight()<canvas.getWidth()) {
                 squareSize = canvas.getHeight()/10;
-            }else{
-                squareSize = canvas.getWidth()/10;
-            }
-            //Draw all the components that dont need scaling (they scale them self)
-            chessBoardGraphic.draw(canvas);
-            chessmanGraphic.draw(canvas);
+        }else{
+            squareSize = canvas.getWidth()/10;
         }
+        //Draw all the components that dont need scaling (they scale them self)
+        chessBoardGraphic.draw(canvas);
+        chessmanGraphic.draw(canvas);
     }
 }
 

@@ -10,6 +10,7 @@ import com.example.kai.verschachtelt.R;
 
 /**
  * Created by Kai on 10.08.2016.
+ * This Activity is shown when you want to start a Game vs the AI.
  */
 public class AISettings extends AppCompatActivity {
 
@@ -27,8 +28,9 @@ public class AISettings extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //If the button is pressed launch the Game-Activity
-                Intent startPvPGame = new Intent(AISettings.this, GameActivity.class);
-                startActivity(startPvPGame);
+                Intent startPvAIGame = new Intent(AISettings.this, GameActivity.class);
+                startPvAIGame.putExtra("GameType",GameActivity.GameType.CHESS_PvAI);      //Tell the Game Activity to start a PvP Game.
+                startActivity(startPvAIGame);
             }
         });
     }

@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //If the button is pressed launch the Game-Activity
                 Intent startPvPGame = new Intent(MainActivity.this, GameActivity.class);
+                startPvPGame.putExtra("GameType",GameActivity.GameType.CHESS_PvP);
                 startActivity(startPvPGame);
             }
         });
