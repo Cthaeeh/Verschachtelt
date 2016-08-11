@@ -22,6 +22,8 @@ import com.example.kai.verschachtelt.graphics.ChessmanGraphic;
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     private MainThread thread;
+    private ChessGame game;
+
     private Background background;
     private ChessBoardGraphic chessBoardGraphic;
     private ChessmanGraphic chessmanGraphic;
@@ -46,6 +48,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         thread = new MainThread(getHolder(),this);
         setFocusable(true);
         inputHandler = new InputHandler();
+        game = new ChessGame(inputHandler);
     }
 
     @Override
@@ -86,7 +89,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     public void update(double avgFPS){
         //Show some dev info
         background.update(String.valueOf(avgFPS)+" fps " + String.valueOf(xTouch)+"|" +String.valueOf(yTouch) );
-        chessmanGraphic.update(inputHandler.getChessBoardState());
+        chessmanGraphic.update(game.getSimpleBoard());
     }
 
     @Override

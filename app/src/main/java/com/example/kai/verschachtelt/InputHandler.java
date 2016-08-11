@@ -11,12 +11,10 @@ import com.example.kai.verschachtelt.chessLogic.ChessBoardSimple;
  */
 public class InputHandler {
 
-    private ChessBoardComplex board;
     private float squareSize;
-
+    private InputEvent inputEvent;
 
     public InputHandler(){
-        board = new ChessBoardComplex();
     }
 
     public void processTouchEvent(MotionEvent event){
@@ -24,10 +22,7 @@ public class InputHandler {
         float x = event.getX();
         float y = event.getY();
         Integer position = getPositionOnBoard(x,y);
-        if(position==-1) board.resetFrames();         //If you touch outside the board all frames are reseted.
-        else{
-            handleTouchOnSquare(position);
-        }
+        inputEvent.handleTouchOnSquare(position);
     }
 
     /**
@@ -35,30 +30,7 @@ public class InputHandler {
      * Depending on the state of the touched squareStates a chessman is selected, deselected, moves
      * @param position
      */
-    private void handleTouchOnSquare(Integer position) {
-        if(board.getSquareStateAt(position)== ChessBoardSimple.SquareState.NORMAL) {    //A normal squareStates was touched -> select it.
-            board.resetFrames();                                                        //Deselect other Squares
-            board.setSquareStateAt(position, ChessBoardSimple.SquareState.SELECTED);    //Select the squareStates
-            board.handleSquareSelection(position);
-            return;
-        }
-        if(board.getSquareStateAt(position)== ChessBoardSimple.SquareState.SELECTED) {  //A selected squareStates was touched -> deselect it -> all squares normal again.
-            board.setSquareStateAt(position, ChessBoardSimple.SquareState.NORMAL);
-            board.handleSquareSelection(-1);                                            //We have nowhere to move from.
-            board.resetFrames();
-            return;
-        }
-        if(board.getSquareStateAt(position)== ChessBoardSimple.SquareState.POSSIBLE){   //If a chessman is selected and there is a squareStates where it can move
-            board.handleMove(position);                                                     //Move there.
-            board.resetFrames();
-            return;
-        }
-        if(board.getSquareStateAt(position)== ChessBoardSimple.SquareState.POSSIBLE_KILL){  //same as above
-            board.handleMove(position);
-            board.resetFrames();
-            return;
-        }
-    }
+
 
 
     /**
@@ -75,8 +47,7 @@ public class InputHandler {
 
     }
 
-    public ChessBoardSimple getChessBoardState() {
-        return board;
+    public void subscribe(InputEvent inputEvent) {
+        this.inputEvent = inputEvent;
     }
-
 }
