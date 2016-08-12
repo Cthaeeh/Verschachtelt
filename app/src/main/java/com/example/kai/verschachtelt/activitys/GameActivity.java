@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 
 import com.example.kai.verschachtelt.GamePanel;
+import com.example.kai.verschachtelt.R;
 import com.example.kai.verschachtelt.pvAIGame.chess_AI.GamePanelPvAI;
 import com.example.kai.verschachtelt.pvpGame.GamePanelPvP;
 
@@ -67,8 +68,13 @@ public class GameActivity extends Activity implements View.OnClickListener{
         LinearLayout gameWidgets = new LinearLayout (this);
 
         Button undoButton = new Button(this);
+        Button redoButton = new Button(this);
+
         undoButton.setWidth(400);
-        undoButton.setText("UNDO"); //TODO make this a ressource
+        redoButton.setWidth(400);
+
+        undoButton.setText(R.string.undo_button);
+        redoButton.setText(R.string.redo_button);
         undoButton.setBottom(0);
 
         gameWidgets.addView(undoButton);

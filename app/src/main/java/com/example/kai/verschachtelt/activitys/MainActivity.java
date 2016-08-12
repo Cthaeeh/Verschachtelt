@@ -1,5 +1,6 @@
 package com.example.kai.verschachtelt.activitys;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,11 +11,22 @@ import com.example.kai.verschachtelt.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static Context mContext;    //This is for accessing Ressources from everywhere without having to pass a Context everywhere.
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = getApplicationContext();
         setContentView(R.layout.activity_main);
         setUpUI();
+    }
+
+    /**
+     * This is for accessing ressources from everywhere without having to pass a Context everywhere.
+     * @return the context
+     */
+    public static Context getContext(){
+        return mContext;
     }
 
     private void setUpUI() {

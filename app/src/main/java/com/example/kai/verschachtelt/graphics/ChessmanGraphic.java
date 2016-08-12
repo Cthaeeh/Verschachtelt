@@ -4,7 +4,10 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.support.v4.content.ContextCompat;
 
+import com.example.kai.verschachtelt.R;
+import com.example.kai.verschachtelt.activitys.MainActivity;
 import com.example.kai.verschachtelt.chessLogic.ChessBoardSimple;
 import com.example.kai.verschachtelt.GamePanel;
 import com.example.kai.verschachtelt.chessLogic.Chessman;
@@ -17,10 +20,10 @@ public class ChessmanGraphic {
 
     private int squareSize;                              //The length / width of a squareStates on the board.
     private final int STROKE_WIDTH = 4;                 //The thickness of the frame around a squareStates in hundredth of squareSize.
-    private final int normalFrameColor = Color.BLACK;   //TODO get this somehow from the resources, either by passing it through from activity or passing the context.
-    private final int selectedSquareFrameColor = Color.BLUE;
-    private final int possibleMoveFrameColor = Color.GREEN;
-    private final int killMoveFrameColor = Color.RED;
+    private final int normalFrameColor = ContextCompat.getColor(MainActivity.getContext(), R.color.normalFrameColor);
+    private final int selectedSquareFrameColor = ContextCompat.getColor(MainActivity.getContext(), R.color.selectedFrameColor);
+    private final int possibleMoveFrameColor = ContextCompat.getColor(MainActivity.getContext(), R.color.possibleMoveFrameColor);
+    private final int killMoveFrameColor = ContextCompat.getColor(MainActivity.getContext(), R.color.possibleKillFrameColor);
     private Paint paint;
 
     //The images of all chessmen
