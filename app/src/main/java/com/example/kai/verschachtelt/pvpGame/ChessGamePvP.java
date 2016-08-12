@@ -17,12 +17,22 @@ public class ChessGamePvP extends ChessGame {
 
     @Override
     protected void move(int position){
-        if(board.getChessManAt(board.getSelectedPosition()).getColor()==playerOnTurn){
-            board.handleMoveTo(position);
-            board.resetFrames();
-            if(playerOnTurn== Chessman.Color.BLACK)playerOnTurn= Chessman.Color.WHITE;
-            else playerOnTurn= Chessman.Color.BLACK;
+        if(boardCurrent.getChessManAt(boardCurrent.getSelectedPosition()).getColor()==playerOnTurn){
+            super.move(position);
+            //After a move the Player on turn must be switched.
+            switchPlayerOnTurn();
         }
+    }
+    @Override
+    public void handleUndoButton() {
+        if(moveCounter>0) switchPlayerOnTurn(); //If we go back in history the Player on turn must be changed as well.
+        super.handleUndoButton();
+
+    }
+
+    private void switchPlayerOnTurn() {
+        if(playerOnTurn== Chessman.Color.BLACK)playerOnTurn= Chessman.Color.WHITE;
+        else playerOnTurn= Chessman.Color.BLACK;
     }
 
 }

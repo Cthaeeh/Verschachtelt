@@ -12,7 +12,7 @@ public class AI {
 
     private final  int difficulty;
     private final  Chessman.Color aiColor;  //The color of the pieces the ai moves
-    private byte[] byteBoard ;           //Inside the ai a board is represented by byte array
+    private byte[] byteBoard ;           //Inside the ai a boardCurrent is represented by byte array
 
     private static final byte VALUE_KING_WHITE = 100;
     private static final byte VALUE_QUEEN_WHITE = 9;
@@ -38,9 +38,9 @@ public class AI {
     }
 
     /**
-     * The ai calculates a move, makes it in the board, and gives it back.
-     * @param board The board you want the ai to calculate a move for.
-     * @return
+     * The ai calculates a move, makes it in the boardCurrent, and gives it back.
+     * @param board The boardCurrent you want the ai to calculate a move for.
+     * @return The board after the ai did its move.
      */
     public ChessBoardComplex calculateMove(ChessBoardComplex board) {
         byteBoard = toByteArray(board);
@@ -49,7 +49,7 @@ public class AI {
     }
 
     /**
-     * The method takes a board object and translates it to a byte array of length 64.
+     * The method takes a boardCurrent object and translates it to a byte array of length 64.
      * to represent different chessmen it uses constants.
      * @param board
      * @return

@@ -26,7 +26,7 @@ public class InputHandler {
     }
 
     /**
-     * Translate the exact touch position on the canvas to a squareStates on the board.
+     * Translate the exact touch position on the canvas to a squareStates on the boardCurrent.
      * Or if outside return null
      * @param x     xPosition on canvas
      * @param y     yPosition on canvas
@@ -41,5 +41,13 @@ public class InputHandler {
 
     public void subscribe(InputEvent inputEvent) {
         this.inputEvent = inputEvent;
+    }
+
+    public void processRedoButton() {
+        inputEvent.handleRedoButton();
+    }
+
+    public void processUndoButton() {
+        inputEvent.handleUndoButton();
     }
 }

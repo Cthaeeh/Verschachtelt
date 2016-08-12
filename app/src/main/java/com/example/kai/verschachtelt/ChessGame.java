@@ -4,58 +4,90 @@ import com.example.kai.verschachtelt.chessLogic.ChessBoardComplex;
 import com.example.kai.verschachtelt.chessLogic.ChessBoardSimple;
 import com.example.kai.verschachtelt.chessLogic.ChessBoardSimple.SquareState;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by Kai on 11.08.2016.
+ * This class is for representing the current state of the game.
+ * It holds the current Chess Board, a history of previous chess Boards (like a Stack)
+ * this stuff is manipulated through the inputEvent interface.
  */
 public class ChessGame implements InputEvent {
     private InputHandler inputHandler;
-    protected ChessBoardComplex board;
-
+    protected ChessBoardComplex boardCurrent;
+    private List<ChessBoardComplex> boardHistory = new ArrayList<>();
+    //Number of moves performed by both players.
+    protected int moveCounter = 0;
 
     public ChessGame(InputHandler inputHandler){
         this.inputHandler = inputHandler;
+        //Subscribe so the inputHandler can call back.
         inputHandler.subscribe(this);
-        board = new ChessBoardComplex();
+        //Create a new ChessBoard
+        boardCurrent = new ChessBoardComplex();
+        //Add this one as first entry in the history
+        boardHistory.add(new ChessBoardComplex(boardCurrent));
     }
 
     /**
      * passes the position that was touched to a ComplexChessBoard.
      * Depending on the state of the touched squareStates a chessman is selected, deselected, moves
-     * @param position  The position on the board that was touched. Starts counting upper left edge. 0-63
+     * @param position  The position on the boardCurrent that was touched. Starts counting upper left edge. 0-63
      */
     public void handleTouchOnSquare(Integer position) {
-        if(position <0){            //If the position is outside of the Chess board reset the frames.
-            board.resetFrames();
+        if(position <0){            //If the position is outside of the Chess boardCurrent reset the frames.
+            boardCurrent.resetFrames();
             return;
         }
-        if(board.getSquareStateAt(position)== SquareState.NORMAL) {    //A normal squareStates was touched -> select it.
-            board.resetFrames();                                                        //Deselect other Squares
-            board.setSquareStateAt(position,SquareState.SELECTED);    //Select the squareStates
-            board.handleSquareSelection(position);
+        if(boardCurrent.getSquareStateAt(position)== SquareState.NORMAL) {    //A normal squareStates was touched -> select it.
+            boardCurrent.resetFrames();                                                        //Deselect other Squares
+            boardCurrent.setSquareStateAt(position,SquareState.SELECTED);    //Select the squareStates
+            boardCurrent.handleSquareSelection(position);
             return;
         }
-        if(board.getSquareStateAt(position)== SquareState.SELECTED) {  //A selected squareStates was touched -> deselect it -> all squares normal again.
-            board.setSquareStateAt(position, SquareState.NORMAL);
-            board.handleSquareSelection(-1);                                            //We have nowhere to move from.
-            board.resetFrames();
+        if(boardCurrent.getSquareStateAt(position)== SquareState.SELECTED) {  //A selected squareStates was touched -> deselect it -> all squares normal again.
+            boardCurrent.setSquareStateAt(position, SquareState.NORMAL);
+            boardCurrent.handleSquareSelection(-1);                                            //We have nowhere to move from.
+            boardCurrent.resetFrames();
             return;
         }
-        if(board.getSquareStateAt(position)== SquareState.POSSIBLE){   //If a chessman is selected and there is a squareStates where it can move
+        if(boardCurrent.getSquareStateAt(position)== SquareState.POSSIBLE){   //If a chessman is selected and there is a squareStates where it can move
             move(position);
             return;
         }
-        if(board.getSquareStateAt(position)== SquareState.POSSIBLE_KILL){  //same as above
+        if(boardCurrent.getSquareStateAt(position)== SquareState.POSSIBLE_KILL){  //same as above
             move(position);
         }
 
+    }
+
+    @Override
+    public void handleUndoButton() {
+        if(moveCounter>0){      //If there has been at least one move.
+            boardCurrent = new ChessBoardComplex(boardHistory.get(moveCounter-1)); //Set to previous Boardstate.
+            boardHistory.remove(moveCounter);
+            moveCounter--;
+        }
+    }
+
+    @Override
+    public void handleRedoButton() {
+        //TODO implement this.
     }
 
     protected void move(int position){
-        board.handleMoveTo(position);
-        board.resetFrames();
+        boardCurrent.handleMoveTo(position);    //Move there from a selected position.
+        boardCurrent.resetFrames();
+        boardHistory.add(new ChessBoardComplex(boardCurrent));
+        moveCounter++;
     }
 
+    /**
+     *
+     * @return a simple Instance of a chessBoard. For example if you just need info where to draw the chessmen.
+     */
     public ChessBoardSimple getSimpleBoard(){
-        return board;
+        return boardCurrent;
     }
 }

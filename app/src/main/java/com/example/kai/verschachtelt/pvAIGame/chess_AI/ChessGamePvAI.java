@@ -21,11 +21,9 @@ public class ChessGamePvAI extends ChessGame {
 
     @Override
     protected void move(int position){
-        if(board.getChessManAt(board.getSelectedPosition()).getColor()!=ai.getColor()){ //Can only move the humans chessman
-            board.handleMoveTo(position);
-            board.resetFrames();
-            board = ai.calculateMove(board);
-
+        if(boardCurrent.getChessManAt(boardCurrent.getSelectedPosition()).getColor()!=ai.getColor()){ //Can only move the humans chessman
+            super.move(position);
+            boardCurrent = ai.calculateMove(boardCurrent);
         }
     }
 }

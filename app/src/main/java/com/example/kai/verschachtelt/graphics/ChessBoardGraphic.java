@@ -9,12 +9,12 @@ import com.example.kai.verschachtelt.GamePanel;
 
 /**
  * Created by Kai on 08.08.2016.
- * This class is for drawing the chess board on the canvas.
+ * This class is for drawing the chess boardCurrent on the canvas.
  */
 public class ChessBoardGraphic {
 
     private Paint paint;
-    private float squareSize;              //length and width of a field of the board
+    private float squareSize;              //length and width of a field of the boardCurrent
 
     public ChessBoardGraphic(){
         paint = new Paint();
@@ -64,7 +64,7 @@ public class ChessBoardGraphic {
         return rects;
     }
 
-    //Calculates all points of the Chessboard, which connected make up the board
+    //Calculates all points of the Chessboard, which connected make up the boardCurrent
     //Ugly code ahead ;)
     private float[] getLinePts() {
         float[] pts = new float[72];//8*8 fields so 9+9=18 lines. To define a line it needs 4 values -> 18*4=72

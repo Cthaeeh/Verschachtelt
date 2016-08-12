@@ -18,8 +18,9 @@ import com.example.kai.verschachtelt.chessLogic.Chessman;
  */
 public class ChessmanGraphic {
 
-    private int squareSize;                              //The length / width of a squareStates on the board.
-    private final int STROKE_WIDTH = 4;                 //The thickness of the frame around a squareStates in hundredth of squareSize.
+    private int squareSize;                              //The length / width of a squareStates on the boardCurrent.
+    //The thickness of the frame around a squareStates in hundredth of squareSize.
+    private final int STROKE_WIDTH = 4; //TODO make this a dimen ressource
     private final int normalFrameColor = ContextCompat.getColor(MainActivity.getContext(), R.color.normalFrameColor);
     private final int selectedSquareFrameColor = ContextCompat.getColor(MainActivity.getContext(), R.color.selectedFrameColor);
     private final int possibleMoveFrameColor = ContextCompat.getColor(MainActivity.getContext(), R.color.possibleMoveFrameColor);
@@ -46,7 +47,7 @@ public class ChessmanGraphic {
     }
 
     public void draw(Canvas canvas){
-        squareSize = GamePanel.squareSize;                                    //length/width of a squareStates of the chess board. Kind of global variable. Muste be changed.
+        squareSize = GamePanel.squareSize;                                    //length/width of a squareStates of the chess boardCurrent. Kind of global variable. Muste be changed.
         int devideIndipendentStrokeWidth = (squareSize /100)*STROKE_WIDTH;    //stepwidth is screen size sensitive -> deviceIndependentStrokewith is now as well.
         paint.setStrokeWidth(devideIndipendentStrokeWidth);
         //draw all pieces, and their frames
@@ -74,16 +75,14 @@ public class ChessmanGraphic {
     }
     //Calculate the X position on the screen where a chessPiece must be drawn.
     private int getX(int position){
-        int x = squareSize + (position%8)* squareSize;
-        return x;
+        return squareSize + (position%8)* squareSize;
     }
 
     /**
      * Calculate the Y position on the screen where a chessPiece must be drawn.
      */
     private int getY(int position){
-        int y = squareSize + (position/8)* squareSize;
-        return y;
+        return squareSize + (position/8)* squareSize;
     }
 
     private Bitmap getChessManImage(Chessman chessman){
@@ -109,7 +108,7 @@ public class ChessmanGraphic {
     }
 
     /**From a larger image, smaller images of the chessmen are cropped out.
-     * @param imageChessmen
+     * @param imageChessmen A large image with all the chessmen
      */
     private void extractImages(Bitmap imageChessmen){
         imageBlackRook = Bitmap.createBitmap(imageChessmen,((960-cropSize)/5)*2,  112  ,cropSize,cropSize);

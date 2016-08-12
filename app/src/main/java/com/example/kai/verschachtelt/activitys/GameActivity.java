@@ -23,7 +23,11 @@ import com.example.kai.verschachtelt.pvpGame.GamePanelPvP;
 public class GameActivity extends Activity implements View.OnClickListener{
 
     private FrameLayout layout;     //The layout that holds the gamePanel, Buttons, etc.
+    private LinearLayout gameWidgets;
     private GamePanel gameView;
+
+    Button undoButton;
+    Button redoButton;
 
     public enum GameType{
         CHESS_PvP,CHESS_PvAI,PUZZLE
@@ -60,15 +64,12 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private void setupPvP() {
         gameView = new GamePanelPvP(this);
         setupUI();  //TODO add special PvP UI-elements
-
+        setupUndoRedo();
     }
 
-    private void setupUI() {
-        layout = new FrameLayout(this);
-        LinearLayout gameWidgets = new LinearLayout (this);
-
-        Button undoButton = new Button(this);
-        Button redoButton = new Button(this);
+    private void setupUndoRedo() {
+        undoButton = new Button(this);
+        redoButton = new Button(this);
 
         undoButton.setWidth(400);
         redoButton.setWidth(400);
@@ -76,8 +77,21 @@ public class GameActivity extends Activity implements View.OnClickListener{
         undoButton.setText(R.string.undo_button);
         redoButton.setText(R.string.redo_button);
         undoButton.setBottom(0);
+        redoButton.setBottom(0);
 
         gameWidgets.addView(undoButton);
+        gameWidgets.addView(redoButton);
+
+        undoButton.setOnClickListener(this);
+        redoButton.setOnClickListener(this);
+    }
+
+    /**
+     * sets up UI elements that all Game modes share
+     */
+    private void setupUI() {
+        layout = new FrameLayout(this);
+        gameWidgets = new LinearLayout (this);
 
         FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM);
@@ -88,6 +102,11 @@ public class GameActivity extends Activity implements View.OnClickListener{
 
     @Override
     public void onClick(View view) {
-        //can access gameView here to redo ...
+        if(view == undoButton){
+            gameView.inputHandler.processUndoButton();
+        }
+        if(view == redoButton){
+            gameView.inputHandler.processRedoButton();
+        }
     }
 }

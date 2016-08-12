@@ -4,20 +4,28 @@ package com.example.kai.verschachtelt.chessLogic;
 /**
  * Created by Kai on 10.08.2016.
  * this class can look for a selectedPosition, where the chessman on the this position can move to.
+ * it takes a chessman array e.g. a board and a selected position and tells you where it is possible to move.
  */
 public class RuleBook {
 
     private boolean[] possibleMoves = new boolean[64];
-    private Chessman[] board;
     private int selectedPosition;
-    
-    public boolean[] getPossibleMoves(int selectedPosition){
+    private Chessman[] board;
+
+    /**
+     *
+     * @param selectedPosition  the position of the chessman you want to look for where it can move.
+     * @param board             the current state of the board the chessman is on
+     * @return                  a array of boolean values where the chessman can possibly move.
+     */
+    public boolean[] getPossibleMoves(int selectedPosition, Chessman[] board){
+        //Copy stuff for easier access
         this.selectedPosition = selectedPosition;
+        this.board = board;
         getPieceSpecificMoves();
         removeFriendlyFireMoves();
         //Check collisions for chessman that arent horses.
         if(board[selectedPosition].getPiece()!= Chessman.Piece.KNIGHT)collisionDetection();
-
         return possibleMoves;
     }
 
@@ -95,13 +103,9 @@ public class RuleBook {
                         possibleMoves = getPossibleUpperPawnMoves();
                         break;
                 }
+            default:
         }
     }
-
-    public RuleBook(Chessman[] board) {
-        this.board=board;
-    }
-
 
     private boolean[] getPossibleRookMoves(){
         resetPossibleMoves();
@@ -164,28 +168,28 @@ public class RuleBook {
     }
 
     /**
-     * Calculates the move possibilitys for the pawn (that spawned in upper area of the board)
+     * Calculates the move possibilitys for the pawn (that spawned in upper area of the boardCurrent)
      * @return the possible destinations for the pawn to move.
      */
     private boolean[] getPossibleUpperPawnMoves(){
         resetPossibleMoves();
-        if(selectedPosition+8<64)possibleMoves[selectedPosition+8]=true;  //Can always move one step forward.
+        if(selectedPosition+8<64&&board[selectedPosition+8]==null)possibleMoves[selectedPosition+8]=true;  //Can always move one step forward.
         if(selectedPosition+9<64&&board[selectedPosition+9]!=null)possibleMoves[selectedPosition+9]=true;   //IF there is a piece he can move diagonal
         if(selectedPosition+7<64&&board[selectedPosition+7]!=null)possibleMoves[selectedPosition+7]=true;
-        if(selectedPosition/8==1)possibleMoves[selectedPosition+16]=true; //If he is on starting Position he can move 2
+        if(selectedPosition/8==1&&board[selectedPosition+16]==null)possibleMoves[selectedPosition+16]=true; //If he is on starting Position he can move 2
         return possibleMoves;
     }
 
     /**
-     * Calculates the move possibilitys for the pawn (that spawned in lower area of the board)
+     * Calculates the move possibilitys for the pawn (that spawned in lower area of the boardCurrent)
      * @return the possible destinations for the pawn to move.
      */
     private boolean[] getPossibleLowerPawnMoves(){
         resetPossibleMoves();
-        if(selectedPosition-8>0)possibleMoves[selectedPosition-8]=true;  //Can always move one step forward.
+        if(selectedPosition-8>0&&board[selectedPosition-8]==null)possibleMoves[selectedPosition-8]=true;  //Can always move one step forward.
         if(selectedPosition-9>0&&board[selectedPosition-9]!=null)possibleMoves[selectedPosition-9]=true;     //IF there is a piece he can move diagonal
         if(selectedPosition-7>0&&board[selectedPosition-7]!=null)possibleMoves[selectedPosition-7]=true;
-        if(selectedPosition/8==6)possibleMoves[selectedPosition-16]=true; //If he is on starting Position he can move 2
+        if(selectedPosition/8==6&&board[selectedPosition-16]==null)possibleMoves[selectedPosition-16]=true; //If he is on starting Position he can move 2
         return possibleMoves;
     }
 
@@ -194,4 +198,5 @@ public class RuleBook {
             possibleMoves[i]=false;
         }
     }
+
 }

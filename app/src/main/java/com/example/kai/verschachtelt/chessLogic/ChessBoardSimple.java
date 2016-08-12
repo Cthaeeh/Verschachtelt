@@ -2,12 +2,12 @@ package com.example.kai.verschachtelt.chessLogic;
 
 /**
  * Created by Kai on 09.08.2016.
- * A Class for representing the chess board outside of the AI-Part.
+ * A Class for representing the chess boardCurrent outside of the AI-Part.
  * No Chess Logic,no Graphics here.
  */
 public class ChessBoardSimple {
 
-    protected Chessman[] board;                         //where are the pieces on the board?
+    protected Chessman[] chessmen;           //where are the pieces on the board ?
     protected SquareState[] squareStates;    //marks (e.g frames )for selected chessman.
 
     public void resetFrames() {
@@ -28,8 +28,8 @@ public class ChessBoardSimple {
     }
 
     public ChessBoardSimple(){
-        board = new Chessman[64];
-        board = getStandartSetup();
+        chessmen = new Chessman[64];
+        chessmen = getStandartSetup();
         squareStates = new SquareState[64];
         squareStates = getNormalState();
     }
@@ -48,14 +48,16 @@ public class ChessBoardSimple {
     }
 
     public Chessman getChessManAt(int position){
-        return board[position];
+        return chessmen[position];
     }
 
     public Chessman getChessManAt(int x, int y){
-        return board[x+8*y];
+        return chessmen[x+8*y];
     }
 
     public SquareState getSquareStateAt(int position){
         return squareStates[position];
     }
+
+
 }

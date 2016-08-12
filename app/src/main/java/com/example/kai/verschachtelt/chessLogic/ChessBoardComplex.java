@@ -6,11 +6,19 @@ package com.example.kai.verschachtelt.chessLogic;
  */
 public class ChessBoardComplex extends ChessBoardSimple {
     private int selectedPosition = -1;                                  //position to move a chessman from. By default no real position.
-    private RuleBook ruleBook = new RuleBook(board);
-    private boolean[] possibleDestinations = new boolean[64];   //It is either possible to move there or not.
+    private static RuleBook ruleBook = new RuleBook();                  //There is just one Rulebook for every game of chess.
+    private boolean[] possibleDestinations = new boolean[64];           //It is either possible to move there or not.
 
     public ChessBoardComplex(){
         super();
+    }
+
+    /**
+     * A copy constructor. To ensure the object can be copied correctly.
+     * @param board The object to make a copy of.
+     */
+    public ChessBoardComplex(ChessBoardComplex board) {
+        chessmen = board.chessmen.clone();
     }
 
     /**
@@ -19,7 +27,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
      */
     public void handleSquareSelection(int position) {
         selectedPosition = position;
-        if(position>=0&&position<64&&board[position]!=null){        //If there is a chessman at this squareStates
+        if(position>=0&&position<64&& chessmen[position]!=null){        //If there is a chessman at this squareStates
             getPossibleDestinations();                                    //get the possible destinations
             markPossibleDestinations();                                   //and mark them.
         }
@@ -31,8 +39,8 @@ public class ChessBoardComplex extends ChessBoardSimple {
      */
     public void handleMoveTo(int position){
         if(selectedPosition >=0){                    //If we try to move from a legit position
-            board[position]=board[selectedPosition];//Set the chessman to its new position.
-            board[selectedPosition]=null;           //Remove the chessman from its originally squareStates.
+            chessmen[position]= chessmen[selectedPosition];//Set the chessman to its new position.
+            chessmen[selectedPosition]=null;           //Remove the chessman from its originally squareStates.
         }
         resetFrames();
     }
@@ -43,9 +51,9 @@ public class ChessBoardComplex extends ChessBoardSimple {
      * @param to    where to move to.
      */
     public void handleMoveFromTo(int from, int to) {
-        if(selectedPosition >=0 && board[from]!=null){//If we try to move from a legit position
-            board[to]=board[from];                    //Set the chessman to its new position.
-            board[from]=null;                         //Remove the chessman from its originally squareStates.
+        if(selectedPosition >=0 && chessmen[from]!=null){//If we try to move from a legit position
+            chessmen[to]= chessmen[from];                    //Set the chessman to its new position.
+            chessmen[from]=null;                         //Remove the chessman from its originally squareStates.
         }
         resetFrames();
     }
@@ -54,15 +62,15 @@ public class ChessBoardComplex extends ChessBoardSimple {
      * Depending on the selected chessman the method acceses the rulebook to see where it can move.
      */
     private void getPossibleDestinations() {
-        possibleDestinations=ruleBook.getPossibleMoves(selectedPosition);
+        possibleDestinations=ruleBook.getPossibleMoves(selectedPosition,chessmen);
     }
 
     /**Depending on the possible move destination the frames are colored accordingly.
      */
     private void markPossibleDestinations(){
         for(int i = 0;i<64;i++){
-            if(possibleDestinations[i]&&board[i]==null) squareStates[i]=SquareState.POSSIBLE;
-            if(possibleDestinations[i]&&board[i]!=null) squareStates[i]=SquareState.POSSIBLE_KILL;
+            if(possibleDestinations[i]&& chessmen[i]==null) squareStates[i]=SquareState.POSSIBLE;
+            if(possibleDestinations[i]&& chessmen[i]!=null) squareStates[i]=SquareState.POSSIBLE_KILL;
         }
     }
 

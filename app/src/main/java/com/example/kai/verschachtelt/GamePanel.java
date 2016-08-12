@@ -27,13 +27,13 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     private Background background;
     private ChessBoardGraphic chessBoardGraphic;
     private ChessmanGraphic chessmanGraphic;
-    public static int squareSize;               //The only global variable kind of. It represents the length and width of a squareStates on the board.
+    public static int squareSize;               //The only global variable kind of. It represents the length and width of a squareStates on the boardCurrent.
 
     //The position of the touch/ for development
     private int xTouch = 0;
     private int yTouch = 0;
 
-    protected InputHandler inputHandler;
+    public InputHandler inputHandler;
 
     //Resolution of Background Image
     public static final int WIDTH = 1080;
