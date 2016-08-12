@@ -96,10 +96,10 @@ public class RuleBook {
                 break;
             case PAWN:
                 switch (board[selectedPosition].getColor()){
-                    case BLACK:
+                    case WHITE:
                         possibleMoves = getPossibleLowerPawnMoves();
                         break;
-                    case WHITE:
+                    case BLACK:
                         possibleMoves = getPossibleUpperPawnMoves();
                         break;
                 }
@@ -197,6 +197,21 @@ public class RuleBook {
         for (int i=0;i<64;i++){
             possibleMoves[i]=false;
         }
+    }
+
+    public Chessman.Color getWinner(Chessman[] board) {
+        boolean whiteWin = true;
+        boolean blackWin = true;
+        for (int i = 0;i<64;i++){
+            //If the King of the other player is still there you have not won.
+            if(board[i]!=null){
+                if(board[i].getPiece()== Chessman.Piece.KING && board[i].getColor() == Chessman.Color.BLACK) whiteWin = false;
+                if(board[i].getPiece()== Chessman.Piece.KING && board[i].getColor() == Chessman.Color.WHITE) blackWin = false;
+            }
+        }
+        if(whiteWin&&!blackWin)return Chessman.Color.WHITE;
+        if(!whiteWin&&blackWin)return Chessman.Color.BLACK;
+        return null;
     }
 
 }

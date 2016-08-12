@@ -10,6 +10,7 @@ import android.view.SurfaceView;
 import com.example.kai.verschachtelt.graphics.Background;
 import com.example.kai.verschachtelt.graphics.ChessBoardGraphic;
 import com.example.kai.verschachtelt.graphics.ChessmanGraphic;
+import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
 
 /**
  * Created by Kai on 28.07.2016.
@@ -19,7 +20,7 @@ import com.example.kai.verschachtelt.graphics.ChessmanGraphic;
  * When it registrates a touch event it uses a TouchnInputHandler Object to change the Game accordingly.
  */
 
-public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
+public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     private MainThread thread;
     protected ChessGame game;
@@ -27,6 +28,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     private Background background;
     private ChessBoardGraphic chessBoardGraphic;
     private ChessmanGraphic chessmanGraphic;
+    protected VictoryScreenGraphic victoryScreenGraphic;
     public static int squareSize;               //The only global variable kind of. It represents the length and width of a squareStates on the boardCurrent.
 
     //The position of the touch/ for development
@@ -56,6 +58,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         background = new Background(BitmapFactory.decodeResource(getResources(),R.drawable.test_background));
         chessBoardGraphic = new ChessBoardGraphic();
         chessmanGraphic = new ChessmanGraphic(BitmapFactory.decodeResource(getResources(),R.drawable.chess_man_symbols));
+        victoryScreenGraphic = new VictoryScreenGraphic(BitmapFactory.decodeResource(getResources(),R.drawable.victory_screens));
 
         thread.setRunning(true);
         thread.start();
@@ -91,6 +94,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         //Show some dev info
         background.update(String.valueOf(avgFPS)+" fps " + String.valueOf(xTouch)+"|" +String.valueOf(yTouch) );
         chessmanGraphic.update(game.getSimpleBoard());
+        victoryScreenGraphic.update(game.getWinner());
     }
 
     @Override
@@ -115,6 +119,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         //Draw all the components that dont need scaling (they scale them self)
         chessBoardGraphic.draw(canvas);
         chessmanGraphic.draw(canvas);
+        if(game.getWinner()!=null)victoryScreenGraphic.draw(canvas);
     }
 }
 

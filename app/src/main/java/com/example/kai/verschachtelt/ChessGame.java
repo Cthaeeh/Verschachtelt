@@ -3,6 +3,7 @@ package com.example.kai.verschachtelt;
 import com.example.kai.verschachtelt.chessLogic.ChessBoardComplex;
 import com.example.kai.verschachtelt.chessLogic.ChessBoardSimple;
 import com.example.kai.verschachtelt.chessLogic.ChessBoardSimple.SquareState;
+import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,4 +91,8 @@ public class ChessGame implements InputEvent {
     public ChessBoardSimple getSimpleBoard(){
         return boardCurrent;
     }
+
+    public VictoryScreenGraphic.VictoryState getWinner(){
+        return null;
+    };
 }

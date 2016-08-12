@@ -59,6 +59,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private void setupPvAI_UI() {
         gameView = new GamePanelPvAI(this);
         setupUI();  //TODO add special PvAI UI-elements
+        setupUndoRedo();
     }
 
     private void setupPvP() {

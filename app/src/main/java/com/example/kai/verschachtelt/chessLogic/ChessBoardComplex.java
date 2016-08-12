@@ -1,5 +1,7 @@
 package com.example.kai.verschachtelt.chessLogic;
 
+import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
+
 /**
  * Created by Kai on 09.08.2016.
  * This class extends the normal Chessboard class and adds basic move functionality, possible move functionality.
@@ -78,4 +80,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
         return selectedPosition;
     }
 
+    public Chessman.Color getWinner() {
+        return ruleBook.getWinner(chessmen);
+    }
 }

@@ -10,18 +10,18 @@ public class Chessman {
 
     public static Chessman[] getStandartSetup() {
         return new Chessman[]{
-                new Chessman(Piece.ROOK,Color.WHITE),new Chessman(Piece.KNIGHT,Color.WHITE),new Chessman(Piece.BISHOP,Color.WHITE),new Chessman(Piece.QUEEN,Color.WHITE),
-                new Chessman(Piece.KING,Color.WHITE),new Chessman(Piece.BISHOP,Color.WHITE),new Chessman(Piece.KNIGHT,Color.WHITE),new Chessman(Piece.ROOK,Color.WHITE),
-                new Chessman(Piece.PAWN,Color.WHITE),new Chessman(Piece.PAWN,Color.WHITE),new Chessman(Piece.PAWN,Color.WHITE),new Chessman(Piece.PAWN,Color.WHITE),
-                new Chessman(Piece.PAWN,Color.WHITE),new Chessman(Piece.PAWN,Color.WHITE),new Chessman(Piece.PAWN,Color.WHITE),new Chessman(Piece.PAWN,Color.WHITE),
-                null,null,null,null,null,null,null,null,
-                null,null,null,null,null,null,null,null,
-                null,null,null,null,null,null,null,null,
-                null,null,null,null,null,null,null,null,
-                new Chessman(Piece.PAWN,Color.BLACK),new Chessman(Piece.PAWN,Color.BLACK),new Chessman(Piece.PAWN,Color.BLACK),new Chessman(Piece.PAWN,Color.BLACK),
-                new Chessman(Piece.PAWN,Color.BLACK),new Chessman(Piece.PAWN,Color.BLACK),new Chessman(Piece.PAWN,Color.BLACK),new Chessman(Piece.PAWN,Color.BLACK),
                 new Chessman(Piece.ROOK,Color.BLACK),new Chessman(Piece.KNIGHT,Color.BLACK),new Chessman(Piece.BISHOP,Color.BLACK),new Chessman(Piece.QUEEN,Color.BLACK),
-                new Chessman(Piece.KING,Color.BLACK),new Chessman(Piece.BISHOP,Color.BLACK),new Chessman(Piece.KNIGHT,Color.BLACK),new Chessman(Piece.ROOK,Color.BLACK)};
+                new Chessman(Piece.KING,Color.BLACK),new Chessman(Piece.BISHOP,Color.BLACK),new Chessman(Piece.KNIGHT,Color.BLACK),new Chessman(Piece.ROOK,Color.BLACK),
+                new Chessman(Piece.PAWN,Color.BLACK),new Chessman(Piece.PAWN,Color.BLACK)  ,new Chessman(Piece.PAWN,Color.BLACK)  ,new Chessman(Piece.PAWN,Color.BLACK),
+                new Chessman(Piece.PAWN,Color.BLACK),new Chessman(Piece.PAWN,Color.BLACK)  ,new Chessman(Piece.PAWN,Color.BLACK)  ,new Chessman(Piece.PAWN,Color.BLACK),
+                null,null,null,null,null,null,null,null,
+                null,null,null,null,null,null,null,null,
+                null,null,null,null,null,null,null,null,
+                null,null,null,null,null,null,null,null,
+                new Chessman(Piece.PAWN,Color.WHITE),new Chessman(Piece.PAWN,Color.WHITE)  ,new Chessman(Piece.PAWN,Color.WHITE)  ,new Chessman(Piece.PAWN,Color.WHITE),
+                new Chessman(Piece.PAWN,Color.WHITE),new Chessman(Piece.PAWN,Color.WHITE)  ,new Chessman(Piece.PAWN,Color.WHITE)  ,new Chessman(Piece.PAWN,Color.WHITE),
+                new Chessman(Piece.ROOK,Color.WHITE),new Chessman(Piece.KNIGHT,Color.WHITE),new Chessman(Piece.BISHOP,Color.WHITE),new Chessman(Piece.QUEEN,Color.WHITE),
+                new Chessman(Piece.KING,Color.WHITE),new Chessman(Piece.BISHOP,Color.WHITE),new Chessman(Piece.KNIGHT,Color.WHITE),new Chessman(Piece.ROOK,Color.WHITE),};
     }
 
     public Piece getPiece() {
