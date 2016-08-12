@@ -3,6 +3,9 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="difficultyTextColor">#000000</color>
+
     <color name="normalFrameColor">#000000</color>
     <color name="selectedFrameColor">#1867d0</color>
     <color name="possibleMoveFrameColor">#63da24</color>

@@ -17,6 +17,20 @@
         android:id="@+id/seekBar"
         android:layout_above="@+id/button_start_Game"
         android:layout_centerHorizontal="true"
+        android:layout_marginLeft="20dp"
         android:layout_marginBottom="30dp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/difficulty_text"
+        android:textColor="@color/difficultyTextColor"
+        android:textSize="20dp"
+        android:id="@+id/textView_difficulty"
+        android:layout_above="@+id/seekBar"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

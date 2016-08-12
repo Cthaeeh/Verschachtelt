@@ -121,5 +121,9 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
         chessmanGraphic.draw(canvas);
         if(game.getWinner()!=null)victoryScreenGraphic.draw(canvas);
     }
+
+
+
+
 }
 

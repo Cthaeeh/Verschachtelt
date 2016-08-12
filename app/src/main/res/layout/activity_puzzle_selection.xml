@@ -10,4 +10,11 @@
         android:id="@+id/textView"
         android:layout_alignParentEnd="true"
         android:textSize="25dp" />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/puzzleListView"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
