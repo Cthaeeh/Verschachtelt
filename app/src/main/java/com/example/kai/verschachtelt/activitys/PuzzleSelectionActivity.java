@@ -6,6 +6,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.example.kai.verschachtelt.R;
+import com.example.kai.verschachtelt.puzzleGame.Puzzle;
+import com.example.kai.verschachtelt.puzzleGame.PuzzlesAdapter;
+
+import java.util.ArrayList;
 
 /**
  * Created by Kai on 10.08.2016.
@@ -24,19 +28,13 @@ public class PuzzleSelectionActivity extends AppCompatActivity {
 
     private void setUpUI() {
         puzzleList = (ListView) findViewById(R.id.puzzleListView);
-        // Defined Array values to show in ListView
-        String[] values = new String[] { "Puzzle A",
-                "Puzzle B",
-                "Puzzle C",
-        };
 
-
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, values);
-
-
-        // Assign adapter to ListView
+        ArrayList<Puzzle> puzzleArray = new ArrayList<Puzzle>();
+        PuzzlesAdapter adapter = new PuzzlesAdapter(this, puzzleArray);
         puzzleList.setAdapter(adapter);
+
+        puzzleArray.add(new Puzzle("I am in a List dude"));
+        //ArrayList<Puzzle> newPuzzles = Puzzle.fromJSON(jsonArray);
     }
 
 }
