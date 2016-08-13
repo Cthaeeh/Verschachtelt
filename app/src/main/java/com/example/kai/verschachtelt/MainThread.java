@@ -4,6 +4,7 @@ import android.graphics.Canvas;
 import android.provider.Settings;
 import android.view.SurfaceHolder;
 
+
 /**
  * Created by Kai on 08.08.2016.
  */
