@@ -48,28 +48,28 @@ public class ChessmanGraphic {
 
     public void draw(Canvas canvas){
         squareSize = GamePanel.squareSize;                                    //length/width of a squareStates of the chess boardCurrent. Kind of global variable. Muste be changed.
-        int devideIndipendentStrokeWidth = (squareSize /100)*STROKE_WIDTH;    //stepwidth is screen size sensitive -> deviceIndependentStrokewith is now as well.
-        paint.setStrokeWidth(devideIndipendentStrokeWidth);
+        int deviceIndependentStrokeWidth = (squareSize /100)*STROKE_WIDTH;    //stepwidth is screen size sensitive -> deviceIndependentStrokewith is now as well.
+        paint.setStrokeWidth(deviceIndependentStrokeWidth);
         //draw all pieces, and their frames
         for(int i = 0;i < 64; i++){
             if(chessBoardSimple.getSquareStateAt(i)== ChessBoardSimple.SquareState.POSSIBLE){    //If you can move to this squareStates highlight it.
                 int x = getX(i);
                 int y = getY(i);
                 paint.setColor(possibleMoveFrameColor);                             //Special Color for this type pf squareStates.
-                canvas.drawRect(x+devideIndipendentStrokeWidth/2,y+devideIndipendentStrokeWidth/2,
-                        x+ squareSize -devideIndipendentStrokeWidth/2,y+ squareSize -devideIndipendentStrokeWidth/2,paint);
+                canvas.drawRect(x+deviceIndependentStrokeWidth/2,y+deviceIndependentStrokeWidth/2,
+                        x+ squareSize -deviceIndependentStrokeWidth/2,y+ squareSize -deviceIndependentStrokeWidth/2,paint);
             }
             if(chessBoardSimple.getChessManAt(i)!=null){
                 int x = getX(i);
                 int y = getY(i);
                 canvas.drawBitmap(getChessManImage(chessBoardSimple.getChessManAt(i)),x,y,null);
-                paint.setStrokeWidth(devideIndipendentStrokeWidth);
+                paint.setStrokeWidth(deviceIndependentStrokeWidth);
                 //Draw a matching frame arround the current squareStates
                 if(chessBoardSimple.getSquareStateAt(i)== ChessBoardSimple.SquareState.NORMAL)paint.setColor(normalFrameColor);
                 if(chessBoardSimple.getSquareStateAt(i)== ChessBoardSimple.SquareState.SELECTED)paint.setColor(selectedSquareFrameColor);
                 if(chessBoardSimple.getSquareStateAt(i)== ChessBoardSimple.SquareState.POSSIBLE_KILL)paint.setColor(killMoveFrameColor);
-                canvas.drawRect(x+devideIndipendentStrokeWidth/2,y+devideIndipendentStrokeWidth/2,
-                                x+ squareSize -devideIndipendentStrokeWidth/2,y+ squareSize -devideIndipendentStrokeWidth/2,paint);
+                canvas.drawRect(x+deviceIndependentStrokeWidth/2,y+deviceIndependentStrokeWidth/2,
+                                x+ squareSize -deviceIndependentStrokeWidth/2,y+ squareSize -deviceIndependentStrokeWidth/2,paint);
             }
         }
     }
