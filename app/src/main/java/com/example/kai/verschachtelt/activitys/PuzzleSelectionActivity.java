@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.example.kai.verschachtelt.PuzzleParser;
 import com.example.kai.verschachtelt.R;
 import com.example.kai.verschachtelt.puzzleGame.Puzzle;
 import com.example.kai.verschachtelt.puzzleGame.PuzzlesAdapter;
@@ -33,7 +34,7 @@ public class PuzzleSelectionActivity extends AppCompatActivity {
         PuzzlesAdapter adapter = new PuzzlesAdapter(this, puzzleArray);
         puzzleList.setAdapter(adapter);
 
-        puzzleArray.add(new Puzzle("I am in a List dude"));
+        puzzleArray.addAll(Puzzle.fromJson(PuzzleParser.getJSONArray()));
         //ArrayList<Puzzle> newPuzzles = Puzzle.fromJSON(jsonArray);
     }
 

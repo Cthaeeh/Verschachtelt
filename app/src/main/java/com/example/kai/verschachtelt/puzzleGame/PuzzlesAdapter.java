@@ -30,9 +30,13 @@ public class PuzzlesAdapter extends ArrayAdapter<Puzzle> {
         }
         // Lookup view for data population
         TextView puzzleName = (TextView) convertView.findViewById(R.id.puzzleName);
+        TextView puzzleDescription = (TextView) convertView.findViewById(R.id.puzzleDescription);
+        TextView puzzleDifficulty = (TextView) convertView.findViewById(R.id.puzzleDifficulty);
 
         // Populate the data into the template view using the data object
         puzzleName.setText(puzzle.getName());
+        puzzleDescription.setText(puzzle.getDescription());
+        puzzleDifficulty.setText(puzzle.getDifficulty());
 
         // Return the completed view to render on screen
         return convertView;

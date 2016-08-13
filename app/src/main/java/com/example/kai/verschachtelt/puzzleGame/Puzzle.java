@@ -22,6 +22,10 @@ public class Puzzle {
         this.name = name;
     }
 
+    /**
+     * creates a Puzzle from a JSONObject
+     * @param jsonObject
+     */
     public Puzzle(JSONObject jsonObject) {
         try {
             this.name = jsonObject.getString("Name");
@@ -43,18 +47,26 @@ public class Puzzle {
         return name;
     }
 
-    // Factory method to convert an array of JSON objects into a list of objects
-    // User.fromJson(jsonArray);
+    /**
+     *  Factory method to convert an array of JSON objects into a list of objects
+      */
     public static ArrayList<Puzzle> fromJson(JSONArray jsonObjects) {
-        ArrayList<Puzzle> users = new ArrayList<Puzzle>();
+        ArrayList<Puzzle> puzzles = new ArrayList<Puzzle>();
         for (int i = 0; i < jsonObjects.length(); i++) {
             try {
-                users.add(new Puzzle(jsonObjects.getJSONObject(i)));
+                puzzles.add(new Puzzle(jsonObjects.getJSONObject(i)));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-        return users;
+        return puzzles;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public String getDifficulty() {
+        return difficulty;
+    }
 }

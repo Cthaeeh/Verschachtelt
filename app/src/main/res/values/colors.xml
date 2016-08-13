@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="difficultyTextColor">#000000</color>
+    <color name="puzzleItemNameColor">#000000</color>
 
     <color name="normalFrameColor">#000000</color>
     <color name="selectedFrameColor">#1867d0</color>

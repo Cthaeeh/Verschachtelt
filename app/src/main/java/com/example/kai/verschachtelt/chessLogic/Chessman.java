@@ -43,7 +43,6 @@ public class Chessman {
         WHITE, BLACK
     }
 
-
     public Chessman(Piece piece, Color color) {
         this.piece = piece;
         this.color = color;

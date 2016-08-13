@@ -23,8 +23,8 @@ public class ChessBoardComplex extends ChessBoardSimple {
         chessmen = board.chessmen.clone();
     }
 
-    public ChessBoardComplex(String s) {
-        //TODO imeplemts thsi
+    public ChessBoardComplex(String fenNotation) {
+        //TODO implement this
     }
 
     /**
