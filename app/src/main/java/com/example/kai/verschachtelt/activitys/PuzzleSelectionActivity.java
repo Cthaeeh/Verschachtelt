@@ -2,10 +2,9 @@ package com.example.kai.verschachtelt.activitys;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import com.example.kai.verschachtelt.PuzzleParser;
+import com.example.kai.verschachtelt.puzzleGame.PuzzleParser;
 import com.example.kai.verschachtelt.R;
 import com.example.kai.verschachtelt.puzzleGame.Puzzle;
 import com.example.kai.verschachtelt.puzzleGame.PuzzlesAdapter;
@@ -33,9 +32,8 @@ public class PuzzleSelectionActivity extends AppCompatActivity {
         ArrayList<Puzzle> puzzleArray = new ArrayList<Puzzle>();
         PuzzlesAdapter adapter = new PuzzlesAdapter(this, puzzleArray);
         puzzleList.setAdapter(adapter);
-
+        //Take JSONArray from ressource txt file convert it to Puzzles.
         puzzleArray.addAll(Puzzle.fromJson(PuzzleParser.getJSONArray()));
-        //ArrayList<Puzzle> newPuzzles = Puzzle.fromJSON(jsonArray);
     }
 
 }

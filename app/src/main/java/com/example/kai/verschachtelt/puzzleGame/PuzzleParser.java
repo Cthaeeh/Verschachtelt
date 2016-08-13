@@ -1,7 +1,8 @@
-package com.example.kai.verschachtelt;
+package com.example.kai.verschachtelt.puzzleGame;
 
 import android.util.Log;
 
+import com.example.kai.verschachtelt.R;
 import com.example.kai.verschachtelt.activitys.MainActivity;
 
 import org.json.JSONArray;
@@ -16,7 +17,10 @@ import java.util.ArrayList;
  * Created by Kai on 13.08.2016.
  */
 public class PuzzleParser {
-
+    /**
+     * Method takes puzzles txt file from ressources and converts it to a JSONObject.
+     * @return
+     */
     public static JSONArray getJSONArray(){
         //Get Data From Text Resource File Contains Json Data.
         InputStream inputStream = MainActivity.getContext().getResources().openRawResource(R.raw.puzzles);
@@ -33,7 +37,6 @@ public class PuzzleParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.v("Text Data", byteArrayOutputStream.toString());
 
         try {
             // Parse the data into jsonobject to get original data in form of json.
