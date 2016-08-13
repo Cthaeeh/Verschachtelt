@@ -50,7 +50,7 @@ public class ChessmanGraphic {
         squareSize = GamePanel.squareSize;                                    //length/width of a squareStates of the chess boardCurrent. Kind of global variable. Muste be changed.
         int deviceIndependentStrokeWidth = (squareSize /100)*STROKE_WIDTH;    //stepwidth is screen size sensitive -> deviceIndependentStrokewith is now as well.
         paint.setStrokeWidth(deviceIndependentStrokeWidth);
-        //draw all pieces, and their frames
+        //draw all pieces and their frames
         for(int i = 0;i < 64; i++){
             if(chessBoardSimple.getSquareStateAt(i)== ChessBoardSimple.SquareState.POSSIBLE){    //If you can move to this squareStates highlight it.
                 int x = getX(i);
