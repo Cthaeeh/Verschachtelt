@@ -1,0 +1,23 @@
+[
+{
+  "Name": "Magnus super zug XY",
+  "Description": "setzen sie ihren Gegner in 3 Zügen Matt",
+  "Moves": 3,
+  "Difficulty": "leicht",
+  "Positions": [ "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1", "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2" ],
+}
+{
+  "Name": "Ivo vs Carlson 2009",
+  "Description": "klauen sie die Dame",
+  "Moves": 2,
+  "Difficulty": "schwer",
+  "Positions": [ "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1", "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2" ],
+}
+{
+  "Name": "Test 3",
+  "Description": "können Sie gar nicht schaffen",
+  "Moves": 5,
+  "Difficulty": "ultra schwer",
+  "Positions": [ "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1", "rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1", "rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2" ],
+}
+]
