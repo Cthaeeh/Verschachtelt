@@ -26,7 +26,7 @@ public class AI {
     private static final byte VALUE_ROOK_BLACK = -5;
     private static final byte VALUE_KNIGHT_BLACK = -4;
     private static final byte VALUE_BISHOP_BLACK = -3;
-    private static final byte VALUE_PAWN_BLACK = - 1;
+    private static final byte VALUE_PAWN_BLACK = - 1;   //changed
 
     /**
      * @param difficulty    How good the ai plays.
