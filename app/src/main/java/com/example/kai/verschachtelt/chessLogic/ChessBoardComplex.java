@@ -23,6 +23,10 @@ public class ChessBoardComplex extends ChessBoardSimple {
         chessmen = board.chessmen.clone();
     }
 
+    public ChessBoardComplex(String s) {
+        //TODO imeplemts thsi
+    }
+
     /**
      * If the user selected a square this is saved in selectedPosition and possible Destinations are marked.
      * @param position  where the user touched.
@@ -83,4 +87,5 @@ public class ChessBoardComplex extends ChessBoardSimple {
     public Chessman.Color getWinner() {
         return ruleBook.getWinner(chessmen);
     }
+
 }
