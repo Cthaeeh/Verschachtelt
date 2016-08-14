@@ -23,7 +23,7 @@ import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
 public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     private MainThread thread;
-    protected ChessGame game;
+    protected ChessGame  game;
 
     private Background background;
     private ChessBoardGraphic chessBoardGraphic;
@@ -89,6 +89,7 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
         inputHandler.processTouchEvent(event);//Pass it to the inputHandler, so the logic is encapsuled.
         return super.onTouchEvent(event);
     }
+
 
     public void update(double avgFPS){
         //Show some dev info

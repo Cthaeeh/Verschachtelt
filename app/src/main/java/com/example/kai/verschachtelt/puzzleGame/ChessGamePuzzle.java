@@ -44,6 +44,14 @@ public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
     }
 
     @Override
+    public void handleShowNextMoveButton() {
+        if(!puzzleSolved){                                                      //If the puzzle isn´t already solved opponent make move.
+            boardCurrent = PUZZLE.getPosition(puzzleSteps+1);
+            puzzleSteps++;
+        }
+    }
+
+    @Override
     public VictoryScreenGraphic.VictoryState getWinner() {
         if(!isPuzzleSolved())return null;    //IF Puzzle isn´t solved don´t show the Victory screen.
         else return VictoryScreenGraphic.VictoryState.VICTORY;  //Otherwise show.
