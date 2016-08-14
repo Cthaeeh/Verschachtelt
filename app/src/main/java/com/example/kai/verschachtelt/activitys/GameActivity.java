@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 
 import com.example.kai.verschachtelt.GamePanel;
+import com.example.kai.verschachtelt.puzzleGame.GamePanelPuzzle;
 import com.example.kai.verschachtelt.R;
 import com.example.kai.verschachtelt.pvAIGame.chess_AI.GamePanelPvAI;
 import com.example.kai.verschachtelt.pvpGame.GamePanelPvP;
@@ -53,6 +54,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     }
 
     private void setupPuzzleUI() {
+        gameView = new GamePanelPuzzle(this);
         setupUI();  //TODO add special Puzzle UI
     }
 

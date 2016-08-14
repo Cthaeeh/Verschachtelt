@@ -1,5 +1,8 @@
 package com.example.kai.verschachtelt.puzzleGame;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.example.kai.verschachtelt.chessLogic.ChessBoardComplex;
 
 import org.json.JSONArray;
@@ -10,8 +13,10 @@ import java.util.ArrayList;
 
 /**
  * Created by Kai on 12.08.2016.
+ * Stores a Puzzle (Name, Difficulty, Description; full Moves, An Array of Chessboards with the positions.)
+ * It implements Parcelable so it can be put into an Intent.
  */
-public class Puzzle {
+public class Puzzle{
     private String description;
     private String name;
     private String difficulty;
@@ -69,4 +74,5 @@ public class Puzzle {
     public String getDifficulty() {
         return difficulty;
     }
+
 }

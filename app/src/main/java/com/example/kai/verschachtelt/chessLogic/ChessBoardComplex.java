@@ -1,12 +1,15 @@
 package com.example.kai.verschachtelt.chessLogic;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
 
 /**
  * Created by Kai on 09.08.2016.
  * This class extends the normal Chessboard class and adds basic move functionality, possible move functionality.
  */
-public class ChessBoardComplex extends ChessBoardSimple {
+public class ChessBoardComplex extends ChessBoardSimple implements Parcelable{
     private int selectedPosition = -1;                                  //position to move a chessman from. By default no real position.
     private static RuleBook ruleBook = new RuleBook();                  //There is just one Rulebook for every game of chess.
     private boolean[] possibleDestinations = new boolean[64];           //It is either possible to move there or not.
@@ -88,4 +91,13 @@ public class ChessBoardComplex extends ChessBoardSimple {
         return ruleBook.getWinner(chessmen);
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+    }
 }
