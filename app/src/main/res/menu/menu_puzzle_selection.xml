@@ -6,6 +6,7 @@
         android:id="@+id/update_puzzles"
         android:icon="@mipmap/ic_refresh_white_48dp"
         android:orderInCategory="100"
+        android:clickable="true"
         android:title="Refresh Puzzles"
         app:showAsAction="always"/>
 

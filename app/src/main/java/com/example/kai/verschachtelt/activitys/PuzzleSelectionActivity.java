@@ -2,7 +2,6 @@ package com.example.kai.verschachtelt.activitys;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Display;
 import android.view.Menu;
@@ -11,14 +10,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
+import com.example.kai.verschachtelt.DownloadListener;
+import com.example.kai.verschachtelt.PuzzleDownloadTask;
 import com.example.kai.verschachtelt.puzzleGame.ChessGamePuzzle;
 import com.example.kai.verschachtelt.puzzleGame.PuzzleParser;
 import com.example.kai.verschachtelt.R;
 import com.example.kai.verschachtelt.puzzleGame.Puzzle;
 import com.example.kai.verschachtelt.puzzleGame.PuzzlesAdapter;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 
@@ -26,17 +30,19 @@ import java.util.ArrayList;
  * Created by Kai on 10.08.2016.
  * This Activity is for selecting the different chess puzzles.
  */
-public class PuzzleSelectionActivity extends AppCompatActivity {
+public class PuzzleSelectionActivity extends AppCompatActivity implements DownloadListener{
 
     ListView puzzleList;
     ArrayList<Puzzle> puzzleArray;
+    PuzzlesAdapter adapter;
+
+    //Web Address where you can find new puzzles
+    private final static String WEBADRESS = "http://verschachtelt.bplaced.net/puzzles.html";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_puzzle_selection);
-
-        Display display = ((WindowManager) getSystemService(WINDOW_SERVICE)).getDefaultDisplay();
-
         setUpUI();
     }
 
@@ -51,7 +57,7 @@ public class PuzzleSelectionActivity extends AppCompatActivity {
     private void setUpUI() {
         puzzleList = (ListView) findViewById(R.id.puzzleListView);
         puzzleArray = new ArrayList<Puzzle>();
-        PuzzlesAdapter adapter = new PuzzlesAdapter(this, puzzleArray);
+        adapter = new PuzzlesAdapter(this, puzzleArray);
         puzzleList.setAdapter(adapter);
         //Take JSONArray from ressource txt file convert it to Puzzles.
         puzzleArray.addAll(Puzzle.fromJson(PuzzleParser.getJSONArray()));
@@ -69,10 +75,29 @@ public class PuzzleSelectionActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * when PuzzleDownloadTask is finnished downloading it calls back
+     * @param result a String e.g the HTML file from the Webaddress.
+     */
+    @Override
+    public void onDownloadFinished(String result) {
+        try {
+            puzzleArray.addAll(Puzzle.fromJson(new JSONArray(result)));
+            adapter.notifyDataSetChanged();
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * If someone touches an item in the actionBar refresh puzzles.
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if(item.getItemId() == R.id.update_puzzles){
-            //TODO downlaod new puzzles from internet and add them.
+            new PuzzleDownloadTask(this).execute(WEBADRESS);
         }
         return true;
     }

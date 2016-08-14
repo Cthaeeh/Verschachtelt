@@ -22,6 +22,7 @@ public class PuzzleParser {
      * @return
      */
     public static JSONArray getJSONArray(){
+        //Implement
         //Get Data From Text Resource File Contains Json Data.
         InputStream inputStream = MainActivity.getContext().getResources().openRawResource(R.raw.puzzles);
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -48,4 +49,5 @@ public class PuzzleParser {
         }
         return null;
     }
+
 }
