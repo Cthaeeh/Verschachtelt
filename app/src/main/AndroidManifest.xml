@@ -16,7 +16,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".activitys.GameActivity"></activity>
-        <activity android:name=".activitys.PuzzleSelectionActivity"></activity>
+        <activity android:name=".activitys.PuzzleSelectionActivity"
+                  android:label="@string/puzzle_selection_headline"></activity>
         <activity android:name=".activitys.AISettings"></activity>
     </application>
 
