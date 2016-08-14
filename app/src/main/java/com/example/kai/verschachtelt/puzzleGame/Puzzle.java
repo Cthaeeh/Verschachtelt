@@ -75,4 +75,17 @@ public class Puzzle{
     public ChessBoardComplex getStartPosition() {
         return positions[0];
     }
+
+    public ChessBoardComplex getPosition(int i) {
+        if(i>=positions.length)return null;
+        return positions[i];
+    }
+
+    /**
+     * Gets the number of moves needed to solve the puzzle.
+     * @return
+     */
+    public int getNeededSteps() {
+        return positions.length-1;
+    }
 }

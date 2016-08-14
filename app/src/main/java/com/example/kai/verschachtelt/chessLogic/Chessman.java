@@ -48,4 +48,23 @@ public class Chessman {
         this.color = color;
     }
 
+    /**
+     * Custom equals method, that does what you would kinda expect of equals in this case.
+     * @param obj   The object to compare this one with
+     * @return      True if same color AND piece, false if not
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        final Chessman other = (Chessman) obj;
+        if (this.getPiece() != other.getPiece()) {
+            return false;
+        }
+        if (this.getColor() != other.getColor()) {
+            return false;
+        }
+        return true;
+    }
 }

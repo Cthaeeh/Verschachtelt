@@ -42,8 +42,8 @@ public class ChessGame implements InputEvent {
             return;
         }
         if(boardCurrent.getSquareStateAt(position)== SquareState.NORMAL) {    //A normal squareStates was touched -> select it.
-            boardCurrent.resetFrames();                                                        //Deselect other Squares
-            boardCurrent.setSquareStateAt(position,SquareState.SELECTED);    //Select the squareStates
+            boardCurrent.resetFrames();                                       //Deselect other Squares
+            boardCurrent.setSquareStateAt(position,SquareState.SELECTED);     //Select the squareStates
             boardCurrent.handleSquareSelection(position);
             return;
         }

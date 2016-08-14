@@ -13,7 +13,7 @@ public class FENParser {
      * @param fenNotation   See https://de.wikipedia.org/wiki/Forsyth-Edwards-Notation#Figurenstellung
      * @return              a Chessman array with the cheesmen on the position as in the notation.
      */
-    public static Chessman[] parse(String fenNotation) {
+    public static Chessman[] getChessmen(String fenNotation) {
         //TODO make this method a lot safer, because there could be a typo in the fenNoatation and the app should not crash then.
         Chessman[] chessmen = new Chessman[64];
         int boardPosition = 0;
@@ -35,6 +35,16 @@ public class FENParser {
             }
         }
         return chessmen;
+    }
+
+    /**
+     *
+     * @param fenNotation   See https://de.wikipedia.org/wiki/Forsyth-Edwards-Notation#Figurenstellung
+     * @return              The color if the player that has to move.
+     */
+    public static Chessman.Color getColor(String fenNotation){
+        if(fenNotation.split(" ")[1].contains("w"))return Chessman.Color.WHITE;
+        else return Chessman.Color.BLACK;
     }
 
     /**
