@@ -8,11 +8,10 @@ public class ChessBoardComplex extends ChessBoardSimple {
     private int selectedPosition = -1;                                  //position to move a chessman from. By default no real position.
     private static RuleBook ruleBook = new RuleBook();                  //There is just one Rulebook for every game of chess.
     private boolean[] possibleDestinations = new boolean[64];           //It is either possible to move there or not.
-    private Chessman.Color playerOnTurn;
+
 
     public ChessBoardComplex(){
         super();
-        playerOnTurn = Chessman.Color.WHITE;    //Always white when start
     }
 
     /**
@@ -120,9 +119,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
         return true;
     }
 
-    public Chessman.Color getPlayerOnTurn() {
-        return playerOnTurn;
-    }
+
 
     private void switchPlayerOnTurn() {
         if(playerOnTurn== Chessman.Color.BLACK)playerOnTurn= Chessman.Color.WHITE;

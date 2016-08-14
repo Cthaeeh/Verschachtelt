@@ -10,6 +10,7 @@ import android.view.SurfaceView;
 import com.example.kai.verschachtelt.graphics.Background;
 import com.example.kai.verschachtelt.graphics.ChessBoardGraphic;
 import com.example.kai.verschachtelt.graphics.ChessmanGraphic;
+import com.example.kai.verschachtelt.graphics.PawnChangeGraphic;
 import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
 
 /**
@@ -30,6 +31,9 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
     private ChessmanGraphic chessmanGraphic;
     protected VictoryScreenGraphic victoryScreenGraphic;
     public static int squareSize;               //The only global variable kind of. It represents the length and width of a squareStates on the boardCurrent.
+
+    // try for pawn change by ivayl
+    private PawnChangeGraphic pawnchange;
 
     //The position of the touch/ for development
     private int xTouch = 0;
@@ -59,6 +63,8 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
         chessBoardGraphic = new ChessBoardGraphic();
         chessmanGraphic = new ChessmanGraphic(BitmapFactory.decodeResource(getResources(),R.drawable.chess_man_symbols));
         victoryScreenGraphic = new VictoryScreenGraphic(BitmapFactory.decodeResource(getResources(),R.drawable.victory_screens));
+        // try for pawn change
+        pawnchange = new PawnChangeGraphic(BitmapFactory.decodeResource(getResources(),R.drawable.chess_man_symbols));
 
         thread.setRunning(true);
         thread.start();
@@ -94,6 +100,7 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
         //Show some dev info
         background.update(String.valueOf(avgFPS)+" fps " + String.valueOf(xTouch)+"|" +String.valueOf(yTouch) );
         chessmanGraphic.update(game.getSimpleBoard());
+        pawnchange.update(game.getComplexBoard());
         victoryScreenGraphic.update(game.getWinner());
     }
 
@@ -119,6 +126,7 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
         //Draw all the components that dont need scaling (they scale them self)
         chessBoardGraphic.draw(canvas);
         chessmanGraphic.draw(canvas);
+        pawnchange.draw(canvas);
         if(game.getWinner()!=null)victoryScreenGraphic.draw(canvas);
     }
 

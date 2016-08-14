@@ -92,6 +92,8 @@ public class ChessGame implements InputEvent {
         return boardCurrent;
     }
 
+    public ChessBoardComplex getComplexBoard() { return boardCurrent; }
+
     public VictoryScreenGraphic.VictoryState getWinner(){
         return null;
     };

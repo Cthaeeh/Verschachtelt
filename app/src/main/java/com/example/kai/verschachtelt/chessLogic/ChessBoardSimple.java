@@ -9,6 +9,7 @@ public class ChessBoardSimple {
 
     protected Chessman[] chessmen;           //where are the pieces on the board ?
     protected SquareState[] squareStates;    //marks (e.g frames )for selected chessman.
+    protected Chessman.Color playerOnTurn;   // marks if black or white is on turn
 
     public void resetFrames() {
         for(int i =0;i<64;i++){
@@ -32,6 +33,7 @@ public class ChessBoardSimple {
         chessmen = getStandartSetup();
         squareStates = new SquareState[64];
         squareStates = getNormalState();
+        playerOnTurn = Chessman.Color.WHITE;    //Always white when start
     }
 
     private SquareState[] getNormalState() {
@@ -57,6 +59,10 @@ public class ChessBoardSimple {
 
     public SquareState getSquareStateAt(int position){
         return squareStates[position];
+    }
+
+    public Chessman.Color getPlayerOnTurn() {
+        return playerOnTurn;
     }
 
 
