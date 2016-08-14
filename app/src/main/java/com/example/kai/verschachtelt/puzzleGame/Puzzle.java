@@ -9,6 +9,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -22,10 +23,6 @@ public class Puzzle{
     private String difficulty;
     private int    fullMoves;
     private ChessBoardComplex[] positions;
-
-    public Puzzle(String name){
-        this.name = name;
-    }
 
     /**
      * creates a Puzzle from a JSONObject
@@ -75,4 +72,7 @@ public class Puzzle{
         return difficulty;
     }
 
+    public ChessBoardComplex getStartPosition() {
+        return positions[0];
+    }
 }

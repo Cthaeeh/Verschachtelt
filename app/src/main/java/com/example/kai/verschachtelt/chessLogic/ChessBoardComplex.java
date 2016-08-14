@@ -1,15 +1,10 @@
 package com.example.kai.verschachtelt.chessLogic;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
-
 /**
  * Created by Kai on 09.08.2016.
  * This class extends the normal Chessboard class and adds basic move functionality, possible move functionality.
  */
-public class ChessBoardComplex extends ChessBoardSimple implements Parcelable{
+public class ChessBoardComplex extends ChessBoardSimple {
     private int selectedPosition = -1;                                  //position to move a chessman from. By default no real position.
     private static RuleBook ruleBook = new RuleBook();                  //There is just one Rulebook for every game of chess.
     private boolean[] possibleDestinations = new boolean[64];           //It is either possible to move there or not.
@@ -26,8 +21,13 @@ public class ChessBoardComplex extends ChessBoardSimple implements Parcelable{
         chessmen = board.chessmen.clone();
     }
 
+    /**
+     * Method takes a String with Dorsyth Edwards Notation and converts it to ChessBoardComplex Object.
+     * @param fenNotation See: https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation
+     */
     public ChessBoardComplex(String fenNotation) {
-        //TODO implement this
+        super();    //create Normal chessBoard.
+        chessmen = FENParser.parse(fenNotation);    //Set the chessmen to the positions from the notation.
     }
 
     /**
@@ -88,16 +88,8 @@ public class ChessBoardComplex extends ChessBoardSimple implements Parcelable{
     }
 
     public Chessman.Color getWinner() {
+        //TODO can also return draw.
         return ruleBook.getWinner(chessmen);
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-
-    }
 }

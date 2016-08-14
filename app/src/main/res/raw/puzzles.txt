@@ -4,7 +4,7 @@
   "Description": "setzen sie ihren Gegner in 3 Zügen Matt",
   "Moves": 3,
   "Difficulty": "leicht",
-  "Positions": ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1","rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1","rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2"]
+  "Positions": ["rnbqkb1r/pp2pppp/5n2/2pp4/3P1B2/2N2N2/PPP1PPPP/R2QKB1R b KQkq - 1 4","rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1","rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2"]
 },
 {
   "Name": "Ivo vs Carlson 2009",

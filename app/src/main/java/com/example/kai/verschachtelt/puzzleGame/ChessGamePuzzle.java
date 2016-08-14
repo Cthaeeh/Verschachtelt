@@ -10,5 +10,6 @@ public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
 
     public ChessGamePuzzle(InputHandler inputHandler) {
         super(inputHandler);
+        boardCurrent = PUZZLE.getStartPosition();
     }
 }
