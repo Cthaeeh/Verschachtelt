@@ -7,6 +7,7 @@ public class Chessman {
 
     private final Piece piece;
     private final Color color;
+    private boolean hasBeenMoved = false;
 
     public static Chessman[] getStandartSetup() {
         return new Chessman[]{
@@ -30,6 +31,17 @@ public class Chessman {
 
     public Color getColor() {
         return color;
+    }
+
+    public boolean hasBeenMoved(){
+        return hasBeenMoved;
+    }
+
+    /**
+     * lets the chessmen know if it was moved once in the game.
+     */
+    public void notifyMove() {
+        hasBeenMoved = true;
     }
 
     /**

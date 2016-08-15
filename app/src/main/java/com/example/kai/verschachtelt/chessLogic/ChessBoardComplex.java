@@ -9,10 +9,12 @@ public class ChessBoardComplex extends ChessBoardSimple {
     private static RuleBook ruleBook = new RuleBook();                  //There is just one Rulebook for every game of chess.
     private boolean[] possibleDestinations = new boolean[64];           //It is either possible to move there or not.
     private Chessman.Color playerOnTurn;
+    private Castling castling;
 
     public ChessBoardComplex(){
         super();
         playerOnTurn = Chessman.Color.WHITE;    //Always white when start
+        castling = new Castling();
     }
 
     /**
@@ -22,7 +24,8 @@ public class ChessBoardComplex extends ChessBoardSimple {
     public ChessBoardComplex(ChessBoardComplex board) {
         chessmen = board.chessmen.clone();
         selectedPosition = board.selectedPosition;
-        playerOnTurn = Chessman.Color.WHITE;
+        playerOnTurn = board.playerOnTurn;
+        castling = new Castling(castling);
     }
 
     /**
@@ -33,6 +36,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
         super();    //create Normal chessBoard.
         chessmen = FENParser.getChessmen(fenNotation);    //Set the chessmen to the positions from the notation.
         playerOnTurn = FENParser.getColor(fenNotation);   //Get the color of the player that has to move.
+        castling = FENParser.getCastlingState(fenNotation);
     }
 
     /**
@@ -55,6 +59,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
      */
     public void handleMoveTo(int position){
         if(selectedPosition >=0 ){                    //If we try to move from a legit position
+            chessmen[selectedPosition].notifyMove();                  //Tell the chessman that he was moved (Important for Castling)
             chessmen[position]= chessmen[selectedPosition];//Set the chessman to its new position.
             chessmen[selectedPosition]=null;           //Remove the chessman from its originally squareStates.
             switchPlayerOnTurn();
@@ -69,7 +74,8 @@ public class ChessBoardComplex extends ChessBoardSimple {
      */
     public void handleMoveFromTo(int from, int to) {
         if(selectedPosition >=0 && chessmen[from]!=null){//If we try to move from a legit position
-            chessmen[to]= chessmen[from];                    //Set the chessman to its new position.
+            chessmen[from].notifyMove();                   //Tell the chessman that he was moved (Important for Castling)
+            chessmen[to]= chessmen[from];                //Set the chessman to its new position.
             chessmen[from]=null;                         //Remove the chessman from its originally squareStates.
             switchPlayerOnTurn();
         }
@@ -81,6 +87,11 @@ public class ChessBoardComplex extends ChessBoardSimple {
      */
     private void getPossibleDestinations() {
         possibleDestinations=ruleBook.getPossibleMoves(selectedPosition,chessmen);
+        boolean[] possibleCastlingDestinations = castling.getPossibleMoves(selectedPosition,chessmen);
+        //Merge both possibleDestinations
+        for(int i = 0;i<64;i++){
+            possibleDestinations[i] = (possibleDestinations[i]||possibleCastlingDestinations[i]);
+        }
     }
 
     /**Depending on the possible move destination the frames are colored accordingly.
