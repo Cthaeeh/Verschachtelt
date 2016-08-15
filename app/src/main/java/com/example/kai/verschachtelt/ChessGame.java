@@ -77,6 +77,11 @@ public class ChessGame implements InputEvent {
         //TODO implement this.
     }
 
+    @Override
+    public void handleShowNextMoveButton() {
+
+    }
+
     protected void move(int position){
         boardCurrent.handleMoveTo(position);    //Move there from a selected position.
         boardCurrent.resetFrames();

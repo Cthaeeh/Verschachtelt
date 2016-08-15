@@ -27,8 +27,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private LinearLayout gameWidgets;
     private GamePanel gameView;
 
-    Button undoButton;
-    Button redoButton;
+    Button undoButton,redoButton,showNextMoveButton;
 
     public enum GameType{
         CHESS_PvP,CHESS_PvAI,PUZZLE
@@ -56,6 +55,16 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private void setupPuzzleUI() {
         gameView = new GamePanelPuzzle(this);
         setupUI();  //TODO add special Puzzle UI
+        setupPuzzleButtons();
+    }
+
+    private void setupPuzzleButtons() {
+        showNextMoveButton = new Button(this);
+        showNextMoveButton.setWidth(400);
+        showNextMoveButton.setText(R.string.show_next_move_button);
+        showNextMoveButton.setBottom(0);
+        gameWidgets.addView(showNextMoveButton);
+        showNextMoveButton.setOnClickListener(this);
     }
 
     private void setupPvAI_UI() {
@@ -110,6 +119,9 @@ public class GameActivity extends Activity implements View.OnClickListener{
         }
         if(view == redoButton){
             gameView.inputHandler.processRedoButton();
+        }
+        if(view == showNextMoveButton){
+            gameView.inputHandler.processShowNextMoveButton();
         }
     }
 }

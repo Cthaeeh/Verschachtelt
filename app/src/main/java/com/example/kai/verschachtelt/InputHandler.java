@@ -50,4 +50,8 @@ public class InputHandler {
     public void processUndoButton() {
         inputEvent.handleUndoButton();
     }
+
+    public void processShowNextMoveButton() {
+        inputEvent.handleShowNextMoveButton();
+    }
 }
