@@ -63,6 +63,10 @@ public class ChessGame implements InputEvent {
 
     }
 
+    public void handleTouchOnFigure() {
+
+    }
+
     @Override
     public void handleUndoButton() {
         if(moveCounter>0){      //If there has been at least one move.

@@ -47,7 +47,6 @@ public void draw(Canvas canvas) {
     canvas.drawBitmap(Bitmap.createScaledBitmap(imageBlackKnight, getShorterSide(canvas)/2, getShorterSide(canvas)/2, false),getShorterSide(canvas)/2,getShorterSide(canvas)/2,null);
 
 
-
 }
 
     public void update(ChessBoardComplex board) {

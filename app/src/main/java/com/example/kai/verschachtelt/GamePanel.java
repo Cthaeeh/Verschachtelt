@@ -94,6 +94,7 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
         yTouch = (int)event.getY();
         inputHandler.processTouchEvent(event);//Pass it to the inputHandler, so the logic is encapsuled.
         return super.onTouchEvent(event);
+
     }
 
 
@@ -127,7 +128,8 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
         //Draw all the components that dont need scaling (they scale them self)
         chessBoardGraphic.draw(canvas);
         chessmanGraphic.draw(canvas);
-       if(game.getComplexBoard().pawnChangePossible() == true)pawnchange.draw(canvas);
+       if(game.getComplexBoard().pawnChangePossible() == true)
+           pawnchange.draw(canvas);
         if(game.getWinner()!=null)victoryScreenGraphic.draw(canvas);
     }
 

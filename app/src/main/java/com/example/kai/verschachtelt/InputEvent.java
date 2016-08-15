@@ -8,6 +8,8 @@ public interface InputEvent {
 
     void handleTouchOnSquare(Integer position);
 
+    void handleTouchOnFigure();
+
     void handleUndoButton();
 
     void handleRedoButton();
