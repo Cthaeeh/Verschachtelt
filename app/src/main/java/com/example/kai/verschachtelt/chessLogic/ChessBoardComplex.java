@@ -125,4 +125,39 @@ public class ChessBoardComplex extends ChessBoardSimple {
         if(playerOnTurn== Chessman.Color.BLACK)playerOnTurn= Chessman.Color.WHITE;
         else playerOnTurn= Chessman.Color.BLACK;
     }
+
+    // method for checking if changing pawn into other figure is possible
+    public boolean pawnChangePossible() {
+        for(int j = 0; j<8; j++) {
+
+            if(getChessManAt(j).getPiece() == Chessman.Piece.PAWN && getChessManAt(j).getColor() == Chessman.Color.BLACK) {   // checking the first row for(black) pawns
+
+                return true;
+
+            }
+
+        }
+
+        for (int j = 56; j<64; j++) {
+
+            if(getChessManAt(j).getPiece() == Chessman.Piece.PAWN && getChessManAt(j).getColor() == Chessman.Color.WHITE) {   // checking the last row for (white) pawns
+
+                return true;
+            }
+        }
+
+        return false;
+
+
+    }
+
+    private  Chessman[] changePawn(Chessman[] manArray, Chessman man, int i){  // turn a pawn into a certain figure
+
+        manArray[i] = man;
+        return manArray;                    // switching the figure in our Chessman-Array
+
+
+    }
+
+
 }
