@@ -100,4 +100,5 @@ public class ChessGame implements InputEvent {
     public VictoryScreenGraphic.VictoryState getWinner(){
         return null;
     };
+
 }

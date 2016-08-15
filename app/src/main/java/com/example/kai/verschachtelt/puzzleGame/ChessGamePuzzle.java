@@ -56,4 +56,12 @@ public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
         if(!isPuzzleSolved())return null;    //IF Puzzle isn´t solved don´t show the Victory screen.
         else return VictoryScreenGraphic.VictoryState.VICTORY;  //Otherwise show.
     }
+
+    public String getPuzzleDescription() {
+        return PUZZLE.getDescription();
+    }
+
+    public String getPuzzleProgess() {
+        return "Steps "+puzzleSteps+" out of "+ PUZZLE.getNeededSteps() +" solved";
+    }
 }
