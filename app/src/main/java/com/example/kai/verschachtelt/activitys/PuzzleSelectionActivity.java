@@ -25,6 +25,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 
 /**
  * Created by Kai on 10.08.2016.
@@ -54,6 +56,7 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
         return true;
     }
 
+
     private void setUpUI() {
         puzzleList = (ListView) findViewById(R.id.puzzleListView);
         puzzleArray = new ArrayList<Puzzle>();
@@ -61,6 +64,7 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
         puzzleList.setAdapter(adapter);
         //Take JSONArray from ressource txt file convert it to Puzzles.
         puzzleArray.addAll(Puzzle.fromJson(PuzzleParser.getJSONArray()));
+        Collections.sort(puzzleArray);  //Sort them by difficulty.
 
         puzzleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
@@ -70,7 +74,6 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
                 startPuzzle.putExtra("GameType",GameActivity.GameType.PUZZLE);      //Tell the Game Activity to start a Puzzle Game.
                 ChessGamePuzzle.PUZZLE = puzzleArray.get(position);
                 startActivity(startPuzzle);
-
             }
         });
     }
@@ -83,6 +86,7 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
     public void onDownloadFinished(String result) {
         try {
             puzzleArray.addAll(Puzzle.fromJson(new JSONArray(result)));
+            Collections.sort(puzzleArray);
             adapter.notifyDataSetChanged();
         } catch (JSONException e) {
             e.printStackTrace();
@@ -101,5 +105,4 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
         }
         return true;
     }
-
 }

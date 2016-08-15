@@ -1,26 +1,25 @@
 package com.example.kai.verschachtelt.puzzleGame;
 
-import android.os.Parcel;
-import android.os.Parcelable;
-
 import com.example.kai.verschachtelt.chessLogic.ChessBoardComplex;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Created by Kai on 12.08.2016.
  * Stores a Puzzle (Name, Difficulty, Description; full Moves, An Array of Chessboards with the positions.)
  * It implements Parcelable so it can be put into an Intent.
  */
-public class Puzzle{
-    private String description;
-    private String name;
-    private String difficulty;
+public class Puzzle implements Comparable<Puzzle>{
+    private String  description;
+    private String  name;
+    private String  difficultyAsText;
+    private Integer difficultyAsInt = 0;
+
     private int    fullMoves;
     private ChessBoardComplex[] positions;
 
@@ -32,7 +31,8 @@ public class Puzzle{
         try {
             this.name = jsonObject.getString("Name");
             this.description = jsonObject.getString("Description");
-            this.difficulty = jsonObject.getString("Difficulty");
+            this.difficultyAsText = jsonObject.getString("DifficultyAsString");
+            this.difficultyAsInt = jsonObject.getInt("DifficultyAsInt");
             this.fullMoves = jsonObject.getInt("Moves");
             JSONArray JSONPositions = jsonObject.getJSONArray("Positions");
             positions = new ChessBoardComplex[JSONPositions.length()];
@@ -42,7 +42,6 @@ public class Puzzle{
         } catch (JSONException e){
             e.printStackTrace();
         }
-
     }
 
     public String getName() {
@@ -68,8 +67,8 @@ public class Puzzle{
         return description;
     }
 
-    public String getDifficulty() {
-        return difficulty;
+    public String getDifficultyAsText() {
+        return difficultyAsText;
     }
 
     public ChessBoardComplex getStartPosition() {
@@ -88,4 +87,16 @@ public class Puzzle{
     public int getNeededSteps() {
         return positions.length-1;
     }
+
+    /**
+     * To make a Puzzle comparable to another.
+     * Since we are only interested in sorting them by difficulty it only compares the difficulty.
+     * @param puzzle The puzzle to compare this one with
+     * @return -1,0,1 depending if its equal, more ore less difficult.
+     */
+    @Override
+    public int compareTo(Puzzle puzzle) {
+        return  this.difficultyAsInt.compareTo(puzzle.difficultyAsInt);
+    }
+
 }

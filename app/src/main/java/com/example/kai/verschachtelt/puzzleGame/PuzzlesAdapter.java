@@ -10,7 +10,6 @@ import android.widget.TextView;
 import com.example.kai.verschachtelt.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Kai on 12.08.2016.
@@ -36,7 +35,7 @@ public class PuzzlesAdapter extends ArrayAdapter<Puzzle> {
         // Populate the data into the template view using the data object
         puzzleName.setText(puzzle.getName());
         puzzleDescription.setText(puzzle.getDescription());
-        puzzleDifficulty.setText(puzzle.getDifficulty());
+        puzzleDifficulty.setText(puzzle.getDifficultyAsText());
 
         // Return the completed view to render on screen
         return convertView;
