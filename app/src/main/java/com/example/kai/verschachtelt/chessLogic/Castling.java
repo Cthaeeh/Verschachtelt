@@ -2,16 +2,19 @@ package com.example.kai.verschachtelt.chessLogic;
 
 /**
  * Created by Kai on 16.08.2016.
- * //TODO make this work with redo,undo (implement all copy constructors correctly)
- * //TODO simplify, comment everything
+ * This class is for handling all castling moves.
+ * You can ask it if a selected chessman can castle.
+ * And if the user decides to castle this class can move the King accordingly.
  * //TODO Bug test with FEN parser
  */
 public class Castling {
+    //The castling state, e.g which player can still castle where. Only used for FENParsing.
     private boolean queenSideWhite = true;
     private boolean queenSideBlack = true;
     private boolean kingSideWhite  = true;
     private boolean kingSideBlack  = true;
 
+    //Final positions where the king can castle.
     private final int KING_SIDE_BLACK_MOVE = 6;
     private final int QUEEN_SIDE_BLACK_MOVE = 2;
     private final int KING_SIDE_WHITE_MOVE = 62;
@@ -19,27 +22,78 @@ public class Castling {
 
     private static RuleBook ruleBook = new RuleBook();                  //There is just one Rulebook for every game of chess.
     boolean[] possibleMoves = new boolean[64];
-    private Chessman[] board;
+    private Chessman[] chessmen;
 
-    public Castling(){
-
+    /**
+     * Standart constructor.
+     * @param chessmen
+     */
+    public Castling(Chessman[] chessmen){
+        this.chessmen = chessmen;
     }
 
     /**
      * Copy Constructor
-     * //TODO implement this carefully
-     * @param toCopy
+     * @param toCopy the castling object you want to copy.
      */
     public Castling(Castling toCopy){
-
+        chessmen = Chessman.deepCopy(toCopy.chessmen);
+        kingSideBlack = toCopy.kingSideBlack;
+        queenSideBlack = toCopy.queenSideBlack;
+        kingSideWhite = toCopy.kingSideWhite;
+        queenSideBlack = toCopy.queenSideBlack;
     }
 
+    /**
+     * If the king castled, the tower needs to jump over him.
+     * So call this method if the king castled and you want to move
+     * the tower accordingly.
+     * @param chessmen
+     * @param position where the king moved.
+     */
+    public void handleCastling(Chessman[] chessmen, int position) {
+        this.chessmen = chessmen;
+        switch (position){
+            case KING_SIDE_BLACK_MOVE:
+                lightMoveFromTo(7,5); //Move the tower over the king.
+                break;
+            case QUEEN_SIDE_BLACK_MOVE:
+                lightMoveFromTo(0,3); //Move the tower over the king.
+                break;
+            case KING_SIDE_WHITE_MOVE:
+                lightMoveFromTo(63,61);//Move the tower over the king.
+                break;
+            case QUEEN_SIDE_WHITE_MOVE:
+                lightMoveFromTo(56,59);//Move the tower over the king.
+                break;
+        }
+    }
+
+    /**
+     * Just takes a chessman from location "from" and takes it to location "to".
+     * @param from
+     * @param to
+     */
+    private void lightMoveFromTo(int from, int to) {
+        if(from >=0 && chessmen[from]!=null){ //If we try to move from a legit position
+            chessmen[from].notifyMove();      //Tell the chessman that he was moved (Important for Castling)
+            chessmen[to]= chessmen[from];        //Set the chessman to its new position.
+            chessmen[from]=null;              //Remove the chessman from its originally squareStates.
+        }
+    }
+
+    /**
+     *
+     * @param selectedPosition the position the user selected
+     * @param chessmen current positions of the chessmen
+     * @return possible castling moves as a boolean array.
+     */
     public boolean[] getPossibleMoves(int selectedPosition, Chessman[] chessmen) {
-        this.board = chessmen;
+        this.chessmen = chessmen; //Save the new chessmen array, you got from ChessBoardComplex.
         resetPossibleMoves();
         if(chessmen[selectedPosition].getPiece()== Chessman.Piece.KING){
             if(chessmen[selectedPosition].getColor()== Chessman.Color.WHITE){
-                possibleMoves[KING_SIDE_WHITE_MOVE]=getKingSideWhiteMove();
+                possibleMoves[KING_SIDE_WHITE_MOVE]=getKingSideWhiteMove(); //Mark possible moves.
                 possibleMoves[QUEEN_SIDE_WHITE_MOVE]=getQueenSideWhiteMove();
             }else {
                 possibleMoves[KING_SIDE_BLACK_MOVE]=getKingSideBlackMove();
@@ -49,44 +103,65 @@ public class Castling {
         return possibleMoves;
     }
 
+
     /**
-     * TODO Comment the four methods, simplify
-     * @return
+     * Checks if is possible for black to castle queenside.
+     * See: https://en.wikipedia.org/wiki/Castling#Requirements
+     * @return true if possible, false if not.
      */
     private boolean getQueenSideBlackMove() {
-        if(!isPathFree(4,2))return false; //Nothing in between.
-        if(board[4].hasBeenMoved())return false; //King wasn´t moved.
-        if(board[0].hasBeenMoved())return false; //Tower wasn´t moved.
+        if(!queenSideBlack) return false;
+        if(!isPathFree(4,0))return false; //Nothing in between.
+        if(chessmen[4].hasBeenMoved())return false; //King wasn´t moved.
+        if(chessmen[0].hasBeenMoved())return false; //Tower wasn´t moved.
         if(canMoveTo(Chessman.Color.WHITE,4))return false;    //King must be safe the whole journey.
         if(canMoveTo(Chessman.Color.WHITE,3))return false;
         if(canMoveTo(Chessman.Color.WHITE,2))return false;
         return true;
     }
 
+    /**
+     * Checks if is possible for black to castle king side.
+     * See: https://en.wikipedia.org/wiki/Castling#Requirements
+     * @return true if possible, false if not.
+     */
     private boolean getKingSideBlackMove() {
-        if(!isPathFree(4,6))return false; //Nothing in between.
-        if(board[4].hasBeenMoved())return false; //King wasn´t moved.
-        if(board[7].hasBeenMoved())return false; //Tower wasn´t moved.
+        if(!kingSideBlack) return false;
+        if(!isPathFree(4,7))return false; //Nothing in between.
+        if(chessmen[4].hasBeenMoved())return false; //King wasn´t moved.
+        if(chessmen[7].hasBeenMoved())return false; //Tower wasn´t moved.
         if(canMoveTo(Chessman.Color.WHITE,4))return false;    //King must be safe the whole journey.
         if(canMoveTo(Chessman.Color.WHITE,5))return false;
         if(canMoveTo(Chessman.Color.WHITE,6))return false;
         return true;
     }
 
+    /**
+     * Checks if is possible for white to castle king side.
+     * See: https://en.wikipedia.org/wiki/Castling#Requirements
+     * @return true if possible, false if not.
+     */
     private boolean getKingSideWhiteMove() {
+        if(!kingSideWhite) return false;
         if(!isPathFree(60,62))return false; //Nothing in between.
-        if(board[60].hasBeenMoved())return false; //King wasn´t moved.
-        if(board[63].hasBeenMoved())return false; //Tower wasn´t moved.
+        if(chessmen[60].hasBeenMoved())return false; //King wasn´t moved.
+        if(chessmen[63].hasBeenMoved())return false; //Tower wasn´t moved.
         if(canMoveTo(Chessman.Color.BLACK,60))return false;    //King must be safe the whole journey.
         if(canMoveTo(Chessman.Color.BLACK,61))return false;
         if(canMoveTo(Chessman.Color.BLACK,62))return false;
         return true;
     }
 
+    /**
+     * Checks if is possible for white to castle queen side.
+     * See: https://en.wikipedia.org/wiki/Castling#Requirements
+     * @return true if possible, false if not.
+     */
     private boolean getQueenSideWhiteMove() {
-        if(!isPathFree(60,58))return false; //Nothing in between.
-        if(board[60].hasBeenMoved())return false; //King wasn´t moved.
-        if(board[56].hasBeenMoved())return false; //Tower wasn´t moved.
+        if(!queenSideWhite) return false;
+        if(!isPathFree(60,56))return false; //Nothing in between.
+        if(chessmen[60].hasBeenMoved())return false; //King wasn´t moved.
+        if(chessmen[56].hasBeenMoved())return false; //Tower wasn´t moved.
         if(canMoveTo(Chessman.Color.BLACK,60))return false;    //King must be safe the whole journey.
         if(canMoveTo(Chessman.Color.BLACK,59))return false;
         if(canMoveTo(Chessman.Color.BLACK,58))return false;
@@ -102,8 +177,8 @@ public class Castling {
      */
     private boolean canMoveTo(Chessman.Color playerColor, int goalSquare){
         for(int i = 0;i<64;i++){
-            if(board[i]!=null && board[i].getColor() == playerColor){
-                if(ruleBook.getPossibleMoves(i,board)[goalSquare])return true;
+            if(chessmen[i]!=null && chessmen[i].getColor() == playerColor){
+                if(ruleBook.getPossibleMoves(i, chessmen)[goalSquare])return true;
             }
         }
         return false;
@@ -111,12 +186,14 @@ public class Castling {
 
     /**
      * The method checks if the path from "from" to "to" is free
+     * Only for x-Direction Movement.
      * @param from  the position of the selected chessman
      * @param to    where it wants to move
      * @return      when blocked false, otherwise true
      */
     private boolean isPathFree(int from, int to) {
-        //TODO simplify this. Doesnt need to check diagonal movements
+        boolean pathFree = true;
+        //TODO simplify this.
         byte xDirection = (byte)Math.signum(to%8-from%8);
         byte yDirection = (byte)Math.signum(to/8-from/8);
 
@@ -124,16 +201,14 @@ public class Castling {
         byte yCurrent = (byte) (from/8+yDirection);
 
         byte xDest = (byte) (to%8);
-        byte yDest = (byte) (to/8);
 
-        while(!(xCurrent==xDest && yCurrent==yDest)) {
-            if (board[xCurrent+(yCurrent*8)]!=null){
-                return false;
+        while(!(xCurrent==xDest)) {
+            if (chessmen[xCurrent+(yCurrent*8)]!=null){
+                pathFree = false;
             }
             xCurrent = (byte) (xCurrent + xDirection);
-            yCurrent = (byte) (yCurrent + yDirection);
         }
-        return true;
+        return pathFree;
     }
 
     //Some simple setters.
@@ -158,4 +233,5 @@ public class Castling {
             possibleMoves[i]=false;
         }
     }
+
 }

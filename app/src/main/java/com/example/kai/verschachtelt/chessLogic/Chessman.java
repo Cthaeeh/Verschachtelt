@@ -45,6 +45,24 @@ public class Chessman {
     }
 
     /**
+     * Method for deep copying an array of chessmen.
+     * It creates for each chessman a new instance.
+     * @param chessmen the array you want to copy.
+     * @return the new copy
+     */
+    public static Chessman[] deepCopy(Chessman[] chessmen) {
+        Chessman[] chessmenCopy = new Chessman[chessmen.length];
+        for (int i = 0; i< chessmen.length;i++){
+            if(chessmen[i]!=null){
+                chessmenCopy[i]=new Chessman(chessmen[i].getPiece(),chessmen[i].getColor());
+                chessmenCopy[i].hasBeenMoved = chessmen[i].hasBeenMoved();
+            }else
+                chessmenCopy[i]=null;
+        }
+        return chessmenCopy;
+    }
+
+    /**
      Representation of all chess man as enums
      **/
     public enum Piece {

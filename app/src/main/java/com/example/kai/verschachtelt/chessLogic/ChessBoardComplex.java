@@ -1,5 +1,7 @@
 package com.example.kai.verschachtelt.chessLogic;
 
+import java.util.Arrays;
+
 /**
  * Created by Kai on 09.08.2016.
  * This class extends the normal Chessboard class and adds basic move functionality, possible move functionality.
@@ -14,7 +16,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
     public ChessBoardComplex(){
         super();
         playerOnTurn = Chessman.Color.WHITE;    //Always white when start
-        castling = new Castling();
+        castling = new Castling(chessmen);
     }
 
     /**
@@ -22,10 +24,10 @@ public class ChessBoardComplex extends ChessBoardSimple {
      * @param board The object to make a copy of.
      */
     public ChessBoardComplex(ChessBoardComplex board) {
-        chessmen = board.chessmen.clone();
+        chessmen = Chessman.deepCopy(board.chessmen);
         selectedPosition = board.selectedPosition;
         playerOnTurn = board.playerOnTurn;
-        castling = new Castling(castling);
+        castling = new Castling(board.castling);
     }
 
     /**
@@ -59,9 +61,13 @@ public class ChessBoardComplex extends ChessBoardSimple {
      */
     public void handleMoveTo(int position){
         if(selectedPosition >=0 ){                    //If we try to move from a legit position
-            chessmen[selectedPosition].notifyMove();                  //Tell the chessman that he was moved (Important for Castling)
+            chessmen[selectedPosition].notifyMove();  //Tell the chessman that he was moved (Important for Castling)
             chessmen[position]= chessmen[selectedPosition];//Set the chessman to its new position.
             chessmen[selectedPosition]=null;           //Remove the chessman from its originally squareStates.
+            //If a King did a jump:
+            if(chessmen[position].getPiece()== Chessman.Piece.KING&&Math.abs(position-selectedPosition)==2){
+                castling.handleCastling(chessmen,position);//The corresponding tower needs to move as well.
+            }
             switchPlayerOnTurn();
         }
         resetFrames();
@@ -73,10 +79,14 @@ public class ChessBoardComplex extends ChessBoardSimple {
      * @param to    where to move to.
      */
     public void handleMoveFromTo(int from, int to) {
-        if(selectedPosition >=0 && chessmen[from]!=null){//If we try to move from a legit position
-            chessmen[from].notifyMove();                   //Tell the chessman that he was moved (Important for Castling)
+        if(from>=0 && chessmen[from]!=null){//If we try to move from a legit position
+            chessmen[from].notifyMove();                 //Tell the chessman that he was moved (Important for Castling)
             chessmen[to]= chessmen[from];                //Set the chessman to its new position.
             chessmen[from]=null;                         //Remove the chessman from its originally squareStates.
+            //If a King did a jump:
+            if(chessmen[to].getPiece()== Chessman.Piece.KING&&Math.abs(from-to)==2){
+                castling.handleCastling(chessmen,to);//The corresponding tower needs to move as well.
+            }
             switchPlayerOnTurn();
         }
         resetFrames();
@@ -88,10 +98,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
     private void getPossibleDestinations() {
         possibleDestinations=ruleBook.getPossibleMoves(selectedPosition,chessmen);
         boolean[] possibleCastlingDestinations = castling.getPossibleMoves(selectedPosition,chessmen);
-        //Merge both possibleDestinations
-        for(int i = 0;i<64;i++){
-            possibleDestinations[i] = (possibleDestinations[i]||possibleCastlingDestinations[i]);
-        }
+        possibleDestinations= combine(possibleCastlingDestinations,possibleDestinations);
     }
 
     /**Depending on the possible move destination the frames are colored accordingly.
@@ -138,5 +145,13 @@ public class ChessBoardComplex extends ChessBoardSimple {
     private void switchPlayerOnTurn() {
         if(playerOnTurn== Chessman.Color.BLACK)playerOnTurn= Chessman.Color.WHITE;
         else playerOnTurn= Chessman.Color.BLACK;
+    }
+
+    private boolean[] combine(boolean[] array1, boolean[] array2) {
+        //Combine both possibleDestinations
+        for(int i = 0;i<64;i++){
+            array2[i] = (array2[i]||array1[i]);
+        }
+        return array2;
     }
 }
