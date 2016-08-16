@@ -83,4 +83,13 @@ public class FENParser {
                 return null;
         }
     }
+
+    public static Castling getCastlingState(String fenNotation) {
+        Castling castling = new Castling(getChessmen(fenNotation));
+        castling.setKingSideWhite(fenNotation.split(" ")[2].contains("K"));
+        castling.setQueenSideWhite(fenNotation.split(" ")[2].contains("Q"));
+        castling.setKingSideBlack(fenNotation.split(" ")[2].contains("k"));
+        castling.setQueenSideBlack(fenNotation.split(" ")[2].contains("q"));
+        return castling;
+    }
 }

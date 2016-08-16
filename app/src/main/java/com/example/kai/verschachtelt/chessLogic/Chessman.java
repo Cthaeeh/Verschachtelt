@@ -7,6 +7,7 @@ public class Chessman {
 
     private final Piece piece;
     private final Color color;
+    private boolean hasBeenMoved = false;
 
     public static Chessman[] getStandartSetup() {
         return new Chessman[]{
@@ -30,6 +31,35 @@ public class Chessman {
 
     public Color getColor() {
         return color;
+    }
+
+    public boolean hasBeenMoved(){
+        return hasBeenMoved;
+    }
+
+    /**
+     * lets the chessmen know if it was moved once in the game.
+     */
+    public void notifyMove() {
+        hasBeenMoved = true;
+    }
+
+    /**
+     * Method for deep copying an array of chessmen.
+     * It creates for each chessman a new instance.
+     * @param chessmen the array you want to copy.
+     * @return the new copy
+     */
+    public static Chessman[] deepCopy(Chessman[] chessmen) {
+        Chessman[] chessmenCopy = new Chessman[chessmen.length];
+        for (int i = 0; i< chessmen.length;i++){
+            if(chessmen[i]!=null){
+                chessmenCopy[i]=new Chessman(chessmen[i].getPiece(),chessmen[i].getColor());
+                chessmenCopy[i].hasBeenMoved = chessmen[i].hasBeenMoved();
+            }else
+                chessmenCopy[i]=null;
+        }
+        return chessmenCopy;
     }
 
     /**
