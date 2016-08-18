@@ -97,8 +97,10 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
       //  return super.onTouchEvent(event);
 
            if(pawnChangeGraphic.activated == true) {
-               inputHandler.processPawnChangeEvent(event); // if pawnchange true, PawnChangeGraphic is shown and PawnChangeEvent has to be started
-                  return super.onTouchEvent(event);
+               inputHandler.processPawnChangeEvent(event);
+               // if the PawnChangeGraphic is activated(meaning it is shown), a touch on the screen activates '
+               // the pawnChangeEvent
+                 return super.onTouchEvent(event);
               } else {
                  inputHandler.processTouchEvent(event);//Pass it to the inputHandler, so the logic is encapsuled.
                  return super.onTouchEvent(event);

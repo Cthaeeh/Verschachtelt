@@ -160,12 +160,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
     // check, if a pawn change is possible
     public boolean pawnChangePossible() {
 
-        for(int j = 0; j < 8; j++) {
-            if (chessmen[j].getPiece() == Chessman.Piece.PAWN & chessmen[j].getColor() ==Chessman.Color.WHITE) {
 
-                return true;
-            }
-        }
 
         for (int j = 56; j<64; j++) {
             if(chessmen[j].getPiece() == Chessman.Piece.PAWN & chessmen[j].getColor() ==Chessman.Color.BLACK) {
@@ -174,6 +169,19 @@ public class ChessBoardComplex extends ChessBoardSimple {
             }
 
         }
+
+
+        for(int j = 0; j < 8; j++) {
+            if (chessmen[j].getPiece() == Chessman.Piece.PAWN & chessmen[j].getColor() ==Chessman.Color.WHITE) {
+
+                return true;
+            }
+        }
+
+
+
+
+
 
         return false;   //false, if there is no pawn in first/last row
     }
