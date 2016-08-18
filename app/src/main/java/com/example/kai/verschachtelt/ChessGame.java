@@ -3,6 +3,7 @@ package com.example.kai.verschachtelt;
 import com.example.kai.verschachtelt.chessLogic.ChessBoardComplex;
 import com.example.kai.verschachtelt.chessLogic.ChessBoardSimple;
 import com.example.kai.verschachtelt.chessLogic.ChessBoardSimple.SquareState;
+import com.example.kai.verschachtelt.chessLogic.Chessman;
 import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
 
 import java.util.ArrayList;
@@ -63,8 +64,28 @@ public class ChessGame implements InputEvent {
 
     }
 
-    public void handleTouchOnFigure() {
+    public void handleTouchOnFigure(float x, float y, float shorterSide) {
+        if(x < shorterSide & y < shorterSide){
+            // draw a queen, if screen was touched top left
+            Chessman newQueen = new Chessman(Chessman.Piece.QUEEN, boardCurrent.getPlayerOnTurn());
+            boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newQueen);
+        }
+        if(x >= shorterSide & y < shorterSide) {
+            // draw a rook, if screen was touched top right
+            Chessman newRook = new Chessman(Chessman.Piece.ROOK, boardCurrent.getPlayerOnTurn());
+            boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newRook);
+        }
+        if(x < shorterSide & y > shorterSide) {
+            //draw a bishop, if screen was touched bottom left
+            Chessman newBishop = new Chessman(Chessman.Piece.BISHOP, boardCurrent.getPlayerOnTurn());
+            boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newBishop);
+        }
 
+        if(x > shorterSide & y > shorterSide) {
+            //draw a knight, if screen was touched bottom right
+            Chessman newKnight = new Chessman(Chessman.Piece.KNIGHT, boardCurrent.getPlayerOnTurn());
+            boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newKnight);
+        }
     }
 
     @Override

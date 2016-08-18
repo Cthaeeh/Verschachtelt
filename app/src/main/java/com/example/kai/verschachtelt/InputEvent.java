@@ -8,7 +8,7 @@ public interface InputEvent {
 
     void handleTouchOnSquare(Integer position);
 
-    void handleTouchOnFigure();
+    void handleTouchOnFigure(float x, float y,float shorterSide);
 
     void handleUndoButton();
 

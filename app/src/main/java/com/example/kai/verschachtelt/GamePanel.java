@@ -31,9 +31,10 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
     private ChessmanGraphic chessmanGraphic;
     protected VictoryScreenGraphic victoryScreenGraphic;
     public static int squareSize;               //The only global variable kind of. It represents the length and width of a squareStates on the boardCurrent.
+    public static int figureChangeSize;         // length of the squares in which the figures for a pawnchange can be chosen
 
     // try for pawn change by ivayl
-    private PawnChangeGraphic pawnchange;
+    private PawnChangeGraphic pawnChangeGraphic;
 
     //The position of the touch/ for development
     private int xTouch = 0;
@@ -64,7 +65,7 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
         chessmanGraphic = new ChessmanGraphic(BitmapFactory.decodeResource(getResources(),R.drawable.chess_man_symbols));
         victoryScreenGraphic = new VictoryScreenGraphic(BitmapFactory.decodeResource(getResources(),R.drawable.victory_screens));
         // try for pawn change
-        pawnchange = new PawnChangeGraphic(BitmapFactory.decodeResource(getResources(),R.drawable.chess_man_symbols));
+        pawnChangeGraphic = new PawnChangeGraphic(BitmapFactory.decodeResource(getResources(),R.drawable.chess_man_symbols));
 
         thread.setRunning(true);
         thread.start();
@@ -89,20 +90,29 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
     }
 
     @Override
-    public boolean onTouchEvent (MotionEvent event){
-        xTouch = (int)event.getX();
-        yTouch = (int)event.getY();
-        inputHandler.processTouchEvent(event);//Pass it to the inputHandler, so the logic is encapsuled.
-        return super.onTouchEvent(event);
+    public boolean onTouchEvent (MotionEvent event) {
+        xTouch = (int) event.getX();
+        yTouch = (int) event.getY();
+      //  inputHandler.processTouchEvent(event);//Pass it to the inputHandler, so the logic is encapsuled.
+      //  return super.onTouchEvent(event);
+
+           if(pawnChangeGraphic.activated == true) {
+               inputHandler.processPawnChangeEvent(event); // if pawnchange true, PawnChangeGraphic is shown and PawnChangeEvent has to be started
+                  return super.onTouchEvent(event);
+              } else {
+                 inputHandler.processTouchEvent(event);//Pass it to the inputHandler, so the logic is encapsuled.
+                 return super.onTouchEvent(event);
+    }
 
     }
+
 
 
     public void update(double avgFPS){
         //Show some dev info
         background.update(String.valueOf(avgFPS)+" fps " + String.valueOf(xTouch)+"|" +String.valueOf(yTouch) );
         chessmanGraphic.update(game.getSimpleBoard());
-        pawnchange.update(game.getComplexBoard());
+        pawnChangeGraphic.update(game.getComplexBoard());
         victoryScreenGraphic.update(game.getWinner());
     }
 
@@ -122,14 +132,23 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
 
         if(canvas.getHeight()<canvas.getWidth()) {
                 squareSize = canvas.getHeight()/10;
+                figureChangeSize = canvas.getHeight()/2;
+            // size of the figures, which are shown for a pawn change, better reachable when declared as global variable
+            // needed for interpreting the touchEvent
         }else{
             squareSize = canvas.getWidth()/10;
+            figureChangeSize = canvas.getWidth()/2;
         }
+
         //Draw all the components that dont need scaling (they scale them self)
         chessBoardGraphic.draw(canvas);
         chessmanGraphic.draw(canvas);
-       if(game.getComplexBoard().pawnChangePossible() == true)
-           pawnchange.draw(canvas);
+        if(game.getComplexBoard().pawnChangePossible() == true) {
+            pawnChangeGraphic.activate();
+            pawnChangeGraphic.draw(canvas);
+        } else {
+            pawnChangeGraphic.deactivate();      // just added to try, really bad code
+        }
         if(game.getWinner()!=null)victoryScreenGraphic.draw(canvas);
     }
 

@@ -21,14 +21,17 @@ public class PawnChangeGraphic {
 
     private final int cropSize = 92;
 
-    private ChessBoardComplex complex;
+    public boolean activated; // a bool value which shows, if the graphic is drawn
+
+   // private ChessBoardComplex complex;
 
 
 
     public PawnChangeGraphic(Bitmap map) {
 
         extractImages(map);
-        complex = new ChessBoardComplex();
+        this.activated = false;
+       // complex = new ChessBoardComplex();
 
     }
 
@@ -51,7 +54,7 @@ public void draw(Canvas canvas) {
 
     public void update(ChessBoardComplex board) {
 
-        this.complex = board;
+      //  this.complex = board;
 
     }
 
@@ -74,5 +77,13 @@ public void draw(Canvas canvas) {
         }else{
             return canvas.getWidth();
         }
+    }
+
+    public void activate(){
+        this.activated = true;
+    }
+
+    public void deactivate() {
+        this.activated = false;
     }
 }
