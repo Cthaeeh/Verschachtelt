@@ -45,6 +45,7 @@ public class AI {
     public ChessBoardComplex calculateMove(ChessBoardComplex board) {
         byteBoard = toByteArray(board);
         board.handleMoveFromTo(1,30);   //Test move
+        
         return board;
     }
 

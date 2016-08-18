@@ -10,24 +10,30 @@
     tools:context=".activitys.MainActivity">
 
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxWidth="400dp"
+        android:minWidth="300dp"
         android:text="@string/button_chess_game_PvP"
         android:id="@+id/launch_PvP_Button"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp" />
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxWidth="400dp"
+        android:minWidth="300dp"
         android:text="@string/button_chess_game_vsAI"
         android:id="@+id/launch_PvAI_Button"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp" />
     <Button
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxWidth="400dp"
+        android:minWidth="300dp"
         android:text="@string/button_select_puzzle"
         android:id="@+id/launch_Puzzle_Selection_Button"
         android:layout_alignParentTop="true"
