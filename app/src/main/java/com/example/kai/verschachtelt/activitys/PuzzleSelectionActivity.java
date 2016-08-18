@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ListView;
 
 import com.example.kai.verschachtelt.DownloadListener;
@@ -34,7 +35,7 @@ import java.util.HashSet;
  */
 public class PuzzleSelectionActivity extends AppCompatActivity implements DownloadListener{
 
-    ListView puzzleList;
+    GridView puzzleGrid ;
     ArrayList<Puzzle> puzzleArray;
     PuzzlesAdapter adapter;
 
@@ -58,15 +59,15 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
 
 
     private void setUpUI() {
-        puzzleList = (ListView) findViewById(R.id.puzzleListView);
+        puzzleGrid = (GridView) findViewById(R.id.puzzleGridView);
         puzzleArray = new ArrayList<Puzzle>();
         adapter = new PuzzlesAdapter(this, puzzleArray);
-        puzzleList.setAdapter(adapter);
+        puzzleGrid.setAdapter(adapter);
         //Take JSONArray from ressource txt file convert it to Puzzles.
         puzzleArray.addAll(Puzzle.fromJson(PuzzleParser.getJSONArray()));
         Collections.sort(puzzleArray);  //Sort them by difficulty.
 
-        puzzleList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        puzzleGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
                 //If the button is pressed launch the Game-Activity
