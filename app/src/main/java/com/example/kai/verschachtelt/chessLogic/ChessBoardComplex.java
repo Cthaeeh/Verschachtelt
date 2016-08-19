@@ -160,23 +160,26 @@ public class ChessBoardComplex extends ChessBoardSimple {
     // check, if a pawn change is possible
     public boolean pawnChangePossible() {
 
+        for(int j = 0; j < 8; j++) {
+            if (chessmen[j].equals(new Chessman(Chessman.Piece.PAWN, Chessman.Color.WHITE)) == true) {
+
+                return true;
+            }
+        }
+
+
 
 
         for (int j = 56; j<64; j++) {
-            if(chessmen[j].getPiece() == Chessman.Piece.PAWN & chessmen[j].getColor() ==Chessman.Color.BLACK) {
+            if(chessmen[j].equals(new Chessman(Chessman.Piece.PAWN, Chessman.Color.BLACK)) == true) {
 
                 return true;
             }
 
+
         }
 
 
-        for(int j = 0; j < 8; j++) {
-            if (chessmen[j].getPiece() == Chessman.Piece.PAWN & chessmen[j].getColor() ==Chessman.Color.WHITE) {
-
-                return true;
-            }
-        }
 
 
 
@@ -189,13 +192,13 @@ public class ChessBoardComplex extends ChessBoardSimple {
     // check and return the position, where a pawn is waiting to be changed
     public int pawnChangePosition(){
         for(int j = 0; j < 8; j++) {
-            if (chessmen[j].getPiece() == Chessman.Piece.PAWN & chessmen[j].getColor() ==Chessman.Color.WHITE) {
+            if (chessmen[j].equals(new Chessman(Chessman.Piece.PAWN, Chessman.Color.WHITE)) == true) {
 
                 return j;
             }
         }
         for(int j = 56; j < 64; j++) {
-            if (chessmen[j].getPiece() == Chessman.Piece.PAWN & chessmen[j].getColor() ==Chessman.Color.BLACK) {
+            if(chessmen[j].equals(new Chessman(Chessman.Piece.PAWN, Chessman.Color.BLACK)) == true) {
 
                 return j;
             }

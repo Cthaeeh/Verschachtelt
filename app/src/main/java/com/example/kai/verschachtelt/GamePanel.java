@@ -100,6 +100,7 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
                inputHandler.processPawnChangeEvent(event);
                // if the PawnChangeGraphic is activated(meaning it is shown), a touch on the screen activates '
                // the pawnChangeEvent
+               pawnChangeGraphic.deactivate();
                  return super.onTouchEvent(event);
               } else {
                  inputHandler.processTouchEvent(event);//Pass it to the inputHandler, so the logic is encapsuled.
@@ -114,7 +115,7 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
         //Show some dev info
         background.update(String.valueOf(avgFPS)+" fps " + String.valueOf(xTouch)+"|" +String.valueOf(yTouch) );
         chessmanGraphic.update(game.getSimpleBoard());
-        pawnChangeGraphic.update(game.getComplexBoard());
+      //  pawnChangeGraphic.update(game.getComplexBoard());
         victoryScreenGraphic.update(game.getWinner());
     }
 
@@ -148,9 +149,8 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
         if(game.getComplexBoard().pawnChangePossible() == true) {
             pawnChangeGraphic.activate();
             pawnChangeGraphic.draw(canvas);
-        } else {
-            pawnChangeGraphic.deactivate();      // just added to try, really bad code
         }
+
         if(game.getWinner()!=null)victoryScreenGraphic.draw(canvas);
     }
 
