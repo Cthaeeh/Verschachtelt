@@ -22,6 +22,8 @@ public class ChessGame implements InputEvent {
     //Number of moves performed by both players.
     protected int moveCounter = 0;
 
+    private Chessman.Color changing; // for switchpawn
+
     public ChessGame(InputHandler inputHandler){
         this.inputHandler = inputHandler;
         //Subscribe so the inputHandler can call back.
@@ -65,25 +67,33 @@ public class ChessGame implements InputEvent {
     }
 
     public void handleTouchOnFigure(float x, float y, float shorterSide) {
+
+
+        if(boardCurrent.getPlayerOnTurn() == Chessman.Color.BLACK){
+            changing = Chessman.Color.WHITE;
+        } else {
+            changing = Chessman.Color.BLACK;
+
+        }
         if(x < shorterSide & y < shorterSide){
             // draw a queen, if screen was touched top left
-            Chessman newQueen = new Chessman(Chessman.Piece.QUEEN, boardCurrent.getPlayerOnTurn());
+            Chessman newQueen = new Chessman(Chessman.Piece.QUEEN, changing);
             boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newQueen);
         }
         if(x >= shorterSide & y < shorterSide) {
             // draw a rook, if screen was touched top right
-            Chessman newRook = new Chessman(Chessman.Piece.ROOK, boardCurrent.getPlayerOnTurn());
+            Chessman newRook = new Chessman(Chessman.Piece.ROOK,changing);
             boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newRook);
         }
         if(x < shorterSide & y > shorterSide) {
             //draw a bishop, if screen was touched bottom left
-            Chessman newBishop = new Chessman(Chessman.Piece.BISHOP, boardCurrent.getPlayerOnTurn());
+            Chessman newBishop = new Chessman(Chessman.Piece.BISHOP, changing);
             boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newBishop);
         }
 
         if(x > shorterSide & y > shorterSide) {
             //draw a knight, if screen was touched bottom right
-            Chessman newKnight = new Chessman(Chessman.Piece.KNIGHT, boardCurrent.getPlayerOnTurn());
+            Chessman newKnight = new Chessman(Chessman.Piece.KNIGHT, changing);
             boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newKnight);
         }
     }
