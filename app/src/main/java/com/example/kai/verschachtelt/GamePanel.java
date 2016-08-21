@@ -96,7 +96,7 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
       //  inputHandler.processTouchEvent(event);//Pass it to the inputHandler, so the logic is encapsuled.
       //  return super.onTouchEvent(event);
 
-           if(pawnChangeGraphic.activated == true) {
+           if(pawnChangeGraphic.activated) {
                inputHandler.processPawnChangeEvent(event);
                // if the PawnChangeGraphic is activated(meaning it is shown), a touch on the screen activates '
                // the pawnChangeEvent
@@ -146,7 +146,7 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
         //Draw all the components that dont need scaling (they scale them self)
         chessBoardGraphic.draw(canvas);
         chessmanGraphic.draw(canvas);
-        if(game.getComplexBoard().pawnChangePossible() == true) {
+        if(game.getComplexBoard().pawnChangePossible()) {
             pawnChangeGraphic.activate();
             pawnChangeGraphic.draw(canvas);
         }

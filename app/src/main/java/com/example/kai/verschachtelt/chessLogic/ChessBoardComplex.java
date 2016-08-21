@@ -14,6 +14,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
     private Castling castling;
 
 
+
     public ChessBoardComplex(){
         super();
         playerOnTurn = Chessman.Color.WHITE;    //Always white when start
