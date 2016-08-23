@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:text="test sdfsdfdfsdffs"
             android:textColor="@color/decriptionColor"
-            android:textSize="20dp"
+            android:textSize="18sp"
             android:id="@+id/gameDescription"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"

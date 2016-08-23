@@ -1,7 +1,9 @@
 package com.example.kai.verschachtelt.activitys;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.FragmentManager;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -112,6 +114,27 @@ public class GameActivity extends Activity implements View.OnClickListener{
             dataFragment = new RetainedFragment();
             fm.beginTransaction().add(dataFragment, "data").commit();
         }
+    }
+
+    /**
+     * Simple method to warn the user if he really wants to leave the game
+     */
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setIcon(R.mipmap.ic_warning_black_36dp)
+                .setTitle("Exit the Game")
+                .setMessage("Are you sure you want to quit this game?" +
+                            " It will not be saved!")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
     @Override
