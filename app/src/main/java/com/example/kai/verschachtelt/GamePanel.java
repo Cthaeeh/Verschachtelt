@@ -124,7 +124,12 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
     }
 
 
+    public ChessGame getGame() {
+        return game;
+    }
 
-
+    public void setGame(ChessGame game) {
+        this.game = game;
+    }
 }
 

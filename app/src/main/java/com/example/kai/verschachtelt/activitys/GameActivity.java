@@ -1,6 +1,7 @@
 package com.example.kai.verschachtelt.activitys;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -11,6 +12,7 @@ import android.widget.LinearLayout;
 
 
 import com.example.kai.verschachtelt.GamePanel;
+import com.example.kai.verschachtelt.RetainedFragment;
 import com.example.kai.verschachtelt.puzzleGame.GamePanelPuzzle;
 import com.example.kai.verschachtelt.R;
 import com.example.kai.verschachtelt.pvAIGame.chess_AI.GamePanelPvAI;
@@ -26,6 +28,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private FrameLayout layout;     //The layout that holds the gamePanel, Buttons, etc.
     private LinearLayout gameWidgets;
     private GamePanel gameView;
+    private RetainedFragment dataFragment;
 
     Button undoButton,redoButton,showNextMoveButton;
 
@@ -36,6 +39,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        createDataFragment();
         Intent intent = getIntent();
         GameType gameType = (GameType) intent.getSerializableExtra("GameType");
         switch (gameType){  //depeding on the type of game different UIs are created
@@ -43,19 +47,46 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 setupPvP();
                 break;
             case CHESS_PvAI:
-                setupPvAI_UI();
+                setupPvAI();
                 break;
             case PUZZLE:
-                setupPuzzleUI();
+                setupPuzzle();
                 break;
         }
         setContentView(layout);
+        if(dataFragment.getData()!=null){   //If this activity was restarted (we saved the game previously)
+            gameView.setGame(dataFragment.getData());   //continue with this game.
+        }
     }
 
-    private void setupPuzzleUI() {
+    private void createDataFragment() {
+        FragmentManager fm = getFragmentManager();  //Try to find the fragment if it was previously instantiated.
+        dataFragment = (RetainedFragment) fm.findFragmentByTag("data");
+
+        // if the activity is new create the fragment.
+        if (dataFragment == null) {
+            // add the fragment
+            dataFragment = new RetainedFragment();
+            fm.beginTransaction().add(dataFragment, "data").commit();
+        }
+    }
+
+    private void setupPuzzle() {
         gameView = new GamePanelPuzzle(this);
-        setupUI();  //TODO add special Puzzle UI
+        setupUI();
         setupPuzzleButtons();
+    }
+
+    private void setupPvAI() {
+        gameView = new GamePanelPvAI(this);
+        setupUI();
+        setupUndoRedo();
+    }
+
+    private void setupPvP() {
+        gameView = new GamePanelPvP(this);
+        setupUI();
+        setupUndoRedo();
     }
 
     private void setupPuzzleButtons() {
@@ -67,18 +98,9 @@ public class GameActivity extends Activity implements View.OnClickListener{
         showNextMoveButton.setOnClickListener(this);
     }
 
-    private void setupPvAI_UI() {
-        gameView = new GamePanelPvAI(this);
-        setupUI();  //TODO add special PvAI UI-elements
-        setupUndoRedo();
-    }
-
-    private void setupPvP() {
-        gameView = new GamePanelPvP(this);
-        setupUI();  //TODO add special PvP UI-elements
-        setupUndoRedo();
-    }
-
+    /**
+     * sets up two Buttons, undo and redo namely
+     */
     private void setupUndoRedo() {
         undoButton = new Button(this);
         redoButton = new Button(this);
@@ -123,5 +145,12 @@ public class GameActivity extends Activity implements View.OnClickListener{
         if(view == showNextMoveButton){
             gameView.inputHandler.processShowNextMoveButton();
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        // store the data in the fragment
+        dataFragment.setData(gameView.getGame());
     }
 }
