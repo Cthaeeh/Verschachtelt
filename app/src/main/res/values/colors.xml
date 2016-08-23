@@ -11,5 +11,5 @@
     <color name="selectedFrameColor">#1867d0</color>
     <color name="possibleMoveFrameColor">#63da24</color>
     <color name="possibleKillFrameColor">#ff0900</color>
-    <color name="decriptionColor">#1867d0</color>
+    <color name="decriptionColor">#000000</color>
 </resources>

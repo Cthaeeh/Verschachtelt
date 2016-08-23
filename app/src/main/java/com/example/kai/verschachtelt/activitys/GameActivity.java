@@ -4,19 +4,14 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-
+import android.widget.TextView;
 
 import com.example.kai.verschachtelt.GamePanel;
 import com.example.kai.verschachtelt.RetainedFragment;
-import com.example.kai.verschachtelt.puzzleGame.GamePanelPuzzle;
 import com.example.kai.verschachtelt.R;
-import com.example.kai.verschachtelt.pvAIGame.chess_AI.GamePanelPvAI;
-import com.example.kai.verschachtelt.pvpGame.GamePanelPvP;
+import com.example.kai.verschachtelt.puzzleGame.ChessGamePuzzle;
 
 /**
  * Created by Kai on 28.07.2016.
@@ -25,12 +20,11 @@ import com.example.kai.verschachtelt.pvpGame.GamePanelPvP;
  */
 public class GameActivity extends Activity implements View.OnClickListener{
 
-    private FrameLayout layout;     //The layout that holds the gamePanel, Buttons, etc.
-    private LinearLayout gameWidgets;
-    private GamePanel gameView;
-    private RetainedFragment dataFragment;
+    private GamePanel gamePanel;
+    private RetainedFragment dataFragment;      //A Fragment to store data, because this Activity is destroyed when the screen orientation changes
 
     Button undoButton,redoButton,showNextMoveButton;
+    TextView description;
 
     public enum GameType{
         CHESS_PvP,CHESS_PvAI,PUZZLE
@@ -39,7 +33,9 @@ public class GameActivity extends Activity implements View.OnClickListener{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_game); //Use an (way better) xml layout, instead of in code layout
         createDataFragment();
+        gamePanel = (GamePanel) findViewById(R.id.surfaceViewForGame); //Now get the GamePanel UI-Element just like a Button.
         Intent intent = getIntent();
         GameType gameType = (GameType) intent.getSerializableExtra("GameType");
         switch (gameType){  //depeding on the type of game different UIs are created
@@ -53,12 +49,59 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 setupPuzzle();
                 break;
         }
-        setContentView(layout);
         if(dataFragment.getData()!=null){   //If this activity was restarted (we saved the game previously)
-            gameView.setGame(dataFragment.getData());   //continue with this game.
+            gamePanel.setGame(dataFragment.getData());   //continue with this saved game.
         }
     }
 
+    private void setupPuzzle() {
+        gamePanel.setGame(GameType.PUZZLE); //Tell the gamePanel what mode we want to play in.
+        showNextMoveButton = (Button) findViewById(R.id.button1);
+        showNextMoveButton.setText(R.string.show_next_move_button);
+        showNextMoveButton.setOnClickListener(this);
+        description = (TextView) findViewById(R.id.gameDescription);
+        description.setText(((ChessGamePuzzle) gamePanel.getGame()).getPuzzleDescription());
+    }
+
+    private void setupPvAI() {
+        gamePanel.setGame(GameType.CHESS_PvAI); //Tell the gamePanel what mode we want to play in.
+        setupUndoRedo();
+    }
+
+    private void setupPvP() {
+        gamePanel.setGame(GameType.CHESS_PvP); //Tell the gamePanel what mode we want to play in.
+        setupUndoRedo();
+    }
+
+
+    /**
+     * sets up two Buttons, undo and redo namely
+     */
+    private void setupUndoRedo() {
+        undoButton = (Button) findViewById(R.id.button1);
+        redoButton = (Button) findViewById(R.id.button2);
+        undoButton.setText(R.string.undo_button);
+        redoButton.setText(R.string.redo_button);
+        undoButton.setOnClickListener(this);
+        redoButton.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view == undoButton){
+            gamePanel.inputHandler.processUndoButton();
+        }
+        if(view == redoButton){
+            gamePanel.inputHandler.processRedoButton();
+        }
+        if(view == showNextMoveButton){
+            gamePanel.inputHandler.processShowNextMoveButton();
+        }
+    }
+
+    /**
+     * Creates a DataFragment that can store a ChessGame and isnt destroyed when the screen orientation changes.
+     */
     private void createDataFragment() {
         FragmentManager fm = getFragmentManager();  //Try to find the fragment if it was previously instantiated.
         dataFragment = (RetainedFragment) fm.findFragmentByTag("data");
@@ -71,86 +114,10 @@ public class GameActivity extends Activity implements View.OnClickListener{
         }
     }
 
-    private void setupPuzzle() {
-        gameView = new GamePanelPuzzle(this);
-        setupUI();
-        setupPuzzleButtons();
-    }
-
-    private void setupPvAI() {
-        gameView = new GamePanelPvAI(this);
-        setupUI();
-        setupUndoRedo();
-    }
-
-    private void setupPvP() {
-        gameView = new GamePanelPvP(this);
-        setupUI();
-        setupUndoRedo();
-    }
-
-    private void setupPuzzleButtons() {
-        showNextMoveButton = new Button(this);
-        showNextMoveButton.setWidth(400);
-        showNextMoveButton.setText(R.string.show_next_move_button);
-        showNextMoveButton.setBottom(0);
-        gameWidgets.addView(showNextMoveButton);
-        showNextMoveButton.setOnClickListener(this);
-    }
-
-    /**
-     * sets up two Buttons, undo and redo namely
-     */
-    private void setupUndoRedo() {
-        undoButton = new Button(this);
-        redoButton = new Button(this);
-
-        undoButton.setWidth(400);
-        redoButton.setWidth(400);
-
-        undoButton.setText(R.string.undo_button);
-        redoButton.setText(R.string.redo_button);
-        undoButton.setBottom(0);
-        redoButton.setBottom(0);
-
-        gameWidgets.addView(undoButton);
-        gameWidgets.addView(redoButton);
-
-        undoButton.setOnClickListener(this);
-        redoButton.setOnClickListener(this);
-    }
-
-    /**
-     * sets up UI elements that all Game modes share
-     */
-    private void setupUI() {
-        layout = new FrameLayout(this);
-        gameWidgets = new LinearLayout (this);
-
-        FrameLayout.LayoutParams layoutParams = new FrameLayout.LayoutParams(
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM);
-
-        layout.addView(gameView);
-        layout.addView(gameWidgets,layoutParams);
-    }
-
-    @Override
-    public void onClick(View view) {
-        if(view == undoButton){
-            gameView.inputHandler.processUndoButton();
-        }
-        if(view == redoButton){
-            gameView.inputHandler.processRedoButton();
-        }
-        if(view == showNextMoveButton){
-            gameView.inputHandler.processShowNextMoveButton();
-        }
-    }
-
     @Override
     public void onDestroy() {
         super.onDestroy();
         // store the data in the fragment
-        dataFragment.setData(gameView.getGame());
+        dataFragment.setData(gamePanel.getGame());
     }
 }

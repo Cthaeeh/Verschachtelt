@@ -3,14 +3,19 @@ package com.example.kai.verschachtelt;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.example.kai.verschachtelt.activitys.GameActivity;
 import com.example.kai.verschachtelt.graphics.Background;
 import com.example.kai.verschachtelt.graphics.ChessBoardGraphic;
 import com.example.kai.verschachtelt.graphics.ChessmanGraphic;
 import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
+import com.example.kai.verschachtelt.puzzleGame.ChessGamePuzzle;
+import com.example.kai.verschachtelt.pvAIGame.chess_AI.ChessGamePvAI;
+import com.example.kai.verschachtelt.pvpGame.ChessGamePvP;
 
 /**
  * Created by Kai on 28.07.2016.
@@ -20,7 +25,7 @@ import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
  * When it registrates a touch event it uses a TouchnInputHandler Object to change the Game accordingly.
  */
 
-public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
+public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     private MainThread thread;
     protected ChessGame  game;
@@ -41,8 +46,8 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
     public static final int WIDTH = 1080;
     public static final int HEIGHT = 1920;
 
-    public GamePanel(Context context){
-        super(context);
+    public GamePanel(Context context,AttributeSet attributeSet){
+        super(context,attributeSet);
 
         //add the callback to the surfaceholder to intercept events
         getHolder().addCallback(this);
@@ -131,6 +136,24 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
     public void setGame(ChessGame game) {
         this.game = game;
         game.setInputHandler(inputHandler); //If we reload a previous game we give it our InputHandler.
+    }
+
+    /**
+     * Depending on the game type create a new game of this type.
+     * @param gameType
+     */
+    public void setGame(GameActivity.GameType gameType) {
+        switch (gameType){  //depeding on the type of game a game object is created
+            case CHESS_PvP:
+                game = new ChessGamePvP(inputHandler);
+                break;
+            case CHESS_PvAI:
+                game = new ChessGamePvAI(inputHandler);
+                break;
+            case PUZZLE:
+                game = new ChessGamePuzzle(inputHandler);
+                break;
+        }
     }
 }
 
