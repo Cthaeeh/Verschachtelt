@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.example.kai.verschachtelt.GamePanel
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/surfaceViewForGame"
+        android:layout_weight="1"
+        android:layout_gravity="top"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:layout_gravity="bottom"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="description of game like puzzle description"
+            android:textColor="@color/decriptionColor"
+            android:textSize="18sp"
+            android:layout_margin="10dp"
+            android:id="@+id/gameDescription" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+            android:layout_margin="10dp"
+            android:layout_below="@id/gameDescription"
+            android:id="@+id/button1" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New Button"
+
+            android:layout_toRightOf="@id/button1"
+            android:layout_alignTop="@id/button1"
+            android:id="@+id/button2" />
+    </RelativeLayout>
+
+</LinearLayout>

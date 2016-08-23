@@ -138,4 +138,9 @@ public class ChessGame implements InputEvent {
         return null;
     };
 
+    public void setInputHandler(InputHandler inputHandler) {
+        this.inputHandler = inputHandler;
+        inputHandler.subscribe(this);
+    }
+
 }

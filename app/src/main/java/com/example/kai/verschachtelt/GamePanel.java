@@ -3,15 +3,19 @@ package com.example.kai.verschachtelt;
 import android.content.Context;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
+import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
+import com.example.kai.verschachtelt.activitys.GameActivity;
 import com.example.kai.verschachtelt.graphics.Background;
 import com.example.kai.verschachtelt.graphics.ChessBoardGraphic;
 import com.example.kai.verschachtelt.graphics.ChessmanGraphic;
-import com.example.kai.verschachtelt.graphics.PawnChangeGraphic;
 import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
+import com.example.kai.verschachtelt.puzzleGame.ChessGamePuzzle;
+import com.example.kai.verschachtelt.pvAIGame.chess_AI.ChessGamePvAI;
+import com.example.kai.verschachtelt.pvpGame.ChessGamePvP;
 
 /**
  * Created by Kai on 28.07.2016.
@@ -21,7 +25,7 @@ import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
  * When it registrates a touch event it uses a TouchnInputHandler Object to change the Game accordingly.
  */
 
-public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
+public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     private MainThread thread;
     protected ChessGame  game;
@@ -31,10 +35,6 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
     private ChessmanGraphic chessmanGraphic;
     protected VictoryScreenGraphic victoryScreenGraphic;
     public static int squareSize;               //The only global variable kind of. It represents the length and width of a squareStates on the boardCurrent.
-    public static int figureChangeSize;         // length of the squares in which the figures for a pawnchange can be chosen
-
-    // try for pawn change by ivayl
-    private PawnChangeGraphic pawnChangeGraphic;
 
     //The position of the touch/ for development
     private int xTouch = 0;
@@ -46,8 +46,8 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
     public static final int WIDTH = 1080;
     public static final int HEIGHT = 1920;
 
-    public GamePanel(Context context){
-        super(context);
+    public GamePanel(Context context,AttributeSet attributeSet){
+        super(context,attributeSet);
 
         //add the callback to the surfaceholder to intercept events
         getHolder().addCallback(this);
@@ -64,8 +64,6 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
         chessBoardGraphic = new ChessBoardGraphic();
         chessmanGraphic = new ChessmanGraphic(BitmapFactory.decodeResource(getResources(),R.drawable.chess_man_symbols));
         victoryScreenGraphic = new VictoryScreenGraphic(BitmapFactory.decodeResource(getResources(),R.drawable.victory_screens));
-        // try for pawn change
-        pawnChangeGraphic = new PawnChangeGraphic(BitmapFactory.decodeResource(getResources(),R.drawable.chess_man_symbols));
 
         thread.setRunning(true);
         thread.start();
@@ -90,32 +88,18 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
     }
 
     @Override
-    public boolean onTouchEvent (MotionEvent event) {
-        xTouch = (int) event.getX();
-        yTouch = (int) event.getY();
-      //  inputHandler.processTouchEvent(event);//Pass it to the inputHandler, so the logic is encapsuled.
-      //  return super.onTouchEvent(event);
-
-           if(pawnChangeGraphic.activated) {
-               inputHandler.processPawnChangeEvent(event);
-               // if the PawnChangeGraphic is activated(meaning it is shown), a touch on the screen activates '
-               // the pawnChangeEvent
-               pawnChangeGraphic.deactivate();
-                 return super.onTouchEvent(event);
-              } else {
-                 inputHandler.processTouchEvent(event);//Pass it to the inputHandler, so the logic is encapsuled.
-                 return super.onTouchEvent(event);
+    public boolean onTouchEvent (MotionEvent event){
+        xTouch = (int)event.getX();
+        yTouch = (int)event.getY();
+        inputHandler.processTouchEvent(event);//Pass it to the inputHandler, so the logic is encapsuled.
+        return super.onTouchEvent(event);
     }
-
-    }
-
 
 
     public void update(double avgFPS){
         //Show some dev info
         background.update(String.valueOf(avgFPS)+" fps " + String.valueOf(xTouch)+"|" +String.valueOf(yTouch) );
         chessmanGraphic.update(game.getSimpleBoard());
-      //  pawnChangeGraphic.update(game.getComplexBoard());
         victoryScreenGraphic.update(game.getWinner());
     }
 
@@ -134,28 +118,42 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
         canvas.restoreToCount(savedState);
 
         if(canvas.getHeight()<canvas.getWidth()) {
-                squareSize = canvas.getHeight()/10;
-                figureChangeSize = canvas.getHeight()/2;
-            // size of the figures, which are shown for a pawn change, better reachable when declared as global variable
-            // needed for interpreting the touchEvent
+                squareSize = canvas.getHeight()/8;
         }else{
-            squareSize = canvas.getWidth()/10;
-            figureChangeSize = canvas.getWidth()/2;
+            squareSize = canvas.getWidth()/8;
         }
-
         //Draw all the components that dont need scaling (they scale them self)
         chessBoardGraphic.draw(canvas);
         chessmanGraphic.draw(canvas);
-        if(game.getComplexBoard().pawnChangePossible()) {
-            pawnChangeGraphic.activate();
-            pawnChangeGraphic.draw(canvas);
-        }
-
         if(game.getWinner()!=null)victoryScreenGraphic.draw(canvas);
     }
 
 
+    public ChessGame getGame() {
+        return game;
+    }
 
+    public void setGame(ChessGame game) {
+        this.game = game;
+        game.setInputHandler(inputHandler); //If we reload a previous game we give it our InputHandler.
+    }
 
+    /**
+     * Depending on the game type create a new game of this type.
+     * @param gameType
+     */
+    public void setGame(GameActivity.GameType gameType) {
+        switch (gameType){  //depeding on the type of game a game object is created
+            case CHESS_PvP:
+                game = new ChessGamePvP(inputHandler);
+                break;
+            case CHESS_PvAI:
+                game = new ChessGamePvAI(inputHandler);
+                break;
+            case PUZZLE:
+                game = new ChessGamePuzzle(inputHandler);
+                break;
+        }
+    }
 }
 
