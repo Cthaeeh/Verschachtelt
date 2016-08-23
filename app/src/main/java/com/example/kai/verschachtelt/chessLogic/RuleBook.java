@@ -186,9 +186,9 @@ public class RuleBook {
      */
     private boolean[] getPossibleLowerPawnMoves(){
         resetPossibleMoves();
-        if(selectedPosition-8>0&&board[selectedPosition-8]==null)possibleMoves[selectedPosition-8]=true;  //Can always move one step forward.
-        if(selectedPosition-9>0&&board[selectedPosition-9]!=null)possibleMoves[selectedPosition-9]=true;     //IF there is a piece he can move diagonal
-        if(selectedPosition-7>0&&board[selectedPosition-7]!=null)possibleMoves[selectedPosition-7]=true;
+        if(selectedPosition-8>=0&&board[selectedPosition-8]==null)possibleMoves[selectedPosition-8]=true;  //Can always move one step forward.
+        if(selectedPosition-9>=0&&board[selectedPosition-9]!=null)possibleMoves[selectedPosition-9]=true;     //IF there is a piece he can move diagonal
+        if(selectedPosition-7>=0&&board[selectedPosition-7]!=null)possibleMoves[selectedPosition-7]=true;
         if(selectedPosition/8==6&&board[selectedPosition-16]==null)possibleMoves[selectedPosition-16]=true; //If he is on starting Position he can move 2
         return possibleMoves;
     }
