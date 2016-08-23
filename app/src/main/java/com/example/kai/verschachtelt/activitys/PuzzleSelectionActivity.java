@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.kai.verschachtelt.DownloadListener;
 import com.example.kai.verschachtelt.PuzzleDownloadTask;
@@ -85,13 +86,25 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
      */
     @Override
     public void onDownloadFinished(String result) {
-        try {
-            puzzleArray.addAll(Puzzle.fromJson(new JSONArray(result)));
-            Collections.sort(puzzleArray);
-            adapter.notifyDataSetChanged();
-        } catch (JSONException e) {
-            e.printStackTrace();
+        if(result.equals("")){
+            showNoInetToast();
+        }else{
+            try {
+                puzzleArray.addAll(Puzzle.fromJson(new JSONArray(result)));
+                Collections.sort(puzzleArray);
+                adapter.notifyDataSetChanged();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    private void showNoInetToast() {
+        CharSequence text = "Something with the Internet went wrong :(";
+        int duration = Toast.LENGTH_LONG;
+
+        Toast toast = Toast.makeText(this, text, duration);
+        toast.show();
     }
 
     /**
