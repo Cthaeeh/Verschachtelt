@@ -52,8 +52,8 @@ public class ChessBoardGraphic {
             int y = (i/4);
             if((i/4)%2==0)x++;
 
-            int left =  (int) (squareSize + x* squareSize);
-            int top  =  (int) (squareSize + y* squareSize);
+            int left =  (int) (x* squareSize);
+            int top  =  (int) (y* squareSize);
             int right = (int) (left+ squareSize);
             int bottom = (int) (top+ squareSize);
 
@@ -71,26 +71,26 @@ public class ChessBoardGraphic {
         int   ptCount = 0;          //Just a counter to go through the array
 
         //vertical lines
-        for(int x=1;x<10;x++){
-            int y = 1;
+        for(int x=0;x<9;x++){
+            int y = 0;
             pts[ptCount]=x*squareSize;
             ptCount++;
             pts[ptCount]=y*squareSize;
             ptCount++;
-            y = 9;
+            y = 8;
             pts[ptCount]=x*squareSize;
             ptCount++;
             pts[ptCount]=y*squareSize;
             ptCount++;
         }
         //horizontal lines
-        for(int y=1;y<10;y++){
-            int x = 1;
+        for(int y=0;y<9;y++){
+            int x = 0;
             pts[ptCount]=x*squareSize;
             ptCount++;
             pts[ptCount]=y*squareSize;
             ptCount++;
-            x = 9;
+            x = 8;
             pts[ptCount]=x*squareSize;
             ptCount++;
             pts[ptCount]=y*squareSize;

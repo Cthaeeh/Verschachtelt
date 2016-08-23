@@ -113,9 +113,9 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
         canvas.restoreToCount(savedState);
 
         if(canvas.getHeight()<canvas.getWidth()) {
-                squareSize = canvas.getHeight()/10;
+                squareSize = canvas.getHeight()/8;
         }else{
-            squareSize = canvas.getWidth()/10;
+            squareSize = canvas.getWidth()/8;
         }
         //Draw all the components that dont need scaling (they scale them self)
         chessBoardGraphic.draw(canvas);
@@ -130,6 +130,7 @@ public abstract class GamePanel extends SurfaceView implements SurfaceHolder.Cal
 
     public void setGame(ChessGame game) {
         this.game = game;
+        game.setInputHandler(inputHandler); //If we reload a previous game we give it our InputHandler.
     }
 }
 

@@ -19,6 +19,7 @@ import com.example.kai.verschachtelt.chessLogic.Chessman;
 public class ChessmanGraphic {
 
     private int squareSize;                              //The length / width of a squareStates on the boardCurrent.
+    private boolean drawnFirstTime = true;
     //The thickness of the frame around a squareStates in hundredth of squareSize.
     private final int STROKE_WIDTH = 4; //TODO make this a dimen ressource
     private final int normalFrameColor = ContextCompat.getColor(MainActivity.getContext(), R.color.normalFrameColor);
@@ -48,6 +49,10 @@ public class ChessmanGraphic {
 
     public void draw(Canvas canvas){
         squareSize = GamePanel.squareSize;                                    //length/width of a squareStates of the chess boardCurrent. Kind of global variable. Muste be changed.
+        if(drawnFirstTime){
+            scaleImages();
+            drawnFirstTime=false;
+        }
         int deviceIndependentStrokeWidth = (squareSize /100)*STROKE_WIDTH;    //stepwidth is screen size sensitive -> deviceIndependentStrokewith is now as well.
         paint.setStrokeWidth(deviceIndependentStrokeWidth);
         //draw all pieces and their frames
@@ -75,14 +80,14 @@ public class ChessmanGraphic {
     }
     //Calculate the X position on the screen where a chessPiece must be drawn.
     private int getX(int position){
-        return squareSize + (position%8)* squareSize;
+        return (position%8)* squareSize;
     }
 
     /**
      * Calculate the Y position on the screen where a chessPiece must be drawn.
      */
     private int getY(int position){
-        return squareSize + (position/8)* squareSize;
+        return (position/8)* squareSize;
     }
 
     private Bitmap getChessManImage(Chessman chessman){
@@ -126,4 +131,19 @@ public class ChessmanGraphic {
         imageWhitePawn = Bitmap.createBitmap(imageChessmen,960-cropSize , 265  ,cropSize,cropSize);
     }
 
+    private void scaleImages(){
+        imageBlackRook = Bitmap.createScaledBitmap(imageBlackRook, squareSize, squareSize, false);
+        imageBlackKnight = Bitmap.createScaledBitmap(imageBlackKnight, squareSize, squareSize, false);
+        imageBlackBishop = Bitmap.createScaledBitmap(imageBlackBishop, squareSize, squareSize, false);
+        imageBlackQueen = Bitmap.createScaledBitmap(imageBlackQueen, squareSize, squareSize, false);
+        imageBlackKing = Bitmap.createScaledBitmap(imageBlackKing, squareSize, squareSize, false);
+        imageBlackPawn = Bitmap.createScaledBitmap(imageBlackPawn, squareSize, squareSize, false);
+
+        imageWhiteRook = Bitmap.createScaledBitmap(imageWhiteRook, squareSize, squareSize, false);
+        imageWhiteKnight = Bitmap.createScaledBitmap(imageWhiteKnight, squareSize, squareSize, false);
+        imageWhiteBishop = Bitmap.createScaledBitmap(imageWhiteBishop, squareSize, squareSize, false);
+        imageWhiteQueen = Bitmap.createScaledBitmap(imageWhiteQueen, squareSize, squareSize, false);
+        imageWhiteKing = Bitmap.createScaledBitmap(imageWhiteKing, squareSize, squareSize, false);
+        imageWhitePawn = Bitmap.createScaledBitmap(imageWhitePawn, squareSize, squareSize, false);
+    }
 }

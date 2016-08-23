@@ -33,8 +33,9 @@ public class InputHandler {
      * @return  an Integer representing the squareStates on the chess Board
      */
     private int getPositionOnBoard(float x,float y){
-        if(x<squareSize || y < squareSize || x > squareSize*9 || y > squareSize*9) return -1; //Touch event was not on the chess Board.
-        int position = (((int)(x-squareSize)/(int)(squareSize))+(8*((int)(y-squareSize)/(int)squareSize)));//Translate to Position on Board
+        squareSize = GamePanel.squareSize;
+        if(x<0 || y < 0 || x > squareSize*8 || y > squareSize*8) return -1; //Touch event was not on the chess Board.
+        int position = (((int)(x)/(int)(squareSize))+(8*((int)(y)/(int)squareSize)));//Translate to Position on Board
         return position;
 
     }
