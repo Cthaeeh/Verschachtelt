@@ -1,13 +1,12 @@
 package com.example.kai.verschachtelt.graphics;
 
-import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Rect;
-import android.view.View;
+import android.graphics.Paint;
+import android.support.v4.content.ContextCompat;
 
-import com.example.kai.verschachtelt.chessLogic.ChessBoardComplex;
+import com.example.kai.verschachtelt.R;
+import com.example.kai.verschachtelt.activitys.MainActivity;
 
 /**
  * Created by ivayl on 14.08.2016.
@@ -18,43 +17,68 @@ public class PawnChangeGraphic {
 
     private Bitmap imageWhiteRook, imageWhiteKnight, imageWhiteBishop, imageWhiteQueen,
                    imageBlackRook, imageBlackKnight, imageBlackBishop, imageBlackQueen;
+    private Paint paint;
+    private final int frameColor = ContextCompat.getColor(MainActivity.getContext(), R.color.pawnChangeFrameColor);
+    private final int backgroundColor = ContextCompat.getColor(MainActivity.getContext(), R.color.pawnChangeBackgroundColor);
 
     private final int cropSize = 92;
 
-    public boolean activated; // a bool value which shows, if the graphic is drawn
-
-   // private ChessBoardComplex complex;
-
-
+    public boolean isActivated; // a bool value which shows, if the graphic is drawn
 
     public PawnChangeGraphic(Bitmap map) {
 
         extractImages(map);
-        this.activated = false;
-       // complex = new ChessBoardComplex();
-
+        this.isActivated = false;
+        paint = new Paint();
+        paint.setStrokeWidth(18);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(frameColor);
     }
 
+    public void draw(Canvas canvas) {
 
+        drawBackground(canvas);
 
-public void draw(Canvas canvas) {
+        int imgSize = getShorterSide(canvas)/2;
+        // draw the Queen
+        canvas.drawBitmap(Bitmap.createScaledBitmap(imageBlackQueen, imgSize, imgSize, false),0,0,null);
+        // draw the Rook
+        canvas.drawBitmap(Bitmap.createScaledBitmap(imageBlackRook, imgSize, imgSize, false),imgSize,0,null);
+        //draw the bishop
+        canvas.drawBitmap(Bitmap.createScaledBitmap(imageBlackBishop, imgSize, imgSize, false),0,imgSize,null);
+        //draw the knight
+        canvas.drawBitmap(Bitmap.createScaledBitmap(imageBlackKnight, imgSize, imgSize, false),imgSize,imgSize,null);
 
+        drawFrames(canvas);
+    }
 
-    // draw the Queen
-    canvas.drawBitmap(Bitmap.createScaledBitmap(imageBlackQueen, getShorterSide(canvas)/2, getShorterSide(canvas)/2, false),0,0,null);
-    // draw the Rook
-    canvas.drawBitmap(Bitmap.createScaledBitmap(imageBlackRook, getShorterSide(canvas)/2, getShorterSide(canvas)/2, false),getShorterSide(canvas)/2,0,null);
-    //draw the bishop
-    canvas.drawBitmap(Bitmap.createScaledBitmap(imageBlackBishop, getShorterSide(canvas)/2, getShorterSide(canvas)/2, false),0,getShorterSide(canvas)/2,null);
-    //draw the knight
-    canvas.drawBitmap(Bitmap.createScaledBitmap(imageBlackKnight, getShorterSide(canvas)/2, getShorterSide(canvas)/2, false),getShorterSide(canvas)/2,getShorterSide(canvas)/2,null);
+    /**
+     * Draws some frames arround the chessmen
+     * @param canvas
+     */
+    private void drawFrames(Canvas canvas) {
+        int imgSize = getShorterSide(canvas)/2;
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setColor(frameColor);
+        canvas.drawRect(0,0,imgSize,imgSize,paint);
+        canvas.drawRect(imgSize,0,2*imgSize,imgSize,paint);
+        canvas.drawRect(0,imgSize,imgSize,2*imgSize,paint);
+        canvas.drawRect(imgSize,imgSize,2*imgSize,2*imgSize,paint);
+    }
 
-}
+    /**
+     * Draws a Background for the chessmen (that you can choose from)
+     * @param canvas
+     */
+    private void drawBackground(Canvas canvas) {
+        int imgSize = getShorterSide(canvas)/2;
+        paint.setStyle(Paint.Style.FILL);
+        paint.setColor(backgroundColor);
+        canvas.drawRect(0,0,2*imgSize,2*imgSize,paint);
+    }
 
-    public void update(ChessBoardComplex board) {
-
-      //  this.complex = board;
-
+    public void update(boolean isActivated) {
+        this.isActivated = isActivated;
     }
 
     private void extractImages(Bitmap imageChessmen) {
@@ -79,10 +103,11 @@ public void draw(Canvas canvas) {
     }
 
     public void activate(){
-        this.activated = true;
+        this.isActivated = true;
     }
 
     public void deactivate() {
-        this.activated = false;
+        this.isActivated = false;
     }
+
 }

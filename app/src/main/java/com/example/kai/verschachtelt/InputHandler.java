@@ -15,9 +15,6 @@ public class InputHandler {
     private float figureChangeSize;
     private InputEvent inputEvent;
 
-    public InputHandler(){
-    }
-
     public void processTouchEvent(MotionEvent event){
 
         squareSize = GamePanel.squareSize;

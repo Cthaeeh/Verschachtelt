@@ -37,7 +37,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     protected VictoryScreenGraphic victoryScreenGraphic;
 
     private PawnChangeGraphic pawnChangeGraphic;
-    public static int squareSize;               //The only global variable kind of. It represents the length and width of a squareStates on the boardCurrent.
+    public static int squareSize;               //The only global variable kind of. It represents the length and width of a square on the boardCurrent.
     public static int figureChangeSize;
 
     //The position of the touch/ for development
@@ -93,25 +93,24 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public boolean onTouchEvent (MotionEvent event){
-        // if the pawnChangeGraphic is activated, it will be drawn, therefore we have to use the
-        // processPawnChangeEvent
-        if(pawnChangeGraphic.activated){
-            pawnChangeGraphic.deactivate();
-            inputHandler.processPawnChangeEvent(event);
-            return super.onTouchEvent(event);
-        }
         xTouch = (int)event.getX();
         yTouch = (int)event.getY();
-        inputHandler.processTouchEvent(event);//Pass it to the inputHandler, so the logic is encapsuled.
+
+        // Depending on whether the pawnChangeGraphic is activated a different inputHandler method is choosen.
+        if(pawnChangeGraphic.isActivated){
+            inputHandler.processPawnChangeEvent(event);
+        }else{
+            inputHandler.processTouchEvent(event);//Pass it to the inputHandler, so the logic is encapsuled.
+        }
         return super.onTouchEvent(event);
     }
-
 
     public void update(double avgFPS){
         //Show some dev info
         background.update(String.valueOf(avgFPS)+" fps " + String.valueOf(xTouch)+"|" +String.valueOf(yTouch) );
         chessmanGraphic.update(game.getSimpleBoard());
         victoryScreenGraphic.update(game.getWinner());
+        pawnChangeGraphic.update(game.getComplexBoard().pawnChangePossible());
     }
 
     @Override
@@ -140,11 +139,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         //Draw all the components that dont need scaling (they scale them self)
         chessBoardGraphic.draw(canvas);
         chessmanGraphic.draw(canvas);
-        if(game.getComplexBoard().pawnChangePossible()) {
-            pawnChangeGraphic.activate();
-            pawnChangeGraphic.draw(canvas);
-        }
-        if(game.getWinner()!=null)victoryScreenGraphic.draw(canvas);
+        if(pawnChangeGraphic.isActivated) pawnChangeGraphic.draw(canvas);
+        if(game.getWinner()!=null)        victoryScreenGraphic.draw(canvas);
     }
 
 

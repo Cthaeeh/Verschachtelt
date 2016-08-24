@@ -11,14 +11,15 @@ public class ChessBoardComplex extends ChessBoardSimple {
     private static RuleBook ruleBook = new RuleBook();                  //There is just one Rulebook for every game of chess.
     private boolean[] possibleDestinations = new boolean[64];           //It is either possible to move there or not.
     private Chessman.Color playerOnTurn;
-    private Castling castling;
+    private Castling castling;                                          //Is used to encapsule the logic for castling
+    private PawnChangeManager pawnChangeManager;                        //Is used to encapsule the logic for pawn changing.
 
-
-
+    //Constructors.
     public ChessBoardComplex(){
         super();
         playerOnTurn = Chessman.Color.WHITE;    //Always white when start
         castling = new Castling(chessmen);
+        pawnChangeManager = new PawnChangeManager(chessmen);
     }
 
     /**
@@ -30,6 +31,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
         selectedPosition = board.selectedPosition;
         playerOnTurn = board.playerOnTurn;
         castling = new Castling(board.castling);
+        pawnChangeManager = new PawnChangeManager(board.pawnChangeManager);
     }
 
     /**
@@ -38,11 +40,14 @@ public class ChessBoardComplex extends ChessBoardSimple {
      */
     public ChessBoardComplex(String fenNotation) {
         super();    //create Normal chessBoard.
-        chessmen = FENParser.getChessmen(fenNotation);    //Set the chessmen to the positions from the notation.
-        playerOnTurn = FENParser.getColor(fenNotation);   //Get the color of the player that has to move.
+        chessmen = FENParser.getChessmen(fenNotation);      //Set the chessmen to the positions from the notation.
+        playerOnTurn = FENParser.getColor(fenNotation);     //Get the color of the player that has to move.
         castling = FENParser.getCastlingState(fenNotation);
+        pawnChangeManager = new PawnChangeManager(chessmen);//There is no info about pawn changes in the FEN
     }
 
+
+    //Methods.
     /**
      * If the user selected a square this is saved in selectedPosition and possible Destinations are marked.
      * @param position  where the user touched.
@@ -149,6 +154,12 @@ public class ChessBoardComplex extends ChessBoardSimple {
         else playerOnTurn= Chessman.Color.BLACK;
     }
 
+    /**
+     * Adds (combines) two boolean array in a way: result[i] = array1[i]||array2[i]
+     * @param array1
+     * @param array2
+     * @return
+     */
     private boolean[] combine(boolean[] array1, boolean[] array2) {
         //Combine both possibleDestinations
         for(int i = 0;i<64;i++){
@@ -157,134 +168,29 @@ public class ChessBoardComplex extends ChessBoardSimple {
         return array2;
     }
 
-
-    // check, if a pawn change is possible
+    /**
+     *     checks, if a pawn change is possible
+     */
     public boolean pawnChangePossible() {
-
-        for(int j = 0; j < 8; j++) {
-         //   if (chessmen[j].equals(new Chessman(Chessman.Piece.PAWN, Chessman.Color.WHITE)) == true) {
-         //
-         //       return true;
-         //   }
-
-            if(chessmen[j] == null) {
-                j++;
-            }
-
-            switch (chessmen[j].getPiece()) {
-
-                case PAWN:
-                    if(chessmen[j].getColor() == Chessman.Color.WHITE) {
-                        return true;
-                    }
-
-                case ROOK:
-                case KNIGHT:
-                case BISHOP:
-                case QUEEN:
-                case KING:
-
-                    j++;
-            }
-        }
-
-
-
-
-        for (int j = 56; j<64; j++) {
-           // if(chessmen[j].equals(new Chessman(Chessman.Piece.PAWN, Chessman.Color.BLACK)) == true) {
-            //return true;
-            // }
-            if(chessmen[j] == null) {
-                j++;
-            }
-
-            switch (chessmen[j].getPiece()) {
-
-                case PAWN:
-                    if(chessmen[j].getColor() == Chessman.Color.BLACK) {
-                        return true;
-                    }
-
-                case ROOK:
-                case KNIGHT:
-                case BISHOP:
-                case QUEEN:
-                case KING:
-
-                    j++;
-            }
-
-
-
-        }
-        return false;   //false, if there is no pawn in first/last row
+        return pawnChangeManager.isPawnChangePossible(chessmen);
     }
 
-    // check and return the position, where a pawn is waiting to be changed
+    /**
+     *  check and return the position, where a pawn is waiting to be changed
+      */
     public int pawnChangePosition(){
-        for(int j = 0; j < 8; j++) {
-           // if (chessmen[j].equals(new Chessman(Chessman.Piece.PAWN, Chessman.Color.WHITE)) == true) {
-
-           //     return j;
-           // }
-
-            if(chessmen[j] == null) {
-                j++;
-            }
-
-            switch (chessmen[j].getPiece()) {
-
-                case PAWN:
-                    if(chessmen[j].getColor() == Chessman.Color.WHITE) {
-                        return j;
-                    }
-
-                case ROOK:
-                case KNIGHT:
-                case BISHOP:
-                case QUEEN:
-                case KING:
-
-                    j++;
-            }
-        }
-        for(int j = 56; j < 64; j++) {
-           // if(chessmen[j].equals(new Chessman(Chessman.Piece.PAWN, Chessman.Color.BLACK)) == true) {
-
-           //     return j;
-           // }
-
-            if(chessmen[j] == null) {
-                j++;
-            }
-
-            switch (chessmen[j].getPiece()) {
-
-                case PAWN:
-                    if(chessmen[j].getColor() == Chessman.Color.BLACK) {
-                        return j;
-                    }
-
-                case ROOK:
-                case KNIGHT:
-                case BISHOP:
-                case QUEEN:
-                case KING:
-
-                    j++;
-            }
-        }
-
-        return -1;   // -1, if there is no such position
-
+             return pawnChangeManager.getPawnChangePosition(chessmen);
     }
 
-
+    /**
+     * Exchanges the pawn at position "position" with newMan.
+     * @param position
+     * @param newMan
+     */
     public void switchPawn(int position, Chessman newMan) {
-
         chessmen[position] = newMan;
 
+        chessmen[position].notifyMove();
     }
 
 
