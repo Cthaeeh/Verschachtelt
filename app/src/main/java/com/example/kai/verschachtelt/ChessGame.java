@@ -3,6 +3,7 @@ package com.example.kai.verschachtelt;
 import com.example.kai.verschachtelt.chessLogic.ChessBoardComplex;
 import com.example.kai.verschachtelt.chessLogic.ChessBoardSimple;
 import com.example.kai.verschachtelt.chessLogic.ChessBoardSimple.SquareState;
+import com.example.kai.verschachtelt.chessLogic.Chessman;
 import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
 
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ public class ChessGame implements InputEvent {
     private List<ChessBoardComplex> boardHistory = new ArrayList<>();
     //Number of moves performed by both players.
     protected int moveCounter = 0;
+
+    private Chessman.Color changing; // for switchpawn
 
     public ChessGame(InputHandler inputHandler){
         this.inputHandler = inputHandler;
@@ -63,6 +66,38 @@ public class ChessGame implements InputEvent {
 
     }
 
+    public void handleTouchOnFigure(float x, float y, float shorterSide) {
+
+
+        if(boardCurrent.getPlayerOnTurn() == Chessman.Color.BLACK){
+            changing = Chessman.Color.WHITE;
+        } else {
+            changing = Chessman.Color.BLACK;
+
+        }
+        if(x < shorterSide & y < shorterSide){
+            // draw a queen, if screen was touched top left
+            Chessman newQueen = new Chessman(Chessman.Piece.QUEEN, changing);
+            boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newQueen);
+        }
+        if(x >= shorterSide & y < shorterSide) {
+            // draw a rook, if screen was touched top right
+            Chessman newRook = new Chessman(Chessman.Piece.ROOK,changing);
+            boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newRook);
+        }
+        if(x < shorterSide & y > shorterSide) {
+            //draw a bishop, if screen was touched bottom left
+            Chessman newBishop = new Chessman(Chessman.Piece.BISHOP, changing);
+            boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newBishop);
+        }
+
+        if(x > shorterSide & y > shorterSide) {
+            //draw a knight, if screen was touched bottom right
+            Chessman newKnight = new Chessman(Chessman.Piece.KNIGHT, changing);
+            boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newKnight);
+        }
+    }
+
     @Override
     public void handleUndoButton() {
         if(moveCounter>0){      //If there has been at least one move.
@@ -96,6 +131,8 @@ public class ChessGame implements InputEvent {
     public ChessBoardSimple getSimpleBoard(){
         return boardCurrent;
     }
+
+    public ChessBoardComplex getComplexBoard() { return boardCurrent; }
 
     public VictoryScreenGraphic.VictoryState getWinner(){
         return null;

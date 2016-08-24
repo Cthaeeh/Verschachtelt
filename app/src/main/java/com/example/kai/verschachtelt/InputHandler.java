@@ -12,17 +12,37 @@ import com.example.kai.verschachtelt.chessLogic.ChessBoardSimple;
 public class InputHandler {
 
     private float squareSize;
+    private float figureChangeSize;
     private InputEvent inputEvent;
 
     public InputHandler(){
     }
 
     public void processTouchEvent(MotionEvent event){
+
         squareSize = GamePanel.squareSize;
         float x = event.getX();
         float y = event.getY();
         Integer position = getPositionOnBoard(x,y);
         inputEvent.handleTouchOnSquare(position);
+    }
+
+    /**
+     * this method activates the handling of a touch on the screen and is
+     * meant to be used only for a touch, happening while the
+     * PawnChangeGraphic is shown.
+     * @param event: detected event, in this case a touch on the screen
+     */
+    public void processPawnChangeEvent(MotionEvent event) {
+
+        /**size of a square on the PawnChangeGraphic, in which
+         * the figures to be chosen from are shown
+         */
+        figureChangeSize = GamePanel.figureChangeSize;
+        float x = event.getX();
+        float y = event.getY();
+
+        inputEvent.handleTouchOnFigure(x,y,figureChangeSize);
     }
 
     /**

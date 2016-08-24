@@ -13,6 +13,8 @@ public class ChessBoardComplex extends ChessBoardSimple {
     private Chessman.Color playerOnTurn;
     private Castling castling;
 
+
+
     public ChessBoardComplex(){
         super();
         playerOnTurn = Chessman.Color.WHITE;    //Always white when start
@@ -154,4 +156,136 @@ public class ChessBoardComplex extends ChessBoardSimple {
         }
         return array2;
     }
+
+
+    // check, if a pawn change is possible
+    public boolean pawnChangePossible() {
+
+        for(int j = 0; j < 8; j++) {
+         //   if (chessmen[j].equals(new Chessman(Chessman.Piece.PAWN, Chessman.Color.WHITE)) == true) {
+         //
+         //       return true;
+         //   }
+
+            if(chessmen[j] == null) {
+                j++;
+            }
+
+            switch (chessmen[j].getPiece()) {
+
+                case PAWN:
+                    if(chessmen[j].getColor() == Chessman.Color.WHITE) {
+                        return true;
+                    }
+
+                case ROOK:
+                case KNIGHT:
+                case BISHOP:
+                case QUEEN:
+                case KING:
+
+                    j++;
+            }
+        }
+
+
+
+
+        for (int j = 56; j<64; j++) {
+           // if(chessmen[j].equals(new Chessman(Chessman.Piece.PAWN, Chessman.Color.BLACK)) == true) {
+            //return true;
+            // }
+            if(chessmen[j] == null) {
+                j++;
+            }
+
+            switch (chessmen[j].getPiece()) {
+
+                case PAWN:
+                    if(chessmen[j].getColor() == Chessman.Color.BLACK) {
+                        return true;
+                    }
+
+                case ROOK:
+                case KNIGHT:
+                case BISHOP:
+                case QUEEN:
+                case KING:
+
+                    j++;
+            }
+
+
+
+        }
+        return false;   //false, if there is no pawn in first/last row
+    }
+
+    // check and return the position, where a pawn is waiting to be changed
+    public int pawnChangePosition(){
+        for(int j = 0; j < 8; j++) {
+           // if (chessmen[j].equals(new Chessman(Chessman.Piece.PAWN, Chessman.Color.WHITE)) == true) {
+
+           //     return j;
+           // }
+
+            if(chessmen[j] == null) {
+                j++;
+            }
+
+            switch (chessmen[j].getPiece()) {
+
+                case PAWN:
+                    if(chessmen[j].getColor() == Chessman.Color.WHITE) {
+                        return j;
+                    }
+
+                case ROOK:
+                case KNIGHT:
+                case BISHOP:
+                case QUEEN:
+                case KING:
+
+                    j++;
+            }
+        }
+        for(int j = 56; j < 64; j++) {
+           // if(chessmen[j].equals(new Chessman(Chessman.Piece.PAWN, Chessman.Color.BLACK)) == true) {
+
+           //     return j;
+           // }
+
+            if(chessmen[j] == null) {
+                j++;
+            }
+
+            switch (chessmen[j].getPiece()) {
+
+                case PAWN:
+                    if(chessmen[j].getColor() == Chessman.Color.BLACK) {
+                        return j;
+                    }
+
+                case ROOK:
+                case KNIGHT:
+                case BISHOP:
+                case QUEEN:
+                case KING:
+
+                    j++;
+            }
+        }
+
+        return -1;   // -1, if there is no such position
+
+    }
+
+
+    public void switchPawn(int position, Chessman newMan) {
+
+        chessmen[position] = newMan;
+
+    }
+
+
 }
