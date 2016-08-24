@@ -66,36 +66,30 @@ public class ChessGame implements InputEvent {
 
     }
 
-    public void handleTouchOnFigure(float x, float y, float shorterSide) {
-
-
+    public void handleTouchOnChessman(Chessman.Piece chessman) {
         if(boardCurrent.getPlayerOnTurn() == Chessman.Color.BLACK){
             changing = Chessman.Color.WHITE;
         } else {
             changing = Chessman.Color.BLACK;
-
         }
-        if(x < shorterSide & y < shorterSide){
-            // draw a queen, if screen was touched top left
-            Chessman newQueen = new Chessman(Chessman.Piece.QUEEN, changing);
-            boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newQueen);
-        }
-        if(x >= shorterSide & y < shorterSide) {
-            // draw a rook, if screen was touched top right
-            Chessman newRook = new Chessman(Chessman.Piece.ROOK,changing);
-            boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newRook);
-        }
-        if(x < shorterSide & y > shorterSide) {
-            //draw a bishop, if screen was touched bottom left
-            Chessman newBishop = new Chessman(Chessman.Piece.BISHOP, changing);
-            boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newBishop);
-        }
-
-        if(x > shorterSide & y > shorterSide) {
-            //draw a knight, if screen was touched bottom right
-            Chessman newKnight = new Chessman(Chessman.Piece.KNIGHT, changing);
-            boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newKnight);
-        }
+            switch (chessman){
+                case QUEEN:
+                    Chessman newQueen = new Chessman(Chessman.Piece.QUEEN, changing);
+                    boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newQueen);
+                    break;
+                case ROOK:
+                    Chessman newRook = new Chessman(Chessman.Piece.ROOK,changing);
+                    boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newRook);
+                    break;
+                case BISHOP:
+                    Chessman newBishop = new Chessman(Chessman.Piece.BISHOP, changing);
+                    boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newBishop);
+                    break;
+                case KNIGHT:
+                    Chessman newKnight = new Chessman(Chessman.Piece.KNIGHT, changing);
+                    boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newKnight);
+                    break;
+            }
     }
 
     @Override

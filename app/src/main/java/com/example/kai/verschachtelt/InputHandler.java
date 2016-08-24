@@ -2,8 +2,7 @@ package com.example.kai.verschachtelt;
 
 import android.view.MotionEvent;
 
-import com.example.kai.verschachtelt.chessLogic.ChessBoardComplex;
-import com.example.kai.verschachtelt.chessLogic.ChessBoardSimple;
+import com.example.kai.verschachtelt.chessLogic.Chessman;
 
 /**
  * Created by Kai on 09.08.2016.
@@ -31,15 +30,21 @@ public class InputHandler {
      * @param event: detected event, in this case a touch on the screen
      */
     public void processPawnChangeEvent(MotionEvent event) {
-
-        /**size of a square on the PawnChangeGraphic, in which
-         * the figures to be chosen from are shown
-         */
-        figureChangeSize = GamePanel.figureChangeSize;
         float x = event.getX();
         float y = event.getY();
-
-        inputEvent.handleTouchOnFigure(x,y,figureChangeSize);
+        float imgSize = 4*GamePanel.squareSize;
+        if(0 < x && x < imgSize && 0<y  && y < imgSize){
+            inputEvent.handleTouchOnChessman(Chessman.Piece.QUEEN);
+        }
+        if(imgSize < x && x < 2*imgSize && 0<y  && y < imgSize) {
+            inputEvent.handleTouchOnChessman(Chessman.Piece.ROOK);
+        }
+        if(0 < x && x < imgSize && imgSize<y  && y < 2*imgSize) {
+            inputEvent.handleTouchOnChessman(Chessman.Piece.BISHOP);
+        }
+        if(imgSize < x && x < 2*imgSize && imgSize<y  && y < 2*imgSize) {
+            inputEvent.handleTouchOnChessman(Chessman.Piece.KNIGHT);
+        }
     }
 
     /**
