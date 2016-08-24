@@ -13,6 +13,6 @@
     <color name="possibleKillFrameColor">#d50000</color>
     <color name="decriptionColor">#000000</color>
 
-    <color name="pawnChangeFrameColor">#d50000</color>
+    <color name="pawnChangeFrameColor">#311b92</color>
     <color name="pawnChangeBackgroundColor">#ffffff</color>
 </resources>

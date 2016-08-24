@@ -19,6 +19,7 @@ public class Puzzle implements Comparable<Puzzle>{
     private String  name;
     private String  difficultyAsText;
     private Integer difficultyAsInt = 0;
+    private boolean isSolved = false; //By default not solved.
 
     private int    fullMoves;
     private ChessBoardComplex[] positions;
@@ -99,4 +100,7 @@ public class Puzzle implements Comparable<Puzzle>{
         return  this.difficultyAsInt.compareTo(puzzle.difficultyAsInt);
     }
 
+    public boolean getSolved() {
+        return isSolved;
+    }
 }

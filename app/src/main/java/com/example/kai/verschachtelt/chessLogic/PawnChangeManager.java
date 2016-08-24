@@ -26,53 +26,12 @@ public class PawnChangeManager {
      */
     public boolean isPawnChangePossible(Chessman[] chessmen) {
         for(int j = 0; j < 8; j++) {
-            if(chessmen[j] == null) {
-                j++;
+            if (chessmen[j] != null) {
+                if (chessmen[j].getPiece() == Chessman.Piece.PAWN) return true;
             }
-
-            switch (chessmen[j].getPiece()) {
-
-                case PAWN:
-                    if(chessmen[j].getColor() == Chessman.Color.WHITE) {
-                        return true;
-                    }
-
-                case ROOK:
-                case KNIGHT:
-                case BISHOP:
-                case QUEEN:
-                case KING:
-
-                    j++;
+            if (chessmen[56+j] !=null){
+                if (chessmen[56+j].getPiece() == Chessman.Piece.PAWN) return true;
             }
-        }
-
-
-
-
-        for (int j = 56; j<64; j++) {
-            if(chessmen[j] == null) {
-                j++;
-            }
-
-            switch (chessmen[j].getPiece()) {
-
-                case PAWN:
-                    if(chessmen[j].getColor() == Chessman.Color.BLACK) {
-                        return true;
-                    }
-
-                case ROOK:
-                case KNIGHT:
-                case BISHOP:
-                case QUEEN:
-                case KING:
-
-                    j++;
-            }
-
-
-
         }
         return false;   //false, if there is no pawn in first/last row
     }
@@ -84,59 +43,14 @@ public class PawnChangeManager {
      */
     public int getPawnChangePosition(Chessman[] chessmen) {
         for(int j = 0; j < 8; j++) {
-            // if (chessmen[j].equals(new Chessman(Chessman.Piece.PAWN, Chessman.Color.WHITE)) == true) {
-
-            //     return j;
-            // }
-
-            if(chessmen[j] == null) {
-                j++;
+            if (chessmen[j] != null) {
+                if (chessmen[j].getPiece() == Chessman.Piece.PAWN) return j;
             }
-
-            switch (chessmen[j].getPiece()) {
-
-                case PAWN:
-                    if(chessmen[j].getColor() == Chessman.Color.WHITE) {
-                        return j;
-                    }
-
-                case ROOK:
-                case KNIGHT:
-                case BISHOP:
-                case QUEEN:
-                case KING:
-
-                    j++;
+            if (chessmen[56+j] !=null){
+                if (chessmen[56+j].getPiece() == Chessman.Piece.PAWN) return 56+j;
             }
         }
-        for(int j = 56; j < 64; j++) {
-            // if(chessmen[j].equals(new Chessman(Chessman.Piece.PAWN, Chessman.Color.BLACK)) == true) {
-
-            //     return j;
-            // }
-
-            if(chessmen[j] == null) {
-                j++;
-            }
-
-            switch (chessmen[j].getPiece()) {
-
-                case PAWN:
-                    if(chessmen[j].getColor() == Chessman.Color.BLACK) {
-                        return j;
-                    }
-
-                case ROOK:
-                case KNIGHT:
-                case BISHOP:
-                case QUEEN:
-                case KING:
-
-                    j++;
-            }
-        }
-
-        return -1;   // -1, if there is no such position
+        return -1;  // -1, if there is no such position
 
     }
 

@@ -99,6 +99,9 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
         }
     }
 
+    /**
+     * Shows a toast that informs the user that something with the Internet went wrong.
+     */
     private void showNoInetToast() {
         CharSequence text = "Something with the Internet went wrong :(";
         int duration = Toast.LENGTH_LONG;

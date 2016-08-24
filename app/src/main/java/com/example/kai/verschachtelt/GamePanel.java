@@ -38,7 +38,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     private PawnChangeGraphic pawnChangeGraphic;
     public static int squareSize;               //The only global variable kind of. It represents the length and width of a square on the boardCurrent.
-    public static int figureChangeSize;
 
     //The position of the touch/ for development
     private int xTouch = 0;
@@ -129,12 +128,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
         if(canvas.getHeight()<canvas.getWidth()) {
                 squareSize = canvas.getHeight()/8;
-                figureChangeSize = canvas.getHeight()/2;
-            // size of the figures, which are shown for a pawn change, better reachable when declared as global variable
-            // needed for interpreting the touchEvent
         }else{
             squareSize = canvas.getWidth()/8;
-            figureChangeSize = canvas.getWidth()/2;
         }
         //Draw all the components that dont need scaling (they scale them self)
         chessBoardGraphic.draw(canvas);

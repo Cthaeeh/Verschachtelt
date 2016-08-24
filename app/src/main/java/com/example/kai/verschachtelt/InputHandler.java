@@ -24,8 +24,9 @@ public class InputHandler {
     }
 
     /**
-     * this method activates the handling of a touch on the screen and is
-     * meant to be used only for a touch, happening while the
+     * this method calculates on which chessman (from PawnChangeGraphic you touched) and tells
+     * the ChessGame that.
+     * Meant to be used only for a touch, happening while the
      * PawnChangeGraphic is shown.
      * @param event: detected event, in this case a touch on the screen
      */
@@ -33,16 +34,16 @@ public class InputHandler {
         float x = event.getX();
         float y = event.getY();
         float imgSize = 4*GamePanel.squareSize;
-        if(0 < x && x < imgSize && 0<y  && y < imgSize){
+        if(0 < x && x < imgSize && 0<y  && y < imgSize){            //upper left edge
             inputEvent.handleTouchOnChessman(Chessman.Piece.QUEEN);
         }
-        if(imgSize < x && x < 2*imgSize && 0<y  && y < imgSize) {
+        if(imgSize < x && x < 2*imgSize && 0<y  && y < imgSize) {   //upper right edge
             inputEvent.handleTouchOnChessman(Chessman.Piece.ROOK);
         }
-        if(0 < x && x < imgSize && imgSize<y  && y < 2*imgSize) {
+        if(0 < x && x < imgSize && imgSize<y  && y < 2*imgSize) {   //lower left edge
             inputEvent.handleTouchOnChessman(Chessman.Piece.BISHOP);
         }
-        if(imgSize < x && x < 2*imgSize && imgSize<y  && y < 2*imgSize) {
+        if(imgSize < x && x < 2*imgSize && imgSize<y  && y < 2*imgSize) {//lower right edge
             inputEvent.handleTouchOnChessman(Chessman.Piece.KNIGHT);
         }
     }
