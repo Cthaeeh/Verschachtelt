@@ -9,6 +9,9 @@ import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
 
 /**
  * Created by Kai on 14.08.2016.
+ * Class that handles a Puzzle Game.
+ * When the player makes a move it looks if it was a correct move, if so displays it.
+ * When the player solves a puzzle this is saved in the DB.
  */
 public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
     public static Puzzle PUZZLE;
@@ -24,7 +27,7 @@ public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
      * Special move method that checks if the move is correct (e.g. the same like in the Puzzle)
      * and only then really executes the move. Otherwise does nothing.
      * TODO inform the user that his move was BS
-     * @param position
+     * @param position where to try to move to
      */
     @Override
     protected void move(int position){
@@ -52,15 +55,16 @@ public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
     }
 
     private boolean isPuzzleSolved() {
-        if (puzzleSteps<PUZZLE.getNeededSteps())return false;
-        else return true;
+        return (!(puzzleSteps<PUZZLE.getNeededSteps()));
     }
 
     @Override
     public void handleShowNextMoveButton() {
         if(!puzzleSolved){                                                      //If the puzzle isn´t already solved opponent make move.
-            boardCurrent = PUZZLE.getPosition(puzzleSteps+1);
-            puzzleSteps++;
+            if(PUZZLE.getPosition(puzzleSteps+1)!=null){
+                boardCurrent = PUZZLE.getPosition(puzzleSteps+1);
+                puzzleSteps++;
+            }
         }
     }
 

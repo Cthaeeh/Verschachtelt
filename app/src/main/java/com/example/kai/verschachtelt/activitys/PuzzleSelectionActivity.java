@@ -64,7 +64,8 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
     @Override
     protected void onRestart() {
         super.onRestart();
-        puzzleArray = myDBHandler.getAllPuzzles(); //synchronise db with puzzleArray
+        puzzleArray.clear();
+        puzzleArray.addAll(myDBHandler.getAllPuzzles()); //synchronise db with puzzleArray
         adapter.notifyDataSetChanged();
     }
 
@@ -129,9 +130,9 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
     }
 
     /**
-     * If someone touches an item in the actionBar refresh puzzles.
-     * @param item
-     * @return
+     * If someone touches an the refresh Button in the actionBar refresh puzzles.
+     * @param item what item in the actionBar was touched.
+     * @return if we took care of the touch.
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
