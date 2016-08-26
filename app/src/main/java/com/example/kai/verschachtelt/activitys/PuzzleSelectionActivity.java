@@ -107,7 +107,8 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
         }else{
             try {
                 myDBHandler.insertPuzzle( Puzzle.fromJson(new JSONArray(result))); //Insert all puzzles that we got from internet into DB
-                puzzleArray = myDBHandler.getAllPuzzles(); //synchronise db with puzzleArray
+                puzzleArray.clear();    //Reasons can be found here: http://stackoverflow.com/questions/15422120/notifydatasetchange-not-working-from-custom-adapter
+                puzzleArray.addAll(myDBHandler.getAllPuzzles()); //synchronise db with puzzleArray
                 Collections.sort(puzzleArray); //Sort puzzleArray
                 adapter.notifyDataSetChanged(); //Inform adapter that shit changed.
             } catch (JSONException e) {

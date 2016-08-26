@@ -67,7 +67,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         chessBoardGraphic = new ChessBoardGraphic();
         chessmanGraphic = new ChessmanGraphic();
         victoryScreenGraphic = new VictoryScreenGraphic(BitmapFactory.decodeResource(getResources(),R.drawable.victory_screens));
-        pawnChangeGraphic = new PawnChangeGraphic((BitmapFactory.decodeResource(getResources(),R.drawable.chess_man_symbols)));
+        pawnChangeGraphic = new PawnChangeGraphic();
         thread.setRunning(true);
         thread.start();
     }
