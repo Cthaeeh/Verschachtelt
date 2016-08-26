@@ -24,7 +24,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private GamePanel gamePanel;
     private RetainedFragment dataFragment;      //A Fragment to store data, because this Activity is destroyed when the screen orientation changes
 
-    Button undoButton,redoButton,showNextMoveButton;
+    Button undoButton,redoButton,showNextMoveButton,surrenderButton;
     TextView description;
     GameType gameType;
 
@@ -61,6 +61,9 @@ public class GameActivity extends Activity implements View.OnClickListener{
         showNextMoveButton = (Button) findViewById(R.id.button1);
         showNextMoveButton.setText(R.string.show_next_move_button);
         showNextMoveButton.setOnClickListener(this);
+        surrenderButton = (Button) findViewById(R.id.button2);
+        surrenderButton.setText(R.string.surrender_button);
+        surrenderButton.setOnClickListener(this);
         description = (TextView) findViewById(R.id.gameDescription);
         description.setText(((ChessGamePuzzle) gamePanel.getGame()).getPuzzleDescription());
     }
@@ -68,11 +71,15 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private void setupPvAI() {
         gamePanel.setGame(GameType.CHESS_PvAI); //Tell the gamePanel what mode we want to play in.
         setupUndoRedo();
+        description = (TextView) findViewById(R.id.gameDescription);
+        description.setText(R.string.ai_mode_description);
     }
 
     private void setupPvP() {
         gamePanel.setGame(GameType.CHESS_PvP); //Tell the gamePanel what mode we want to play in.
         setupUndoRedo();
+        description = (TextView) findViewById(R.id.gameDescription);
+        description.setText(R.string.pvp_mode_description);
     }
 
 
@@ -98,6 +105,9 @@ public class GameActivity extends Activity implements View.OnClickListener{
         }
         if(view == showNextMoveButton){
             gamePanel.inputHandler.processShowNextMoveButton();
+        }
+        if(view == surrenderButton){
+            onBackPressed();
         }
     }
 

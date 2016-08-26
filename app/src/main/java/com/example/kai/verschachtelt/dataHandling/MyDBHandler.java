@@ -49,14 +49,14 @@ public class MyDBHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_PUZZLES); //delete old table
         db.execSQL(getCreationQuery());                    //create new one
-        insertPuzzle(Puzzle.fromJson(PuzzleParser.getJSONArray())); //put puzzles from txt file here.
+        insertPuzzle(Puzzle.fromJson(PuzzleParser.getJSONArrayFromRes())); //put puzzles from txt file here.
     }
 
     /**
      * Method takes a puzzle and writes it in the DB.
      * If a Puzzle with the same id is there it overwrites it.
      * See: http://stackoverflow.com/questions/13311727/android-sqlite-insert-or-update
-     * @param puzzle
+     * @param puzzle the puzzle to write in the DB
      * @return if this worked.
      */
     public boolean updatePuzzle(Puzzle puzzle){
@@ -79,8 +79,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
      * Inserts a puzzle into the database.
      * If it is already existing (same id) then nothing happens.
      * At least thats what I want it to do.
-     * @param puzzle
-     * @return
+     * @param puzzle the puzzle to be inserted
+     * @return if this was sucessfull
      */
     public boolean insertPuzzle(Puzzle puzzle){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -102,7 +102,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
      * Inserts multiple puzzles into the database.
      * Returns true if something was inserted.
      * Returns false if nothing could be inserted.
-     * @param puzzles
+     * @param puzzles the puzzles to be inserted.
      */
     public boolean insertPuzzle(ArrayList<Puzzle> puzzles){
         boolean insertedSomething = false;
@@ -142,7 +142,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
      * Method takes a cursor at a certain position e.g a row
      * and translates it to a database entry.
      * @param cursor
-     * @return
+     * @return the JSONObject containing the puzzle from the row the cursor points to.
      */
     private JSONObject rowToJSON(Cursor cursor) {
         try {
@@ -165,8 +165,8 @@ public class MyDBHandler extends SQLiteOpenHelper {
      * Takes an int ant converts it to a boolean value.
      * After the convention 0 = false, 1 = true.
      * Because SQLite doesnt know booleans but JSON does.
-     * @param anInt
-     * @return
+     * @param anInt the int that you want to convert to a boolean
+     * @return the boolean value
      */
     private boolean getBooleanVal(int anInt) {
         if( anInt == 1)return true;
@@ -193,7 +193,7 @@ public class MyDBHandler extends SQLiteOpenHelper {
     /**
      * Creates an String with a query to create a DB.
      * In other words it creates a SQL-command as a String
-     * @return
+     * @return SQLITE-Command as String
      */
     private String getCreationQuery() {
         String query = "CREATE TABLE "+TABLE_PUZZLES + " (" +

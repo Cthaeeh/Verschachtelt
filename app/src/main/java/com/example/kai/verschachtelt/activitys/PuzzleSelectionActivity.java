@@ -92,7 +92,7 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
      */
     private void getPuzzlesFromDB() {
         myDBHandler = new MyDBHandler(this);       //Create database or get connection to database.
-        myDBHandler.insertPuzzle(Puzzle.fromJson(PuzzleParser.getJSONArray())); //Fill with puzzles from txt.
+        myDBHandler.insertPuzzle(Puzzle.fromJson(PuzzleParser.getJSONArrayFromRes())); //Fill with puzzles from txt.
         puzzleArray = myDBHandler.getAllPuzzles(); //synchronise db with puzzleArray
         Collections.sort(puzzleArray);             //Sort them by difficulty.
     }

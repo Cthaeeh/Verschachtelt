@@ -22,7 +22,7 @@ public class ChessmanGraphic {
     private int squareSize;                              //The length / width of a squareStates on the boardCurrent.
     private boolean drawnFirstTime = true;
     //The thickness of the frame around a squareStates in hundredth of squareSize.
-    private final int STROKE_WIDTH = 4; //TODO make this a dimen ressource
+    private final int STROKE_WIDTH = (int) MainActivity.getContext().getResources().getDimension(R.dimen.frameThickness);
     private final int normalFrameColor = ContextCompat.getColor(MainActivity.getContext(), R.color.normalFrameColor);
     private final int selectedSquareFrameColor = ContextCompat.getColor(MainActivity.getContext(), R.color.selectedFrameColor);
     private final int possibleMoveFrameColor = ContextCompat.getColor(MainActivity.getContext(), R.color.possibleMoveFrameColor);

@@ -12,6 +12,11 @@
         android:layout_gravity="top"
         />
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dp"
+        android:background="@color/dividerLine"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,7 +26,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="description of game like puzzle description"
+            android:text="should be replaced depending on game Mode."
             android:textColor="@color/decriptionColor"
             android:textSize="18sp"
             android:layout_margin="10dp"
@@ -38,7 +43,7 @@
             android:layout_height="wrap_content"
             android:text="New Button"
 
-            android:layout_toRightOf="@id/button1"
+            android:layout_toEndOf="@id/button1"
             android:layout_alignTop="@id/button1"
             android:id="@+id/button2" />
     </RelativeLayout>

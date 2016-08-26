@@ -15,14 +15,14 @@ import java.util.ArrayList;
 
 /**
  * Created by Kai on 13.08.2016.
+ * A class to get JSON Array from ressources.
  */
 public class PuzzleParser {
     /**
-     * Method takes puzzles txt file from ressources and converts it to a JSONObject.
-     * //TODO find a better name
-     * @return
+     * Method takes puzzles  txt file from ressources and converts it to a JSONObject.
+     * @return a JSONArray that contains puzzles, hopefully.
      */
-    public static JSONArray getJSONArray(){
+    public static JSONArray getJSONArrayFromRes(){
         //Implement
         //Get Data From Text Resource File Contains Json Data.
         InputStream inputStream = MainActivity.getContext().getResources().openRawResource(R.raw.puzzles);
