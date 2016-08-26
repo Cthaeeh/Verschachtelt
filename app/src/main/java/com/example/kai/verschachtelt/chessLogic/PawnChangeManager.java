@@ -22,18 +22,18 @@ public class PawnChangeManager {
     /**
      * Method checks if a pawn went to the other side of the board, e.g a pawn change is possible.
      * @param chessmen the board where we look for that situation.
-     * @return true if a pawn must be exchanged, false if not.
+     * @return if possible the color of the player who can exchange pawn otherwise null
      */
-    public boolean isPawnChangePossible(Chessman[] chessmen) {
+    public Chessman.Color pawnChangeColor(Chessman[] chessmen) {
         for(int j = 0; j < 8; j++) {
             if (chessmen[j] != null) {
-                if (chessmen[j].getPiece() == Chessman.Piece.PAWN) return true;
+                if (chessmen[j].getPiece() == Chessman.Piece.PAWN) return Chessman.Color.WHITE;
             }
             if (chessmen[56+j] !=null){
-                if (chessmen[56+j].getPiece() == Chessman.Piece.PAWN) return true;
+                if (chessmen[56+j].getPiece() == Chessman.Piece.PAWN) return Chessman.Color.BLACK;
             }
         }
-        return false;   //false, if there is no pawn in first/last row
+        return null;   //null, if there is no pawn in first/last row
     }
 
     /**

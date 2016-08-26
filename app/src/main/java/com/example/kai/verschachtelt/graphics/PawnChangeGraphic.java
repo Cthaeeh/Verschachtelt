@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 
 import com.example.kai.verschachtelt.R;
 import com.example.kai.verschachtelt.activitys.MainActivity;
+import com.example.kai.verschachtelt.chessLogic.Chessman;
 
 /**
  * Created by ivayl on 14.08.2016.
@@ -23,6 +24,8 @@ public class PawnChangeGraphic {
     private final int backgroundColor = ContextCompat.getColor(MainActivity.getContext(), R.color.pawnChangeBackgroundColor);
 
     public boolean isActivated; // a bool value which shows, if the graphic is drawn
+    private Chessman.Color color;
+
 
     public PawnChangeGraphic() {
 
@@ -35,9 +38,23 @@ public class PawnChangeGraphic {
     }
 
     public void draw(Canvas canvas) {
-
         drawBackground(canvas);
+        switch (color){
+            case WHITE:
+                drawWhiteChessmen(canvas);
+                break;
+            case BLACK:
+                drawBlackChessmen(canvas);
+                break;
+        }
+        drawFrames(canvas);
+    }
 
+    /**
+     * Draws the black chessmen on the canvas that can be exchanged for the pawn.
+     * @param canvas
+     */
+    private void drawBlackChessmen(Canvas canvas) {
         int imgSize = getShorterSide(canvas)/2;
         // draw the Queen
         canvas.drawBitmap(Bitmap.createScaledBitmap(imageBlackQueen, imgSize, imgSize, false),0,0,null);
@@ -47,7 +64,22 @@ public class PawnChangeGraphic {
         canvas.drawBitmap(Bitmap.createScaledBitmap(imageBlackBishop, imgSize, imgSize, false),0,imgSize,null);
         //draw the knight
         canvas.drawBitmap(Bitmap.createScaledBitmap(imageBlackKnight, imgSize, imgSize, false),imgSize,imgSize,null);
-        drawFrames(canvas);
+    }
+
+    /**
+     * Draws the black chessmen on the canvas that can be exchanged for the pawn.
+     * @param canvas
+     */
+    private void drawWhiteChessmen(Canvas canvas) {
+        int imgSize = getShorterSide(canvas)/2;
+        // draw the Queen
+        canvas.drawBitmap(Bitmap.createScaledBitmap(imageWhiteQueen, imgSize, imgSize, false),0,0,null);
+        // draw the Rook
+        canvas.drawBitmap(Bitmap.createScaledBitmap(imageWhiteRook, imgSize, imgSize, false),imgSize,0,null);
+        //draw the bishop
+        canvas.drawBitmap(Bitmap.createScaledBitmap(imageWhiteBishop, imgSize, imgSize, false),0,imgSize,null);
+        //draw the knight
+        canvas.drawBitmap(Bitmap.createScaledBitmap(imageWhiteKnight, imgSize, imgSize, false),imgSize,imgSize,null);
     }
 
     /**
@@ -75,8 +107,10 @@ public class PawnChangeGraphic {
         canvas.drawRect(0,0,2*imgSize,2*imgSize,paint);
     }
 
-    public void update(boolean isActivated) {
-        this.isActivated = isActivated;
+    public void update(Chessman.Color color) {
+        if(color == null) isActivated = false;
+        else isActivated = true;
+        this.color = color;
     }
 
     private void extractImages() {
@@ -106,6 +140,6 @@ public class PawnChangeGraphic {
 
     public void deactivate() {
         this.isActivated = false;
-    }
+}
 
 }

@@ -1,7 +1,5 @@
 package com.example.kai.verschachtelt.chessLogic;
 
-import java.util.Arrays;
-
 /**
  * Created by Kai on 09.08.2016.
  * This class extends the normal Chessboard class and adds basic move functionality, possible move functionality.
@@ -171,8 +169,8 @@ public class ChessBoardComplex extends ChessBoardSimple {
     /**
      *     checks, if a pawn change is possible
      */
-    public boolean pawnChangePossible() {
-        return pawnChangeManager.isPawnChangePossible(chessmen);
+    public Chessman.Color pawnChangePossible() {
+        return pawnChangeManager.pawnChangeColor(chessmen);
     }
 
     /**
