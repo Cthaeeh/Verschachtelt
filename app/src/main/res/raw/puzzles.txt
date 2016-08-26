@@ -1,34 +1,38 @@
 [
 {
+  "Id": 4,
   "Name": "Magnus super zug XY",
   "Description": "töten sie einen bauern",
-  "Moves": 3,
   "DifficultyAsString": "leicht",
   "DifficultyAsInt": 1,
-  "Positions": ["rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR b KQkq d3 0 1","rnbqkbnr/pppp1ppp/8/4p3/3P4/8/PPP1PPPP/RNBQKBNR w KQkq e6 0 2","rnbqkbnr/pppp1ppp/8/4P3/8/8/PPP1PPPP/RNBQKBNR b KQkq - 0 2"]
+  "Positions": ["rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR b KQkq d3 0 1","rnbqkbnr/pppp1ppp/8/4p3/3P4/8/PPP1PPPP/RNBQKBNR w KQkq e6 0 2","rnbqkbnr/pppp1ppp/8/4P3/8/8/PPP1PPPP/RNBQKBNR b KQkq - 0 2"],
+  "Solved": false
 },
 {
+  "Id": 3,
   "Name": "Ivo vs Carlson 2009",
   "Description": "klauen sie die Dame",
-  "Moves": 2,
   "DifficultyAsString": "schwer",
   "DifficultyAsInt": 3,
-  "Positions": ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1","rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1","rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2"]
+  "Positions": ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1","rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1","rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2"],
+  "Solved": false
 },
 {
+  "Id": 2,
   "Name": "Test 3",
   "Description": "können Sie gar nicht schaffen",
-  "Moves": 5,
   "DifficultyAsString": "mittel",
   "DifficultyAsInt": 2,
-  "Positions": ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1","rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1","rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2"]
+  "Positions": ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1","rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1","rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2"],
+  "Solved": false
 },
 {
+  "Id": 1,
   "Name": "Erstes reales Puzzle",
   "Description": "Machen sie den optimalen Move für Schwarz",
-  "Moves": 1,
   "DifficultyAsString": "leicht",
   "DifficultyAsInt": 1,
-  "Positions": ["4r3/2PQ3R/pKn4P/3B1PP1/b7/5p2/pb4pB/1k6 b - - 0 1","4r3/2PQ3R/pKn4P/3B1PP1/b2b4/5p2/p5pB/1k6 w - - 0 1"]
+  "Positions": ["4r3/2PQ3R/pKn4P/3B1PP1/b7/5p2/pb4pB/1k6 b - - 0 1","4r3/2PQ3R/pKn4P/3B1PP1/b2b4/5p2/p5pB/1k6 w - - 0 1"],
+  "Solved": false
 }
 ]

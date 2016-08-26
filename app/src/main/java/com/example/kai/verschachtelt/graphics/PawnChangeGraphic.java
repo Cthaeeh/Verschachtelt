@@ -48,7 +48,6 @@ public class PawnChangeGraphic {
         canvas.drawBitmap(Bitmap.createScaledBitmap(imageBlackBishop, imgSize, imgSize, false),0,imgSize,null);
         //draw the knight
         canvas.drawBitmap(Bitmap.createScaledBitmap(imageBlackKnight, imgSize, imgSize, false),imgSize,imgSize,null);
-
         drawFrames(canvas);
     }
 

@@ -1,7 +1,10 @@
 package com.example.kai.verschachtelt.puzzleGame;
 
 import com.example.kai.verschachtelt.InputHandler;
+import com.example.kai.verschachtelt.activitys.MainActivity;
+import com.example.kai.verschachtelt.activitys.PuzzleSelectionActivity;
 import com.example.kai.verschachtelt.chessLogic.ChessBoardComplex;
+import com.example.kai.verschachtelt.dataHandling.MyDBHandler;
 import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
 
 /**
@@ -25,6 +28,7 @@ public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
      */
     @Override
     protected void move(int position){
+        if(isPuzzleSolved())return;
         ChessBoardComplex hypotheticalBoard = new ChessBoardComplex(boardCurrent);  //Make a copy to test if users move was correct.
         hypotheticalBoard.handleMoveTo(position);                                   //Make move on the copied board.
         if(hypotheticalBoard.comparePositions(PUZZLE.getPosition(puzzleSteps+1))){  //If the correct move was made.
@@ -35,7 +39,16 @@ public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
                 boardCurrent = PUZZLE.getPosition(puzzleSteps+1);
                 puzzleSteps++;
             }
+            if(isPuzzleSolved())saveProgress();         //After the move see if the puzzle is solved.
         }
+    }
+
+    /**
+     * puts the current puzzles in the dataBase
+     */
+    private void saveProgress() {
+        PUZZLE.updateSolved();
+        new MyDBHandler(MainActivity.getContext()).updatePuzzle(PUZZLE);
     }
 
     private boolean isPuzzleSolved() {
@@ -61,7 +74,4 @@ public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
         return PUZZLE.getDescription();
     }
 
-    public String getPuzzleProgess() {
-        return "Steps "+puzzleSteps+" out of "+ PUZZLE.getNeededSteps() +" solved";
-    }
 }

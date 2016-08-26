@@ -1,7 +1,9 @@
-package com.example.kai.verschachtelt;
+package com.example.kai.verschachtelt.activitys;
 
 import android.app.Fragment;
 import android.os.Bundle;
+
+import com.example.kai.verschachtelt.ChessGame;
 
 /**
  * Created by Kai on 23.08.2016.

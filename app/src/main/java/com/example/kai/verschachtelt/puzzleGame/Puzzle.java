@@ -15,14 +15,15 @@ import java.util.Objects;
  * It implements Parcelable so it can be put into an Intent.
  */
 public class Puzzle implements Comparable<Puzzle>{
-    private String  description;
-    private String  name;
-    private String  difficultyAsText;
+    private String  description = "Default";
+    private String  name        = "Default";
+    private String  difficultyAsText = "Default";
     private Integer difficultyAsInt = 0;
+    private int id = 0;
     private boolean isSolved = false; //By default not solved.
 
-    private int    fullMoves;
     private ChessBoardComplex[] positions;
+    private JSONArray JSONPositions;
 
     /**
      * creates a Puzzle from a JSONObject
@@ -34,9 +35,10 @@ public class Puzzle implements Comparable<Puzzle>{
             this.description = jsonObject.getString("Description");
             this.difficultyAsText = jsonObject.getString("DifficultyAsString");
             this.difficultyAsInt = jsonObject.getInt("DifficultyAsInt");
-            this.fullMoves = jsonObject.getInt("Moves");
-            JSONArray JSONPositions = jsonObject.getJSONArray("Positions");
-            positions = new ChessBoardComplex[JSONPositions.length()];
+            this.isSolved = jsonObject.getBoolean("Solved");
+            this.id = jsonObject.getInt("Id");
+            this.JSONPositions = jsonObject.getJSONArray("Positions");
+            this.positions = new ChessBoardComplex[JSONPositions.length()];
             for(int i = 0; i < positions.length; i++){
                 positions[i] = new ChessBoardComplex(JSONPositions.get(i).toString());
             }
@@ -45,13 +47,9 @@ public class Puzzle implements Comparable<Puzzle>{
         }
     }
 
-    public String getName() {
-        return name;
-    }
-
     /**
      *  Factory method to convert an array of JSON objects into a list of objects
-      */
+     */
     public static ArrayList<Puzzle> fromJson(JSONArray jsonObjects) {
         ArrayList<Puzzle> puzzles = new ArrayList<Puzzle>();
         for (int i = 0; i < jsonObjects.length(); i++) {
@@ -62,6 +60,27 @@ public class Puzzle implements Comparable<Puzzle>{
             }
         }
         return puzzles;
+    }
+
+    public void updateSolved() {
+        isSolved = true;
+    }
+
+    /**
+     * To make a Puzzle comparable to another.
+     * Since we are only interested in sorting them by difficulty it only compares the difficulty.
+     * @param puzzle The puzzle to compare this one with
+     * @return -1,0,1 depending if its equal, more ore less difficult.
+     */
+    @Override
+    public int compareTo(Puzzle puzzle) {
+        return  this.difficultyAsInt.compareTo(puzzle.difficultyAsInt);
+    }
+
+
+    //Getters, Getters, Getters
+    public String getName() {
+        return name;
     }
 
     public String getDescription() {
@@ -89,18 +108,21 @@ public class Puzzle implements Comparable<Puzzle>{
         return positions.length-1;
     }
 
-    /**
-     * To make a Puzzle comparable to another.
-     * Since we are only interested in sorting them by difficulty it only compares the difficulty.
-     * @param puzzle The puzzle to compare this one with
-     * @return -1,0,1 depending if its equal, more ore less difficult.
-     */
-    @Override
-    public int compareTo(Puzzle puzzle) {
-        return  this.difficultyAsInt.compareTo(puzzle.difficultyAsInt);
-    }
-
     public boolean getSolved() {
         return isSolved;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public Integer getDifficultyAsInt() {
+        return difficultyAsInt;
+    }
+
+    public JSONArray getPositionsAsFEN() {
+        return JSONPositions;
+    }
+
+
 }

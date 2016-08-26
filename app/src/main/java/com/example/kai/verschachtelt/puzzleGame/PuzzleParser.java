@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class PuzzleParser {
     /**
      * Method takes puzzles txt file from ressources and converts it to a JSONObject.
+     * //TODO find a better name
      * @return
      */
     public static JSONArray getJSONArray(){
@@ -42,7 +43,7 @@ public class PuzzleParser {
         try {
             // Parse the data into jsonobject to get original data in form of json.
             JSONArray jsonArray = new JSONArray(
-                    byteArrayOutputStream.toString());
+                    byteArrayOutputStream.toString("UTF-8"));   //Just to be safe make clear we want to use UTF-8
             return jsonArray;
         } catch (Exception e) {
             e.printStackTrace();

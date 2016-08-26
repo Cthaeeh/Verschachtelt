@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.kai.verschachtelt.GamePanel;
-import com.example.kai.verschachtelt.RetainedFragment;
 import com.example.kai.verschachtelt.R;
 import com.example.kai.verschachtelt.puzzleGame.ChessGamePuzzle;
 
@@ -27,6 +26,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
 
     Button undoButton,redoButton,showNextMoveButton;
     TextView description;
+    GameType gameType;
 
     public enum GameType{
         CHESS_PvP,CHESS_PvAI,PUZZLE
@@ -39,7 +39,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
         createDataFragment();
         gamePanel = (GamePanel) findViewById(R.id.surfaceViewForGame); //Now get the GamePanel UI-Element just like a Button.
         Intent intent = getIntent();
-        GameType gameType = (GameType) intent.getSerializableExtra("GameType");
+        gameType = (GameType) intent.getSerializableExtra("GameType");
         switch (gameType){  //depeding on the type of game different UIs are created
             case CHESS_PvP:
                 setupPvP();

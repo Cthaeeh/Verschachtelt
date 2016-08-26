@@ -3,24 +3,21 @@ package com.example.kai.verschachtelt.activitys;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Display;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.kai.verschachtelt.DownloadListener;
-import com.example.kai.verschachtelt.PuzzleDownloadTask;
+import com.example.kai.verschachtelt.dataHandling.DownloadListener;
+import com.example.kai.verschachtelt.dataHandling.MyDBHandler;
+import com.example.kai.verschachtelt.dataHandling.PuzzleDownloadTask;
 import com.example.kai.verschachtelt.puzzleGame.ChessGamePuzzle;
-import com.example.kai.verschachtelt.puzzleGame.PuzzleParser;
 import com.example.kai.verschachtelt.R;
 import com.example.kai.verschachtelt.puzzleGame.Puzzle;
+import com.example.kai.verschachtelt.puzzleGame.PuzzleParser;
 import com.example.kai.verschachtelt.puzzleGame.PuzzlesAdapter;
 
 import org.json.JSONArray;
@@ -28,7 +25,6 @@ import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 
 /**
  * Created by Kai on 10.08.2016.
@@ -36,9 +32,10 @@ import java.util.HashSet;
  */
 public class PuzzleSelectionActivity extends AppCompatActivity implements DownloadListener{
 
-    GridView puzzleGrid ;
-    ArrayList<Puzzle> puzzleArray;
-    PuzzlesAdapter adapter;
+    private GridView puzzleGrid ;
+    private ArrayList<Puzzle> puzzleArray;
+    private PuzzlesAdapter adapter;
+    private MyDBHandler myDBHandler;
 
     //Web Address where you can find new puzzles
     private final static String WEBADRESS = "http://verschachtelt.bplaced.net/puzzles.html";
@@ -47,6 +44,7 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_puzzle_selection);
+        getPuzzlesFromDB();
         setUpUI();
     }
 
@@ -58,15 +56,23 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
         return true;
     }
 
+    /**
+     * Method is called when Method gets visible again.
+     * That can happen if we return from a puzzle -> maybe it was solved ->
+     * must synchronise with database.
+     */
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        puzzleArray = myDBHandler.getAllPuzzles(); //synchronise db with puzzleArray
+        adapter.notifyDataSetChanged();
+    }
 
     private void setUpUI() {
         puzzleGrid = (GridView) findViewById(R.id.puzzleGridView);
-        puzzleArray = new ArrayList<Puzzle>();
         adapter = new PuzzlesAdapter(this, puzzleArray);
         puzzleGrid.setAdapter(adapter);
-        //Take JSONArray from ressource txt file convert it to Puzzles.
-        puzzleArray.addAll(Puzzle.fromJson(PuzzleParser.getJSONArray()));
-        Collections.sort(puzzleArray);  //Sort them by difficulty.
+        adapter.notifyDataSetChanged();
 
         puzzleGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view,
@@ -81,6 +87,16 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
     }
 
     /**
+     * Method for getting Puzzles from DB.
+     */
+    private void getPuzzlesFromDB() {
+        myDBHandler = new MyDBHandler(this);       //Create database or get connection to database.
+        myDBHandler.insertPuzzle(Puzzle.fromJson(PuzzleParser.getJSONArray())); //Fill with puzzles from txt.
+        puzzleArray = myDBHandler.getAllPuzzles(); //synchronise db with puzzleArray
+        Collections.sort(puzzleArray);             //Sort them by difficulty.
+    }
+
+    /**
      * when PuzzleDownloadTask is finnished downloading it calls back
      * @param result a String e.g the HTML file from the Webaddress.
      */
@@ -90,9 +106,10 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
             showNoInetToast();
         }else{
             try {
-                puzzleArray.addAll(Puzzle.fromJson(new JSONArray(result)));
-                Collections.sort(puzzleArray);
-                adapter.notifyDataSetChanged();
+                myDBHandler.insertPuzzle( Puzzle.fromJson(new JSONArray(result))); //Insert all puzzles that we got from internet into DB
+                puzzleArray = myDBHandler.getAllPuzzles(); //synchronise db with puzzleArray
+                Collections.sort(puzzleArray); //Sort puzzleArray
+                adapter.notifyDataSetChanged(); //Inform adapter that shit changed.
             } catch (JSONException e) {
                 e.printStackTrace();
             }
