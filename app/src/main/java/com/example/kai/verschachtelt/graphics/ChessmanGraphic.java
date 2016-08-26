@@ -114,7 +114,6 @@ public class ChessmanGraphic {
     }
 
     /**From a larger image, smaller images of the chessmen are cropped out.
-     * @param imageChessmen A large image with all the chessmen
      */
     private void extractImages(){
         imageBlackRook = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.black_rook);

@@ -1,6 +1,7 @@
 package com.example.kai.verschachtelt.graphics;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.support.v4.content.ContextCompat;
@@ -21,13 +22,11 @@ public class PawnChangeGraphic {
     private final int frameColor = ContextCompat.getColor(MainActivity.getContext(), R.color.pawnChangeFrameColor);
     private final int backgroundColor = ContextCompat.getColor(MainActivity.getContext(), R.color.pawnChangeBackgroundColor);
 
-    private final int cropSize = 92;
-
     public boolean isActivated; // a bool value which shows, if the graphic is drawn
 
-    public PawnChangeGraphic(Bitmap map) {
+    public PawnChangeGraphic() {
 
-        extractImages(map);
+        extractImages();
         this.isActivated = false;
         paint = new Paint();
         paint.setStrokeWidth(18);
@@ -53,7 +52,7 @@ public class PawnChangeGraphic {
     }
 
     /**
-     * Draws some frames arround the chessmen
+     * Draws some frames around the chessmen
      * @param canvas
      */
     private void drawFrames(Canvas canvas) {
@@ -81,16 +80,16 @@ public class PawnChangeGraphic {
         this.isActivated = isActivated;
     }
 
-    private void extractImages(Bitmap imageChessmen) {
-        imageBlackRook = Bitmap.createBitmap(imageChessmen, ((960 - cropSize) / 5) * 2, 112, cropSize, cropSize);
-        imageBlackKnight = Bitmap.createBitmap(imageChessmen, ((960 - cropSize) / 5) * 4, 112, cropSize, cropSize);
-        imageBlackBishop = Bitmap.createBitmap(imageChessmen, ((960 - cropSize) / 5) * 3, 112, cropSize, cropSize);
-        imageBlackQueen = Bitmap.createBitmap(imageChessmen, ((960 - cropSize) / 5) * 1, 112, cropSize, cropSize);
+    private void extractImages() {
+        imageBlackRook = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.black_rook);
+        imageBlackKnight = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.black_knight);
+        imageBlackBishop = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.black_bishop);
+        imageBlackQueen = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.black_queen);
 
-        imageWhiteRook = Bitmap.createBitmap(imageChessmen, ((960 - cropSize) / 5) * 2, 265, cropSize, cropSize);
-        imageWhiteKnight = Bitmap.createBitmap(imageChessmen, ((960 - cropSize) / 5) * 4, 265, cropSize, cropSize);
-        imageWhiteBishop = Bitmap.createBitmap(imageChessmen, ((960 - cropSize) / 5) * 3, 265, cropSize, cropSize);
-        imageWhiteQueen = Bitmap.createBitmap(imageChessmen, ((960 - cropSize) / 5) * 1, 265, cropSize, cropSize);
+        imageWhiteRook = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.white_rook);
+        imageWhiteKnight = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.white_knight);
+        imageWhiteBishop = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.white_bishop);
+        imageWhiteQueen = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.white_queen);
 
     }
 
