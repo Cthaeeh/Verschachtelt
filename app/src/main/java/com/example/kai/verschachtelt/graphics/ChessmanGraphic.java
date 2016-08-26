@@ -1,6 +1,7 @@
 package com.example.kai.verschachtelt.graphics;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -35,10 +36,10 @@ public class ChessmanGraphic {
 
     private ChessBoardSimple chessBoardSimple;
 
-    public ChessmanGraphic(Bitmap res){
+    public ChessmanGraphic(){
         paint = new Paint();
         paint.setStyle(Paint.Style.STROKE);
-        extractImages(res);
+        extractImages();
 
         chessBoardSimple = new ChessBoardSimple();
     }
@@ -113,22 +114,21 @@ public class ChessmanGraphic {
     }
 
     /**From a larger image, smaller images of the chessmen are cropped out.
-     * @param imageChessmen A large image with all the chessmen
      */
-    private void extractImages(Bitmap imageChessmen){
-        imageBlackRook = Bitmap.createBitmap(imageChessmen,((960-cropSize)/5)*2,  112  ,cropSize,cropSize);
-        imageBlackKnight = Bitmap.createBitmap(imageChessmen,((960-cropSize)/5)*4,112  ,cropSize,cropSize);
-        imageBlackBishop = Bitmap.createBitmap(imageChessmen,((960-cropSize)/5)*3,112  ,cropSize,cropSize);
-        imageBlackQueen = Bitmap.createBitmap(imageChessmen,((960-cropSize)/5)*1, 112  ,cropSize,cropSize);
-        imageBlackKing = Bitmap.createBitmap(imageChessmen,0,      112  ,cropSize,cropSize);
-        imageBlackPawn = Bitmap.createBitmap(imageChessmen,960-cropSize , 112  ,cropSize,cropSize);
+    private void extractImages(){
+        imageBlackRook = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.black_rook);
+        imageBlackKnight = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.black_knight);
+        imageBlackBishop = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.black_bishop);
+        imageBlackQueen = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.black_queen);
+        imageBlackKing = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.black_king);
+        imageBlackPawn = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.black_pawn);
 
-        imageWhiteRook = Bitmap.createBitmap(imageChessmen,((960-cropSize)/5)*2,  265  ,cropSize,cropSize);
-        imageWhiteKnight = Bitmap.createBitmap(imageChessmen,((960-cropSize)/5)*4,265  ,cropSize,cropSize);
-        imageWhiteBishop = Bitmap.createBitmap(imageChessmen,((960-cropSize)/5)*3,265  ,cropSize,cropSize);
-        imageWhiteQueen = Bitmap.createBitmap(imageChessmen,((960-cropSize)/5)*1, 265  ,cropSize,cropSize);
-        imageWhiteKing = Bitmap.createBitmap(imageChessmen,0,      265  ,cropSize,cropSize);
-        imageWhitePawn = Bitmap.createBitmap(imageChessmen,960-cropSize , 265  ,cropSize,cropSize);
+        imageWhiteRook = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.white_rook);
+        imageWhiteKnight = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.white_knight);
+        imageWhiteBishop = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.white_bishop);
+        imageWhiteQueen = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.white_queen);
+        imageWhiteKing = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.white_king);
+        imageWhitePawn = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.white_pawn);
     }
 
     private void scaleImages(){
