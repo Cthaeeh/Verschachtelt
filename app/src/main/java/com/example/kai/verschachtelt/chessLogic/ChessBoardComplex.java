@@ -191,5 +191,36 @@ public class ChessBoardComplex extends ChessBoardSimple {
         chessmen[position].notifyMove();
     }
 
+    /**
+     * method, searching for the position of the white king
+     * @return position of white king in the chessmen array
+     */
+    public int getWhiteKingPosition(){
+        for (int i = 0; i<64; i++) {
+            if (chessmen[i] != null) {
+                if (chessmen[i].getPiece() == Chessman.Piece.KING && chessmen[i].getColor() == Chessman.Color.WHITE) {
+                    return i;
+                }
+            }
+        }
+
+        return -1;
+        // shouldn´t happen to be -1, if so, method has to be checked
+    }
+
+    public int getBlackKingPosition(){
+        for (int i = 0; i<64; i++) {
+            if (chessmen[i] != null) {
+                if (chessmen[i].getPiece() == Chessman.Piece.KING && chessmen[i].getColor() == Chessman.Color.BLACK) {
+                    return i;
+                }
+            }
+        }
+
+        return -1;
+        // shouldn´t happen to be -1, if so, method has to be checked
+    }
+
+
 
 }
