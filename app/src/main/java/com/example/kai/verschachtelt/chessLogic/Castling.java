@@ -114,9 +114,9 @@ public class Castling {
         if(!isPathFree(4,0))return false; //Nothing in between.
         if(chessmen[4].hasBeenMoved())return false; //King wasn´t moved.
         if(chessmen[0].hasBeenMoved())return false; //Tower wasn´t moved.
-        if(canMoveTo(Chessman.Color.WHITE,4))return false;    //King must be safe the whole journey.
-        if(canMoveTo(Chessman.Color.WHITE,3))return false;
-        if(canMoveTo(Chessman.Color.WHITE,2))return false;
+        if(squareInDanger(Chessman.Color.WHITE,4))return false;    //King must be safe the whole journey.
+        if(squareInDanger(Chessman.Color.WHITE,3))return false;
+        if(squareInDanger(Chessman.Color.WHITE,2))return false;
         return true;
     }
 
@@ -130,9 +130,9 @@ public class Castling {
         if(!isPathFree(4,7))return false; //Nothing in between.
         if(chessmen[4].hasBeenMoved())return false; //King wasn´t moved.
         if(chessmen[7].hasBeenMoved())return false; //Tower wasn´t moved.
-        if(canMoveTo(Chessman.Color.WHITE,4))return false;    //King must be safe the whole journey.
-        if(canMoveTo(Chessman.Color.WHITE,5))return false;
-        if(canMoveTo(Chessman.Color.WHITE,6))return false;
+        if(squareInDanger(Chessman.Color.WHITE,4))return false;    //King must be safe the whole journey.
+        if(squareInDanger(Chessman.Color.WHITE,5))return false;
+        if(squareInDanger(Chessman.Color.WHITE,6))return false;
         return true;
     }
 
@@ -146,9 +146,9 @@ public class Castling {
         if(!isPathFree(60,62))return false; //Nothing in between.
         if(chessmen[60].hasBeenMoved())return false; //King wasn´t moved.
         if(chessmen[63].hasBeenMoved())return false; //Tower wasn´t moved.
-        if(canMoveTo(Chessman.Color.BLACK,60))return false;    //King must be safe the whole journey.
-        if(canMoveTo(Chessman.Color.BLACK,61))return false;
-        if(canMoveTo(Chessman.Color.BLACK,62))return false;
+        if(squareInDanger(Chessman.Color.BLACK,60))return false;    //King must be safe the whole journey.
+        if(squareInDanger(Chessman.Color.BLACK,61))return false;
+        if(squareInDanger(Chessman.Color.BLACK,62))return false;
         return true;
     }
 
@@ -162,9 +162,9 @@ public class Castling {
         if(!isPathFree(60,56))return false; //Nothing in between.
         if(chessmen[60].hasBeenMoved())return false; //King wasn´t moved.
         if(chessmen[56].hasBeenMoved())return false; //Tower wasn´t moved.
-        if(canMoveTo(Chessman.Color.BLACK,60))return false;    //King must be safe the whole journey.
-        if(canMoveTo(Chessman.Color.BLACK,59))return false;
-        if(canMoveTo(Chessman.Color.BLACK,58))return false;
+        if(squareInDanger(Chessman.Color.BLACK,60))return false;    //King must be safe the whole journey.
+        if(squareInDanger(Chessman.Color.BLACK,59))return false;
+        if(squareInDanger(Chessman.Color.BLACK,58))return false;
         return true;
     }
 
@@ -175,7 +175,7 @@ public class Castling {
      * @param goalSquare
      * @return if the player can move there.
      */
-    private boolean canMoveTo(Chessman.Color playerColor, int goalSquare){
+    private boolean squareInDanger(Chessman.Color playerColor, int goalSquare){
         for(int i = 0;i<64;i++){
             if(chessmen[i]!=null && chessmen[i].getColor() == playerColor){
                 if(ruleBook.getPossibleMoves(i, chessmen)[goalSquare])return true;
