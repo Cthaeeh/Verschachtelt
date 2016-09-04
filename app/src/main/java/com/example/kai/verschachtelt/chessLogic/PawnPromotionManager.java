@@ -3,7 +3,7 @@ package com.example.kai.verschachtelt.chessLogic;
 /**
  * Created by Kai on 24.08.2016.
  */
-public class PawnChangeManager {
+public class PawnPromotionManager {
 
     private Chessman[] chessmen;
 
@@ -11,11 +11,11 @@ public class PawnChangeManager {
      * Copy constructor, now not necessary.
      * @param toCopy
      */
-    public PawnChangeManager(PawnChangeManager toCopy) {
+    public PawnPromotionManager(PawnPromotionManager toCopy) {
         chessmen = Chessman.deepCopy(toCopy.chessmen);
     }
 
-    public PawnChangeManager(Chessman[] chessmen) {
+    public PawnPromotionManager(Chessman[] chessmen) {
         this.chessmen = chessmen;
     }
 

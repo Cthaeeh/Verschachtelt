@@ -66,7 +66,7 @@ public class ChessGame implements InputEvent {
 
     }
 
-    public void handleTouchOnChessman(Chessman.Piece chessman) {
+    public void handlePromotion(Chessman.Piece chessman) {
         if(boardCurrent.getPlayerOnTurn() == Chessman.Color.BLACK){
             changing = Chessman.Color.WHITE;
         } else {
@@ -75,19 +75,19 @@ public class ChessGame implements InputEvent {
             switch (chessman){
                 case QUEEN:
                     Chessman newQueen = new Chessman(Chessman.Piece.QUEEN, changing);
-                    boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newQueen);
+                    boardCurrent.promotePawn(boardCurrent.pawnChangePosition(), newQueen);
                     break;
                 case ROOK:
                     Chessman newRook = new Chessman(Chessman.Piece.ROOK,changing);
-                    boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newRook);
+                    boardCurrent.promotePawn(boardCurrent.pawnChangePosition(), newRook);
                     break;
                 case BISHOP:
                     Chessman newBishop = new Chessman(Chessman.Piece.BISHOP, changing);
-                    boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newBishop);
+                    boardCurrent.promotePawn(boardCurrent.pawnChangePosition(), newBishop);
                     break;
                 case KNIGHT:
                     Chessman newKnight = new Chessman(Chessman.Piece.KNIGHT, changing);
-                    boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newKnight);
+                    boardCurrent.promotePawn(boardCurrent.pawnChangePosition(), newKnight);
                     break;
             }
     }

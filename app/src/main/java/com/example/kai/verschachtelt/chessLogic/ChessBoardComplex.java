@@ -1,5 +1,7 @@
 package com.example.kai.verschachtelt.chessLogic;
 
+import com.example.kai.verschachtelt.pvAIGame.chess_AI.Move;
+
 /**
  * Created by Kai on 09.08.2016.
  * This class extends the normal Chessboard class and adds basic move functionality, possible move functionality.
@@ -10,14 +12,14 @@ public class ChessBoardComplex extends ChessBoardSimple {
     private boolean[] possibleDestinations = new boolean[64];           //It is either possible to move there or not.
     private Chessman.Color playerOnTurn;
     private Castling castling;                                          //Is used to encapsule the logic for castling
-    private PawnChangeManager pawnChangeManager;                        //Is used to encapsule the logic for pawn changing.
+    private PawnPromotionManager pawnPromotionManager;                        //Is used to encapsule the logic for pawn changing.
 
     //Constructors.
     public ChessBoardComplex(){
         super();
         playerOnTurn = Chessman.Color.WHITE;    //Always white when start
         castling = new Castling(chessmen);
-        pawnChangeManager = new PawnChangeManager(chessmen);
+        pawnPromotionManager = new PawnPromotionManager(chessmen);
     }
 
     /**
@@ -29,7 +31,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
         selectedPosition = board.selectedPosition;
         playerOnTurn = board.playerOnTurn;
         castling = new Castling(board.castling);
-        pawnChangeManager = new PawnChangeManager(board.pawnChangeManager);
+        pawnPromotionManager = new PawnPromotionManager(board.pawnPromotionManager);
     }
 
     /**
@@ -41,7 +43,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
         chessmen = FENParser.getChessmen(fenNotation);      //Set the chessmen to the positions from the notation.
         playerOnTurn = FENParser.getColor(fenNotation);     //Get the color of the player that has to move.
         castling = FENParser.getCastlingState(fenNotation);
-        pawnChangeManager = new PawnChangeManager(chessmen);//There is no info about pawn changes in the FEN
+        pawnPromotionManager = new PawnPromotionManager(chessmen);//There is no info about pawn changes in the FEN
     }
 
 
@@ -80,18 +82,14 @@ public class ChessBoardComplex extends ChessBoardSimple {
 
     /**
      * The Chessboard will rearrange the chessman.
-     * @param from  where to move from.
-     * @param to    where to move to.
+     * This method is for the ai (at least for now ...)
      */
-    public void handleMoveFromTo(int from, int to) {
-        if(from>=0 && chessmen[from]!=null){//If we try to move from a legit position
-            chessmen[from].notifyMove();                 //Tell the chessman that he was moved (Important for Castling)
-            chessmen[to]= chessmen[from];                //Set the chessman to its new position.
-            chessmen[from]=null;                         //Remove the chessman from its originally squareStates.
-            //If a King did a jump:
-            if(chessmen[to].getPiece()== Chessman.Piece.KING&&Math.abs(from-to)==2){
-                castling.handleCastling(chessmen,to);//The corresponding tower needs to move as well.
-            }
+    public void handleMoveFromTo(Move move) {
+        if(move.from>=0 && chessmen[move.from]!=null){        //If we try to move from a legit position
+            chessmen[move.from].notifyMove();                 //Tell the chessman that he was moved (Important for Castling)
+            chessmen[move.to]= chessmen[move.from];           //Set the chessman to its new position.
+            chessmen[move.from]=null;                         //Remove the chessman from its originally squareStates.
+            if(move.isPromotion()) chessmen[move.to] = new Chessman(Chessman.Piece.QUEEN,chessmen[move.to].getColor());
             switchPlayerOnTurn();
         }
         resetFrames();
@@ -121,7 +119,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
 
     public Chessman.Color getWinner() {
         //TODO can also return draw.
-        return ruleBook.getWinner(chessmen);
+        return ruleBook.getWinner(chessmen,playerOnTurn);
     }
 
     /**
@@ -170,14 +168,14 @@ public class ChessBoardComplex extends ChessBoardSimple {
      *     checks, if a pawn change is possible
      */
     public Chessman.Color pawnChangePossible() {
-        return pawnChangeManager.pawnChangeColor(chessmen);
+        return pawnPromotionManager.pawnChangeColor(chessmen);
     }
 
     /**
      *  check and return the position, where a pawn is waiting to be changed
       */
     public int pawnChangePosition(){
-             return pawnChangeManager.getPawnChangePosition(chessmen);
+             return pawnPromotionManager.getPawnChangePosition(chessmen);
     }
 
     /**
@@ -185,9 +183,8 @@ public class ChessBoardComplex extends ChessBoardSimple {
      * @param position
      * @param newMan
      */
-    public void switchPawn(int position, Chessman newMan) {
+    public void promotePawn(int position, Chessman newMan) {
         chessmen[position] = newMan;
-
         chessmen[position].notifyMove();
     }
 

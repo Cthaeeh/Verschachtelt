@@ -220,7 +220,9 @@ public class RuleBook {
         }
     }
 
-    public Chessman.Color getWinner(Chessman[] board) {
+    public Chessman.Color getWinner(Chessman[] board, Chessman.Color playerOnTurn) {
+
+        //TODO look if a player can´t do any move
         boolean whiteWin = true;
         boolean blackWin = true;
         for (int i = 0;i<64;i++){
@@ -234,6 +236,4 @@ public class RuleBook {
         if(!whiteWin&&blackWin)return Chessman.Color.BLACK;
         return null;
     }
-
-
 }

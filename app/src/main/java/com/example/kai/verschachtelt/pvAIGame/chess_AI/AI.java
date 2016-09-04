@@ -2,31 +2,32 @@ package com.example.kai.verschachtelt.pvAIGame.chess_AI;
 
 import com.example.kai.verschachtelt.chessLogic.ChessBoardComplex;
 import com.example.kai.verschachtelt.chessLogic.Chessman;
+import com.example.kai.verschachtelt.dataHandling.PuzzleDownloadTask;
 
 /**
  * Created by Kai on 10.08.2016.
  * This is the starting point for all AI development.
  *
  */
-public class AI {
+public class AI implements AI_Listener {
 
     private final  int difficulty;
     private final  Chessman.Color aiColor;  //The color of the pieces the ai moves
-    private byte[] byteBoard ;           //Inside the ai a boardCurrent is represented by byte array
+    private byte[] byteBoard ;              //Inside the ai a boardCurrent is represented by byte array
 
-    private static final byte VALUE_KING_WHITE = 100;
-    private static final byte VALUE_QUEEN_WHITE = 9;
-    private static final byte VALUE_ROOK_WHITE =5;
-    private static final byte VALUE_KNIGHT_WHITE =4;
-    private static final byte VALUE_BISHOP_WHITE =3;
-    private static final byte VALUE_PAWN_WHITE =1;
 
-    private static final byte VALUE_KING_BLACK = -100;
-    private static final byte VALUE_QUEEN_BLACK = -9;
-    private static final byte VALUE_ROOK_BLACK = -5;
-    private static final byte VALUE_KNIGHT_BLACK = -4;
-    private static final byte VALUE_BISHOP_BLACK = -3;
-    private static final byte VALUE_PAWN_BLACK = - 1;   //changed
+    int mailbox64[] = {                 //For transferring a 8x8 to a 10x12 board. See: https://chessprogramming.wikispaces.com/10x12+Board
+                21, 22, 23, 24, 25, 26, 27, 28,
+                31, 32, 33, 34, 35, 36, 37, 38,
+                41, 42, 43, 44, 45, 46, 47, 48,
+                51, 52, 53, 54, 55, 56, 57, 58,
+                61, 62, 63, 64, 65, 66, 67, 68,
+                71, 72, 73, 74, 75, 76, 77, 78,
+                81, 82, 83, 84, 85, 86, 87, 88,
+                91, 92, 93, 94, 95, 96, 97, 98
+    };
+    private ChessBoardComplex boardComplex;
+
 
     /**
      * @param difficulty    How good the ai plays.
@@ -43,53 +44,74 @@ public class AI {
      * @return The board after the ai did its move.
      */
     public ChessBoardComplex calculateMove(ChessBoardComplex board) {
+        this.boardComplex = board;
         byteBoard = toByteArray(board);
-        board.handleMoveFromTo(1,30);   //Test move
-        
+        new AI_Task(this).execute(byteBoard);
         return board;
     }
 
     /**
-     * The method takes a boardCurrent object and translates it to a byte array of length 64.
+     * The method takes a boardCurrent object and translates it to a byte array of length 120.
      * to represent different chessmen it uses constants.
      * @param board
      * @return
      */
     public byte[] toByteArray(ChessBoardComplex board) {
-        byte[] byteBoard = new byte[64];
+        byte[] byteBoard = getEmptyByteBoard();
         for (int i = 0;i<64;i++){
             if(board.getChessManAt(i)!=null){
                 Chessman chessman = board.getChessManAt(i);
                 switch (chessman.getColor()){
                     case BLACK:
                         switch (chessman.getPiece()){
-                            case KING:  byteBoard[i] = VALUE_KING_BLACK;break;
-                            case QUEEN: byteBoard[i] = VALUE_QUEEN_BLACK;break;
-                            case ROOK:  byteBoard[i] = VALUE_ROOK_BLACK;break;
-                            case KNIGHT:byteBoard[i] = VALUE_KNIGHT_BLACK;break;
-                            case BISHOP:byteBoard[i] = VALUE_BISHOP_BLACK;break;
-                            case PAWN:  byteBoard[i] = VALUE_PAWN_BLACK;break;
+                            case KING:  byteBoard[mailbox64[i]] = MoveGenerator.KING_BLACK;break;
+                            case QUEEN: byteBoard[mailbox64[i]] = MoveGenerator.QUEEN_BLACK;break;
+                            case ROOK:  byteBoard[mailbox64[i]] = MoveGenerator.ROOK_BLACK;break;
+                            case KNIGHT:byteBoard[mailbox64[i]] = MoveGenerator.KNIGHT_BLACK;break;
+                            case BISHOP:byteBoard[mailbox64[i]] = MoveGenerator.BISHOP_BLACK;break;
+                            case PAWN:  byteBoard[mailbox64[i]] = MoveGenerator.PAWN_BLACK;break;
                         }
                         break;
                     case WHITE:
                         switch (chessman.getPiece()){
-                            case KING:  byteBoard[i] = VALUE_KING_WHITE;break;
-                            case QUEEN: byteBoard[i] = VALUE_QUEEN_WHITE;break;
-                            case ROOK:  byteBoard[i] = VALUE_ROOK_WHITE;break;
-                            case KNIGHT:byteBoard[i] = VALUE_KNIGHT_WHITE;break;
-                            case BISHOP:byteBoard[i] = VALUE_BISHOP_WHITE;break;
-                            case PAWN:  byteBoard[i] = VALUE_PAWN_WHITE;break;
+                            case KING:  byteBoard[mailbox64[i]] = MoveGenerator.KING_WHITE;break;
+                            case QUEEN: byteBoard[mailbox64[i]] = MoveGenerator.QUEEN_WHITE;break;
+                            case ROOK:  byteBoard[mailbox64[i]] = MoveGenerator.ROOK_WHITE;break;
+                            case KNIGHT:byteBoard[mailbox64[i]] = MoveGenerator.KNIGHT_WHITE;break;
+                            case BISHOP:byteBoard[mailbox64[i]] = MoveGenerator.BISHOP_WHITE;break;
+                            case PAWN:  byteBoard[mailbox64[i]] = MoveGenerator.PAWN_WHITE;break;
                         }
                         break;
                 }
             }else {
-                byteBoard[i]=0;
+                byteBoard[mailbox64[i]]= MoveGenerator.EMPTY;
             }
+        }
+        if(aiColor== Chessman.Color.WHITE)byteBoard[MoveGenerator.PLAYER_ON_TURN_EXTRA_FIELD]=MoveGenerator.WHITE;
+        else byteBoard[MoveGenerator.PLAYER_ON_TURN_EXTRA_FIELD]=MoveGenerator.BLACK;
+        return byteBoard;
+    }
+
+    /**
+     * Method creates an empty ByteBoard with only inaccessible Squares.
+     * @return
+     */
+    private byte[] getEmptyByteBoard() {
+        byte[] byteBoard = new byte[130];
+        for(int i = 0;i<120;i++){
+            byteBoard[i] = MoveGenerator.INACCESSIBLE;
         }
         return byteBoard;
     }
 
+
     public Chessman.Color getColor() {
         return aiColor;
     }
+
+    @Override
+    public void onMoveCalculated(Move move) {
+        boardComplex.handleMoveFromTo(move);   //Test move
+    }
+
 }

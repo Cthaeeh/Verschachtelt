@@ -13,7 +13,7 @@ public class VictoryScreenGraphic {
     private int x,y;        //Position of Background
     private VictoryState victoryState = null;
     public enum VictoryState {
-        VICTORY,DEFEAT,WHITEWIN,BLACKWIN
+        VICTORY,DEFEAT,WHITEWIN,BLACKWIN,
     }
 
 

@@ -1,6 +1,7 @@
 package com.example.kai.verschachtelt.chessLogic;
 
 import com.example.kai.verschachtelt.chessLogic.Chessman.Color;
+import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
 
 /**
  * Created by Kai on 04.09.2016.
@@ -77,6 +78,5 @@ public class CheckTester {
         }
         return false;
     }
-
 
 }
