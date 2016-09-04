@@ -78,5 +78,24 @@ public class CheckTester {
         return false;
     }
 
+    public static boolean isMate(Color color, Chessman[] board){
+        // checks, if the player with the given color is checked
+        if(isCheck(color,board)){
+            for(int i = 0; i < 64; i++){
+                //searches for all pieces with the given color
+                if(board[i]!=null && board[i].getColor() == color){
+                    // checks, if there are moves with this piece
+                    // if there is even one possible  move left, the player is not mated
+                    if(ruleBook.hasMoves(ruleBook.getPossibleMoves(i,board))) return false;
+                }
+            }
+            // we get here, if no piece has a possible move AND the player is checked. this indicates checkmate!
+            return true;
+        }
+
+        //if there is no check, there can´t be mate of course
+        return false;
+    }
+
 
 }
