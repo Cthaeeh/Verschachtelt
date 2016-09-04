@@ -13,12 +13,33 @@ public class RuleBook {
     private Chessman[] board;
 
     /**
-     *
+     * Calculates the possible move destinations for the chessman in the selectedPosition,
      * @param selectedPosition  the position of the chessman you want to look for where it can move.
      * @param board             the current state of the board the chessman is on
      * @return                  a array of boolean values where the chessman can possibly move.
      */
     public boolean[] getPossibleMoves(int selectedPosition, Chessman[] board){
+        if(board[selectedPosition]==null){resetPossibleMoves();return possibleMoves;}
+        //Copy stuff for easier access
+        this.selectedPosition = selectedPosition;
+        this.board = board;
+        getPieceSpecificMoves();
+        removeFriendlyFireMoves();
+        //Check collisions for chessman that arent horses.
+        if(board[selectedPosition].getPiece()!= Chessman.Piece.KNIGHT)collisionDetection();
+        possibleMoves = CheckTester.removeSuicidalMoves(selectedPosition,board,possibleMoves);
+        return possibleMoves;
+    }
+
+    /**
+     * Calculates the possible move destinations for the chessman in the selectedPosition,
+     * BUT whithout checking if the moves would result in check (which is illegal).
+     * @param selectedPosition  the position of the chessman you want to look for where it can move.
+     * @param board             the current state of the board the chessman is on
+     * @return                  a array of boolean values where the chessman can possibly move.
+     */
+    public boolean[] getPossibleMovesLight(int selectedPosition, Chessman[] board) {
+        if(board[selectedPosition]==null){resetPossibleMoves();return possibleMoves;}
         //Copy stuff for easier access
         this.selectedPosition = selectedPosition;
         this.board = board;
@@ -213,5 +234,6 @@ public class RuleBook {
         if(!whiteWin&&blackWin)return Chessman.Color.BLACK;
         return null;
     }
+
 
 }

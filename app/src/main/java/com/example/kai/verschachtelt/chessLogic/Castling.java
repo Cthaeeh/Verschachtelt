@@ -90,13 +90,14 @@ public class Castling {
      */
     public boolean[] getPossibleMoves(int selectedPosition, Chessman[] chessmen) {
         this.chessmen = chessmen; //Save the new chessmen array, you got from ChessBoardComplex.
-        resetPossibleMoves();
+        resetPossibleMoves();     //Clean up the return board.
         if(chessmen[selectedPosition].getPiece()== Chessman.Piece.KING){
-            if(chessmen[selectedPosition].getColor()== Chessman.Color.WHITE){
+            if(chessmen[selectedPosition].getColor()== Chessman.Color.WHITE && selectedPosition/8==7 ){ //Must be a black king and on base line
                 possibleMoves[KING_SIDE_WHITE_MOVE]=getKingSideWhiteMove(); //Mark possible moves.
                 possibleMoves[QUEEN_SIDE_WHITE_MOVE]=getQueenSideWhiteMove();
-            }else {
-                possibleMoves[KING_SIDE_BLACK_MOVE]=getKingSideBlackMove();
+            }
+            if(chessmen[selectedPosition].getColor()== Chessman.Color.BLACK && selectedPosition/8==0 ){ //Must be a black king and on base line
+                possibleMoves[KING_SIDE_BLACK_MOVE]=getKingSideBlackMove(); //Mark possible moves.
                 possibleMoves[QUEEN_SIDE_BLACK_MOVE]=getQueenSideBlackMove();
             }
         }
@@ -112,11 +113,11 @@ public class Castling {
     private boolean getQueenSideBlackMove() {
         if(!queenSideBlack) return false;
         if(!isPathFree(4,0))return false; //Nothing in between.
-        if(chessmen[4].hasBeenMoved())return false; //King wasn´t moved.
-        if(chessmen[0].hasBeenMoved())return false; //Tower wasn´t moved.
-        if(canMoveTo(Chessman.Color.WHITE,4))return false;    //King must be safe the whole journey.
-        if(canMoveTo(Chessman.Color.WHITE,3))return false;
-        if(canMoveTo(Chessman.Color.WHITE,2))return false;
+        if(chessmen[4] == null || chessmen[4].hasBeenMoved())return false; //King wasn´t moved.
+        if(chessmen[0] == null || chessmen[0].hasBeenMoved())return false; //Tower wasn´t moved.
+        if(squareInDanger(Chessman.Color.WHITE,4))return false;    //King must be safe the whole journey.
+        if(squareInDanger(Chessman.Color.WHITE,3))return false;
+        if(squareInDanger(Chessman.Color.WHITE,2))return false;
         return true;
     }
 
@@ -128,11 +129,11 @@ public class Castling {
     private boolean getKingSideBlackMove() {
         if(!kingSideBlack) return false;
         if(!isPathFree(4,7))return false; //Nothing in between.
-        if(chessmen[4].hasBeenMoved())return false; //King wasn´t moved.
-        if(chessmen[7].hasBeenMoved())return false; //Tower wasn´t moved.
-        if(canMoveTo(Chessman.Color.WHITE,4))return false;    //King must be safe the whole journey.
-        if(canMoveTo(Chessman.Color.WHITE,5))return false;
-        if(canMoveTo(Chessman.Color.WHITE,6))return false;
+        if(chessmen[4] == null || chessmen[4].hasBeenMoved())return false; //King wasn´t moved.
+        if(chessmen[7] == null || chessmen[7].hasBeenMoved())return false; //Tower wasn´t moved.
+        if(squareInDanger(Chessman.Color.WHITE,4))return false;    //King must be safe the whole journey.
+        if(squareInDanger(Chessman.Color.WHITE,5))return false;
+        if(squareInDanger(Chessman.Color.WHITE,6))return false;
         return true;
     }
 
@@ -144,11 +145,11 @@ public class Castling {
     private boolean getKingSideWhiteMove() {
         if(!kingSideWhite) return false;
         if(!isPathFree(60,62))return false; //Nothing in between.
-        if(chessmen[60].hasBeenMoved())return false; //King wasn´t moved.
-        if(chessmen[63].hasBeenMoved())return false; //Tower wasn´t moved.
-        if(canMoveTo(Chessman.Color.BLACK,60))return false;    //King must be safe the whole journey.
-        if(canMoveTo(Chessman.Color.BLACK,61))return false;
-        if(canMoveTo(Chessman.Color.BLACK,62))return false;
+        if(chessmen[60] == null || chessmen[60].hasBeenMoved())return false; //King wasn´t moved.
+        if(chessmen[63] == null || chessmen[63].hasBeenMoved())return false; //Tower wasn´t moved.
+        if(squareInDanger(Chessman.Color.BLACK,60))return false;    //King must be safe the whole journey.
+        if(squareInDanger(Chessman.Color.BLACK,61))return false;
+        if(squareInDanger(Chessman.Color.BLACK,62))return false;
         return true;
     }
 
@@ -160,11 +161,11 @@ public class Castling {
     private boolean getQueenSideWhiteMove() {
         if(!queenSideWhite) return false;
         if(!isPathFree(60,56))return false; //Nothing in between.
-        if(chessmen[60].hasBeenMoved())return false; //King wasn´t moved.
-        if(chessmen[56].hasBeenMoved())return false; //Tower wasn´t moved.
-        if(canMoveTo(Chessman.Color.BLACK,60))return false;    //King must be safe the whole journey.
-        if(canMoveTo(Chessman.Color.BLACK,59))return false;
-        if(canMoveTo(Chessman.Color.BLACK,58))return false;
+        if(chessmen[60] == null || chessmen[60].hasBeenMoved())return false; //King wasn´t moved.
+        if(chessmen[56] == null || chessmen[56].hasBeenMoved())return false; //Tower wasn´t moved.
+        if(squareInDanger(Chessman.Color.BLACK,60))return false;    //King must be safe the whole journey.
+        if(squareInDanger(Chessman.Color.BLACK,59))return false;
+        if(squareInDanger(Chessman.Color.BLACK,58))return false;
         return true;
     }
 
@@ -175,7 +176,7 @@ public class Castling {
      * @param goalSquare
      * @return if the player can move there.
      */
-    private boolean canMoveTo(Chessman.Color playerColor, int goalSquare){
+    private boolean squareInDanger(Chessman.Color playerColor, int goalSquare){
         for(int i = 0;i<64;i++){
             if(chessmen[i]!=null && chessmen[i].getColor() == playerColor){
                 if(ruleBook.getPossibleMoves(i, chessmen)[goalSquare])return true;
@@ -228,6 +229,9 @@ public class Castling {
         this.queenSideBlack = queenSideBlack;
     }
 
+    /**
+     * Resets the possibleMove array e.g all fields are false you can´t move anywhere.
+     */
     private void resetPossibleMoves() {
         for (int i=0;i<64;i++){
             possibleMoves[i]=false;
