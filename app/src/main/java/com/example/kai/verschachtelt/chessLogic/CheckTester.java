@@ -12,14 +12,14 @@ public class CheckTester {
     /**
      * Removes suicical Moves from the Moves that are otherwise legal.
      * @param selectedPosition the Chessman that was selected by the user.
-     * @param currentBoard           the current board.
+     * @param currentBoard     the current board.
      * @param possibleMoves    the otherwise legal Moves.
      * @return                 the legal moves where you don´t kill your self.
      */
     public static boolean[] removeSuicidalMoves(int selectedPosition, Chessman[] currentBoard, boolean[] possibleMoves) {
         for(int i = 0; i<64; i++){  //Iterate through fields.
             if(possibleMoves[i]){   //If this is a possible move destination.
-                possibleMoves[i] = isLegalMove(selectedPosition,i,currentBoard);
+                possibleMoves[i] = isLegalMove(selectedPosition,i,currentBoard);    //check if its a suicidal move.
             }
         }
         return possibleMoves;
@@ -27,6 +27,7 @@ public class CheckTester {
 
     /**
      * Method checks if a Move
+     * (creates a hypothetical board were the move was really made)
      * @param from
      * @param to
      * on the
@@ -35,7 +36,7 @@ public class CheckTester {
      * @return
      */
     private static boolean isLegalMove(int from, int to, Chessman[] currentBoard) {
-        Chessman[] boardAfterMove = Chessman.deepCopy(currentBoard);
+        Chessman[] boardAfterMove = Chessman.deepCopy(currentBoard);    //Very important, make a deep copy.
         boardAfterMove[to]=boardAfterMove[from];    //Make the move
         boardAfterMove[from]=null;
         return !isCheck(boardAfterMove[to].getColor(),boardAfterMove);  //If it is check afterwards it was a illegal move.
