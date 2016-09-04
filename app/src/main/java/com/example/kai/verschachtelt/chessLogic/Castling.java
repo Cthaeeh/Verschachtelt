@@ -229,6 +229,9 @@ public class Castling {
         this.queenSideBlack = queenSideBlack;
     }
 
+    /**
+     * Resets the possibleMove array e.g all fields are false you can´t move anywhere.
+     */
     private void resetPossibleMoves() {
         for (int i=0;i<64;i++){
             possibleMoves[i]=false;
