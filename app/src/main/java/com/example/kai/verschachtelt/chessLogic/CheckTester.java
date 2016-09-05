@@ -86,7 +86,7 @@ public class CheckTester {
                 if(board[i]!=null && board[i].getColor() == color){
                     // checks, if there are moves with this piece
                     // if there is even one possible  move left, the player is not mated
-                    if(ruleBook.hasMoves(ruleBook.getPossibleMoves(i,board))) return false;
+                    if(hasMoves(ruleBook.getPossibleMoves(i,board))) return false;
                 }
             }
             // we get here, if no piece has a possible move AND the player is checked. this indicates checkmate!
@@ -96,6 +96,17 @@ public class CheckTester {
         //if there is no check, there can´t be mate of course
         return false;
     }
+    /**
+     * A method, which checks, if there are any possible moves, a certain figure can make
+     * @return if the player has any possible move left with a figure
+     */
+    public static boolean hasMoves (boolean[] moves){
+        for(int i = 0; i < moves.length; i++){
+            if(moves[i]) return true;
+        }
+        return false;
+    }
+
 
 
 }

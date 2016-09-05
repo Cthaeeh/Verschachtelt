@@ -1,6 +1,8 @@
 package com.example.kai.verschachtelt.chessLogic;
 
 
+import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
+
 /**
  * Created by Kai on 10.08.2016.
  * this class can look for a selectedPosition, where the chessman on the this position can move to.
@@ -222,7 +224,7 @@ public class RuleBook {
         }
     }
 
-    public Chessman.Color getWinner(Chessman[] board) {
+    public VictoryScreenGraphic.VictoryState getWinner(Chessman[] board) {
  //       boolean whiteWin = true;
    //     boolean blackWin = true;
      //   for (int i = 0;i<64;i++){
@@ -235,21 +237,11 @@ public class RuleBook {
         //if(whiteWin&&!blackWin)return Chessman.Color.WHITE;
         //if(!whiteWin&&blackWin)return Chessman.Color.BLACK;
         //return null;
-        if(CheckTester.isMate(Chessman.Color.BLACK,board))return Chessman.Color.WHITE;
-        if(CheckTester.isMate(Chessman.Color.WHITE,board)) return Chessman.Color.BLACK;
+        if(CheckTester.isMate(Chessman.Color.BLACK,board))return VictoryScreenGraphic.VictoryState.WHITEWIN;
+        if(CheckTester.isMate(Chessman.Color.WHITE,board)) return VictoryScreenGraphic.VictoryState.BLACKWIN;
 
         return null;
     }
 
-    /**
-     * A method, which checks, if there are any possible moves, a certain figure can make
-     * @return if the player has any possible move left with a figure
-     */
-    public boolean hasMoves (boolean[] moves){
-        for(int i = 0; i < moves.length; i++){
-            if(moves[i]) return true;
-        }
-        return false;
-    }
 
 }

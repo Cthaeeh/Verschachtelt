@@ -129,7 +129,7 @@ public class ChessGame implements InputEvent {
     public ChessBoardComplex getComplexBoard() { return boardCurrent; }
 
     public VictoryScreenGraphic.VictoryState getWinner(){
-        return null;
+        return boardCurrent.getWinner();
     };
 
     public void setInputHandler(InputHandler inputHandler) {
