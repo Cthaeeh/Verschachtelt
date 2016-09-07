@@ -38,7 +38,7 @@ public class BordEvaluation {
         double boardValue = 0.0;
         boardValue+=getMaterialValue(board);
         boardValue+=getCenterControl(board);
-        //TODO evaluate King safety, mobility, center control, etc
+        //TODO evaluate King safety, mobility, etc
         return boardValue;
     }
 

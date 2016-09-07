@@ -38,11 +38,17 @@ public class ChessGamePvAI extends ChessGame {
      */
     @Override
     public void handleUndoButton() {
-        if(moveCounter>0){      //If there has been at least one move.
+        if(moveCounter>1 && boardCurrent.getPlayerOnTurn()!= ai.getColor()){      //If there has been at least one move.
             boardCurrent = new ChessBoardComplex(boardHistory.get(moveCounter-2)); //Set to previous Boardstate.
             boardHistory.remove(moveCounter);
             boardHistory.remove(moveCounter-1);
             moveCounter=moveCounter-2;
+        }
+        if(moveCounter>0 && boardCurrent.getPlayerOnTurn()== ai.getColor()){      //If there has been at least one move.
+            ai.cancel();
+            boardCurrent = new ChessBoardComplex(boardHistory.get(moveCounter-1)); //Set to previous Boardstate.
+            boardHistory.remove(moveCounter);
+            moveCounter=moveCounter-1;
         }
     }
 }
