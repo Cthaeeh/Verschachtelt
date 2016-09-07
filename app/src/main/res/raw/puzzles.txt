@@ -1,4 +1,15 @@
 [
+
+{
+ "Id": 10,
+ "Name": "Nice Mate",
+ "Description": "Matt in zwei Zügen",
+ "DifficultyAsString": "Mittel",
+ "DifficultyAsInt": 2,
+ "Positions": ["1r3k2/2n1p1b1/3p2QR/p1pq1pN1/bp6/7P/2P2PP1/4RBK1 w - - 0 1" , "1r3k1R/2n1p1b1/3p2Q1/p1pq1pN1/bp6/7P/2P2PP1/4RBK1 b - - 0 1", "1r3k1b/2n1p3/3p2Q1/p1pq1pN1/bp6/7P/2P2PP1/4RBK1 w - - 0 2", "1r3k1b/2n1p2N/3p2Q1/p1pq1p2/bp6/7P/2P2PP1/4RBK1 b - - 0 2"],
+ "Solved": false
+},
+}
 {
   "Id": 4,
   "Name": "Magnus super zug XY",
