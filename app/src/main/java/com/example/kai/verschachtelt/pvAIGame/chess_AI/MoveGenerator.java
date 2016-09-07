@@ -101,7 +101,7 @@ public class MoveGenerator {
             }
         }
 
-        return new ArrayList<byte[]>(moves);
+        return new ArrayList<byte[]>(moves);    //TODO WHY IS THIS NEEDED ???
     }
 
 

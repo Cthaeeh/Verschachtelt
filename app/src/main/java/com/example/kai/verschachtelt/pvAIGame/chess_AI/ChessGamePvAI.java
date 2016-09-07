@@ -35,6 +35,7 @@ public class ChessGamePvAI extends ChessGame {
 
     /**
      * Overrides the standard UndoButton, because in a Game vs the AI you want to undo your own Move and the ai´s move.
+     * If the AI is in the middle of calculating process we stop calculations and go back just one move -> humans turn again.
      */
     @Override
     public void handleUndoButton() {
