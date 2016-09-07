@@ -10,7 +10,7 @@ public interface InputEvent {
 
     void handleTouchOnSquare(Integer position);
 
-    void handleTouchOnChessman(Chessman.Piece chessman);
+    void handlePromotion(Chessman.Piece chessman);
 
     void handleUndoButton();
 

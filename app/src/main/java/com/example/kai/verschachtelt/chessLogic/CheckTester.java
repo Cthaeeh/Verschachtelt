@@ -68,16 +68,26 @@ public class CheckTester {
         Chessman.Color enemyColor;
         if(board[squarePosition]==null)return false;
         if(board[squarePosition].getColor()==Color.WHITE)enemyColor = Color.BLACK;  //Who is the enemy ?
-        else enemyColor = Color.WHITE;
-
+        else {
+            enemyColor = Color.WHITE;
+        }
         for(int i = 0;i<64;i++){    //Iterate through fields.
-            if(board[i]!=null && board[i].getColor() == enemyColor){    //If we found a square with an enemy chessman.
-                if(ruleBook.getPossibleMovesLight(i, board)[squarePosition])return true; //And this enemy chessman can move to the squarePosition this square is in danger.
+            if(board[i]!=null){
+               if(board[i].getColor() == enemyColor){
+                   if(ruleBook.getPossibleMovesLight(i, board)[squarePosition])return true; //And this enemy chessman can move to the squarePosition this square is in danger.
+               }
             }
         }
+
         return false;
     }
 
+    /**
+     * Method checks if player with Color (parameter color) hast lost the game.
+     * @param color
+     * @param board
+     * @return
+     */
     public static boolean isMate(Color color, Chessman[] board){
         // checks, if the player with the given color is checked
         if(isCheck(color,board)){
@@ -92,21 +102,19 @@ public class CheckTester {
             // we get here, if no piece has a possible move AND the player is checked. this indicates checkmate!
             return true;
         }
-
         //if there is no check, there can´t be mate of course
         return false;
     }
+
     /**
      * A method, which checks, if there are any possible moves, a certain figure can make
      * @return if the player has any possible move left with a figure
      */
-    public static boolean hasMoves (boolean[] moves){
-        for(int i = 0; i < moves.length; i++){
-            if(moves[i]) return true;
+    public static boolean hasMoves (boolean[] possibleDestinations){
+        for(int i = 0; i < 64; i++){
+            if(possibleDestinations[i]) return true;
         }
         return false;
     }
-
-
 
 }

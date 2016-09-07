@@ -35,16 +35,16 @@ public class InputHandler {
         float y = event.getY();
         float imgSize = 4*GamePanel.squareSize;
         if(0 < x && x < imgSize && 0<y  && y < imgSize){            //upper left edge
-            inputEvent.handleTouchOnChessman(Chessman.Piece.QUEEN);
+            inputEvent.handlePromotion(Chessman.Piece.QUEEN);
         }
         if(imgSize < x && x < 2*imgSize && 0<y  && y < imgSize) {   //upper right edge
-            inputEvent.handleTouchOnChessman(Chessman.Piece.ROOK);
+            inputEvent.handlePromotion(Chessman.Piece.ROOK);
         }
         if(0 < x && x < imgSize && imgSize<y  && y < 2*imgSize) {   //lower left edge
-            inputEvent.handleTouchOnChessman(Chessman.Piece.BISHOP);
+            inputEvent.handlePromotion(Chessman.Piece.BISHOP);
         }
         if(imgSize < x && x < 2*imgSize && imgSize<y  && y < 2*imgSize) {//lower right edge
-            inputEvent.handleTouchOnChessman(Chessman.Piece.KNIGHT);
+            inputEvent.handlePromotion(Chessman.Piece.KNIGHT);
         }
     }
 

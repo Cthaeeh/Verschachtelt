@@ -109,7 +109,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         background.update(String.valueOf(avgFPS)+" fps " + String.valueOf(xTouch)+"|" +String.valueOf(yTouch) );
         chessmanGraphic.update(game.getSimpleBoard());
         victoryScreenGraphic.update(game.getWinner());
-        pawnChangeGraphic.update(game.getComplexBoard().pawnChangePossible());
+        pawnChangeGraphic.update(game.getComplexBoard().pawnPromotionPossible());
     }
 
     @Override
@@ -137,7 +137,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         if(pawnChangeGraphic.isActivated) pawnChangeGraphic.draw(canvas);
         if(game.getWinner()!=null)        victoryScreenGraphic.draw(canvas);
     }
-
 
     public ChessGame getGame() {
         return game;

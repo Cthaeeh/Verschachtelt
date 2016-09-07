@@ -18,7 +18,7 @@ import java.util.List;
 public class ChessGame implements InputEvent {
     private InputHandler inputHandler;
     protected ChessBoardComplex boardCurrent;
-    private List<ChessBoardComplex> boardHistory = new ArrayList<>();
+    protected List<ChessBoardComplex> boardHistory = new ArrayList<>();
     //Number of moves performed by both players.
     protected int moveCounter = 0;
 
@@ -57,16 +57,16 @@ public class ChessGame implements InputEvent {
             return;
         }
         if(boardCurrent.getSquareStateAt(position)== SquareState.POSSIBLE){   //If a chessman is selected and there is a squareStates where it can move
-            move(position);
+            moveByHuman(position);
             return;
         }
         if(boardCurrent.getSquareStateAt(position)== SquareState.POSSIBLE_KILL){  //same as above
-            move(position);
+            moveByHuman(position);
         }
 
     }
 
-    public void handleTouchOnChessman(Chessman.Piece chessman) {
+    public void handlePromotion(Chessman.Piece chessman) {
         if(boardCurrent.getPlayerOnTurn() == Chessman.Color.BLACK){
             changing = Chessman.Color.WHITE;
         } else {
@@ -75,19 +75,19 @@ public class ChessGame implements InputEvent {
             switch (chessman){
                 case QUEEN:
                     Chessman newQueen = new Chessman(Chessman.Piece.QUEEN, changing);
-                    boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newQueen);
+                    boardCurrent.promotePawn(boardCurrent.pawnChangePosition(), newQueen);
                     break;
                 case ROOK:
                     Chessman newRook = new Chessman(Chessman.Piece.ROOK,changing);
-                    boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newRook);
+                    boardCurrent.promotePawn(boardCurrent.pawnChangePosition(), newRook);
                     break;
                 case BISHOP:
                     Chessman newBishop = new Chessman(Chessman.Piece.BISHOP, changing);
-                    boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newBishop);
+                    boardCurrent.promotePawn(boardCurrent.pawnChangePosition(), newBishop);
                     break;
                 case KNIGHT:
                     Chessman newKnight = new Chessman(Chessman.Piece.KNIGHT, changing);
-                    boardCurrent.switchPawn(boardCurrent.pawnChangePosition(), newKnight);
+                    boardCurrent.promotePawn(boardCurrent.pawnChangePosition(), newKnight);
                     break;
             }
     }
@@ -111,7 +111,11 @@ public class ChessGame implements InputEvent {
 
     }
 
-    protected void move(int position){
+    /**
+     * Handles a Move initiated by a Human.
+     * @param position
+     */
+    protected void moveByHuman(int position){
         boardCurrent.handleMoveTo(position);    //Move there from a selected position.
         boardCurrent.resetFrames();
         boardHistory.add(new ChessBoardComplex(boardCurrent));
