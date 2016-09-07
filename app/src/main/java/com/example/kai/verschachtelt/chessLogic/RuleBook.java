@@ -21,10 +21,10 @@ public class RuleBook {
      * @return                  a array of boolean values where the chessman can possibly move.
      */
     public boolean[] getPossibleMoves(int selectedPosition, Chessman[] board){
-        if(board[selectedPosition]==null){resetPossibleMoves();return possibleMoves;}
-        //Copy stuff for easier access
         this.selectedPosition = selectedPosition;
         this.board = board;
+        if(board[selectedPosition]==null){resetPossibleMoves();return possibleMoves;}
+        //Copy stuff for easier access
         getPieceSpecificMoves();
         removeFriendlyFireMoves();
         //Check collisions for chessman that arent horses.
@@ -41,10 +41,10 @@ public class RuleBook {
      * @return                  a array of boolean values where the chessman can possibly move.
      */
     public boolean[] getPossibleMovesLight(int selectedPosition, Chessman[] board) {
-        if(board[selectedPosition]==null){resetPossibleMoves();return possibleMoves;}
-        //Copy stuff for easier access
         this.selectedPosition = selectedPosition;
         this.board = board;
+        if(board[selectedPosition]==null){resetPossibleMoves();return possibleMoves;}
+        //Copy stuff for easier access
         getPieceSpecificMoves();
         removeFriendlyFireMoves();
         //Check collisions for chessman that arent horses.
