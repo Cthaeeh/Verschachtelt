@@ -3,6 +3,8 @@ package com.example.kai.verschachtelt.chessLogic;
 
 import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
 
+import static java.lang.Math.signum;
+
 /**
  * Created by Kai on 10.08.2016.
  * this class can look for a selectedPosition, where the chessman on the this position can move to.
@@ -21,12 +23,15 @@ public class RuleBook {
      * @return                  a array of boolean values where the chessman can possibly move.
      */
     public boolean[] getPossibleMoves(int selectedPosition, Chessman[] board){
-        if(board[selectedPosition]==null){resetPossibleMoves();return possibleMoves;}
-        //Copy stuff for easier access
         this.selectedPosition = selectedPosition;
         this.board = board;
+        if(board[selectedPosition]==null){
+            resetPossibleMoves();
+            return possibleMoves;
+        }
+        //Copy stuff for easier access
         getPieceSpecificMoves();
-        removeFriendlyFireMoves();
+        removeFriendlyFireMoves(board[selectedPosition].getColor());
         //Check collisions for chessman that arent horses.
         if(board[selectedPosition].getPiece()!= Chessman.Piece.KNIGHT)collisionDetection();
         possibleMoves = CheckTester.removeSuicidalMoves(selectedPosition,board,possibleMoves);
@@ -41,17 +46,27 @@ public class RuleBook {
      * @return                  a array of boolean values where the chessman can possibly move.
      */
     public boolean[] getPossibleMovesLight(int selectedPosition, Chessman[] board) {
-        if(board[selectedPosition]==null){resetPossibleMoves();return possibleMoves;}
-        //Copy stuff for easier access
-        this.selectedPosition = selectedPosition;
-        this.board = board;
-        getPieceSpecificMoves();
-        removeFriendlyFireMoves();
-        //Check collisions for chessman that arent horses.
-        if(board[selectedPosition].getPiece()!= Chessman.Piece.KNIGHT)collisionDetection();
+        try {
+            resetPossibleMoves();
+            this.selectedPosition = selectedPosition;
+            this.board = board;
+            Chessman asshole = board[selectedPosition];
+            if(board[selectedPosition]==null){
+                resetPossibleMoves();
+                return possibleMoves;
+            }else {
+                //Copy stuff for easier access
+                getPieceSpecificMoves();
+                removeFriendlyFireMoves(asshole.getColor());
+                //Check collisions for chessman that arent horses.
+                if(asshole.getPiece()!= Chessman.Piece.KNIGHT)collisionDetection();
+                return possibleMoves;
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            return possibleMoves;
+        }
 
-
-        return possibleMoves;
     }
 
     private void collisionDetection() {
@@ -69,8 +84,8 @@ public class RuleBook {
      * @return      when blocked false, otherwise true
      */
     private boolean isPathFree(int from, int to) {
-        byte xDirection = (byte)Math.signum(to%8-from%8);
-        byte yDirection = (byte)Math.signum(to/8-from/8);
+        byte xDirection = (byte) signum(to%8-from%8);
+        byte yDirection = (byte) signum(to/8-from/8);
 
         byte xCurrent = (byte) (from%8+xDirection);
         byte yCurrent = (byte) (from/8+yDirection);
@@ -91,10 +106,10 @@ public class RuleBook {
     /**
      * The method ensures that you can not beat your own figures
      */
-    private void removeFriendlyFireMoves() {
+    private void removeFriendlyFireMoves(Chessman.Color color) {
         for (int i = 0;i<64;i++){
             if(board[i]!=null){  //Check if you want to move on your own piece
-                if(board[selectedPosition].getColor()==board[i].getColor())possibleMoves[i]=false;
+                if(color==board[i].getColor())possibleMoves[i]=false;
             }
         }
     }
@@ -226,22 +241,9 @@ public class RuleBook {
         }
     }
 
-    public VictoryScreenGraphic.VictoryState getWinner(Chessman[] board) {
- //       boolean whiteWin = true;
-   //     boolean blackWin = true;
-     //   for (int i = 0;i<64;i++){
-       //     //If the King of the other player is still there you have not won.
-         //   if(board[i]!=null){
-           //     if(board[i].getPiece()== Chessman.Piece.KING && board[i].getColor() == Chessman.Color.BLACK) whiteWin = false;
-             //   if(board[i].getPiece()== Chessman.Piece.KING && board[i].getColor() == Chessman.Color.WHITE) blackWin = false;
-            //}
-        //}
-        //if(whiteWin&&!blackWin)return Chessman.Color.WHITE;
-        //if(!whiteWin&&blackWin)return Chessman.Color.BLACK;
-        //return null;
-        if(CheckTester.isMate(Chessman.Color.BLACK,board))return VictoryScreenGraphic.VictoryState.WHITEWIN;
+    public VictoryScreenGraphic.VictoryState  getWinner(Chessman[] board) {
+        if(CheckTester.isMate(Chessman.Color.BLACK,board)) return VictoryScreenGraphic.VictoryState.WHITEWIN;
         if(CheckTester.isMate(Chessman.Color.WHITE,board)) return VictoryScreenGraphic.VictoryState.BLACKWIN;
-
         return null;
     }
 
