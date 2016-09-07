@@ -218,6 +218,8 @@ public class RuleBook {
         return possibleMoves;
     }
 
+    //COMMENT TO TEST BRANCH
+
     private void resetPossibleMoves() {
         for (int i=0;i<64;i++){
             possibleMoves[i]=false;
