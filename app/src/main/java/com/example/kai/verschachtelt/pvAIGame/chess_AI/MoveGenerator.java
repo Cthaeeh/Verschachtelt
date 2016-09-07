@@ -1,5 +1,7 @@
 package com.example.kai.verschachtelt.pvAIGame.chess_AI;
 
+import com.example.kai.verschachtelt.chessLogic.Chessman;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,7 @@ import java.util.List;
  * The code there is really crazy short, but does the same what this Class does.
  */
 public class MoveGenerator {
+    //Constants for representing certain Chessman:
     //Following must be positive !
     protected static final byte KING_WHITE = 10;
     protected static final byte QUEEN_WHITE = 9;
@@ -156,6 +159,10 @@ public class MoveGenerator {
                 if(destinationValue==INACCESSIBLE)break;    //Stop when you hit a Wall
                 if(destinationValue>0)break;                //Stop when you hit friendly chessman
                 addMove(startPos,destinationPos,QUEEN_WHITE);
+                if(destinationValue<0){
+                    addMove(startPos,destinationPos,QUEEN_WHITE);//Stop when you hit a enemy but add the kill move.
+                    break;
+                }
             }
         }
     }
@@ -167,6 +174,10 @@ public class MoveGenerator {
                 byte destinationValue = board[destinationPos];
                 if(destinationValue==INACCESSIBLE)break;    //Stop when you hit a Wall
                 if(destinationValue<0)break;                //Stop when you hit friendly chessman
+                if(destinationValue>0){
+                    addMove(startPos,destinationPos,QUEEN_BLACK);//Stop when you hit a enemy but add the kill move.
+                    break;
+                }
                 addMove(startPos,destinationPos,QUEEN_BLACK);
             }
         }
@@ -182,6 +193,10 @@ public class MoveGenerator {
                 if(destinationValue==INACCESSIBLE)break;    //Stop when you hit a Wall
                 if(destinationValue>0)break;                //Stop when you hit friendly chessman
                 addMove(startPos,destinationPos,ROOK_WHITE);
+                if(destinationValue<0){
+                    addMove(startPos,destinationPos,ROOK_WHITE);//Stop when you hit a enemy but add the kill move.
+                    break;
+                }
             }
         }
     }
@@ -193,6 +208,10 @@ public class MoveGenerator {
                 byte destinationValue = board[destinationPos];
                 if(destinationValue==INACCESSIBLE)break;    //Stop when you hit a Wall
                 if(destinationValue<0)break;                //Stop when you hit friendly chessman
+                if(destinationValue>0){
+                    addMove(startPos,destinationPos,ROOK_BLACK);//Stop when you hit a enemy but add the kill move.
+                    break;
+                }
                 addMove(startPos,destinationPos,ROOK_BLACK);
             }
         }
@@ -207,6 +226,10 @@ public class MoveGenerator {
                 byte destinationValue = board[destinationPos];
                 if(destinationValue==INACCESSIBLE)break;    //Stop when you hit a Wall
                 if(destinationValue>0)break;                //Stop when you hit friendly chessman
+                if(destinationValue<0){
+                    addMove(startPos,destinationPos,BISHOP_WHITE);
+                    break;
+                }
                 addMove(startPos,destinationPos,BISHOP_WHITE);
             }
         }
@@ -219,6 +242,10 @@ public class MoveGenerator {
                 byte destinationValue = board[destinationPos];
                 if(destinationValue==INACCESSIBLE)break;    //Stop when you hit a Wall
                 if(destinationValue<0)break;                //Stop when you hit friendly chessman
+                if(destinationValue>0){
+                    addMove(startPos,destinationPos,BISHOP_BLACK);
+                    break;
+                }
                 addMove(startPos,destinationPos,BISHOP_BLACK);
             }
         }
@@ -269,6 +296,9 @@ public class MoveGenerator {
         byte[] boardAfterMove = board.clone();
         boardAfterMove[destinationPos]=chessmanValue;   //Make move
         boardAfterMove[startPos]=0;
+        //Change player on turn.
+        if(boardAfterMove[PLAYER_ON_TURN_EXTRA_FIELD]==BLACK)boardAfterMove[PLAYER_ON_TURN_EXTRA_FIELD]=WHITE;
+        else boardAfterMove[PLAYER_ON_TURN_EXTRA_FIELD]=BLACK;
         moves.add(boardAfterMove);                  //Add to possible Moves
     }
 

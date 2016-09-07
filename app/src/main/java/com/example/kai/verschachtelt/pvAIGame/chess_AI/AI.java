@@ -2,7 +2,6 @@ package com.example.kai.verschachtelt.pvAIGame.chess_AI;
 
 import com.example.kai.verschachtelt.chessLogic.ChessBoardComplex;
 import com.example.kai.verschachtelt.chessLogic.Chessman;
-import com.example.kai.verschachtelt.dataHandling.PuzzleDownloadTask;
 
 /**
  * Created by Kai on 10.08.2016.
@@ -15,7 +14,6 @@ public class AI implements AI_Listener {
     private final  Chessman.Color aiColor;  //The color of the pieces the ai moves
     private byte[] byteBoard ;              //Inside the ai a boardCurrent is represented by byte array
 
-
     int mailbox64[] = {                 //For transferring a 8x8 to a 10x12 board. See: https://chessprogramming.wikispaces.com/10x12+Board
                 21, 22, 23, 24, 25, 26, 27, 28,
                 31, 32, 33, 34, 35, 36, 37, 38,
@@ -26,7 +24,7 @@ public class AI implements AI_Listener {
                 81, 82, 83, 84, 85, 86, 87, 88,
                 91, 92, 93, 94, 95, 96, 97, 98
     };
-    private ChessBoardComplex boardComplex;
+    private ChessGamePvAI boardComplex;
 
 
     /**
@@ -43,26 +41,27 @@ public class AI implements AI_Listener {
      * @param board The boardCurrent you want the ai to calculate a move for.
      * @return The board after the ai did its move.
      */
-    public ChessBoardComplex calculateMove(ChessBoardComplex board) {
-        this.boardComplex = board;
-        byteBoard = toByteArray(board);
+    public void calculateMove(ChessGamePvAI game) {
+        this.boardComplex = game;
+        byteBoard = toByteArray(game.getComplexBoard());
         new AI_Task(this).execute(byteBoard);
-        return board;
     }
 
     /**
-     * The method takes a boardCurrent object and translates it to a byte array of length 120.
+     * The method takes a boardCurrent object and translates it to a byte array of length 130.
+     * See: https://chessprogramming.wikispaces.com/10x12+Board
+     * the 10 extra values are fore stroring the player on turn.
      * to represent different chessmen it uses constants.
      * @param board
      * @return
      */
     public byte[] toByteArray(ChessBoardComplex board) {
         byte[] byteBoard = getEmptyByteBoard();
-        for (int i = 0;i<64;i++){
+        for (int i = 0;i<64;i++){                       //Iterate over board.
             if(board.getChessManAt(i)!=null){
                 Chessman chessman = board.getChessManAt(i);
                 switch (chessman.getColor()){
-                    case BLACK:
+                    case BLACK:                         //Depending on the chessman a constant is choosen.
                         switch (chessman.getPiece()){
                             case KING:  byteBoard[mailbox64[i]] = MoveGenerator.KING_BLACK;break;
                             case QUEEN: byteBoard[mailbox64[i]] = MoveGenerator.QUEEN_BLACK;break;
@@ -111,7 +110,7 @@ public class AI implements AI_Listener {
 
     @Override
     public void onMoveCalculated(Move move) {
-        boardComplex.handleMoveFromTo(move);   //Test move
+        boardComplex.moveByAi(move);
     }
 
 }

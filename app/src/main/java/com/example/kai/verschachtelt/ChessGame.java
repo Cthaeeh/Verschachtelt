@@ -18,7 +18,7 @@ import java.util.List;
 public class ChessGame implements InputEvent {
     private InputHandler inputHandler;
     protected ChessBoardComplex boardCurrent;
-    private List<ChessBoardComplex> boardHistory = new ArrayList<>();
+    protected List<ChessBoardComplex> boardHistory = new ArrayList<>();
     //Number of moves performed by both players.
     protected int moveCounter = 0;
 
@@ -57,11 +57,11 @@ public class ChessGame implements InputEvent {
             return;
         }
         if(boardCurrent.getSquareStateAt(position)== SquareState.POSSIBLE){   //If a chessman is selected and there is a squareStates where it can move
-            move(position);
+            moveByHuman(position);
             return;
         }
         if(boardCurrent.getSquareStateAt(position)== SquareState.POSSIBLE_KILL){  //same as above
-            move(position);
+            moveByHuman(position);
         }
 
     }
@@ -111,7 +111,11 @@ public class ChessGame implements InputEvent {
 
     }
 
-    protected void move(int position){
+    /**
+     * Handles a Move initiated by a Human.
+     * @param position
+     */
+    protected void moveByHuman(int position){
         boardCurrent.handleMoveTo(position);    //Move there from a selected position.
         boardCurrent.resetFrames();
         boardHistory.add(new ChessBoardComplex(boardCurrent));

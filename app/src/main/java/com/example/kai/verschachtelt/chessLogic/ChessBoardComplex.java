@@ -1,5 +1,6 @@
 package com.example.kai.verschachtelt.chessLogic;
 
+import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
 import com.example.kai.verschachtelt.pvAIGame.chess_AI.Move;
 
 /**
@@ -84,7 +85,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
      * The Chessboard will rearrange the chessman.
      * This method is for the ai (at least for now ...)
      */
-    public void handleMoveFromTo(Move move) {
+    public void handleMove(Move move) {
         if(move.from>=0 && chessmen[move.from]!=null){        //If we try to move from a legit position
             chessmen[move.from].notifyMove();                 //Tell the chessman that he was moved (Important for Castling)
             chessmen[move.to]= chessmen[move.from];           //Set the chessman to its new position.
@@ -117,9 +118,8 @@ public class ChessBoardComplex extends ChessBoardSimple {
         return selectedPosition;
     }
 
-    public Chessman.Color getWinner() {
-        //TODO can also return draw.
-        return ruleBook.getWinner(chessmen,playerOnTurn);
+    public VictoryScreenGraphic.VictoryState getWinner() {
+        return ruleBook.getWinner(chessmen);
     }
 
     /**
@@ -165,9 +165,9 @@ public class ChessBoardComplex extends ChessBoardSimple {
     }
 
     /**
-     *     checks, if a pawn change is possible
+     *     checks, if a pawn change is possible and returns the color of the pawn to promote if possible otherwise null.
      */
-    public Chessman.Color pawnChangePossible() {
+    public Chessman.Color pawnPromotionPossible() {
         return pawnPromotionManager.pawnChangeColor(chessmen);
     }
 

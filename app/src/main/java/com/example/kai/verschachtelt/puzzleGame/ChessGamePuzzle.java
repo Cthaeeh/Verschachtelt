@@ -2,7 +2,6 @@ package com.example.kai.verschachtelt.puzzleGame;
 
 import com.example.kai.verschachtelt.InputHandler;
 import com.example.kai.verschachtelt.activitys.MainActivity;
-import com.example.kai.verschachtelt.activitys.PuzzleSelectionActivity;
 import com.example.kai.verschachtelt.chessLogic.ChessBoardComplex;
 import com.example.kai.verschachtelt.dataHandling.MyDBHandler;
 import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
@@ -30,12 +29,12 @@ public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
      * @param position where to try to move to
      */
     @Override
-    protected void move(int position){
+    protected void moveByHuman(int position){
         if(isPuzzleSolved())return;
         ChessBoardComplex hypotheticalBoard = new ChessBoardComplex(boardCurrent);  //Make a copy to test if users move was correct.
         hypotheticalBoard.handleMoveTo(position);                                   //Make move on the copied board.
         if(hypotheticalBoard.comparePositions(PUZZLE.getPosition(puzzleSteps+1))){  //If the correct move was made.
-            super.move(position);                                                   //Make the move on the real board.
+            super.moveByHuman(position);                                                   //Make the move on the real board.
             puzzleSteps++;
             puzzleSolved = isPuzzleSolved();
             if(!puzzleSolved){                                                      //If the puzzle isn´t already solved opponent make move.

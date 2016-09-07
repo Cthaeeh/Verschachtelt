@@ -4,6 +4,8 @@ package com.example.kai.verschachtelt.pvAIGame.chess_AI;
 
 /**
  * Created by Kai on 04.09.2016.
+ * This class represents a Move. It can be simple move from one to another place. But it
+ * also can be a pawn promotion (later maybe castling, en passant).
  */
 public class Move {
     //For transferring a 10x12 to a 8x8 board. See: https://chessprogramming.wikispaces.com/10x12+Board
@@ -43,6 +45,9 @@ public class Move {
      * @param boardEnd
      */
     public Move(byte[] boardStart, byte[] boardEnd) {
+        if(boardEnd == null || boardStart == null){
+            return;
+        }
         for(int i = 0; i < 120; i++){
             if(boardEnd[i]==MoveGenerator.EMPTY && boardStart[i]!=MoveGenerator.EMPTY){
                 from = mailbox[i];
@@ -60,6 +65,10 @@ public class Move {
         }
     }
 
+    /**
+     * Returns if this Move resulted in a pawn promotion.
+     * @return
+     */
     public boolean isPromotion(){
         return isPromotion;
     }
