@@ -1,5 +1,7 @@
 package com.example.kai.verschachtelt.pvAIGame.chess_AI;
 
+import android.os.AsyncTask;
+
 import com.example.kai.verschachtelt.chessLogic.ChessBoardComplex;
 import com.example.kai.verschachtelt.chessLogic.Chessman;
 
@@ -11,6 +13,7 @@ import com.example.kai.verschachtelt.chessLogic.Chessman;
 public class AI implements AI_Listener {
 
     private final  int difficulty;
+    private AsyncTask<byte[], Integer, Move> ai_task;
     private final  Chessman.Color aiColor;  //The color of the pieces the ai moves
     private byte[] byteBoard ;              //Inside the ai a boardCurrent is represented by byte array
 
@@ -44,7 +47,7 @@ public class AI implements AI_Listener {
     public void calculateMove(ChessGamePvAI game) {
         this.boardComplex = game;
         byteBoard = toByteArray(game.getComplexBoard());
-        new AI_Task(this).execute(byteBoard);
+        ai_task = new AI_Task(this).execute(byteBoard);
     }
 
     /**
@@ -110,7 +113,15 @@ public class AI implements AI_Listener {
 
     @Override
     public void onMoveCalculated(Move move) {
+        if(move == null) return;
         boardComplex.moveByAi(move);
     }
 
+    public void cancel() {
+        try {
+            ai_task.cancel(true);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
 }

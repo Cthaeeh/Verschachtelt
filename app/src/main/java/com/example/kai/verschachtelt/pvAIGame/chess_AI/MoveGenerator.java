@@ -100,7 +100,8 @@ public class MoveGenerator {
                 }
             }
         }
-        return moves;
+
+        return new ArrayList<byte[]>(moves);
     }
 
 
