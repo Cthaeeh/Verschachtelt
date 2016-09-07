@@ -117,6 +117,9 @@ public class AI implements AI_Listener {
         boardComplex.moveByAi(move);
     }
 
+    /**
+     * Try to cancel the current calculations.
+     */
     public void cancel() {
         try {
             ai_task.cancel(true);

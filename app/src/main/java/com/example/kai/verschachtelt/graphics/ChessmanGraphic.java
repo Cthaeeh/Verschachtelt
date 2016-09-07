@@ -54,28 +54,27 @@ public class ChessmanGraphic {
             scaleImages();
             drawnFirstTime=false;
         }
-        int deviceIndependentStrokeWidth = (squareSize /100)*STROKE_WIDTH;    //stepwidth is screen size sensitive -> deviceIndependentStrokewith is now as well.
-        paint.setStrokeWidth(deviceIndependentStrokeWidth);
+        paint.setStrokeWidth(STROKE_WIDTH);
         //draw all pieces and their frames
         for(int i = 0;i < 64; i++){
             if(chessBoardSimple.getSquareStateAt(i)== ChessBoardSimple.SquareState.POSSIBLE){    //If you can move to this squareStates highlight it.
                 int x = getX(i);
                 int y = getY(i);
                 paint.setColor(possibleMoveFrameColor);                             //Special Color for this type pf squareStates.
-                canvas.drawRect(x+deviceIndependentStrokeWidth/2,y+deviceIndependentStrokeWidth/2,
-                        x+ squareSize -deviceIndependentStrokeWidth/2,y+ squareSize -deviceIndependentStrokeWidth/2,paint);
+                canvas.drawRect(x+STROKE_WIDTH/2,y+STROKE_WIDTH/2,
+                        x+ squareSize -STROKE_WIDTH/2,y+ squareSize -STROKE_WIDTH/2,paint);
             }
             if(chessBoardSimple.getChessManAt(i)!=null){
                 int x = getX(i);
                 int y = getY(i);
                 canvas.drawBitmap(getChessManImage(chessBoardSimple.getChessManAt(i)),x,y,null);
-                paint.setStrokeWidth(deviceIndependentStrokeWidth);
+                paint.setStrokeWidth(STROKE_WIDTH);
                 //Draw a matching frame arround the current squareStates
                 if(chessBoardSimple.getSquareStateAt(i)== ChessBoardSimple.SquareState.NORMAL)paint.setColor(normalFrameColor);
                 if(chessBoardSimple.getSquareStateAt(i)== ChessBoardSimple.SquareState.SELECTED)paint.setColor(selectedSquareFrameColor);
                 if(chessBoardSimple.getSquareStateAt(i)== ChessBoardSimple.SquareState.POSSIBLE_KILL)paint.setColor(killMoveFrameColor);
-                canvas.drawRect(x+deviceIndependentStrokeWidth/2,y+deviceIndependentStrokeWidth/2,
-                                x+ squareSize -deviceIndependentStrokeWidth/2,y+ squareSize -deviceIndependentStrokeWidth/2,paint);
+                canvas.drawRect(x+STROKE_WIDTH/2,y+STROKE_WIDTH/2,
+                                x+ squareSize -STROKE_WIDTH/2,y+ squareSize - STROKE_WIDTH/2,paint);
             }
         }
     }

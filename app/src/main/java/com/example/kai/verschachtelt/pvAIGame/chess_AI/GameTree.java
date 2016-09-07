@@ -56,10 +56,10 @@ public class GameTree {
     /**
      * See: https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning
      * @param node
-     * @param depth
+     * @param depth the number of plies the alg needs to go deeper down the tree.
      * @param α
      * @param β
-     * @return
+     * @return      //TODO comment this really well.
      */
     private double alphabeta(byte[] node,int depth,double α,double β){
         if(depth == 0){ //TODO add possibility of leaf
