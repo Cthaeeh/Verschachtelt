@@ -68,7 +68,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
      * @param position  The position to move to.
      */
     public void handleMoveTo(int position){
-        if(selectedPosition >=0 ){                    //If we try to move from a legit position
+        if(selectedPosition >=0 && chessmen[selectedPosition]!=null){                    //If we try to move from a legit position
             chessmen[selectedPosition].notifyMove();  //Tell the chessman that he was moved (Important for Castling)
             chessmen[position]= chessmen[selectedPosition];//Set the chessman to its new position.
             chessmen[selectedPosition]=null;           //Remove the chessman from its originally squareStates.

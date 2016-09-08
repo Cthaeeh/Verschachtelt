@@ -1,9 +1,8 @@
 package com.example.kai.verschachtelt.pvAIGame.chess_AI;
 
-import com.example.kai.verschachtelt.chessLogic.Chessman;
-
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * Created by Kai on 04.09.2016.
@@ -39,12 +38,16 @@ public class MoveGenerator {
     protected static final byte EMPTY = 0;
 
     //Constants for extra Information encoded in the board.
+    protected static final int CAPTURE_MOVE_EXTRA_FIELD = 128;  //To see if in this move a chessman was captured and its value.
+
     protected static final int PLAYER_ON_TURN_EXTRA_FIELD = 129;
     protected static final byte BLACK = -112;
     protected static final byte WHITE = 112;
 
-    static ArrayList<byte[]> moves = new ArrayList<>();
-    static byte[]       board;
+    private static ArrayList<byte[]> moves = new ArrayList<>();
+    private static double mobility = 0.0;
+    private static boolean calcJustNumOfMoves = false;  //If true we wont create new boards, just count the num of possible moves.
+    private static byte[]       board;
 
     /**
      * Method takes a byteBoard and returns all possibleMoves
@@ -53,14 +56,11 @@ public class MoveGenerator {
     public static ArrayList<byte[]> generatePossibleMoves(byte[] boardToCalc){
         moves.clear();
         board = boardToCalc;
-        if(board[PLAYER_ON_TURN_EXTRA_FIELD] == BLACK){
+        if(board[PLAYER_ON_TURN_EXTRA_FIELD] == BLACK){     //TODO make this if else
             for(int i = 21;i<99;i++){   //Iterate through board.
                 switch (board[i]){  //Find chessman of the player on turn
-                    case KING_BLACK:
-                        generateBlackKingMoves(i);
-                        break;
-                    case QUEEN_BLACK:
-                        generateBlackQueenMoves(i);
+                    case PAWN_BLACK:
+                        generateBlackPawnMoves(i);
                         break;
                     case ROOK_BLACK:
                         generateBlackRookMoves(i);
@@ -71,19 +71,19 @@ public class MoveGenerator {
                     case BISHOP_BLACK:
                         generateBlackBishopMoves(i);
                         break;
-                    case PAWN_BLACK:
-                        generateBlackPawnMoves(i);
+                    case KING_BLACK:
+                        generateBlackKingMoves(i);
+                        break;
+                    case QUEEN_BLACK:
+                        generateBlackQueenMoves(i);
                         break;
                 }
             }
         }else{
             for(int i = 21;i<99;i++){   //Iterate through board.
                 switch (board[i]){  //Find chessman of the player on turn
-                    case KING_WHITE:
-                        generateWhiteKingMoves(i);
-                        break;
-                    case QUEEN_WHITE:
-                        generateWhiteQueenMoves(i);
+                    case PAWN_WHITE:
+                        generateWhitePawnMoves(i);
                         break;
                     case ROOK_WHITE:
                         generateWhiteRookMoves(i);
@@ -94,14 +94,78 @@ public class MoveGenerator {
                     case BISHOP_WHITE:
                         generateWhiteBishopMoves(i);
                         break;
-                    case PAWN_WHITE:
-                        generateWhitePawnMoves(i);
+                    case KING_WHITE:
+                        generateWhiteKingMoves(i);
+                        break;
+                    case QUEEN_WHITE:
+                        generateWhiteQueenMoves(i);
                         break;
                 }
             }
         }
-
+        sortMoves();    //I benchmarked this and it make the ai 130% faster :)
         return new ArrayList<byte[]>(moves);    //TODO WHY IS THIS NEEDED ???
+    }
+
+    public static double getMobility(byte[] boardToCalc){
+        calcJustNumOfMoves = true;
+        mobility = 0.0;
+        board = boardToCalc;
+        for(int i = 21;i<99;i++){   //Iterate through board.
+            switch (board[i]){
+                case PAWN_WHITE:
+                    generateWhitePawnMoves(i);
+                    break;
+                case PAWN_BLACK:
+                    generateBlackPawnMoves(i);
+                    break;
+                case ROOK_WHITE:
+                    generateWhiteRookMoves(i);
+                    break;
+                case KNIGHT_WHITE:
+                    generateWhiteKnightMoves(i);
+                    break;
+                case BISHOP_WHITE:
+                    generateWhiteBishopMoves(i);
+                    break;
+                case ROOK_BLACK:
+                    generateBlackRookMoves(i);
+                    break;
+                case KNIGHT_BLACK:
+                    generateBlackKnightMoves(i);
+                    break;
+                case BISHOP_BLACK:
+                    generateBlackBishopMoves(i);
+                    break;
+                case KING_BLACK:
+                    generateBlackKingMoves(i);
+                    break;
+                case KING_WHITE:
+                    generateWhiteKingMoves(i);
+                    break;
+                case QUEEN_WHITE:
+                    generateWhiteQueenMoves(i);
+                    break;
+                case QUEEN_BLACK:
+                    generateBlackQueenMoves(i);
+                    break;
+            }
+        }
+        calcJustNumOfMoves = false;
+        return mobility;
+    }
+
+    /**
+     * Very simple move ordering.
+     */
+    private static void sortMoves() {
+        Collections.sort(moves, new Comparator<byte[]>() {
+            @Override
+            public int compare(byte[] move1, byte[] move2) {
+                //TODO advanced sorting.
+                return ((Byte)move2[CAPTURE_MOVE_EXTRA_FIELD]).compareTo(move1[CAPTURE_MOVE_EXTRA_FIELD]);
+            }
+        });
     }
 
 
@@ -159,11 +223,11 @@ public class MoveGenerator {
                 byte destinationValue = board[destinationPos];
                 if(destinationValue==INACCESSIBLE)break;    //Stop when you hit a Wall
                 if(destinationValue>0)break;                //Stop when you hit friendly chessman
-                addMove(startPos,destinationPos,QUEEN_WHITE);
                 if(destinationValue<0){
                     addMove(startPos,destinationPos,QUEEN_WHITE);//Stop when you hit a enemy but add the kill move.
                     break;
                 }
+                addMove(startPos,destinationPos,QUEEN_WHITE);
             }
         }
     }
@@ -193,11 +257,11 @@ public class MoveGenerator {
                 byte destinationValue = board[destinationPos];
                 if(destinationValue==INACCESSIBLE)break;    //Stop when you hit a Wall
                 if(destinationValue>0)break;                //Stop when you hit friendly chessman
-                addMove(startPos,destinationPos,ROOK_WHITE);
                 if(destinationValue<0){
                     addMove(startPos,destinationPos,ROOK_WHITE);//Stop when you hit a enemy but add the kill move.
                     break;
                 }
+                addMove(startPos,destinationPos,ROOK_WHITE);
             }
         }
     }
@@ -289,18 +353,38 @@ public class MoveGenerator {
 
     /**
      * Method adds a Move to our possibleMovesList. Works for simple Moves, not Castling, En Passant, Pawn promoting.
+     * Or if we just want to count the number of possible moves, it adds them up to mobility
      * @param startPos the starting Position of a Move
      * @param destinationPos  the destination Position of a Move
      * @param chessmanValue  the chessman that is moved.
      */
     private static void addMove(int startPos, int destinationPos, byte chessmanValue) {
-        byte[] boardAfterMove = board.clone();
-        boardAfterMove[destinationPos]=chessmanValue;   //Make move
-        boardAfterMove[startPos]=0;
-        //Change player on turn.
-        if(boardAfterMove[PLAYER_ON_TURN_EXTRA_FIELD]==BLACK)boardAfterMove[PLAYER_ON_TURN_EXTRA_FIELD]=WHITE;
-        else boardAfterMove[PLAYER_ON_TURN_EXTRA_FIELD]=BLACK;
-        moves.add(boardAfterMove);                  //Add to possible Moves
+        if(calcJustNumOfMoves){
+            if(chessmanValue>0) mobility++;
+            else mobility--;
+            return;
+        }else {
+            byte[] boardAfterMove = board.clone();
+            boardAfterMove[CAPTURE_MOVE_EXTRA_FIELD] = abs(boardAfterMove[destinationPos]); //check if it was a capture, if so safe the value.
+            boardAfterMove[destinationPos] = chessmanValue;   //Make move
+            boardAfterMove[startPos] = 0;
+            //Change player on turn.
+            if (boardAfterMove[PLAYER_ON_TURN_EXTRA_FIELD] == BLACK)
+                boardAfterMove[PLAYER_ON_TURN_EXTRA_FIELD] = WHITE;
+            else boardAfterMove[PLAYER_ON_TURN_EXTRA_FIELD] = BLACK;
+            moves.add(boardAfterMove);                  //Add to possible Moves
+        }
+    }
+
+    /**
+     * Because Math.abs(someByte) doesnt work.
+     * @param in
+     * @return
+     * @throws ArithmeticException
+     */
+    public static byte abs (byte in) throws ArithmeticException {
+        if (in == Byte.MIN_VALUE) throw new ArithmeticException ("abs called on Byte.MIN_VALUE");
+        return (in < 0) ? (byte) -in : in;
     }
 
 }

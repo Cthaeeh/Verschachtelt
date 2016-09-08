@@ -2,8 +2,6 @@ package com.example.kai.verschachtelt.pvAIGame.chess_AI;
 
 import android.util.Log;
 
-import java.util.Arrays;
-
 /**
  * Created by Kai on 07.09.2016.
  * The purpose of this class is solely to evaluate a Board.
@@ -34,12 +32,24 @@ public class BordEvaluation {
      * @param board
      * @return
      */
-    public static double evaluate(byte[] board) {
+    public static double evaluate(final byte[] board) {
         double boardValue = 0.0;
         boardValue+=getMaterialValue(board);
         boardValue+=getCenterControl(board);
-        //TODO evaluate King safety, mobility, etc
+        boardValue+=getMobility(board);
+        //TODO evaluate King safety, etc
         return boardValue;
+    }
+
+    /**
+     * Evaluates the mobility.
+     * @param board
+     * @return
+     */
+    private static double getMobility(byte[] board) {
+        double mobilityValue = 0.0;
+        mobilityValue -= MoveGenerator.getMobility(board)*0.1;
+        return mobilityValue;
     }
 
     /**
@@ -63,6 +73,7 @@ public class BordEvaluation {
 
         return boardValue;
     }
+
 
     private static double getMaterialValue(byte[] board) {
         double boardValue = 0.0;
