@@ -150,7 +150,7 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     /**
      * Depending on the game type create a new game of this type.
      * @param gameType
-     * @param difficulty
+     * @param difficulty is only used for GameType AI
      */
     public void setGame(GameActivity.GameType gameType, int difficulty) {
         switch (gameType){  //depeding on the type of game a game object is created

@@ -1,9 +1,5 @@
 package com.example.kai.verschachtelt.pvAIGame.chess_AI;
 
-import android.util.Log;
-
-import java.util.Arrays;
-
 /**
  * Created by Kai on 07.09.2016.
  * An Instance of this class represents one branch of the game tree.
@@ -57,7 +53,7 @@ public class GameTree {
      * @return      //TODO comment this really well.
      */
     private double alphabeta(byte[] node,int depth,double α,double β){
-        if(depth == 0){ //TODO add possibility of leaf
+        if(depth == 0 || node[MoveGenerator.GAME_HAS_ENDED_EXTRA_FIELD]==MoveGenerator.TRUE){
             return BordEvaluation.evaluate(node);
         }
         byte player = node[MoveGenerator.PLAYER_ON_TURN_EXTRA_FIELD];

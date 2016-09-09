@@ -147,6 +147,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 .show();
     }
 
+
     @Override
     public void onDestroy() {
         super.onDestroy();

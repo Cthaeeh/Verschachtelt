@@ -1,8 +1,12 @@
 package com.example.kai.verschachtelt.pvAIGame.chess_AI;
 
+import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Vibrator;
 import android.util.Log;
+import android.os.Vibrator;
 
+import com.example.kai.verschachtelt.activitys.MainActivity;
 import com.example.kai.verschachtelt.chessLogic.ChessBoardComplex;
 import com.example.kai.verschachtelt.chessLogic.Chessman;
 
@@ -123,6 +127,7 @@ public class AI implements AI_Listener {
     public void onMoveCalculated(Move move) {
         if(move == null) return;
         boardComplex.moveByAi(move);
+        if(difficulty > 2) vibrate(300);   //TODO make this a setting
     }
 
     /**
@@ -134,6 +139,15 @@ public class AI implements AI_Listener {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    /**
+     * lets the phone vibrate for "ms" milliseconds.
+     * @param ms
+     */
+    private void vibrate(int ms){
+        Vibrator v = (Vibrator) MainActivity.getContext().getSystemService(Context.VIBRATOR_SERVICE);
+        v.vibrate(ms);
     }
 
     public int getDifficulty(){

@@ -40,6 +40,10 @@ public class MoveGenerator {
     //Constants for extra Information encoded in the board.
     protected static final int CAPTURE_MOVE_EXTRA_FIELD = 128;  //To see if in this move a chessman was captured and its value.
 
+    protected static final int GAME_HAS_ENDED_EXTRA_FIELD = 127;
+    protected static final byte FALSE = -112;
+    protected static final byte TRUE = 112;
+
     protected static final int PLAYER_ON_TURN_EXTRA_FIELD = 129;
     protected static final byte BLACK = -112;
     protected static final byte WHITE = 112;
@@ -366,13 +370,21 @@ public class MoveGenerator {
         }else {
             byte[] boardAfterMove = board.clone();
             boardAfterMove[CAPTURE_MOVE_EXTRA_FIELD] = abs(boardAfterMove[destinationPos]); //check if it was a capture, if so safe the value.
-            boardAfterMove[destinationPos] = chessmanValue;   //Make move
+            //Safe it if a King was killed -> no further bords need to be evaluated.
+            if(boardAfterMove[destinationPos] == KING_WHITE || boardAfterMove[destinationPos] == KING_BLACK ){
+                boardAfterMove[GAME_HAS_ENDED_EXTRA_FIELD] = TRUE;
+            }
+            //Make move
+            boardAfterMove[destinationPos] = chessmanValue;
             boardAfterMove[startPos] = 0;
+
             //Change player on turn.
             if (boardAfterMove[PLAYER_ON_TURN_EXTRA_FIELD] == BLACK)
                 boardAfterMove[PLAYER_ON_TURN_EXTRA_FIELD] = WHITE;
             else boardAfterMove[PLAYER_ON_TURN_EXTRA_FIELD] = BLACK;
-            moves.add(boardAfterMove);                  //Add to possible Moves
+
+            //Add to possible Moves
+            moves.add(boardAfterMove);
         }
     }
 
