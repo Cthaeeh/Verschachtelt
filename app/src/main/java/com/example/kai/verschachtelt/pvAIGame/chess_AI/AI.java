@@ -1,6 +1,7 @@
 package com.example.kai.verschachtelt.pvAIGame.chess_AI;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.example.kai.verschachtelt.chessLogic.ChessBoardComplex;
 import com.example.kai.verschachtelt.chessLogic.Chessman;
@@ -12,10 +13,14 @@ import com.example.kai.verschachtelt.chessLogic.Chessman;
  */
 public class AI implements AI_Listener {
 
-    private final  int difficulty;
+    private static final String TAG = "AI";
+
     private AsyncTask<byte[], Integer, Move> ai_task;
+
+    private final  int difficulty;          //TODO implement this.
     private final  Chessman.Color aiColor;  //The color of the pieces the ai moves
     private byte[] byteBoard ;              //Inside the ai a boardCurrent is represented by byte array
+    private ChessGamePvAI boardComplex;
 
     int mailbox64[] = {                 //For transferring a 8x8 to a 10x12 board. See: https://chessprogramming.wikispaces.com/10x12+Board
                 21, 22, 23, 24, 25, 26, 27, 28,
@@ -27,7 +32,6 @@ public class AI implements AI_Listener {
                 81, 82, 83, 84, 85, 86, 87, 88,
                 91, 92, 93, 94, 95, 96, 97, 98
     };
-    private ChessGamePvAI boardComplex;
 
 
     /**
@@ -41,13 +45,13 @@ public class AI implements AI_Listener {
 
     /**
      * The ai calculates a move, makes it in the boardCurrent, and gives it back.
-     * @param board The boardCurrent you want the ai to calculate a move for.
+     * @param game The Chess game you want the ai to calculate a move for.
      * @return The board after the ai did its move.
      */
     public void calculateMove(ChessGamePvAI game) {
         this.boardComplex = game;
         byteBoard = toByteArray(game.getComplexBoard());
-        ai_task = new AI_Task(this).execute(byteBoard);
+        ai_task = new AI_Task(this,difficulty).execute(byteBoard);
     }
 
     /**
@@ -111,6 +115,10 @@ public class AI implements AI_Listener {
         return aiColor;
     }
 
+    /**
+     * The AsyncTask calculating the moves can call this method when finnished with calculations.
+     * @param move  the move the asyncTask calculated.
+     */
     @Override
     public void onMoveCalculated(Move move) {
         if(move == null) return;
@@ -126,5 +134,9 @@ public class AI implements AI_Listener {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public int getDifficulty(){
+        return difficulty;
     }
 }

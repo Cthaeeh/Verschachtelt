@@ -18,7 +18,8 @@
         android:layout_above="@+id/button_start_Game"
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="20dp"
-        android:layout_marginBottom="30dp" />
+        android:layout_marginBottom="30dp"
+        android:max="3"/>
 
 
     <TextView

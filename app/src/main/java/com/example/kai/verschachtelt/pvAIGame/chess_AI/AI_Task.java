@@ -1,6 +1,7 @@
 package com.example.kai.verschachtelt.pvAIGame.chess_AI;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 /**
  * Created by Kai on 04.09.2016.
@@ -11,10 +12,11 @@ public class AI_Task extends AsyncTask<byte[], Integer, Move> {
     private final AI_Listener listener;
     private byte[] bestMove;
     private static final String TAG = "AI_Task";
-    private final int SEARCH_DEPTH = 5; //5 is max on shitty phones
+    private int SEARCH_DEPTH = 3; //5 is max on shitty phones
 
-    public AI_Task(AI_Listener listener) {
+    public AI_Task(AI_Listener listener, int difficulty) {
         this.listener = listener;
+        SEARCH_DEPTH = difficulty+2;
     }
 
     @Override
@@ -35,8 +37,10 @@ public class AI_Task extends AsyncTask<byte[], Integer, Move> {
      */
     private void getBestMove(byte[] root) {
         GameTree gameTree = new GameTree(root,this);
+        long startTime = System.currentTimeMillis();    //For performance measurement
         bestMove = gameTree.getLeastWorstOutcome(SEARCH_DEPTH);
+        long endTime = System.currentTimeMillis();
+        Log.d(TAG,"DEPTH: "+SEARCH_DEPTH + "  Time it took: " + (endTime-startTime));
     }
-
 
 }

@@ -57,7 +57,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     }
 
     private void setupPuzzle() {
-        gamePanel.setGame(GameType.PUZZLE); //Tell the gamePanel what mode we want to play in.
+        gamePanel.setGame(GameType.PUZZLE, getIntent().getIntExtra("Difficulty", 1)); //Tell the gamePanel what mode we want to play in.
         showNextMoveButton = (Button) findViewById(R.id.button1);
         showNextMoveButton.setText(R.string.show_next_move_button);
         showNextMoveButton.setOnClickListener(this);
@@ -69,14 +69,14 @@ public class GameActivity extends Activity implements View.OnClickListener{
     }
 
     private void setupPvAI() {
-        gamePanel.setGame(GameType.CHESS_PvAI); //Tell the gamePanel what mode we want to play in.
+        gamePanel.setGame(GameType.CHESS_PvAI,getIntent().getIntExtra("Difficulty",1)); //Tell the gamePanel what mode we want to play in.
         setupUndoRedo();
         description = (TextView) findViewById(R.id.gameDescription);
         description.setText(R.string.ai_mode_description);
     }
 
     private void setupPvP() {
-        gamePanel.setGame(GameType.CHESS_PvP); //Tell the gamePanel what mode we want to play in.
+        gamePanel.setGame(GameType.CHESS_PvP, getIntent().getIntExtra("Difficulty", 1)); //Tell the gamePanel what mode we want to play in.
         setupUndoRedo();
         description = (TextView) findViewById(R.id.gameDescription);
         description.setText(R.string.pvp_mode_description);
