@@ -21,94 +21,92 @@ public class RuleBook {
     // new Rulebook beginning
 
     private boolean isDiagonalPathfree(int from, int to){
-        int currentPos = from;
-        int destination = to;
-
         // moves from bottom left to top right
         if((to-from) % 7 == 0 & (to-from) < 0 ) {
-            while(currentPos != destination){
-                if(board[currentPos - 7] != null) return false;
+            int currentPos = from - 7;
+            while(currentPos != to){
+                if(board[currentPos] != null) return false;
                 currentPos = currentPos - 7;
             }
             return true;
         }
         // moves from top right to bottom left
         if((to - from) % 7 == 0 & (to - from) > 0){
-            while(currentPos != destination){
-                if(board[currentPos + 7] != null) return false;
+            int currentPos = from + 7;
+            while(currentPos != to){
+                if(board[currentPos] != null) return false;
                 currentPos = currentPos + 7;
             }
             return true;
         }
         //moves from bottom right to top left
         if((to-from) % 9 == 0 & (to - from) < 0){
-            while(currentPos != destination){
-                if(board[currentPos - 9] != null) return false;
+            int currentPos = from - 9;
+            while(currentPos != to){
+                if(board[currentPos] != null) return false;
                 currentPos = currentPos - 9;
             }
             return true;
         }
         // moves from top left to bottom right
         else{// if((to-from) % 9 == 0 & (to - from) > 0){
-            while(currentPos != destination){
-                if(board[currentPos + 9] != null) return false;
+            int currentPos = from + 9;
+            while(currentPos != to){
+                if(board[currentPos] != null) return false;
                 currentPos = currentPos + 9;
             }
             return true;
         }
     }
 
-    private boolean isStraightPathFree(int from,int to){
-        int currentPos = from;
-        int destination = to;
-
+    private boolean isSidePathFree(int from,int to) {
         // move right
-        if(to > from  & floor(to/8) == floor(from/8)){
-            while(currentPos != destination){
-                if(board[currentPos + 1] != null) return false;
+        if (to > from ) {
+            int currentPos = from + 1;
+            while (currentPos != to) {
+                if (board[currentPos] != null) return false;
                 currentPos++;
             }
             return true;
         }
         // move left
-        if(to < from  & floor(to/8) == floor(from/8)){
-
-                while(currentPos != destination){
-                    if(board[currentPos - 1] != null) return false;
-                    currentPos--;
-                }
-                return true;
+        else {
+            int currentPos = from-1;
+            while (currentPos != to) {
+                if (board[currentPos] != null) return false;
+                currentPos--;
+            }
+            return true;
         }
+    }
 
+    private boolean isUpDownPathFree(int from, int to){
         // move down
-        if(to > from & to%8 == from%8){
-            while(currentPos != destination){
-                if(board[currentPos + 8] != null) return false;
+        if(to > from){
+            int currentPos = from + 8;
+            while(currentPos != to){
+                if(board[currentPos] != null) return false;
                 currentPos = currentPos + 8;
             }
             return true;
         }
-        //move up
-
-        else{ //if(to < from & to%8 == from%8){
-            while(currentPos != destination){
-                if(board[currentPos - 8] != null) return false;
+        else{
+            int currentPos = from - 8;
+            while(currentPos != to){
+                if(board[currentPos] != null) return false;
                 currentPos = currentPos - 8;
             }
             return true;
         }
-
     }
 
     private boolean isPathFree(int from, int to) {
         byte xDirection = (byte) signum(to%8-from%8);
-        byte yDirection = (byte) signum(to/8-from/8);
+        byte yDirection = (byte) signum(floor(to/8)-floor(from/8));
 
-        if(xDirection == 0 | yDirection == 0){
-            return isStraightPathFree(from,to);
-        } else {
-           return isDiagonalPathfree(from,to);
-        }
+        if(xDirection == 0) return isUpDownPathFree(from,to);
+        if(yDirection == 0) return isSidePathFree(from,to);
+        else                return isDiagonalPathfree(from,to);
     }
 
 
