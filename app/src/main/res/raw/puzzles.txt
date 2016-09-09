@@ -34,5 +34,14 @@
   "DifficultyAsInt": 1,
   "Positions": ["4r3/2PQ3R/pKn4P/3B1PP1/b7/5p2/pb4pB/1k6 b - - 0 1","4r3/2PQ3R/pKn4P/3B1PP1/b2b4/5p2/p5pB/1k6 w - - 0 1"],
   "Solved": false
+},
+{
+  "Id": 5 ,
+  "Name": "Mate in one",
+  "Description": "Setzen Sie Schwarz Matt in einem Zug",
+  "DifficultyAsString": "leicht",
+  "DifficultyAsInt": 1 ,
+  "Positions": ["5K1k/7b/8/8/pr6/2P5/1B4p1/7R w - - 0 1" , "5K1k/7b/8/8/pP6/8/1B4p1/7R b - - 0 1"],
+  "Solved": false
 }
 ]

@@ -13,9 +13,9 @@ public class ChessGamePvAI extends ChessGame {
 
     private AI ai;
 
-    public ChessGamePvAI(InputHandler inputHandler) {
+    public ChessGamePvAI(InputHandler inputHandler, int difficulty) {
         super(inputHandler);
-        ai = new AI(1,Chessman.Color.BLACK);
+        ai = new AI(difficulty,Chessman.Color.BLACK);
     }
 
     @Override
@@ -52,4 +52,5 @@ public class ChessGamePvAI extends ChessGame {
             moveCounter=moveCounter-1;
         }
     }
+
 }

@@ -6,7 +6,7 @@
     <string name="button_start_AIgame">Start Game!</string>
 
     <string name="puzzle_selection_headline">Select a Puzzle!</string>
-    <string name="difficulty_text">Difficulty:</string>
+    <string name="difficulty_text">Difficulty: </string>
 
     <string name="redo_button">Redo!</string>
     <string name="undo_button">Undo!</string>

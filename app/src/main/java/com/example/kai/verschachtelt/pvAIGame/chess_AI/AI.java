@@ -51,7 +51,7 @@ public class AI implements AI_Listener {
     public void calculateMove(ChessGamePvAI game) {
         this.boardComplex = game;
         byteBoard = toByteArray(game.getComplexBoard());
-        ai_task = new AI_Task(this).execute(byteBoard);
+        ai_task = new AI_Task(this,difficulty).execute(byteBoard);
     }
 
     /**
@@ -134,5 +134,9 @@ public class AI implements AI_Listener {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public int getDifficulty(){
+        return difficulty;
     }
 }
