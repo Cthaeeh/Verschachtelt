@@ -50,7 +50,6 @@ public class AI implements AI_Listener {
     /**
      * The ai calculates a move, makes it in the boardCurrent, and gives it back.
      * @param game The Chess game you want the ai to calculate a move for.
-     * @return The board after the ai did its move.
      */
     public void calculateMove(ChessGamePvAI game) {
         this.boardComplex = game;
@@ -127,7 +126,7 @@ public class AI implements AI_Listener {
     public void onMoveCalculated(Move move) {
         if(move == null) return;
         boardComplex.moveByAi(move);
-        if(difficulty > 2) vibrate(300);   //TODO make this a setting
+        if(difficulty >= 2) vibrate(300);   //TODO make this a setting
     }
 
     /**

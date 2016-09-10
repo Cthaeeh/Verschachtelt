@@ -133,8 +133,8 @@ public class ChessGame implements InputEvent {
     public ChessBoardComplex getComplexBoard() { return boardCurrent; }
 
     public VictoryScreenGraphic.VictoryState getWinner(){
-        return boardCurrent.getWinner();
-    };
+        return null;
+    }
 
     public void setInputHandler(InputHandler inputHandler) {
         this.inputHandler = inputHandler;

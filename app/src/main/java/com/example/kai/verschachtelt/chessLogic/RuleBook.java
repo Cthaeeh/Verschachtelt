@@ -37,7 +37,7 @@ public class RuleBook {
      * Doesn´t check for suicidal Moves.
      * @param color
      * @param board the current state of the board.
-     * @return
+     * @return a boolean[64] array with all possible moves marked.
      */
     public boolean[] getAllPossibleMoves(Color color, Chessman[] board) {
         boolean[] allPossibleMoves = new boolean[64];
@@ -223,16 +223,16 @@ public class RuleBook {
         }
     }
 
-    public VictoryScreenGraphic.VictoryState  getWinner(Chessman[] board) {
-        if(CheckTester.isMate(Chessman.Color.BLACK,board)) return VictoryScreenGraphic.VictoryState.WHITEWIN;
-        if(CheckTester.isMate(Chessman.Color.WHITE,board)) return VictoryScreenGraphic.VictoryState.BLACKWIN;
+    public Color getWinner(Chessman[] board) {
+        if(CheckTester.isMate(Chessman.Color.BLACK,board)) return Color.WHITE;
+        if(CheckTester.isMate(Chessman.Color.WHITE,board)) return Color.BLACK;
         return null;
     }
 
     /**
-     * Adds (combines) two boolean array in a way: result[i] = array1[i]||array2[i]
-     * @param array1
-     * @param array2
+     * Adds (combines) two boolean array in a way: result[i] = array1[i]||array2[i] (OR)
+     * @param array1 the first array to combine
+     * @param array2 the second array to combine
      * @return
      */
     private boolean[] combine(boolean[] array1, boolean[] array2) {
