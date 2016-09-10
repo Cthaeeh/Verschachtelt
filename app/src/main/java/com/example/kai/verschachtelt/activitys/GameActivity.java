@@ -56,6 +56,11 @@ public class GameActivity extends Activity implements View.OnClickListener{
         }
     }
 
+    @Override
+    public void onStart(){
+        super.onStart();
+    }
+
     private void setupPuzzle() {
         gamePanel.setGame(GameType.PUZZLE, getIntent().getIntExtra("Difficulty", 1)); //Tell the gamePanel what mode we want to play in.
         showNextMoveButton = (Button) findViewById(R.id.button1);
@@ -147,11 +152,11 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 .show();
     }
 
-
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onStop(){
+        super.onStop();
         // store the data in the fragment
         dataFragment.setData(gamePanel.getGame());
     }
+
 }

@@ -34,9 +34,9 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     private Background background;
     private ChessBoardGraphic chessBoardGraphic;
     private ChessmanGraphic chessmanGraphic;
-    protected VictoryScreenGraphic victoryScreenGraphic;
-
+    private VictoryScreenGraphic victoryScreenGraphic;
     private PawnChangeGraphic pawnChangeGraphic;
+
     public static int squareSize;               //The only global variable kind of. It represents the length and width of a square on the boardCurrent.
 
     //The position of the touch/ for development
@@ -51,30 +51,27 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     public GamePanel(Context context,AttributeSet attributeSet){
         super(context,attributeSet);
-
         //add the callback to the surfaceholder to intercept events
         getHolder().addCallback(this);
-
         thread = new MainThread(getHolder(),this);
         setFocusable(true);
         inputHandler = new InputHandler();
         game = new ChessGame(inputHandler);
+        setUpGraphics();
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-        background = new Background(BitmapFactory.decodeResource(getResources(),R.drawable.test_background));
-        chessBoardGraphic = new ChessBoardGraphic();
-        chessmanGraphic = new ChessmanGraphic();
-        victoryScreenGraphic = new VictoryScreenGraphic(BitmapFactory.decodeResource(getResources(),R.drawable.victory_screens));
-        pawnChangeGraphic = new PawnChangeGraphic();
+        if (thread.getState() == Thread.State.TERMINATED)   //See also: http://stackoverflow.com/questions/16381411/how-to-best-pause-and-resume-a-surfaceview-thread?rq=1
+        {                                                   //I love the guy that answered the question.
+            thread = new MainThread(getHolder(),this);
+        }
         thread.setRunning(true);
         thread.start();
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int format, int width, int height) {
-
     }
 
     @Override
@@ -136,6 +133,15 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         chessmanGraphic.draw(canvas);
         if(pawnChangeGraphic.isActivated) pawnChangeGraphic.draw(canvas);
         if(game.getWinner()!=null)        victoryScreenGraphic.draw(canvas);
+    }
+
+
+    private void setUpGraphics() {
+        background = new Background(BitmapFactory.decodeResource(getResources(),R.drawable.test_background));
+        chessBoardGraphic = new ChessBoardGraphic();
+        chessmanGraphic = new ChessmanGraphic();
+        victoryScreenGraphic = new VictoryScreenGraphic(BitmapFactory.decodeResource(getResources(),R.drawable.victory_screens));
+        pawnChangeGraphic = new PawnChangeGraphic();
     }
 
     public ChessGame getGame() {
