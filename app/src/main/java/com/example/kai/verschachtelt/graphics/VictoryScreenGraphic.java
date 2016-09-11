@@ -48,12 +48,11 @@ public class VictoryScreenGraphic {
     }
 
     private void extractImages(){
-        imageVictory = Bitmap.createBitmap(image,0,0,1000,1000);
-        imageDefeat  = Bitmap.createBitmap(image,1000,0,1000,1000);
-        imageWhiteWins = Bitmap.createBitmap(image,0,1000,1000,1000);
+        imageVictory = Bitmap.createBitmap(image  ,0   ,0   ,1000,1000);
+        imageDefeat  = Bitmap.createBitmap(image  ,1000,0   ,1000,1000);
+        imageWhiteWins = Bitmap.createBitmap(image,0   ,1000,1000,1000);
         imageBlackWins = Bitmap.createBitmap(image,1000,1000,1000,1000);
         //imageDraw = Bitmap.createBitmap(image,2000,0,1000,1000);
-
     }
 
     private int getShorterSide(Canvas canvas){

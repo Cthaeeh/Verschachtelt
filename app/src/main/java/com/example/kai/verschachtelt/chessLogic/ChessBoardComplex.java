@@ -14,6 +14,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
     private Chessman.Color playerOnTurn;
     private Castling castling;                                          //Is used to encapsule the logic for castling
     private PawnPromotionManager pawnPromotionManager;                        //Is used to encapsule the logic for pawn changing.
+    private Chessman.Color winner;
 
     //Constructors.
     public ChessBoardComplex(){
@@ -79,6 +80,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
             switchPlayerOnTurn();
         }
         resetFrames();
+        winner = ruleBook.getWinner(chessmen);
     }
 
     /**
@@ -94,6 +96,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
             switchPlayerOnTurn();
         }
         resetFrames();
+        winner = ruleBook.getWinner(chessmen);
     }
 
     /**
@@ -118,8 +121,8 @@ public class ChessBoardComplex extends ChessBoardSimple {
         return selectedPosition;
     }
 
-    public VictoryScreenGraphic.VictoryState getWinner() {
-        return ruleBook.getWinner(chessmen);
+    public Chessman.Color getWinner() {
+        return winner;
     }
 
     /**

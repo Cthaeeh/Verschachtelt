@@ -4,6 +4,7 @@ import com.example.kai.verschachtelt.ChessGame;
 import com.example.kai.verschachtelt.InputHandler;
 import com.example.kai.verschachtelt.chessLogic.ChessBoardComplex;
 import com.example.kai.verschachtelt.chessLogic.Chessman;
+import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
 
 /**
  * Created by Kai on 11.08.2016.
@@ -22,7 +23,7 @@ public class ChessGamePvAI extends ChessGame {
     protected void moveByHuman(int position){
         if(boardCurrent.getChessManAt(boardCurrent.getSelectedPosition()).getColor()!=ai.getColor()){ //Can only move the humans chessman
             super.moveByHuman(position);
-            ai.calculateMove(this);
+            if(boardCurrent.getWinner()==null)ai.calculateMove(this);   //Dont start ai calculations if there was already a move.
         }
     }
 
@@ -31,6 +32,18 @@ public class ChessGamePvAI extends ChessGame {
         boardCurrent.resetFrames();
         boardHistory.add(new ChessBoardComplex(boardCurrent));
         moveCounter++;
+    }
+
+    /**
+     * Depending on the color of the ai and the color of the winning
+     * @return  if human won VICTORY, if ai won DEFEAT
+     */
+    @Override
+    public VictoryScreenGraphic.VictoryState getWinner(){
+        if(boardCurrent.getWinner()==null)return null;
+        if(boardCurrent.getWinner() == ai.getColor() ){
+             return VictoryScreenGraphic.VictoryState.DEFEAT;
+        }else return VictoryScreenGraphic.VictoryState.VICTORY;
     }
 
     /**
