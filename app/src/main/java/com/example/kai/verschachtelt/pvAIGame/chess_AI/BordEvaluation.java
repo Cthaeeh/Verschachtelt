@@ -8,22 +8,28 @@ import android.util.Log;
  */
 public class BordEvaluation {
 
-    private static final double  KING_WHITE_VALUE   = 100;
-    private static final double  QUEEN_WHITE_VALUE  = 10;
-    private static final double  ROOK_WHITE_VALUE   = 5;
-    private static final double  KNIGHT_WHITE_VALUE = 3;
-    private static final double  BISHOP_WHITE_VALUE = 3;
+    private static final double  KING_WHITE_VALUE   = 200;
+    private static final double  QUEEN_WHITE_VALUE  = 9.6;
+    private static final double  ROOK_WHITE_VALUE   = 5.2;
+    private static final double  KNIGHT_WHITE_VALUE = 3.2;
+    private static final double  BISHOP_WHITE_VALUE = 3.3;
     private static final double  PAWN_WHITE_VALUE   = 1;
 
     //Following must be negative !
-    private static final double  KING_BLACK_VALUE   = -100;
-    private static final double  QUEEN_BLACK_VALUE  = -10;
-    private static final double  ROOK_BLACK_VALUE   = -5;
-    private static final double  KNIGHT_BLACK_VALUE = -3;
-    private static final double  BISHOP_BLACK_VALUE = -3;
+    private static final double  KING_BLACK_VALUE   = -200;
+    private static final double  QUEEN_BLACK_VALUE  = -9.6;
+    private static final double  ROOK_BLACK_VALUE   = -5.2;
+    private static final double  KNIGHT_BLACK_VALUE = -3.2;
+    private static final double  BISHOP_BLACK_VALUE = -3.3;
     private static final double  PAWN_BLACK_VALUE   = -1;
 
-    private static final String TAG = "BordEvaluation";
+    private static final double  PAWN_BLOCK_PENALTY = 0.5;
+    private static final double  PAWN_SUPPORT_BONUS = 0.25;
+
+    private static final int  NORTH = -10;
+    private static final int  SOUTH = 10;
+    private static final int  EAST  = 1;
+    private static final int  WEST  = -1;
 
     /**
      * Evaluates a Board. E.g it looks for what player this board is favorable.
@@ -48,7 +54,7 @@ public class BordEvaluation {
      */
     private static double getMobility(byte[] board) {
         double mobilityValue = 0.0;
-        mobilityValue -= MoveGenerator.getMobility(board)*0.1;
+        mobilityValue -= MoveGenerator.getMobility(board)*0.12;
         return mobilityValue;
     }
 
@@ -77,8 +83,8 @@ public class BordEvaluation {
 
     private static double getMaterialValue(byte[] board) {
         double boardValue = 0.0;
-        for(int i = 21;i<99;i++){   //Iterate through board.
-            switch (board[i]){      //TODO make this if else because little faster!
+        for(int position = 21;position<99;position++){   //Iterate through board.
+            switch (board[position]){      //TODO make this if else because little faster!
                 case MoveGenerator.KING_BLACK:
                     boardValue += KING_BLACK_VALUE;
                     break;
@@ -96,6 +102,7 @@ public class BordEvaluation {
                     break;
                 case MoveGenerator.PAWN_BLACK:
                     boardValue += PAWN_BLACK_VALUE;
+                    boardValue += getBlackPawnValue(position,board);
                     break;
                 case MoveGenerator.KING_WHITE:
                     boardValue += KING_WHITE_VALUE;
@@ -114,11 +121,72 @@ public class BordEvaluation {
                     break;
                 case MoveGenerator.PAWN_WHITE:
                     boardValue += PAWN_WHITE_VALUE;
+                    boardValue += getWhitePawnValue(position,board);
                     break;
             }
         }
         return boardValue;
     }
 
+    /**
+     * Evaluates the value of a Pawn.
+     * Penalty for double pawn
+     * Bonus for supported pawn
+     * @param position
+     * @param board
+     * @return
+     */
+    private static double getWhitePawnValue(int position, byte[] board) {
+        double pawnVal = 0.0;
+        if(board[position+NORTH]==MoveGenerator.PAWN_WHITE){    //double pawn
+            pawnVal-=PAWN_BLOCK_PENALTY;
+        }
+        if(board[position+NORTH]==MoveGenerator.PAWN_BLACK){    //opposed by enemy
+            pawnVal-=PAWN_BLOCK_PENALTY/2;
+        }
+        if(board[position+SOUTH+EAST]==MoveGenerator.PAWN_WHITE){
+            pawnVal+=PAWN_SUPPORT_BONUS;
+        }
+        if(board[position+SOUTH+WEST]==MoveGenerator.PAWN_WHITE){
+            pawnVal+=PAWN_SUPPORT_BONUS;
+        }
+        return pawnVal;
+    }
 
+    /**
+     * Evaluates the value of a Pawn.
+     * Penalty for double pawn
+     * Bonus for supported pawn
+     * @param position
+     * @param board
+     * @return
+     */
+    private static double getBlackPawnValue(int position, byte[] board) {
+        double pawnVal = 0.0;
+        if(board[position+NORTH]==MoveGenerator.PAWN_BLACK){    //double pawn
+            pawnVal+=PAWN_BLOCK_PENALTY;
+        }
+        if(board[position+NORTH]==MoveGenerator.PAWN_WHITE){    //opposed by enemy
+            pawnVal+=PAWN_BLOCK_PENALTY/2;
+        }
+        if(board[position+NORTH+EAST]==MoveGenerator.PAWN_BLACK){
+            pawnVal-=PAWN_SUPPORT_BONUS;
+        }
+        if(board[position+NORTH+WEST]==MoveGenerator.PAWN_BLACK){
+            pawnVal-=PAWN_SUPPORT_BONUS;
+        }
+        return pawnVal;
+    }
+
+    /**
+     * Evaluates the board for King-Safety.
+     * @param board
+     * @return
+     */
+    private static double getKingSafety(int position, byte[] board){
+        double boardValue = 0.0;
+
+
+        return boardValue;
+    }
 }

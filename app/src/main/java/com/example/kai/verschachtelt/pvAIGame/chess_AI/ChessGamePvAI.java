@@ -20,6 +20,13 @@ public class ChessGamePvAI extends ChessGame {
     }
 
     @Override
+    public void handleTouchOnSquare(Integer position) {
+        if(boardCurrent.getPlayerOnTurn() != ai.getColor()){
+            super.handleTouchOnSquare(position);
+        }
+    }
+
+    @Override
     protected void moveByHuman(int position){
         if(boardCurrent.getChessManAt(boardCurrent.getSelectedPosition()).getColor()!=ai.getColor()){ //Can only move the humans chessman
             super.moveByHuman(position);

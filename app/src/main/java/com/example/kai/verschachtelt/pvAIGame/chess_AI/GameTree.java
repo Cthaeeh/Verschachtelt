@@ -71,5 +71,4 @@ public class GameTree {
             return β;
         }
     }
-
 }
