@@ -67,23 +67,25 @@ public class RuleBook {
      * @return      when blocked false, otherwise true
      */
     private boolean isPathFree(int from, int to,  Chessman[] board) {
-        byte xDirection = (byte) signum(to%8-from%8);
-        byte yDirection = (byte) signum(to/8-from/8);
+        int xDirection = (int) signum(to%8-from%8);
+        int yDirection = (int) signum(to/8-from/8);
 
-        byte xCurrent = (byte) (from%8+xDirection);
-            byte yCurrent = (byte) (from/8+yDirection);
+        int xCurrent =  (from%8+xDirection);
+        int yCurrent =  (from/8+yDirection);
 
-            byte xDest = (byte) (to%8);
-            byte yDest = (byte) (to/8);
+        int xDest =  (to%8);
+        int yDest =  (to/8);
+        int position = xCurrent+(yCurrent*8);
 
-            while(!((xCurrent==xDest && yCurrent==yDest) || (xCurrent+(yCurrent*8)<0) || (xCurrent+(yCurrent*8)>63))) {
-                if (board[xCurrent+(yCurrent*8)]!=null){
-                    return false;
-                }
-                xCurrent = (byte) (xCurrent + xDirection);
-                yCurrent = (byte) (yCurrent + yDirection);
+        while(!(xCurrent==xDest && yCurrent==yDest) && position<64 && position>-1) {
+            if (board[xCurrent+(yCurrent*8)]!=null){
+                return false;
             }
-            return true;
+            xCurrent =  (xCurrent + xDirection);
+            yCurrent =  (yCurrent + yDirection);
+            position =  xCurrent+(yCurrent*8);
+        }
+        return true;
     }
 
     /**

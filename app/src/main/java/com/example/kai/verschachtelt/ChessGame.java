@@ -22,7 +22,6 @@ public class ChessGame implements InputEvent {
     //Number of moves performed by both players.
     protected int moveCounter = 0;
 
-    private Chessman.Color changing; // for switchpawn
 
     public ChessGame(InputHandler inputHandler){
         this.inputHandler = inputHandler;
@@ -67,26 +66,23 @@ public class ChessGame implements InputEvent {
     }
 
     public void handlePromotion(Chessman.Piece chessman) {
-        if(boardCurrent.getPlayerOnTurn() == Chessman.Color.BLACK){
-            changing = Chessman.Color.WHITE;
-        } else {
-            changing = Chessman.Color.BLACK;
-        }
+        Chessman.Color color;
+        color = boardCurrent.getPlayerOnTurn();
             switch (chessman){
                 case QUEEN:
-                    Chessman newQueen = new Chessman(Chessman.Piece.QUEEN, changing);
+                    Chessman newQueen = new Chessman(Chessman.Piece.QUEEN, color);
                     boardCurrent.promotePawn(boardCurrent.pawnChangePosition(), newQueen);
                     break;
                 case ROOK:
-                    Chessman newRook = new Chessman(Chessman.Piece.ROOK,changing);
+                    Chessman newRook = new Chessman(Chessman.Piece.ROOK,color);
                     boardCurrent.promotePawn(boardCurrent.pawnChangePosition(), newRook);
                     break;
                 case BISHOP:
-                    Chessman newBishop = new Chessman(Chessman.Piece.BISHOP, changing);
+                    Chessman newBishop = new Chessman(Chessman.Piece.BISHOP, color);
                     boardCurrent.promotePawn(boardCurrent.pawnChangePosition(), newBishop);
                     break;
                 case KNIGHT:
-                    Chessman newKnight = new Chessman(Chessman.Piece.KNIGHT, changing);
+                    Chessman newKnight = new Chessman(Chessman.Piece.KNIGHT, color);
                     boardCurrent.promotePawn(boardCurrent.pawnChangePosition(), newKnight);
                     break;
             }

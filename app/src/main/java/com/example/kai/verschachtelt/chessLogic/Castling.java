@@ -203,7 +203,7 @@ public class Castling {
 
         byte xDest = (byte) (to%8);
 
-        while(!(xCurrent==xDest)) {
+        while(!((xCurrent==xDest) || (xCurrent+(yCurrent*8) < 0)||(xCurrent+(yCurrent*8) > 63))) {
             if (chessmen[xCurrent+(yCurrent*8)]!=null){
                 pathFree = false;
             }

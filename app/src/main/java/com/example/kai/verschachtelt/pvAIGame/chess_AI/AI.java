@@ -21,7 +21,7 @@ public class AI implements AI_Listener {
 
     private AsyncTask<byte[], Integer, Move> ai_task;
 
-    private final  int difficulty;          //TODO implement this.
+    private final  int difficulty;
     private final  Chessman.Color aiColor;  //The color of the pieces the ai moves
     private byte[] byteBoard ;              //Inside the ai a boardCurrent is represented by byte array
     private ChessGamePvAI boardComplex;
@@ -98,6 +98,10 @@ public class AI implements AI_Listener {
         }
         if(aiColor== Chessman.Color.WHITE)byteBoard[MoveGenerator.PLAYER_ON_TURN_EXTRA_FIELD]=MoveGenerator.WHITE;
         else byteBoard[MoveGenerator.PLAYER_ON_TURN_EXTRA_FIELD]=MoveGenerator.BLACK;
+        byteBoard[MoveGenerator.BLACK_CASTLE_KING_SIDE_MOVE_EXTRA_FIELD]=MoveGenerator.TRUE;
+        byteBoard[MoveGenerator.WHITE_CASTLE_KING_SIDE_EXTRA_FIELD]=MoveGenerator.TRUE;
+        byteBoard[MoveGenerator.BLACK_CASTLE_QUEEN_SIDE_MOVE_EXTRA_FIELD]=MoveGenerator.TRUE;
+        byteBoard[MoveGenerator.WHITE_CASTLE_QUEEN_SIDE_EXTRA_FIELD]=MoveGenerator.TRUE;
         return byteBoard;
     }
 

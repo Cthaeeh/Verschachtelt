@@ -38,11 +38,16 @@ public class MoveGenerator {
     protected static final byte EMPTY = 0;
 
     //Constants for extra Information encoded in the board.
-    protected static final int CAPTURE_MOVE_EXTRA_FIELD = 128;  //To see if in this move a chessman was captured and its value.
+    protected static final int WHITE_CASTLE_QUEEN_SIDE_EXTRA_FIELD = 123;
+    protected static final int BLACK_CASTLE_QUEEN_SIDE_MOVE_EXTRA_FIELD = 124;
+    protected static final int WHITE_CASTLE_KING_SIDE_EXTRA_FIELD = 125;
+    protected static final int BLACK_CASTLE_KING_SIDE_MOVE_EXTRA_FIELD = 126;
 
     protected static final int GAME_HAS_ENDED_EXTRA_FIELD = 127;
     protected static final byte FALSE = -112;
     protected static final byte TRUE = 112;
+
+    protected static final int CAPTURE_MOVE_EXTRA_FIELD = 128;  //To see if in this move a chessman was captured and its value.
 
     protected static final int PLAYER_ON_TURN_EXTRA_FIELD = 129;
     protected static final byte BLACK = -112;
@@ -182,7 +187,16 @@ public class MoveGenerator {
                 addMove(startPos,destinationPos,KING_WHITE);
             }
         }
-        //TODO eventually ad Castling possibility.
+        generateCastlingMovesWhite(startPos);
+    }
+
+    private static void generateCastlingMovesWhite(int startPos) {
+        if(board[WHITE_CASTLE_KING_SIDE_EXTRA_FIELD]==TRUE){
+
+        }
+        if(board[WHITE_CASTLE_QUEEN_SIDE_EXTRA_FIELD]==TRUE){
+
+        }
     }
 
     private static void generateBlackKingMoves(int startPos) {
@@ -394,7 +408,7 @@ public class MoveGenerator {
      * @return
      * @throws ArithmeticException
      */
-    public static byte abs (byte in) throws ArithmeticException {
+    private static byte abs (byte in) throws ArithmeticException {
         if (in == Byte.MIN_VALUE) throw new ArithmeticException ("abs called on Byte.MIN_VALUE");
         return (in < 0) ? (byte) -in : in;
     }
