@@ -43,5 +43,23 @@
   "DifficultyAsInt": 1 ,
   "Positions": ["5K1k/7b/8/8/pr6/2P5/1B4p1/7R w - - 0 1" , "5K1k/7b/8/8/pP6/8/1B4p1/7R b - - 0 1"],
   "Solved": false
-}
+},
+ {
+   "Id": 6 ,
+   "Name": "Blackburn vs Martin, 1876",
+   "Description": "Matt in zwei für Weiß",
+   "DifficultyAsString": "Candidate Master",
+   "DifficultyAsInt": 2 ,
+   "Positions": ["1r1kr3/Nbppn1pp/1b6/8/6Q1/3B1P2/Pq3P1P/2BRR1K1 w - - 0 1", "1r1kr3/NbpQn1pp/1b6/8/8/3B1P2/Pq3P1P/2BRR1K1 b - - 0 1", "1r2r3/Nbpkn1pp/1b6/8/8/3B1P2/Pq3P1P/2BRR1K1 w - - 0 2","1r2r3/Nbpkn1pp/1b6/5B2/8/5P2/Pq3P1P/2BRR1K1 b - - 0 2"],
+   "Solved": false
+},
+ {
+   "Id": 7 ,
+   "Name": "Mate in one",
+   "Description": "Setzen Sie Matt in einem Zug",
+   "DifficultyAsString": "Beginner",
+   "DifficultyAsInt": 1 ,
+   "Positions": ["1nkr2r1/2pn1p2/p7/8/P1NP2q1/6Pp/1P1Q1P1P/1BR1R1K1 w - - 0 1" , " 1nkr2r1/2pn1p2/p2N4/8/P2P2q1/6Pp/1P1Q1P1P/1BR1R1K1 b - - 0 1 "],
+   "Solved": false
+ }
 ]

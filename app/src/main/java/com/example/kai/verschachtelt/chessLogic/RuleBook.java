@@ -151,9 +151,9 @@ public class RuleBook {
         if(selectedPosition+6<64 &&selectedPosition%8>1 )possibleMoves[selectedPosition+6]=true;
         if(selectedPosition+17<64&&selectedPosition%8<7 )possibleMoves[selectedPosition+17]=true;
         if(selectedPosition+15<64&&selectedPosition%8>0 )possibleMoves[selectedPosition+15]=true;
-        if(selectedPosition-10>0 &&selectedPosition%8>1 )possibleMoves[selectedPosition-10]=true;
+        if(selectedPosition-10>=0 &&selectedPosition%8>1 )possibleMoves[selectedPosition-10]=true;
         if(selectedPosition-6>0  &&selectedPosition%8<6 )possibleMoves[selectedPosition-6]=true;
-        if(selectedPosition-17>0 &&selectedPosition%8>0 )possibleMoves[selectedPosition-17]=true;
+        if(selectedPosition-17>=0 &&selectedPosition%8>0 )possibleMoves[selectedPosition-17]=true;
         if(selectedPosition-15>0 &&selectedPosition%8<7 )possibleMoves[selectedPosition-15]=true;
         return possibleMoves;
     }
