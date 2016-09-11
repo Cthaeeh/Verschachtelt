@@ -95,7 +95,6 @@ public class ChessBoardComplex extends ChessBoardSimple {
             if(move.isPromotion()) chessmen[move.to] = new Chessman(Chessman.Piece.QUEEN,chessmen[move.to].getColor());
             switchPlayerOnTurn();
         }
-        resetFrames();
         winner = ruleBook.getWinner(chessmen);
     }
 

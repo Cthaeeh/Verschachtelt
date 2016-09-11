@@ -25,7 +25,7 @@ public class ChessBoardSimple {
      * Representation of the states of a squareStates. E.g it can be selected, it is possible to move there from a selected field ...
      */
     public enum SquareState {
-        NORMAL,SELECTED,POSSIBLE,POSSIBLE_KILL
+        NORMAL,SELECTED,POSSIBLE,POSSIBLE_KILL,AI_MOVE
     }
 
     public ChessBoardSimple(){
@@ -51,10 +51,6 @@ public class ChessBoardSimple {
 
     public Chessman getChessManAt(int position){
         return chessmen[position];
-    }
-
-    public Chessman getChessManAt(int x, int y){
-        return chessmen[x+8*y];
     }
 
     public SquareState getSquareStateAt(int position){

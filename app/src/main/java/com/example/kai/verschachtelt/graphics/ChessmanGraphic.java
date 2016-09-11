@@ -27,13 +27,12 @@ public class ChessmanGraphic {
     private final int selectedSquareFrameColor = ContextCompat.getColor(MainActivity.getContext(), R.color.selectedFrameColor);
     private final int possibleMoveFrameColor = ContextCompat.getColor(MainActivity.getContext(), R.color.possibleMoveFrameColor);
     private final int killMoveFrameColor = ContextCompat.getColor(MainActivity.getContext(), R.color.possibleKillFrameColor);
+    private final int aiMoveFrameColor = ContextCompat.getColor(MainActivity.getContext(), R.color.aiMoveFrameColor);
     private Paint paint;
 
     //The images of all chessmen
     private Bitmap  imageWhiteRook, imageWhiteKnight, imageWhiteBishop, imageWhiteQueen, imageWhiteKing, imageWhitePawn,
                     imageBlackRook, imageBlackKnight, imageBlackBishop, imageBlackQueen, imageBlackKing, imageBlackPawn;
-    private final int cropSize = 92;    //The length/width of the section containing the chessman to be cropped out. Only applies to the now used image ressource.
-
     private ChessBoardSimple chessBoardSimple;
 
     public ChessmanGraphic(){
@@ -57,16 +56,14 @@ public class ChessmanGraphic {
         paint.setStrokeWidth(STROKE_WIDTH);
         //draw all pieces and their frames
         for(int i = 0;i < 64; i++){
+            int x = getX(i);
+            int y = getY(i);
             if(chessBoardSimple.getSquareStateAt(i)== ChessBoardSimple.SquareState.POSSIBLE){    //If you can move to this squareStates highlight it.
-                int x = getX(i);
-                int y = getY(i);
                 paint.setColor(possibleMoveFrameColor);                             //Special Color for this type pf squareStates.
                 canvas.drawRect(x+STROKE_WIDTH/2,y+STROKE_WIDTH/2,
                         x+ squareSize -STROKE_WIDTH/2,y+ squareSize -STROKE_WIDTH/2,paint);
             }
             if(chessBoardSimple.getChessManAt(i)!=null){
-                int x = getX(i);
-                int y = getY(i);
                 canvas.drawBitmap(getChessManImage(chessBoardSimple.getChessManAt(i)),x,y,null);
                 paint.setStrokeWidth(STROKE_WIDTH);
                 //Draw a matching frame arround the current squareStates
@@ -75,6 +72,11 @@ public class ChessmanGraphic {
                 if(chessBoardSimple.getSquareStateAt(i)== ChessBoardSimple.SquareState.POSSIBLE_KILL)paint.setColor(killMoveFrameColor);
                 canvas.drawRect(x+STROKE_WIDTH/2,y+STROKE_WIDTH/2,
                                 x+ squareSize -STROKE_WIDTH/2,y+ squareSize - STROKE_WIDTH/2,paint);
+            }
+            if(chessBoardSimple.getSquareStateAt(i)== ChessBoardSimple.SquareState.AI_MOVE){
+                paint.setColor(aiMoveFrameColor);
+                canvas.drawRect(x+STROKE_WIDTH/2,y+STROKE_WIDTH/2,
+                        x+ squareSize -STROKE_WIDTH/2,y+ squareSize -STROKE_WIDTH/2,paint);
             }
         }
     }

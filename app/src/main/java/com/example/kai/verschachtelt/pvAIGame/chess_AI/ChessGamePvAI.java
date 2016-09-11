@@ -3,6 +3,7 @@ package com.example.kai.verschachtelt.pvAIGame.chess_AI;
 import com.example.kai.verschachtelt.ChessGame;
 import com.example.kai.verschachtelt.InputHandler;
 import com.example.kai.verschachtelt.chessLogic.ChessBoardComplex;
+import com.example.kai.verschachtelt.chessLogic.ChessBoardSimple;
 import com.example.kai.verschachtelt.chessLogic.Chessman;
 import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
 
@@ -49,7 +50,8 @@ public class ChessGamePvAI extends ChessGame {
 
     public void moveByAi(Move move) {
         boardCurrent.handleMoveByAI(move);    //Move there from a selected position.
-        boardCurrent.resetFrames();
+        boardCurrent.setSquareStateAt(move.from, ChessBoardSimple.SquareState.AI_MOVE);
+        boardCurrent.setSquareStateAt(move.to, ChessBoardSimple.SquareState.AI_MOVE);
         boardHistory.add(new ChessBoardComplex(boardCurrent));
         moveCounter++;
     }

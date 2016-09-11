@@ -7,12 +7,13 @@
     <color name="difficultyTextColor">#000000</color>
     <color name="puzzleItemNameColor">#000000</color>
     <color name="dividerLine">#000000</color>
+    <color name="decriptionColor">#000000</color>
 
     <color name="normalFrameColor">#000000</color>
     <color name="selectedFrameColor">#1565c0</color>
     <color name="possibleMoveFrameColor">#64dd17</color>
     <color name="possibleKillFrameColor">#d50000</color>
-    <color name="decriptionColor">#000000</color>
+    <color name="aiMoveFrameColor">#6200ea</color>
 
     <color name="pawnChangeFrameColor">#311b92</color>
     <color name="pawnChangeBackgroundColor">#ffffff</color>
