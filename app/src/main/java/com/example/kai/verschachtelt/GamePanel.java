@@ -135,7 +135,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
         if(game.getWinner()!=null)        victoryScreenGraphic.draw(canvas);
     }
 
-
     private void setUpGraphics() {
         background = new Background(BitmapFactory.decodeResource(getResources(),R.drawable.test_background));
         chessBoardGraphic = new ChessBoardGraphic();

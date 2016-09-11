@@ -77,7 +77,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
             if(chessmen[position].getPiece()== Chessman.Piece.KING&&Math.abs(position-selectedPosition)==2){
                 castling.handleCastling(chessmen,position);//The corresponding tower needs to move as well.
             }
-            switchPlayerOnTurn();
+            if(pawnPromotionPossible()==null)switchPlayerOnTurn();  //Only switch Player on turn if it was not a pawn promotion move.
         }
         resetFrames();
         winner = ruleBook.getWinner(chessmen);
@@ -87,7 +87,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
      * The Chessboard will rearrange the chessman.
      * This method is for the ai (at least for now ...)
      */
-    public void handleMove(Move move) {
+    public void handleMoveByAI(Move move) {
         if(move.from>=0 && chessmen[move.from]!=null){        //If we try to move from a legit position
             chessmen[move.from].notifyMove();                 //Tell the chessman that he was moved (Important for Castling)
             chessmen[move.to]= chessmen[move.from];           //Set the chessman to its new position.
@@ -178,7 +178,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
      *  check and return the position, where a pawn is waiting to be changed
       */
     public int pawnChangePosition(){
-             return pawnPromotionManager.getPawnChangePosition(chessmen);
+        return pawnPromotionManager.getPawnChangePosition(chessmen);
     }
 
     /**
@@ -189,6 +189,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
     public void promotePawn(int position, Chessman newMan) {
         chessmen[position] = newMan;
         chessmen[position].notifyMove();
+        switchPlayerOnTurn();
     }
 
 

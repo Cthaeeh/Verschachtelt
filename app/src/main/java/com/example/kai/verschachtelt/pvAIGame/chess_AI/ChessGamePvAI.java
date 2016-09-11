@@ -26,16 +26,29 @@ public class ChessGamePvAI extends ChessGame {
         }
     }
 
+
+    /**
+     * Why override this ? Because the AI wants to know beforehand with which chessman you want to replace the pawn.
+     * @param chessman the chessman that was selected to replace the pawn.
+     */
+    @Override
+    public void handlePromotion(Chessman.Piece chessman) {
+        super.handlePromotion(chessman);
+        if(boardCurrent.getWinner()==null)ai.calculateMove(this);
+    }
+
+
     @Override
     protected void moveByHuman(int position){
         if(boardCurrent.getChessManAt(boardCurrent.getSelectedPosition()).getColor()!=ai.getColor()){ //Can only move the humans chessman
             super.moveByHuman(position);
-            if(boardCurrent.getWinner()==null)ai.calculateMove(this);   //Dont start ai calculations if there was already a move.
+            //Dont start ai calculations if game ended/pawn promotion in progress.
+            if(boardCurrent.getWinner()==null && boardCurrent.pawnPromotionPossible()==null)ai.calculateMove(this);
         }
     }
 
     public void moveByAi(Move move) {
-        boardCurrent.handleMove(move);    //Move there from a selected position.
+        boardCurrent.handleMoveByAI(move);    //Move there from a selected position.
         boardCurrent.resetFrames();
         boardHistory.add(new ChessBoardComplex(boardCurrent));
         moveCounter++;

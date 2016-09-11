@@ -77,7 +77,7 @@ public class RuleBook {
         int yDest =  (to/8);
         int position = xCurrent+(yCurrent*8);
 
-        while((!(xCurrent==xDest && yCurrent==yDest))  && position>=0 && position<64) {
+        while(!(xCurrent==xDest && yCurrent==yDest) && position<64 && position>-1) {
             if (board[xCurrent+(yCurrent*8)]!=null){
                 return false;
             }
