@@ -3,6 +3,8 @@ package com.example.kai.verschachtelt.pvAIGame.chess_AI;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.kai.verschachtelt.graphics.Background;
+
 /**
  * Created by Kai on 04.09.2016.
  * This class wraps the protracted ai calculations.
@@ -41,6 +43,7 @@ public class AI_Task extends AsyncTask<byte[], Integer, Move> {
         bestMove = gameTree.getLeastWorstOutcome(SEARCH_DEPTH);
         long endTime = System.currentTimeMillis();
         Log.d(TAG,"DEPTH: "+SEARCH_DEPTH + "  Time it took: " + (endTime-startTime));
+        Background.ai_debug_info ="DEPTH: "+SEARCH_DEPTH + "  Time it took: " + (endTime-startTime)/1000.0 +"sek";
     }
 
 }
