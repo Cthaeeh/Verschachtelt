@@ -8,28 +8,78 @@ import android.util.Log;
  */
 public class BordEvaluation {
 
-    private static final double  KING_WHITE_VALUE   = 200;
-    private static final double  QUEEN_WHITE_VALUE  = 9.6;
-    private static final double  ROOK_WHITE_VALUE   = 5.2;
-    private static final double  KNIGHT_WHITE_VALUE = 3.2;
-    private static final double  BISHOP_WHITE_VALUE = 3.3;
-    private static final double  PAWN_WHITE_VALUE   = 1;
+    private static final short  KING_WHITE_VALUE   = 10000;
+    private static final short  QUEEN_WHITE_VALUE  = 960;
+    private static final short  ROOK_WHITE_VALUE   = 520;
+    private static final short  KNIGHT_WHITE_VALUE = 320;
+    private static final short  BISHOP_WHITE_VALUE = 330;
+    private static final short  PAWN_WHITE_VALUE   = 100;
 
     //Following must be negative !
-    private static final double  KING_BLACK_VALUE   = -200;
-    private static final double  QUEEN_BLACK_VALUE  = -9.6;
-    private static final double  ROOK_BLACK_VALUE   = -5.2;
-    private static final double  KNIGHT_BLACK_VALUE = -3.2;
-    private static final double  BISHOP_BLACK_VALUE = -3.3;
-    private static final double  PAWN_BLACK_VALUE   = -1;
+    private static final short  KING_BLACK_VALUE   = -10000;
+    private static final short  QUEEN_BLACK_VALUE  = -960;
+    private static final short  ROOK_BLACK_VALUE   = -520;
+    private static final short  KNIGHT_BLACK_VALUE = -320;
+    private static final short  BISHOP_BLACK_VALUE = -330;
+    private static final short  PAWN_BLACK_VALUE   = -100;
 
-    private static final double  PAWN_BLOCK_PENALTY = 0.5;
-    private static final double  PAWN_SUPPORT_BONUS = 0.25;
+    //Piece Square Tables
+    private static final short[] KnightTable = new short[]
+            {
+                    0, 0  ,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0,
+                    0, 0  ,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0,
+                    0, -50,-40,-30,-30,-30,-30,-40,-50,0,
+                    0, -40,-20,  0,  0,  0,  0,-20,-40,0,
+                    0, -30,  0, 10, 15, 15, 10,  0,-30,0,
+                    0, -30,  5, 15, 20, 20, 15,  5,-30,0,
+                    0, -30,  0, 15, 20, 20, 15,  0,-30,0,
+                    0, -30,  5, 10, 15, 15, 10,  5,-30,0,
+                    0, -40,-20,  0,  5,  5,  0,-20,-40,0,
+                    0, -50,-40,-20,-30,-30,-20,-40,-50,0,
+                    0, 0  ,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0,
+                    0, 0  ,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0
+            };
+    private static final short[] BishopTable = new short[]
+            {
+                    0, 0  ,0  ,0  ,0  ,0  ,0  ,0  ,0   ,0,
+                    0, 0  ,0  ,0  ,0  ,0  ,0  ,0  ,0   ,0,
+                    0, -20,-10,-10,-10,-10,-10,-10,-20 ,0,
+                    0, -10,  0,  0,  0,  0,  0,  0,-10 ,0,
+                    0, -10,  0,  5, 10, 10,  5,  0,-10 ,0,
+                    0, -10,  5,  5, 10, 10,  5,  5,-10 ,0,
+                    0, -10,  0, 10, 10, 10, 10,  0,-10 ,0,
+                    0, -10, 10, 10, 10, 10, 10, 10,-10 ,0,
+                    0, -10,  5,  0,  0,  0,  0,  5,-10 ,0,
+                    0, -20,-10,-40,-10,-10,-40,-10,-20 ,0,
+                    0, 0  ,0  ,0  ,0  ,0  ,0  ,0  ,0   ,0,
+                    0, 0  ,0  ,0  ,0  ,0  ,0  ,0  ,0   ,0
+            };
+
+    private static final short[] PawnTable = new short[]
+            {
+                    0,   0,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0,
+                    0,   0,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0,
+                    0,   0,  0,  0,  0,  0,  0,  0,0  ,0,
+                    0,  50, 50, 50, 50, 50, 50, 50, 50,0,
+                    0,  10, 10, 20, 30, 30, 20, 10, 10,0,
+                    0,   5,  5, 10, 27, 27, 10,  5,  5,0,
+                    0,   0,  0,  0, 25, 25,  0,  0,  0,0,
+                    0,   5, -5,-10,  0,  0,-10, -5,  5,0,
+                    0,   5, 10, 10,-25,-25, 10, 10,  5,0,
+                    0,   0,  0,  0,  0,  0,  0,  0,0  ,0,
+                    0,   0,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0,
+                    0,   0,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0,
+            };
+
+
+    private static final double  PAWN_BLOCK_PENALTY = 50;
+    private static final double  PAWN_SUPPORT_BONUS = 15;
 
     private static final int  NORTH = -10;
     private static final int  SOUTH = 10;
     private static final int  EAST  = 1;
     private static final int  WEST  = -1;
+
 
     /**
      * Evaluates a Board. E.g it looks for what player this board is favorable.
@@ -38,51 +88,15 @@ public class BordEvaluation {
      * @param board
      * @return
      */
-    public static double evaluate(final byte[] board) {
-        double boardValue = 0.0;
+    public static short evaluate(final byte[] board) {
+        short boardValue = 0;
         boardValue+=getMaterialValue(board);
-        boardValue+=getCenterControl(board);
-        boardValue+=getMobility(board);
         //TODO evaluate King safety, etc
         return boardValue;
     }
 
-    /**
-     * Evaluates the mobility.
-     * @param board
-     * @return
-     */
-    private static double getMobility(byte[] board) {
-        double mobilityValue = 0.0;
-        mobilityValue -= MoveGenerator.getMobility(board)*0.12;
-        return mobilityValue;
-    }
-
-    /**
-     * Evaluates a board for center control.
-     *
-     * @param board
-     * @return
-     */
-    private static double getCenterControl(byte[] board) {
-        double boardValue = 0.0;
-        //If black controls center that is better for black so return a more negative value.
-        if(board[54]<0)boardValue-=0.2;
-        if(board[55]<0)boardValue-=0.2;
-        if(board[64]<0)boardValue-=0.2;
-        if(board[65]<0)boardValue-=0.2;
-
-        if(board[54]>0)boardValue+=0.2;
-        if(board[55]>0)boardValue+=0.2;
-        if(board[64]>0)boardValue+=0.2;
-        if(board[65]>0)boardValue+=0.2;
-
-        return boardValue;
-    }
-
-
-    private static double getMaterialValue(byte[] board) {
-        double boardValue = 0.0;
+    private static short getMaterialValue(byte[] board) {
+        short boardValue = 0;
         for(int position = 21;position<99;position++){   //Iterate through board.
             switch (board[position]){      //TODO make this if else because little faster!
                 case MoveGenerator.KING_BLACK:
@@ -95,12 +109,15 @@ public class BordEvaluation {
                     boardValue += ROOK_BLACK_VALUE;
                     break;
                 case MoveGenerator.KNIGHT_BLACK:
+                    boardValue -= KnightTable[119-position];    //because the tables always adward positive values for better positions we need to use -=
                     boardValue += KNIGHT_BLACK_VALUE;
                     break;
                 case MoveGenerator.BISHOP_BLACK:
+                    boardValue -= BishopTable[119-position];    //because the tables always adward positive values for better positions we need to use -=
                     boardValue += BISHOP_BLACK_VALUE;
                     break;
                 case MoveGenerator.PAWN_BLACK:
+                    boardValue -= PawnTable[119-position];      //because the tables always adward positive values for better positions we need to use -=
                     boardValue += PAWN_BLACK_VALUE;
                     boardValue += getBlackPawnValue(position,board);
                     break;
@@ -114,12 +131,15 @@ public class BordEvaluation {
                     boardValue += ROOK_WHITE_VALUE;
                     break;
                 case MoveGenerator.KNIGHT_WHITE:
+                    boardValue += KnightTable[position];
                     boardValue += KNIGHT_WHITE_VALUE;
                     break;
                 case MoveGenerator.BISHOP_WHITE:
+                    boardValue += BishopTable[position];
                     boardValue += BISHOP_WHITE_VALUE;
                     break;
                 case MoveGenerator.PAWN_WHITE:
+                    boardValue += PawnTable[position];
                     boardValue += PAWN_WHITE_VALUE;
                     boardValue += getWhitePawnValue(position,board);
                     break;
@@ -136,8 +156,8 @@ public class BordEvaluation {
      * @param board
      * @return
      */
-    private static double getWhitePawnValue(int position, byte[] board) {
-        double pawnVal = 0.0;
+    private static short getWhitePawnValue(int position, byte[] board) {
+        short pawnVal = 0;
         if(board[position+NORTH]==MoveGenerator.PAWN_WHITE){    //double pawn
             pawnVal-=PAWN_BLOCK_PENALTY;
         }
@@ -161,8 +181,8 @@ public class BordEvaluation {
      * @param board
      * @return
      */
-    private static double getBlackPawnValue(int position, byte[] board) {
-        double pawnVal = 0.0;
+    private static short getBlackPawnValue(int position, byte[] board) {
+        short pawnVal = 0;
         if(board[position+NORTH]==MoveGenerator.PAWN_BLACK){    //double pawn
             pawnVal+=PAWN_BLOCK_PENALTY;
         }
@@ -183,10 +203,9 @@ public class BordEvaluation {
      * @param board
      * @return
      */
-    private static double getKingSafety(int position, byte[] board){
-        double boardValue = 0.0;
-
-
+    private static short getKingSafety(int position, byte[] board){
+        short boardValue = 0;
+        //TODO implement
         return boardValue;
     }
 }

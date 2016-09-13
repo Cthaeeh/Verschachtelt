@@ -18,13 +18,13 @@ public class GameTree {
     /**
      */
     public byte[] getLeastWorstOutcome(int depth){
-        double α = -500;
-        double β = 500;
+        short α = -32760;
+        short β = 32760;
         byte player = root[MoveGenerator.PLAYER_ON_TURN_EXTRA_FIELD];
         byte[] bestMove = null;
         if (player == MoveGenerator.WHITE){
             for(byte[] child : MoveGenerator.generatePossibleMoves(root)){
-                double val = alphabeta(child, depth-1, α, β);
+                short val = alphabeta(child, depth-1, α, β);
                 if(α < val ){
                     α = val;
                     bestMove = child;
@@ -33,7 +33,7 @@ public class GameTree {
             }
         } else {
             for(byte[] child : MoveGenerator.generatePossibleMoves(root)){
-                double val = alphabeta(child, depth-1, α, β);
+                short val = alphabeta(child, depth-1, α, β);
                 if(β > val){
                     β = val;
                     bestMove = child;
@@ -52,23 +52,46 @@ public class GameTree {
      * @param β
      * @return      //TODO comment this really well.
      */
-    private double alphabeta(byte[] node,int depth,double α,double β){
+    private short alphabeta(byte[] node,int depth,short α,short β){
         if(depth == 0 || node[MoveGenerator.GAME_HAS_ENDED_EXTRA_FIELD]==MoveGenerator.TRUE){
             return BordEvaluation.evaluate(node);
         }
         byte player = node[MoveGenerator.PLAYER_ON_TURN_EXTRA_FIELD];
         if (player == MoveGenerator.WHITE){
             for(byte [] child : MoveGenerator.generatePossibleMoves(node)){
-                α = Math.max(α, alphabeta(child, depth-1, α, β));
+                α = max(α, alphabeta(child, depth-1, α, β));
                 if (β <= α)break;                             // Beta cut-off *)
             }
             return α;
         } else {
             for(byte [] child : MoveGenerator.generatePossibleMoves(node)){
-                β = Math.min(β, alphabeta(child, depth-1, α, β));
+                β = min(β, alphabeta(child, depth-1, α, β));
                 if (β <= α)break;                             // Alpha cut-off *)
             }
             return β;
         }
+
+    }
+
+    /**
+     * Returns the greater value.
+     * @param val1
+     * @param val2
+     * @return the greater one
+     */
+    private short max(short val1, short val2) {
+        if(val1>val2)return val1;
+        else return val2;
+    }
+
+    /**
+     * Returns the smaller value.
+     * @param val1
+     * @param val2
+     * @return the smaller one
+     */
+    private short min(short val1, short val2) {
+        if(val1<val2)return val1;
+        else return val2;
     }
 }
