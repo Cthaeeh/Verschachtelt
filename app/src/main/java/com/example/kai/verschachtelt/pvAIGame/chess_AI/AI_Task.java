@@ -18,7 +18,7 @@ public class AI_Task extends AsyncTask<byte[], Integer, Move> {
 
     public AI_Task(AI_Listener listener, int difficulty) {
         this.listener = listener;
-        SEARCH_DEPTH = difficulty+2;
+        SEARCH_DEPTH = difficulty+3;
     }
 
     @Override
@@ -43,7 +43,7 @@ public class AI_Task extends AsyncTask<byte[], Integer, Move> {
         bestMove = gameTree.getLeastWorstOutcome(SEARCH_DEPTH);
         long endTime = System.currentTimeMillis();
         Log.d(TAG,"DEPTH: "+SEARCH_DEPTH + "  Time it took: " + (endTime-startTime));
-        Background.ai_debug_info ="DEPTH: "+SEARCH_DEPTH + "  Time it took: " + (endTime-startTime)/1000.0 +"sek current Eval " + BordEvaluation.evaluate(bestMove);
+        Background.ai_debug_info ="DEPTH: "+SEARCH_DEPTH + " Time " + (endTime-startTime)/1000.0 +"s Eval " + BordEvaluation.evaluate(bestMove) +" Bran: " + Math.pow(gameTree.getNodesSearched(),(1.0/SEARCH_DEPTH));
     }
 
 }

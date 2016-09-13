@@ -30,6 +30,6 @@ public class Background {
     public void draw(Canvas canvas){
         canvas.drawBitmap(image,x,y,null);
         canvas.drawText(info,10.f,40.f,paint);  //Draw info in upper left edge
-        canvas.drawText(ai_debug_info,10.f,canvas.getHeight()-80,paint);   //TODO remove when ship
+        canvas.drawText(ai_debug_info,10.f,canvas.getHeight()*2,paint);   //TODO remove when ship
     }
 }

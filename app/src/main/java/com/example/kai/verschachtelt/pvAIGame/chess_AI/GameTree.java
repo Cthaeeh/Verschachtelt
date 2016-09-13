@@ -9,6 +9,7 @@ public class GameTree {
 
     private final byte[] root;  //Or first plie if you want so.
     private AI_Task task;
+    private int nodesSearched = 0;
 
     public GameTree(byte[] root, AI_Task task){
         this.root = root;
@@ -18,6 +19,7 @@ public class GameTree {
     /**
      */
     public byte[] getLeastWorstOutcome(int depth){
+        nodesSearched =0;
         short α = -32760;
         short β = 32760;
         byte player = root[MoveGenerator.PLAYER_ON_TURN_EXTRA_FIELD];
@@ -54,6 +56,7 @@ public class GameTree {
      */
     private short alphabeta(byte[] node,int depth,short α,short β){
         if(depth == 0 || node[MoveGenerator.GAME_HAS_ENDED_EXTRA_FIELD]==MoveGenerator.TRUE){
+            nodesSearched++;
             return BordEvaluation.evaluate(node);
         }
         byte player = node[MoveGenerator.PLAYER_ON_TURN_EXTRA_FIELD];
@@ -93,5 +96,9 @@ public class GameTree {
     private short min(short val1, short val2) {
         if(val1<val2)return val1;
         else return val2;
+    }
+
+    public int getNodesSearched(){
+        return nodesSearched;
     }
 }
