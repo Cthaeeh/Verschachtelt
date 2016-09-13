@@ -13,6 +13,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
     private boolean[] possibleDestinations = new boolean[64];           //It is either possible to move there or not.
     private Chessman.Color playerOnTurn;
     private Castling castling;                                          //Is used to encapsule the logic for castling
+    private EnPassant enPassant;                                        // Is used to encapsule the logic for en-passant
     private PawnPromotionManager pawnPromotionManager;                        //Is used to encapsule the logic for pawn changing.
     private Chessman.Color winner;
 
@@ -22,6 +23,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
         playerOnTurn = Chessman.Color.WHITE;    //Always white when start
         castling = new Castling(chessmen);
         pawnPromotionManager = new PawnPromotionManager(chessmen);
+        enPassant = new EnPassant(chessmen);
     }
 
     /**
@@ -34,6 +36,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
         playerOnTurn = board.playerOnTurn;
         castling = new Castling(board.castling);
         pawnPromotionManager = new PawnPromotionManager(board.pawnPromotionManager);
+        enPassant = new EnPassant(board.enPassant);
     }
 
     /**
@@ -77,6 +80,19 @@ public class ChessBoardComplex extends ChessBoardSimple {
             if(chessmen[position].getPiece()== Chessman.Piece.KING&&Math.abs(position-selectedPosition)==2){
                 castling.handleCastling(chessmen,position);//The corresponding tower needs to move as well.
             }
+            if(chessmen[position].getPiece() == Chessman.Piece.PAWN && Math.abs(position-selectedPosition) == 16){
+                enPassant.opponentPawn = selectedPosition;
+                enPassant.setEnPassantPossibilities(position); // activate en passant possibilities after double jump
+            }
+            if(chessmen[position].getPiece() == Chessman.Piece.PAWN && position == enPassant.opponentPawn + 8) {
+                chessmen[enPassant.opponentPawn + 16] = null;
+                enPassant.resetEnPassantPossibilities();// en passant removal for white
+            }
+            if(chessmen[position].getPiece() == Chessman.Piece.PAWN && position == enPassant.opponentPawn - 8) {
+                chessmen[enPassant.opponentPawn - 16] = null;
+                enPassant.resetEnPassantPossibilities();// en passant removal for black
+            }
+
             if(pawnPromotionPossible()==null)switchPlayerOnTurn();  //Only switch Player on turn if it was not a pawn promotion move.
         }
         resetFrames();
@@ -105,6 +121,9 @@ public class ChessBoardComplex extends ChessBoardSimple {
         possibleDestinations=ruleBook.getPossibleMoves(selectedPosition,chessmen);
         boolean[] possibleCastlingDestinations = castling.getPossibleMoves(selectedPosition,chessmen);
         possibleDestinations= combine(possibleCastlingDestinations,possibleDestinations);
+        // add en-passant moves
+        boolean[] possibleEnPassantDestinations = enPassant.getPossibleMoves(selectedPosition,chessmen);
+        possibleDestinations = combine(possibleEnPassantDestinations,possibleDestinations);
     }
 
     /**Depending on the possible move destination the frames are colored accordingly.
