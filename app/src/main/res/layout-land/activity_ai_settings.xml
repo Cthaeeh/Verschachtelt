@@ -8,21 +8,21 @@
         android:text="@string/button_start_AIgame"
         android:id="@+id/button_start_Game"
         android:maxWidth="400dp"
-        android:minWidth="300dp"
+        android:minWidth="200dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="60dp" />
+        android:layout_alignParentEnd="true" />
+
 
     <SeekBar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/seekBar"
+        android:layout_marginRight="20dp"
+        android:max="3"
         android:layout_above="@+id/button_start_Game"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="20dp"
-        android:layout_marginBottom="30dp"
-        android:max="3"/>
-
+        android:layout_alignStart="@+id/button_start_Game" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -31,10 +31,10 @@
         android:textColor="@color/difficultyTextColor"
         android:textSize="20dp"
         android:id="@+id/textView_difficulty"
-        android:layout_above="@+id/seekBar"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="27dp"
         android:layout_marginLeft="20dp"
-        android:layout_alignParentStart="true" />
+        android:layout_above="@+id/seekBar"
+        android:layout_alignStart="@+id/button_start_Game" />
 
     <TextView
         android:maxLines = "200"
@@ -46,9 +46,10 @@
         android:layout_alignParentTop="true"
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="30dp"
-        android:layout_above="@+id/textView_difficulty"
-        android:layout_alignParentStart="true" />
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_alignParentStart="true"
+        android:layout_toStartOf="@+id/button_start_Game"
+        android:layout_alignParentBottom="true" />
 
 </RelativeLayout>

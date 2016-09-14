@@ -7,6 +7,28 @@
 
     <string name="puzzle_selection_headline">Select a Puzzle!</string>
     <string name="difficulty_text">Difficulty: </string>
+    <string name="aboutAI"><![CDATA[
+    <div id="page">
+		<div id="header">
+			<h1>About the AI</h1>
+		</div>
+		<div id="content">
+			<p>
+				The AI uses Alpha–beta pruning to search search tree and find the best move.
+			</p>
+			<p>
+				The Evaluation Class considers the Material Weight, the positions of knights and bishops and pawns, the pawn structure...
+			</p>
+		</div>
+		<div id="footer">
+			<p>
+				Programmed by <a href="/" target="_blank">Ivo and Kai</a>
+			</p>
+		</div>
+	</div>
+    ]]>
+    </string>
+
 
     <string name="redo_button">Redo!</string>
     <string name="undo_button">Undo!</string>
@@ -14,4 +36,5 @@
     <string name="surrender_button">Surrender :(</string>
     <string name="ai_mode_description">Player vs. Phone Mode</string>
     <string name="pvp_mode_description">Player vs. Player Mode</string>
+
 </resources>
