@@ -34,7 +34,7 @@ public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
         ChessBoardComplex hypotheticalBoard = new ChessBoardComplex(boardCurrent);  //Make a copy to test if users move was correct.
         hypotheticalBoard.handleMoveTo(position);                                   //Make move on the copied board.
         if(hypotheticalBoard.comparePositions(PUZZLE.getPosition(puzzleSteps+1))){  //If the correct move was made.
-            super.moveByHuman(position);                                                   //Make the move on the real board.
+            super.moveByHuman(position);                                            //Make the move on the real board.
             puzzleSteps++;
             puzzleSolved = isPuzzleSolved();
             if(!puzzleSolved){                                                      //If the puzzle isn´t already solved opponent make move.

@@ -47,6 +47,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
         chessmen = FENParser.getChessmen(fenNotation);      //Set the chessmen to the positions from the notation.
         playerOnTurn = FENParser.getColor(fenNotation);     //Get the color of the player that has to move.
         castling = FENParser.getCastlingState(fenNotation);
+        enPassant = FENParser.getEnPassantState(fenNotation);
         pawnPromotionManager = new PawnPromotionManager(chessmen);//There is no info about pawn changes in the FEN
     }
 

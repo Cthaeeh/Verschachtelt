@@ -92,4 +92,9 @@ public class FENParser {
         castling.setQueenSideBlack(fenNotation.split(" ")[2].contains("q"));
         return castling;
     }
+
+    public static EnPassant getEnPassantState(String fenNotation) {
+        //TODO write this
+        return new EnPassant(getChessmen(fenNotation));
+    }
 }
