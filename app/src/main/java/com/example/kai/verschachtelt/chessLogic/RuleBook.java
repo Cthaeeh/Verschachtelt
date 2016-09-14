@@ -180,16 +180,16 @@ public class RuleBook {
     }
 
     private boolean[] getPossibleKingMoves(int selectedPosition){
-        resetPossibleMoves();
-            if(selectedPosition+1<64)possibleMoves[selectedPosition+1]=true;
-            if(selectedPosition-1>=0)possibleMoves[selectedPosition-1]=true;
-            if(selectedPosition+8<64)possibleMoves[selectedPosition+8]=true;
-            if(selectedPosition-8>=0)possibleMoves[selectedPosition-8]=true;
+        resetPossibleMoves();   //Disallow glitching, and moves out of the board.
+        if(selectedPosition+1<64 && selectedPosition/8 == (selectedPosition+1)/8)possibleMoves[selectedPosition+1]=true;
+        if(selectedPosition-1>=0 && selectedPosition/8 == (selectedPosition-1)/8)possibleMoves[selectedPosition-1]=true;
+        if(selectedPosition+8<64)possibleMoves[selectedPosition+8]=true;
+        if(selectedPosition-8>=0)possibleMoves[selectedPosition-8]=true;
 
-            if(selectedPosition+9<64)possibleMoves[selectedPosition+9]=true;
-            if(selectedPosition-9>=0)possibleMoves[selectedPosition-9]=true;
-            if(selectedPosition+7<64&&selectedPosition!=0)possibleMoves[selectedPosition+7]=true;
-            if(selectedPosition-7>=0&&selectedPosition%8!=7)possibleMoves[selectedPosition-7]=true;
+        if(selectedPosition+9<64 && selectedPosition/8 == ((selectedPosition+9)/8)-1 )possibleMoves[selectedPosition+9]=true;
+        if(selectedPosition-9>=0 && selectedPosition/8 == ((selectedPosition-9)/8)+1 )possibleMoves[selectedPosition-9]=true;
+        if(selectedPosition+7<64&&selectedPosition!=0 && selectedPosition/8 == ((selectedPosition+7)/8)-1 )possibleMoves[selectedPosition+7]=true;
+        if(selectedPosition-7>=0&&selectedPosition%8!=7)possibleMoves[selectedPosition-7]=true;
         return possibleMoves;
     }
 
