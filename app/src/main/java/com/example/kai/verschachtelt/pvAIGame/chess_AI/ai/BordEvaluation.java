@@ -1,6 +1,4 @@
-package com.example.kai.verschachtelt.pvAIGame.chess_AI;
-
-import android.util.Log;
+package com.example.kai.verschachtelt.pvAIGame.chess_AI.ai;
 
 /**
  * Created by Kai on 07.09.2016.

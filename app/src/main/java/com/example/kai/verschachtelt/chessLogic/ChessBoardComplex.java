@@ -1,7 +1,6 @@
 package com.example.kai.verschachtelt.chessLogic;
 
-import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
-import com.example.kai.verschachtelt.pvAIGame.chess_AI.Move;
+import com.example.kai.verschachtelt.pvAIGame.chess_AI.ai.Move;
 
 /**
  * Created by Kai on 09.08.2016.

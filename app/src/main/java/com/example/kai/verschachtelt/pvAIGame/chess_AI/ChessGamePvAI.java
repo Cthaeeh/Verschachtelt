@@ -6,6 +6,8 @@ import com.example.kai.verschachtelt.chessLogic.ChessBoardComplex;
 import com.example.kai.verschachtelt.chessLogic.ChessBoardSimple;
 import com.example.kai.verschachtelt.chessLogic.Chessman;
 import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
+import com.example.kai.verschachtelt.pvAIGame.chess_AI.ai.AI;
+import com.example.kai.verschachtelt.pvAIGame.chess_AI.ai.Move;
 
 /**
  * Created by Kai on 11.08.2016.

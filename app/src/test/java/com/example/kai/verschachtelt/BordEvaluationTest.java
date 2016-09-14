@@ -1,7 +1,5 @@
 package com.example.kai.verschachtelt;
 
-import com.example.kai.verschachtelt.pvAIGame.chess_AI.BordEvaluation;
-
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

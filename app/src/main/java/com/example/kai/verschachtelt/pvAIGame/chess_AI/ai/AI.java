@@ -1,14 +1,13 @@
-package com.example.kai.verschachtelt.pvAIGame.chess_AI;
+package com.example.kai.verschachtelt.pvAIGame.chess_AI.ai;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Vibrator;
-import android.util.Log;
 import android.os.Vibrator;
 
 import com.example.kai.verschachtelt.activitys.MainActivity;
 import com.example.kai.verschachtelt.chessLogic.ChessBoardComplex;
 import com.example.kai.verschachtelt.chessLogic.Chessman;
+import com.example.kai.verschachtelt.pvAIGame.chess_AI.ChessGamePvAI;
 
 /**
  * Created by Kai on 10.08.2016.
