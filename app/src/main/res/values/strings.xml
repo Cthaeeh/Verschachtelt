@@ -14,10 +14,10 @@
 		</div>
 		<div id="content">
 			<p>
-				The AI uses Alpha–beta pruning to search search tree and find the best move.
+				The AI uses Alpha–beta pruning to search the search tree and find the best move.
 			</p>
 			<p>
-				The Evaluation Class considers the Material Weight, the positions of knights and bishops and pawns, the pawn structure...
+				The Evaluation Class considers the Material Weight, the positions of knights and bishops and pawns, the pawn structure....
 			</p>
 		</div>
 		<div id="footer">
