@@ -40,10 +40,9 @@ public class VictoryScreenGraphic {
             case BLACKWIN:
                 canvas.drawBitmap(Bitmap.createScaledBitmap(imageBlackWins, getShorterSide(canvas), getShorterSide(canvas), false),0,0,null);
                 break;
-           // case DRAW:
-            //    canvas.drawBitmap(Bitmap.createScaledBitmap(imageDraw, getShorterSide(canvas),getShorterSide(canvas),false),0,0,null);
-
-
+            case DRAW:
+                canvas.drawBitmap(Bitmap.createScaledBitmap(imageDraw, getShorterSide(canvas),getShorterSide(canvas),false),0,0,null);
+                break;
         }
     }
 
@@ -52,7 +51,7 @@ public class VictoryScreenGraphic {
         imageDefeat  = Bitmap.createBitmap(image  ,1000,0   ,1000,1000);
         imageWhiteWins = Bitmap.createBitmap(image,0   ,1000,1000,1000);
         imageBlackWins = Bitmap.createBitmap(image,1000,1000,1000,1000);
-        //imageDraw = Bitmap.createBitmap(image,2000,0,1000,1000);
+        imageDraw = Bitmap.createBitmap(image,2000,0,1000,1000);
     }
 
     private int getShorterSide(Canvas canvas){

@@ -65,9 +65,13 @@ public class ChessGamePvAI extends ChessGame {
     @Override
     public VictoryScreenGraphic.VictoryState getWinner(){
         if(boardCurrent.getWinner()==null)return null;
-        if(boardCurrent.getWinner() == ai.getColor() ){
+        if(boardCurrent.getWinner() == VictoryScreenGraphic.VictoryState.DRAW)
+            return VictoryScreenGraphic.VictoryState.DRAW;
+        if(boardCurrent.getWinner() == VictoryScreenGraphic.VictoryState.WHITEWIN && ai.getColor() == Chessman.Color.WHITE )
              return VictoryScreenGraphic.VictoryState.DEFEAT;
-        }else return VictoryScreenGraphic.VictoryState.VICTORY;
+        if(boardCurrent.getWinner() == VictoryScreenGraphic.VictoryState.BLACKWIN && ai.getColor() == Chessman.Color.BLACK)
+            return VictoryScreenGraphic.VictoryState.DEFEAT;
+        return VictoryScreenGraphic.VictoryState.VICTORY;
     }
 
     /**

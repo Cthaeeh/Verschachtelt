@@ -1,5 +1,6 @@
 package com.example.kai.verschachtelt.chessLogic;
 
+import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
 import com.example.kai.verschachtelt.pvAIGame.chess_AI.ai.Move;
 
 /**
@@ -14,7 +15,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
     private Castling castling;                                          //Is used to encapsule the logic for castling
     private EnPassant enPassant;                                        // Is used to encapsule the logic for en-passant
     private PawnPromotionManager pawnPromotionManager;                        //Is used to encapsule the logic for pawn changing.
-    private Chessman.Color winner;
+    private VictoryScreenGraphic.VictoryState winner;
 
     //Constructors.
     public ChessBoardComplex(){
@@ -92,11 +93,13 @@ public class ChessBoardComplex extends ChessBoardSimple {
                 chessmen[enPassant.opponentPawn - 16] = null;
                 enPassant.resetEnPassantPossibilities();// en passant removal for black
             }
-
-            if(pawnPromotionPossible()==null)switchPlayerOnTurn();  //Only switch Player on turn if it was not a pawn promotion move.
+            if(pawnPromotionPossible()==null){
+                switchPlayerOnTurn();  //Only switch Player on turn if it was not a pawn promotion move.
+                winner = ruleBook.getWinner(chessmen, playerOnTurn);
+            }
         }
         resetFrames();
-        winner = ruleBook.getWinner(chessmen);
+
     }
 
     /**
@@ -111,7 +114,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
             if(move.isPromotion()) chessmen[move.to] = new Chessman(Chessman.Piece.QUEEN,chessmen[move.to].getColor());
             switchPlayerOnTurn();
         }
-        winner = ruleBook.getWinner(chessmen);
+        winner = ruleBook.getWinner(chessmen,playerOnTurn);
     }
 
     /**
@@ -139,7 +142,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
         return selectedPosition;
     }
 
-    public Chessman.Color getWinner() {
+    public VictoryScreenGraphic.VictoryState getWinner() {
         return winner;
     }
 
@@ -208,6 +211,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
         chessmen[position] = newMan;
         chessmen[position].notifyMove();
         switchPlayerOnTurn();
+        winner = ruleBook.getWinner(chessmen, playerOnTurn);
     }
 
 

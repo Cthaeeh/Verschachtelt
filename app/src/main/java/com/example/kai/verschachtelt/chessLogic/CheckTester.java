@@ -105,5 +105,19 @@ public class CheckTester {
         return false;
     }
 
-
+    /**
+     * Determines if the given player on the board has no moves left and is not in check -> its a Draw
+     * @param board
+     * @param playerOnTurn
+     * @return true if it is a draw, false if not.
+     */
+    public static boolean isDraw(Chessman[] board, Color playerOnTurn) {
+        if(isCheck(board,playerOnTurn))return false;    //If player is in check he is mate or has moves left.(so no draw)
+        for(int i = 0; i < 64; i++){    //Iterate over Board
+            if(board[i]!=null && board[i].getColor() == playerOnTurn){
+                if(hasMoveLeft(rulebook.getPossibleMoves(i,board))) return false;   //If he has any moves left its not a draw
+            }
+        }
+        return true;    //No moves left -> its a draw.
+    }
 }

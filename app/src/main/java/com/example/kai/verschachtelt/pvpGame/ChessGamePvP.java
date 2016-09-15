@@ -16,10 +16,7 @@ public class ChessGamePvP extends ChessGame {
 
     @Override
     public VictoryScreenGraphic.VictoryState getWinner(){
-        if(boardCurrent.getWinner()==null)return null;
-        if(boardCurrent.getWinner() == Chessman.Color.WHITE){
-            return VictoryScreenGraphic.VictoryState.WHITEWIN;
-        }else return VictoryScreenGraphic.VictoryState.BLACKWIN;
+        return boardCurrent.getWinner();
     }
 
 

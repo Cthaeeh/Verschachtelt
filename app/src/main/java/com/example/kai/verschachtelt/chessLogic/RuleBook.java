@@ -225,9 +225,10 @@ public class RuleBook {
         }
     }
 
-    public Color getWinner(Chessman[] board) {
-        if(CheckTester.isMate(Chessman.Color.BLACK,board)) return Color.WHITE;
-        if(CheckTester.isMate(Chessman.Color.WHITE,board)) return Color.BLACK;
+    public VictoryScreenGraphic.VictoryState getWinner(Chessman[] board, Color playerOnTurn) {
+        if(CheckTester.isMate(Chessman.Color.BLACK,board)) return VictoryScreenGraphic.VictoryState.WHITEWIN;
+        if(CheckTester.isMate(Chessman.Color.WHITE,board)) return VictoryScreenGraphic.VictoryState.BLACKWIN;
+        if(CheckTester.isDraw(board,playerOnTurn))return VictoryScreenGraphic.VictoryState.DRAW;
         return null;
     }
 
