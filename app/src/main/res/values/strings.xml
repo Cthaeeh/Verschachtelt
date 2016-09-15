@@ -34,6 +34,7 @@
     <string name="undo_button">Undo!</string>
     <string name="show_next_move_button">Show Next Move!</string>
     <string name="surrender_button">Surrender :(</string>
+    <string name="puzzle_wrong_move_toast">Try Again!</string>
     <string name="ai_mode_description">Player vs. Phone Mode</string>
     <string name="pvp_mode_description">Player vs. Player Mode</string>
 

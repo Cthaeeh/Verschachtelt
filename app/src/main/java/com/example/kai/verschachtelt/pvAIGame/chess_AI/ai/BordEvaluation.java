@@ -89,7 +89,6 @@ public class BordEvaluation {
     public static short evaluate(final byte[] board) {
         short boardValue = 0;
         boardValue+=getMaterialValue(board);
-        //TODO evaluate King safety, etc
         return boardValue;
     }
 

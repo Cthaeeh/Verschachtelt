@@ -113,7 +113,7 @@ public class MoveGenerator {
             }
         }
         sortMoves();    //I benchmarked this and it make the ai 130% faster :)
-        return new ArrayList<byte[]>(moves);    //TODO WHY IS THIS NEEDED ???
+        return new ArrayList<byte[]>(moves);
     }
 
     public static double getMobility(byte[] boardToCalc){

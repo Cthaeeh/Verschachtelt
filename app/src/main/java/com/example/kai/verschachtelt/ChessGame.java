@@ -99,7 +99,7 @@ public class ChessGame implements InputEvent {
 
     @Override
     public void handleRedoButton() {
-        //TODO implement this.
+        //TODO implement this or delete the Button.
     }
 
     @Override

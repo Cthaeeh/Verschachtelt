@@ -1,6 +1,9 @@
 package com.example.kai.verschachtelt.puzzleGame;
 
+import android.widget.Toast;
+
 import com.example.kai.verschachtelt.InputHandler;
+import com.example.kai.verschachtelt.R;
 import com.example.kai.verschachtelt.activitys.MainActivity;
 import com.example.kai.verschachtelt.chessLogic.ChessBoardComplex;
 import com.example.kai.verschachtelt.dataHandling.MyDBHandler;
@@ -42,8 +45,11 @@ public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
                 puzzleSteps++;
             }
             if(isPuzzleSolved())saveProgress();         //After the move see if the puzzle is solved.
+        }else {
+            showWrongMoveInfo();
         }
     }
+
 
     /**
      * puts the current puzzles in the dataBase
@@ -75,6 +81,14 @@ public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
 
     public String getPuzzleDescription() {
         return PUZZLE.getDescription();
+    }
+
+    /**
+     * When the User did a wrong Move, he should be informed about that.
+     * That is what we do here.
+     */
+    private void showWrongMoveInfo() {
+        Toast.makeText(MainActivity.getContext(), MainActivity.getContext().getString(R.string.puzzle_wrong_move_toast), Toast.LENGTH_SHORT).show();
     }
 
 }

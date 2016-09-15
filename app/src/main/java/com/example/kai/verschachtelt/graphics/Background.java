@@ -9,8 +9,6 @@ import android.graphics.Paint;
  */
 public class Background {
 
-    //TODO somehow react to a change from portrait to landscape mode
-
     private Bitmap image;
     private int x,y;        //Position of Background
     private String info;    //Dev info to display
