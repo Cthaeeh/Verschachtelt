@@ -19,31 +19,34 @@ public class GameTree {
     /**
      */
     public byte[] getLeastWorstOutcome(int depth){
+        MoveGenerator.setRoot(root);
         nodesSearched =0;
         short α = -32760;
         short β = 32760;
         byte player = root[MoveGenerator.PLAYER_ON_TURN_EXTRA_FIELD];
-        byte[] bestMove = null;
+        int bestMove = 0;
         if (player == MoveGenerator.WHITE){
-            for(byte[] child : MoveGenerator.generatePossibleMoves(root)){
-                short val = alphabeta(child, depth-1, α, β);
+            for(int move : MoveGenerator.generatePossibleMoves()){
+                short val = alphabeta(MoveGenerator.makeMove(move), depth-1, α, β);
+                MoveGenerator.unMakeMove(move);
                 if(α < val ){
                     α = val;
-                    bestMove = child;
+                    bestMove = move;
                 }
                 if (β <= α)break;                             // Beta cut-off *)
             }
         } else {
-            for(byte[] child : MoveGenerator.generatePossibleMoves(root)){
-                short val = alphabeta(child, depth-1, α, β);
+            for(int move : MoveGenerator.generatePossibleMoves()){
+                short val = alphabeta(MoveGenerator.makeMove(move), depth-1, α, β);
+                MoveGenerator.unMakeMove(move);
                 if(β > val){
                     β = val;
-                    bestMove = child;
+                    bestMove = move;
                 }
                 if (β <= α)break;                             // Alpha cut-off *)
             }
         }
-        return bestMove;
+        return MoveGenerator.makeMove(bestMove);
     }
 
     /**
@@ -61,14 +64,16 @@ public class GameTree {
         }
         byte player = node[MoveGenerator.PLAYER_ON_TURN_EXTRA_FIELD];
         if (player == MoveGenerator.WHITE){
-            for(byte [] child : MoveGenerator.generatePossibleMoves(node)){
-                α = max(α, alphabeta(child, depth-1, α, β));
+            for(int move : MoveGenerator.generatePossibleMoves()){
+                α = max(α, alphabeta(MoveGenerator.makeMove(move), depth-1, α, β));
+                MoveGenerator.unMakeMove(move);
                 if (β <= α)break;                             // Beta cut-off *)
             }
             return α;
         } else {
-            for(byte [] child : MoveGenerator.generatePossibleMoves(node)){
-                β = min(β, alphabeta(child, depth-1, α, β));
+            for(int move : MoveGenerator.generatePossibleMoves()){
+                β = min(β, alphabeta(MoveGenerator.makeMove(move), depth-1, α, β));
+                MoveGenerator.unMakeMove(move);
                 if (β <= α)break;                             // Alpha cut-off *)
             }
             return β;

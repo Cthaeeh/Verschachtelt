@@ -35,7 +35,7 @@ public final class MoveAsInteger {
         return (move & DEST_MASK)>>> destShift;
     }
 
-    public static int getCapture(int move){
+    public static byte getCapture(int move){
         return (byte)((move & CAPTURE_MASK) >>> captureShift);
     }
 
@@ -52,5 +52,9 @@ public final class MoveAsInteger {
         moveAsString+=" Capture:";
         moveAsString+=getCapture(move);
         return moveAsString;
+    }
+
+    public static int getVal(int move) {    //TODO somehow determine very fast if a move is interesting
+        return 0;
     }
 }

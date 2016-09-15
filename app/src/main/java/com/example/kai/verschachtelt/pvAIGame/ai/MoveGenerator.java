@@ -53,16 +53,21 @@ public class MoveGenerator {
     protected static final byte BLACK = -112;
     protected static final byte WHITE = 112;
 
-    private static ArrayList<byte[]> moves = new ArrayList<>();
-    private static byte[]       board;
+    private static int[]  moves = new int[64];   //TODO maybe make custom implementation of List
+    private static byte    moveCounter = 0;
+    private static byte[] board;
+
+    public static void setRoot(byte[] root) {
+        board = root;
+    }
 
     /**
      * Method takes a byteBoard and returns all possibleMoves
      * @param boardToCalc
      */
-    public static ArrayList<byte[]> generatePossibleMoves(byte[] boardToCalc){
-        moves.clear();
-        board = boardToCalc;
+    public static int[] generatePossibleMoves(){
+        moves = new int[64];
+        moveCounter = 0;
         if(board[PLAYER_ON_TURN_EXTRA_FIELD] == BLACK){     //TODO make this if else
             for(int i = 21;i<99;i++){   //Iterate through board.
                 switch (board[i]){  //Find chessman of the player on turn
@@ -111,20 +116,23 @@ public class MoveGenerator {
             }
         }
         sortMoves();    //I benchmarked this and it make the ai 130% faster :)
-        return new ArrayList<byte[]>(moves);
+        return moves;
     }
 
     /**
      * Very simple move ordering.
      */
     private static void sortMoves() {
-        Collections.sort(moves, new Comparator<byte[]>() {
-            @Override
-            public int compare(byte[] move1, byte[] move2) {
-                //TODO advanced sorting.
-                return ((Byte)move2[CAPTURE_MOVE_EXTRA_FIELD]).compareTo(move1[CAPTURE_MOVE_EXTRA_FIELD]);
+        //InsertionSort
+        for(int j = 1;j<(moveCounter+1);j++){
+            int key = MoveAsInteger.getVal(moves[j]); 					//Wir fangen beim 2. Element nach l (linkes Bereichs Ende) an und hören bei r (rechtest Bereichs Ende) auf.
+            int i = j - 1;						//Wir nehmen an a[l] ist schon sortiert
+            while (i > -1 && MoveAsInteger.getVal(moves[i]) > key){		//Und sortieren es in den schon sortierten Bereich [(j-1)..l]
+                moves[i + 1] = moves[i];				//immer einen Schritt nach "links"
+                i--;
             }
-        });
+            moves[i + 1] = key;						//An die passende Stelle schreiben!
+        }
     }
 
 
@@ -327,33 +335,26 @@ public class MoveGenerator {
      * @param chessmanValue  the chessman that is moved.
      */
     private static void addMove(int startPos, int destinationPos, byte chessmanValue) {
-            byte[] boardAfterMove = board.clone();
-            boardAfterMove[CAPTURE_MOVE_EXTRA_FIELD] = abs(boardAfterMove[destinationPos]); //check if it was a capture, if so safe the value.
-            //Safe it if a King was killed -> no further bords need to be evaluated.
-            if(boardAfterMove[destinationPos] == KING_WHITE || boardAfterMove[destinationPos] == KING_BLACK ){
-                boardAfterMove[GAME_HAS_ENDED_EXTRA_FIELD] = TRUE;
-            }
-            //Make move
-            boardAfterMove[destinationPos] = chessmanValue;
-            boardAfterMove[startPos] = 0;
-
-            //Change player on turn.
-            if (boardAfterMove[PLAYER_ON_TURN_EXTRA_FIELD] == BLACK)
-                boardAfterMove[PLAYER_ON_TURN_EXTRA_FIELD] = WHITE;
-            else boardAfterMove[PLAYER_ON_TURN_EXTRA_FIELD] = BLACK;
-
-            //Add to possible Moves
-            moves.add(boardAfterMove);
+        //Add to possible Moves
+        moves[moveCounter] = MoveAsInteger.getMoveAsInt(startPos,destinationPos,board[destinationPos]);
+        moveCounter++;
     }
 
-    /**
-     * Because Math.abs(someByte) doesnt work.
-     * @param in
-     * @return
-     * @throws ArithmeticException
-     */
-    private static byte abs (byte in) throws ArithmeticException {
-        if (in == Byte.MIN_VALUE) throw new ArithmeticException ("abs called on Byte.MIN_VALUE");
-        return (in < 0) ? (byte) -in : in;
+    public static byte[] makeMove(int move){
+        //Make move
+        board[MoveAsInteger.getDest(move)] = board[MoveAsInteger.getStart(move)];
+        board[MoveAsInteger.getStart(move)] =EMPTY;
+        //Change player on turn.
+        board[PLAYER_ON_TURN_EXTRA_FIELD]*=-1;
+        return board;   //TODO castling, en passant, promotion.
     }
+
+    public static void unMakeMove(int move){
+        //Unmake move
+        board[MoveAsInteger.getStart(move)] = board[MoveAsInteger.getDest(move)];   //Take chessman back
+        board[MoveAsInteger.getDest(move)] = MoveAsInteger.getCapture(move);        //Take eventually captured piece back.
+        //Change player on turn.
+        board[PLAYER_ON_TURN_EXTRA_FIELD]*=-1;
+    }
+
 }
