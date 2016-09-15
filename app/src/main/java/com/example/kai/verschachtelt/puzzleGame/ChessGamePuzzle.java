@@ -28,7 +28,6 @@ public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
     /**
      * Special move method that checks if the move is correct (e.g. the same like in the Puzzle)
      * and only then really executes the move. Otherwise does nothing.
-     * TODO inform the user that his move was BS
      * @param position where to try to move to
      */
     @Override
@@ -37,19 +36,22 @@ public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
         ChessBoardComplex hypotheticalBoard = new ChessBoardComplex(boardCurrent);  //Make a copy to test if users move was correct.
         hypotheticalBoard.handleMoveTo(position);                                   //Make move on the copied board.
         if(hypotheticalBoard.comparePositions(PUZZLE.getPosition(puzzleSteps+1))){  //If the correct move was made.
-            super.moveByHuman(position);                                            //Make the move on the real board.
-            puzzleSteps++;
-            puzzleSolved = isPuzzleSolved();
-            if(!puzzleSolved){                                                      //If the puzzle isn´t already solved opponent make move.
-                boardCurrent = PUZZLE.getPosition(puzzleSteps+1);
-                puzzleSteps++;
-            }
-            if(isPuzzleSolved())saveProgress();         //After the move see if the puzzle is solved.
+            handleCorrectPuzzleMove(position);
         }else {
             showWrongMoveInfo();
         }
     }
 
+    private void handleCorrectPuzzleMove(int position) {
+        super.moveByHuman(position);                                            //Make the move on the real board.
+        puzzleSteps++;
+        puzzleSolved = isPuzzleSolved();
+        if(!puzzleSolved){                                                      //If the puzzle isn´t already solved opponent make move.
+            boardCurrent = PUZZLE.getPosition(puzzleSteps+1);
+            puzzleSteps++;
+        }
+        if(isPuzzleSolved())saveProgress();         //After the move see if the puzzle is solved.
+    }
 
     /**
      * puts the current puzzles in the dataBase
