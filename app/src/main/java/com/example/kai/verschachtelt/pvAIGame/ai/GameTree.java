@@ -18,7 +18,7 @@ public class GameTree {
 
     /**
      */
-    public byte[] getLeastWorstOutcome(int depth){
+    public int getLeastWorstOutcome(int depth){
         MoveGenerator.setRoot(root);
         nodesSearched =0;
         short α = -32760;
@@ -46,7 +46,7 @@ public class GameTree {
                 if (β <= α)break;                             // Alpha cut-off *)
             }
         }
-        return MoveGenerator.makeMove(bestMove);
+        return bestMove;
     }
 
     /**

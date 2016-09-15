@@ -12,7 +12,7 @@ import com.example.kai.verschachtelt.graphics.Background;
 public class AI_Task extends AsyncTask<byte[], Integer, Move> {
 
     private final AI_Listener listener;
-    private byte[] bestMove;
+    private int bestMove;
     private static final String TAG = "AI_Task";
     private int SEARCH_DEPTH = 3; //5 is max on shitty phones
 
@@ -30,7 +30,7 @@ public class AI_Task extends AsyncTask<byte[], Integer, Move> {
     @Override
     protected Move doInBackground(final byte[]... board) {
         getBestMove(board[0]);
-        return    new Move(board[0],bestMove);  //Return the best one.
+        return    new Move(bestMove);  //Return the best one.
     }
 
     /**
@@ -43,7 +43,7 @@ public class AI_Task extends AsyncTask<byte[], Integer, Move> {
         bestMove = gameTree.getLeastWorstOutcome(SEARCH_DEPTH);
         long endTime = System.currentTimeMillis();
         Log.d(TAG,"DEPTH: "+SEARCH_DEPTH + "  Time it took: " + (endTime-startTime));
-        Background.ai_debug_info ="DEPTH: "+SEARCH_DEPTH + " Time " + (endTime-startTime)/1000.0 +"s Eval " + BordEvaluation.evaluate(bestMove) +" Bran: " + Math.pow(gameTree.getNodesSearched(),(1.0/SEARCH_DEPTH));
+        Background.ai_debug_info ="DEPTH: "+SEARCH_DEPTH + " Time " + (endTime-startTime)/1000.0 +"s Eval " + " Bran: " + Math.pow(gameTree.getNodesSearched(),(1.0/SEARCH_DEPTH));
     }
 
 }

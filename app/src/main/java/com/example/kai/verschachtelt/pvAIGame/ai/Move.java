@@ -39,28 +39,16 @@ public class Move {
     /**
      * This constructor creates a Move-Object from two byteBoards
      * (the first one previous to the move, the second one after the move)
-     * @param boardStart
-     * @param boardEnd
      */
-    public Move(byte[] boardStart, byte[] boardEnd) {
-        if(boardEnd == null || boardStart == null){
+    public Move(int move) {
+        if(move == 0){
             return;
         }
-        for(int i = 0; i < 120; i++){
-            if(boardEnd[i]==MoveGenerator.EMPTY && boardStart[i]!=MoveGenerator.EMPTY){
-                from = mailbox[i];
-                from10x12Val = i;
-            }
-            if(boardEnd[i]!=MoveGenerator.EMPTY && boardStart[i]!=boardEnd[i]){
-                to = mailbox[i];
-                to10x12Val = i;
-            }
-        }
-        //If a pawn started and a Queen arrived it was a promotion.
-        if((boardEnd[to10x12Val]==MoveGenerator.QUEEN_BLACK || boardEnd[to10x12Val]==MoveGenerator.QUEEN_WHITE )&&
-                (boardStart[from10x12Val]==MoveGenerator.PAWN_BLACK || boardStart[from10x12Val]==MoveGenerator.PAWN_WHITE)){
-            isPromotion = true;
-        }
+        from10x12Val = MoveAsInteger.getStart(move);
+        to10x12Val = MoveAsInteger.getDest(move);
+        from = mailbox[from10x12Val ];
+        to = mailbox[to10x12Val];
+        //TODO handle promotion, en passant, castling
     }
 
     /**

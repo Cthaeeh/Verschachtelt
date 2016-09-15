@@ -1,6 +1,7 @@
 package com.example.kai.verschachtelt.pvAIGame.ai;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 
@@ -115,8 +116,8 @@ public class MoveGenerator {
                 }
             }
         }
-        sortMoves();    //I benchmarked this and it make the ai 130% faster :)
-        return moves;
+        //sortMoves();    //I benchmarked this and it make the ai 130% faster :)
+        return Arrays.copyOf(moves,moveCounter);
     }
 
     /**
