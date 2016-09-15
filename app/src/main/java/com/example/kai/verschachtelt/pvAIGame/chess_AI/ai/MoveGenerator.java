@@ -54,8 +54,6 @@ public class MoveGenerator {
     protected static final byte WHITE = 112;
 
     private static ArrayList<byte[]> moves = new ArrayList<>();
-    private static double mobility = 0.0;
-    private static boolean calcJustNumOfMoves = false;  //If true we wont create new boards, just count the num of possible moves.
     private static byte[]       board;
 
     /**
@@ -114,54 +112,6 @@ public class MoveGenerator {
         }
         sortMoves();    //I benchmarked this and it make the ai 130% faster :)
         return new ArrayList<byte[]>(moves);
-    }
-
-    public static double getMobility(byte[] boardToCalc){
-        calcJustNumOfMoves = true;
-        mobility = 0.0;
-        board = boardToCalc;
-        for(int i = 21;i<99;i++){   //Iterate through board.
-            switch (board[i]){
-                case PAWN_WHITE:
-                    generateWhitePawnMoves(i);
-                    break;
-                case PAWN_BLACK:
-                    generateBlackPawnMoves(i);
-                    break;
-                case ROOK_WHITE:
-                    generateWhiteRookMoves(i);
-                    break;
-                case KNIGHT_WHITE:
-                    generateWhiteKnightMoves(i);
-                    break;
-                case BISHOP_WHITE:
-                    generateWhiteBishopMoves(i);
-                    break;
-                case ROOK_BLACK:
-                    generateBlackRookMoves(i);
-                    break;
-                case KNIGHT_BLACK:
-                    generateBlackKnightMoves(i);
-                    break;
-                case BISHOP_BLACK:
-                    generateBlackBishopMoves(i);
-                    break;
-                case KING_BLACK:
-                    generateBlackKingMoves(i);
-                    break;
-                case KING_WHITE:
-                    generateWhiteKingMoves(i);
-                    break;
-                case QUEEN_WHITE:
-                    generateWhiteQueenMoves(i);
-                    break;
-                case QUEEN_BLACK:
-                    generateBlackQueenMoves(i);
-                    break;
-            }
-        }
-        calcJustNumOfMoves = false;
-        return mobility;
     }
 
     /**
@@ -377,11 +327,6 @@ public class MoveGenerator {
      * @param chessmanValue  the chessman that is moved.
      */
     private static void addMove(int startPos, int destinationPos, byte chessmanValue) {
-        if(calcJustNumOfMoves){
-            if(chessmanValue>0) mobility++;
-            else mobility--;
-            return;
-        }else {
             byte[] boardAfterMove = board.clone();
             boardAfterMove[CAPTURE_MOVE_EXTRA_FIELD] = abs(boardAfterMove[destinationPos]); //check if it was a capture, if so safe the value.
             //Safe it if a King was killed -> no further bords need to be evaluated.
@@ -399,7 +344,6 @@ public class MoveGenerator {
 
             //Add to possible Moves
             moves.add(boardAfterMove);
-        }
     }
 
     /**
