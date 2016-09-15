@@ -1,6 +1,4 @@
-package com.example.kai.verschachtelt.pvAIGame.chess_AI.ai;
-
-    import com.example.kai.verschachtelt.pvAIGame.chess_AI.ai.MoveGenerator;
+package com.example.kai.verschachtelt.pvAIGame.ai;
 
 /**
  * Created by Kai on 04.09.2016.

@@ -1,4 +1,4 @@
-package com.example.kai.verschachtelt.pvAIGame.chess_AI.ai;
+package com.example.kai.verschachtelt.pvAIGame.ai;
 
 import android.os.AsyncTask;
 import android.util.Log;

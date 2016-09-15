@@ -1,4 +1,4 @@
-package com.example.kai.verschachtelt.pvAIGame.chess_AI.ai;
+package com.example.kai.verschachtelt.pvAIGame.ai;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -356,5 +356,4 @@ public class MoveGenerator {
         if (in == Byte.MIN_VALUE) throw new ArithmeticException ("abs called on Byte.MIN_VALUE");
         return (in < 0) ? (byte) -in : in;
     }
-
 }
