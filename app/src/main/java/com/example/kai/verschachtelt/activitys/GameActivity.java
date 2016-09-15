@@ -98,6 +98,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
         redoButton.setText(R.string.redo_button);
         undoButton.setOnClickListener(this);
         redoButton.setOnClickListener(this);
+        // hide the button for now!
+        redoButton.setVisibility(View.GONE);
     }
 
     @Override

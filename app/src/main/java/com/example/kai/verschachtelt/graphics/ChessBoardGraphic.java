@@ -4,8 +4,11 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.support.v4.content.ContextCompat;
 
 import com.example.kai.verschachtelt.GamePanel;
+import com.example.kai.verschachtelt.R;
+import com.example.kai.verschachtelt.activitys.MainActivity;
 
 /**
  * Created by Kai on 08.08.2016.
@@ -15,6 +18,8 @@ public class ChessBoardGraphic {
 
     private Paint paint;
     private float squareSize;              //length and width of a field of the boardCurrent
+
+    private final int darkSquareColor = ContextCompat.getColor(MainActivity.getContext(), R.color.darkSquareColor);
 
     public ChessBoardGraphic(){
         paint = new Paint();
@@ -34,7 +39,7 @@ public class ChessBoardGraphic {
         canvas.drawLines(pts,paint);
 
         paint.setStyle(Paint.Style.FILL);
-        paint.setColor(Color.LTGRAY);
+        paint.setColor(darkSquareColor);
         for(int i = 0; i<32;i++){
             canvas.drawRect(rects[i],paint);
         }
