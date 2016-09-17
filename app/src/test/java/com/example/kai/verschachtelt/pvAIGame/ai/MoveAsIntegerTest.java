@@ -17,7 +17,7 @@ public class MoveAsIntegerTest {
     public void testGetMoveAsInt() throws Exception {
         int testMove = MoveAsInteger.getMoveAsInt(start,dest,capture);
         String testResult = MoveAsInteger.toString(testMove);
-        assert (testResult.equals("Start:12 Dest:23 Capture:-3"));
+        assert (testResult.equals("Start:12 Dest:23 Capture:-2"));
     }
 
     @Test

@@ -12,7 +12,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
     private static RuleBook ruleBook = new RuleBook();                  //There is just one Rulebook for every game of chess.
     private boolean[] possibleDestinations = new boolean[64];           //It is either possible to move there or not.
     private Chessman.Color playerOnTurn;
-    private Castling castling;                                          //Is used to encapsule the logic for castling
+    private CastlingManager castlingManager;                                          //Is used to encapsule the logic for castling
     private EnPassant enPassant;                                        // Is used to encapsule the logic for en-passant
     private PawnPromotionManager pawnPromotionManager;                        //Is used to encapsule the logic for pawn changing.
     private VictoryScreenGraphic.VictoryState winner;
@@ -21,7 +21,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
     public ChessBoardComplex(){
         super();
         playerOnTurn = Chessman.Color.WHITE;    //Always white when start
-        castling = new Castling(chessmen);
+        castlingManager = new CastlingManager(chessmen);
         pawnPromotionManager = new PawnPromotionManager(chessmen);
         enPassant = new EnPassant(chessmen);
     }
@@ -34,7 +34,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
         chessmen = Chessman.deepCopy(board.chessmen);
         selectedPosition = board.selectedPosition;
         playerOnTurn = board.playerOnTurn;
-        castling = new Castling(board.castling);
+        castlingManager = new CastlingManager(board.castlingManager);
         pawnPromotionManager = new PawnPromotionManager(board.pawnPromotionManager);
         enPassant = new EnPassant(board.enPassant);
     }
@@ -47,7 +47,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
         super();    //create Normal chessBoard.
         chessmen = FENParser.getChessmen(fenNotation);      //Set the chessmen to the positions from the notation.
         playerOnTurn = FENParser.getColor(fenNotation);     //Get the color of the player that has to move.
-        castling = FENParser.getCastlingState(fenNotation);
+        castlingManager = FENParser.getCastlingState(fenNotation);
         enPassant = FENParser.getEnPassantState(fenNotation);
         pawnPromotionManager = new PawnPromotionManager(chessmen);//There is no info about pawn changes in the FEN
     }
@@ -79,7 +79,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
             chessmen[selectedPosition]=null;           //Remove the chessman from its originally squareStates.
             //If a King did a jump:
             if(chessmen[position].getPiece()== Chessman.Piece.KING&&Math.abs(position-selectedPosition)==2){
-                castling.handleCastling(chessmen,position);//The corresponding tower needs to move as well.
+                castlingManager.handleCastling(chessmen,position);//The corresponding tower needs to move as well.
             }
             if(chessmen[position].getPiece() == Chessman.Piece.PAWN && Math.abs(position-selectedPosition) == 16){
                 enPassant.opponentPawn = selectedPosition;
@@ -111,6 +111,9 @@ public class ChessBoardComplex extends ChessBoardSimple {
             chessmen[move.from].notifyMove();                 //Tell the chessman that he was moved (Important for Castling)
             chessmen[move.to]= chessmen[move.from];           //Set the chessman to its new position.
             chessmen[move.from]=null;                         //Remove the chessman from its originally squareStates.
+            if(chessmen[move.to].getPiece()== Chessman.Piece.KING&&Math.abs(move.to-move.from)==2){
+                castlingManager.handleCastling(chessmen,move.to);//The corresponding tower needs to move as well.
+            }
             if(move.isPromotion()) chessmen[move.to] = new Chessman(Chessman.Piece.QUEEN,chessmen[move.to].getColor());
             switchPlayerOnTurn();
         }
@@ -122,7 +125,7 @@ public class ChessBoardComplex extends ChessBoardSimple {
      */
     private void getPossibleDestinations() {
         possibleDestinations=ruleBook.getPossibleMoves(selectedPosition,chessmen);
-        boolean[] possibleCastlingDestinations = castling.getPossibleMoves(selectedPosition,chessmen);
+        boolean[] possibleCastlingDestinations = castlingManager.getPossibleMoves(selectedPosition,chessmen);
         possibleDestinations= combine(possibleCastlingDestinations,possibleDestinations);
         // add en-passant moves
         boolean[] possibleEnPassantDestinations = enPassant.getPossibleMoves(selectedPosition,chessmen);
@@ -215,4 +218,8 @@ public class ChessBoardComplex extends ChessBoardSimple {
     }
 
 
+    public CastlingManager getCastlingManager() {
+        castlingManager.setChessMen(chessmen);
+        return castlingManager;
+    }
 }

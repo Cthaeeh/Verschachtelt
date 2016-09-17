@@ -53,7 +53,22 @@ public class AI implements AI_Listener {
     public void calculateMove(ChessGamePvAI game) {
         this.boardComplex = game;
         byteBoard = toByteArray(game.getComplexBoard());
-        ai_task = new AI_Task(this,difficulty).execute(byteBoard);
+        int extraInfo = extractExtraInfo(game.getComplexBoard());
+        ai_task = new AI_Task(this,difficulty,extraInfo).execute(byteBoard);
+    }
+
+    /**
+     * The method takes a boardCurrent object and extracts the extra Info,
+     * such as Castling Rights, (later en passant ..) //TODO enpassant
+     * @return the extra Info encoded as a int.
+     */
+    private int extractExtraInfo(ChessBoardComplex complexBoard) {
+        boolean queenSideBlackCastling = complexBoard.getCastlingManager().getQueenSideBlack();
+        boolean kingSideBlackCastling = complexBoard.getCastlingManager().getKingSideBlack();
+        boolean queenSideWhiteCastling = complexBoard.getCastlingManager().getQueenSideWhite();
+        boolean kingSideWhiteCastling = complexBoard.getCastlingManager().getKingSideWhite();
+        int halfMoveClock = 0;  //TODO implement
+        return ExtraInfoAsInt.encodeExtraInfo(queenSideBlackCastling,kingSideBlackCastling,queenSideWhiteCastling,kingSideWhiteCastling,halfMoveClock);
     }
 
     /**
@@ -95,12 +110,8 @@ public class AI implements AI_Listener {
                 byteBoard[mailbox64[i]]= MoveGenerator.EMPTY;
             }
         }
-        if(aiColor== Chessman.Color.WHITE)byteBoard[MoveGenerator.PLAYER_ON_TURN_EXTRA_FIELD]=MoveGenerator.WHITE;
-        else byteBoard[MoveGenerator.PLAYER_ON_TURN_EXTRA_FIELD]=MoveGenerator.BLACK;
-        byteBoard[MoveGenerator.BLACK_CASTLE_KING_SIDE_MOVE_EXTRA_FIELD]=MoveGenerator.TRUE;
-        byteBoard[MoveGenerator.WHITE_CASTLE_KING_SIDE_EXTRA_FIELD]=MoveGenerator.TRUE;
-        byteBoard[MoveGenerator.BLACK_CASTLE_QUEEN_SIDE_MOVE_EXTRA_FIELD]=MoveGenerator.TRUE;
-        byteBoard[MoveGenerator.WHITE_CASTLE_QUEEN_SIDE_EXTRA_FIELD]=MoveGenerator.TRUE;
+        if(aiColor== Chessman.Color.WHITE)byteBoard[MoveGenerator.PLAYER_ON_TURN]=MoveGenerator.WHITE;
+        else byteBoard[MoveGenerator.PLAYER_ON_TURN]=MoveGenerator.BLACK;
         return byteBoard;
     }
 
@@ -150,9 +161,5 @@ public class AI implements AI_Listener {
     private void vibrate(int ms){
         Vibrator v = (Vibrator) MainActivity.getContext().getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(ms);
-    }
-
-    public int getDifficulty(){
-        return difficulty;
     }
 }

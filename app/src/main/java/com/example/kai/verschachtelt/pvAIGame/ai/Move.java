@@ -58,4 +58,5 @@ public class Move {
     public boolean isPromotion(){
         return isPromotion;
     }
+
 }

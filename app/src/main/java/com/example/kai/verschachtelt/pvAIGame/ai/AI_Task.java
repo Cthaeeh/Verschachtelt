@@ -14,10 +14,12 @@ public class AI_Task extends AsyncTask<byte[], Integer, Move> {
     private final AI_Listener listener;
     private int bestMove;
     private static final String TAG = "AI_Task";
-    private int SEARCH_DEPTH = 3; //5 is max on shitty phones
+    private int SEARCH_DEPTH = 3;   //5 is max on shitty phones
+    private int extraInfo;          //Extra info like castling rights, en passant, haöf move clock.
 
-    public AI_Task(AI_Listener listener, int difficulty) {
+    public AI_Task(AI_Listener listener, int difficulty, int extraInfo) {
         this.listener = listener;
+        this.extraInfo = extraInfo;
         SEARCH_DEPTH = difficulty+3;
     }
 
@@ -38,12 +40,12 @@ public class AI_Task extends AsyncTask<byte[], Integer, Move> {
      * @param root
      */
     private void getBestMove(byte[] root) {
-        GameTree gameTree = new GameTree(root,this);
-        long startTime = System.currentTimeMillis();    //For performance measurement
-        bestMove = gameTree.getLeastWorstOutcome(SEARCH_DEPTH);
+        Search search = new Search(root,this,extraInfo);
+        long startTime = System.currentTimeMillis();            //For performance measurement
+        bestMove = search.getLeastWorstOutcome(SEARCH_DEPTH); //Calc best move.
         long endTime = System.currentTimeMillis();
         Log.d(TAG,"DEPTH: "+SEARCH_DEPTH + "  Time it took: " + (endTime-startTime));
-        Background.ai_debug_info ="DEPTH: "+SEARCH_DEPTH + " Time " + (endTime-startTime)/1000.0 +"s Eval " + " Bran: " + Math.pow(gameTree.getNodesSearched(),(1.0/SEARCH_DEPTH));
+        Background.ai_debug_info ="DEPTH: "+SEARCH_DEPTH + " Time " + (endTime-startTime)/1000.0 +"s Searched " + search.getNodesSearched() + " Bran: " + Math.pow(search.getNodesSearched(),(1.0/SEARCH_DEPTH));
     }
 
 }
