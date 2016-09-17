@@ -18,7 +18,7 @@ public class Background {
     public Background(Bitmap res){
         image = res;
         paint = new Paint();        //Set the Text Size large enough
-        paint.setTextSize(40.f);
+        paint.setTextSize(25.f);
     }
 
     public void update(String info){

@@ -5,13 +5,13 @@ package com.example.kai.verschachtelt.pvAIGame.chess_AI.ai;
  * An Instance of this class represents one branch of the game tree.
  * It can be grown (e.g adding plies) and it can be evaluated (the last plie will be evaluated)
  */
-public class GameTree {
+public class Search {
 
     private final byte[] root;  //Or first plie if you want so.
     private AI_Task task;
     private int nodesSearched = 0;
 
-    public GameTree(byte[] root, AI_Task task){
+    public Search(byte[] root, AI_Task task){
         this.root = root;
         this.task = task;
     }
@@ -97,6 +97,7 @@ public class GameTree {
         if(val1<val2)return val1;
         else return val2;
     }
+
 
     public int getNodesSearched(){
         return nodesSearched;

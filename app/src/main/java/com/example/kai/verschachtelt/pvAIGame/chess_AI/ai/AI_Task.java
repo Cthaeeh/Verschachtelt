@@ -38,12 +38,13 @@ public class AI_Task extends AsyncTask<byte[], Integer, Move> {
      * @param root
      */
     private void getBestMove(byte[] root) {
-        GameTree gameTree = new GameTree(root,this);
+        Search search = new Search(root,this);
         long startTime = System.currentTimeMillis();    //For performance measurement
-        bestMove = gameTree.getLeastWorstOutcome(SEARCH_DEPTH);
+        bestMove = search.getLeastWorstOutcome(SEARCH_DEPTH);
         long endTime = System.currentTimeMillis();
         Log.d(TAG,"DEPTH: "+SEARCH_DEPTH + "  Time it took: " + (endTime-startTime));
-        Background.ai_debug_info ="DEPTH: "+SEARCH_DEPTH + " Time " + (endTime-startTime)/1000.0 +"s Eval " + BordEvaluation.evaluate(bestMove) +" Bran: " + Math.pow(gameTree.getNodesSearched(),(1.0/SEARCH_DEPTH));
+        int nps = (int)(search.getNodesSearched() / ((endTime-startTime)/1000.0 ));
+        Background.ai_debug_info = "nps: " +nps+"  DEPTH: "+SEARCH_DEPTH + " Time " + (endTime-startTime)/1000.0 +"s Eval " + BordEvaluation.evaluate(bestMove) +" Bran: " + Math.pow(search.getNodesSearched(),(1.0/SEARCH_DEPTH));
     }
 
 }
