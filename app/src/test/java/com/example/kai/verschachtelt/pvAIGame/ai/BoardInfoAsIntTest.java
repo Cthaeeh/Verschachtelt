@@ -5,14 +5,14 @@ import org.junit.Test;
 /**
  * Created by Kai on 16.09.2016.
  */
-public class ExtraInfoAsIntTest {
+public class BoardInfoAsIntTest {
     @Test
     public void testExtractExtraInfo() throws Exception {
-        int testExtraInfo = ExtraInfoAsInt.encodeExtraInfo(true,true,false,false,220);
-        boolean queenSideBlackResult = ExtraInfoAsInt.getQueenSideBlackCastlingRight(testExtraInfo);
-        boolean kingSideBlackResult = ExtraInfoAsInt.getKingSideBlackCastlingRight(testExtraInfo);
-        boolean queenSideWhiteResult = ExtraInfoAsInt.getQueenSideWhiteCastlingRight(testExtraInfo);
-        boolean kingSideWhiteResult = ExtraInfoAsInt.getKingSideWhiteCastlingRight(testExtraInfo);
+        int testExtraInfo = BoardInfoAsInt.encodeExtraInfo(true,true,false,false,220);
+        boolean queenSideBlackResult = BoardInfoAsInt.getQueenSideBlackCastlingRight(testExtraInfo);
+        boolean kingSideBlackResult = BoardInfoAsInt.getKingSideBlackCastlingRight(testExtraInfo);
+        boolean queenSideWhiteResult = BoardInfoAsInt.getQueenSideWhiteCastlingRight(testExtraInfo);
+        boolean kingSideWhiteResult = BoardInfoAsInt.getKingSideWhiteCastlingRight(testExtraInfo);
 
         assert(queenSideBlackResult==true);
 
@@ -22,7 +22,7 @@ public class ExtraInfoAsIntTest {
 
         assert(kingSideWhiteResult==false);
 
-        assert(ExtraInfoAsInt.getHalfMoveClock(testExtraInfo)==220);
+        assert(BoardInfoAsInt.getHalfMoveClock(testExtraInfo)==220);
     }
 
     @Test

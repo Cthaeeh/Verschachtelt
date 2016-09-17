@@ -16,8 +16,6 @@ import com.example.kai.verschachtelt.pvAIGame.ChessGamePvAI;
  */
 public class AI implements AI_Listener {
 
-    private static final String TAG = "AI";
-
     private AsyncTask<byte[], Integer, Move> ai_task;
 
     private final  int difficulty;
@@ -53,8 +51,8 @@ public class AI implements AI_Listener {
     public void calculateMove(ChessGamePvAI game) {
         this.boardComplex = game;
         byteBoard = toByteArray(game.getComplexBoard());
-        int extraInfo = extractExtraInfo(game.getComplexBoard());
-        ai_task = new AI_Task(this,difficulty,extraInfo).execute(byteBoard);
+        int boardAdditionalInfo = extractExtraInfo(game.getComplexBoard());   //The AI needs to know about castling states and such.
+        ai_task = new AI_Task(this,difficulty,boardAdditionalInfo).execute(byteBoard);
     }
 
     /**
@@ -68,7 +66,7 @@ public class AI implements AI_Listener {
         boolean queenSideWhiteCastling = complexBoard.getCastlingManager().getQueenSideWhite();
         boolean kingSideWhiteCastling = complexBoard.getCastlingManager().getKingSideWhite();
         int halfMoveClock = 0;  //TODO implement
-        return ExtraInfoAsInt.encodeExtraInfo(queenSideBlackCastling,kingSideBlackCastling,queenSideWhiteCastling,kingSideWhiteCastling,halfMoveClock);
+        return BoardInfoAsInt.encodeExtraInfo(queenSideBlackCastling,kingSideBlackCastling,queenSideWhiteCastling,kingSideWhiteCastling,halfMoveClock);
     }
 
     /**
@@ -87,31 +85,31 @@ public class AI implements AI_Listener {
                 switch (chessman.getColor()){
                     case BLACK:                         //Depending on the chessman a constant is choosen.
                         switch (chessman.getPiece()){
-                            case KING:  byteBoard[mailbox64[i]] = MoveGenerator.KING_BLACK;break;
-                            case QUEEN: byteBoard[mailbox64[i]] = MoveGenerator.QUEEN_BLACK;break;
-                            case ROOK:  byteBoard[mailbox64[i]] = MoveGenerator.ROOK_BLACK;break;
-                            case KNIGHT:byteBoard[mailbox64[i]] = MoveGenerator.KNIGHT_BLACK;break;
-                            case BISHOP:byteBoard[mailbox64[i]] = MoveGenerator.BISHOP_BLACK;break;
-                            case PAWN:  byteBoard[mailbox64[i]] = MoveGenerator.PAWN_BLACK;break;
+                            case KING:  byteBoard[mailbox64[i]] = MoveGen.KING_BLACK;break;
+                            case QUEEN: byteBoard[mailbox64[i]] = MoveGen.QUEEN_BLACK;break;
+                            case ROOK:  byteBoard[mailbox64[i]] = MoveGen.ROOK_BLACK;break;
+                            case KNIGHT:byteBoard[mailbox64[i]] = MoveGen.KNIGHT_BLACK;break;
+                            case BISHOP:byteBoard[mailbox64[i]] = MoveGen.BISHOP_BLACK;break;
+                            case PAWN:  byteBoard[mailbox64[i]] = MoveGen.PAWN_BLACK;break;
                         }
                         break;
                     case WHITE:
                         switch (chessman.getPiece()){
-                            case KING:  byteBoard[mailbox64[i]] = MoveGenerator.KING_WHITE;break;
-                            case QUEEN: byteBoard[mailbox64[i]] = MoveGenerator.QUEEN_WHITE;break;
-                            case ROOK:  byteBoard[mailbox64[i]] = MoveGenerator.ROOK_WHITE;break;
-                            case KNIGHT:byteBoard[mailbox64[i]] = MoveGenerator.KNIGHT_WHITE;break;
-                            case BISHOP:byteBoard[mailbox64[i]] = MoveGenerator.BISHOP_WHITE;break;
-                            case PAWN:  byteBoard[mailbox64[i]] = MoveGenerator.PAWN_WHITE;break;
+                            case KING:  byteBoard[mailbox64[i]] = MoveGen.KING_WHITE;break;
+                            case QUEEN: byteBoard[mailbox64[i]] = MoveGen.QUEEN_WHITE;break;
+                            case ROOK:  byteBoard[mailbox64[i]] = MoveGen.ROOK_WHITE;break;
+                            case KNIGHT:byteBoard[mailbox64[i]] = MoveGen.KNIGHT_WHITE;break;
+                            case BISHOP:byteBoard[mailbox64[i]] = MoveGen.BISHOP_WHITE;break;
+                            case PAWN:  byteBoard[mailbox64[i]] = MoveGen.PAWN_WHITE;break;
                         }
                         break;
                 }
             }else {
-                byteBoard[mailbox64[i]]= MoveGenerator.EMPTY;
+                byteBoard[mailbox64[i]]= MoveGen.EMPTY;
             }
         }
-        if(aiColor== Chessman.Color.WHITE)byteBoard[MoveGenerator.PLAYER_ON_TURN]=MoveGenerator.WHITE;
-        else byteBoard[MoveGenerator.PLAYER_ON_TURN]=MoveGenerator.BLACK;
+        if(aiColor== Chessman.Color.WHITE)byteBoard[MoveGen.PLAYER_ON_TURN]= MoveGen.WHITE;
+        else byteBoard[MoveGen.PLAYER_ON_TURN]= MoveGen.BLACK;
         return byteBoard;
     }
 
@@ -122,7 +120,7 @@ public class AI implements AI_Listener {
     private byte[] getEmptyByteBoard() {
         byte[] byteBoard = new byte[130];
         for(int i = 0;i<120;i++){
-            byteBoard[i] = MoveGenerator.INACCESSIBLE;
+            byteBoard[i] = MoveGen.INACCESSIBLE;
         }
         return byteBoard;
     }

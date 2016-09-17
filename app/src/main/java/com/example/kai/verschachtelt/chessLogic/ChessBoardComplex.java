@@ -111,10 +111,10 @@ public class ChessBoardComplex extends ChessBoardSimple {
             chessmen[move.from].notifyMove();                 //Tell the chessman that he was moved (Important for Castling)
             chessmen[move.to]= chessmen[move.from];           //Set the chessman to its new position.
             chessmen[move.from]=null;                         //Remove the chessman from its originally squareStates.
-            if(chessmen[move.to].getPiece()== Chessman.Piece.KING&&Math.abs(move.to-move.from)==2){
-                castlingManager.handleCastling(chessmen,move.to);//The corresponding tower needs to move as well.
-            }
-            if(move.isPromotion()) chessmen[move.to] = new Chessman(Chessman.Piece.QUEEN,chessmen[move.to].getColor());
+            if(chessmen[move.to].getPiece()== Chessman.Piece.KING&&Math.abs(move.to-move.from)==2)
+                castlingManager.handleCastling(chessmen, move.to);//The corresponding tower needs to move as well.
+
+            if(move.isPromotion()) chessmen[move.to] = new Chessman(move.getPromotedPiece(),chessmen[move.to].getColor());
             switchPlayerOnTurn();
         }
         winner = ruleBook.getWinner(chessmen,playerOnTurn);

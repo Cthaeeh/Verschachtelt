@@ -14,8 +14,8 @@ public class AI_Task extends AsyncTask<byte[], Integer, Move> {
     private final AI_Listener listener;
     private int bestMove;
     private static final String TAG = "AI_Task";
-    private int SEARCH_DEPTH = 3;   //5 is max on shitty phones
-    private int extraInfo;          //Extra info like castling rights, en passant, haöf move clock.
+    private int SEARCH_DEPTH = 3;   //Default value
+    private int extraInfo;          //Extra info like castling rights, en passant , half move clock.
 
     public AI_Task(AI_Listener listener, int difficulty, int extraInfo) {
         this.listener = listener;
@@ -32,7 +32,7 @@ public class AI_Task extends AsyncTask<byte[], Integer, Move> {
     @Override
     protected Move doInBackground(final byte[]... board) {
         getBestMove(board[0]);
-        return    new Move(bestMove);  //Return the best one.
+        return new Move(bestMove);  //Return the best one.
     }
 
     /**
@@ -42,10 +42,12 @@ public class AI_Task extends AsyncTask<byte[], Integer, Move> {
     private void getBestMove(byte[] root) {
         Search search = new Search(root,this,extraInfo);
         long startTime = System.currentTimeMillis();            //For performance measurement
-        bestMove = search.getLeastWorstOutcome(SEARCH_DEPTH); //Calc best move.
-        long endTime = System.currentTimeMillis();
-        Log.d(TAG,"DEPTH: "+SEARCH_DEPTH + "  Time it took: " + (endTime-startTime));
-        Background.ai_debug_info ="DEPTH: "+SEARCH_DEPTH + " Time " + (endTime-startTime)/1000.0 +"s Searched " + search.getNodesSearched() + " Bran: " + Math.pow(search.getNodesSearched(),(1.0/SEARCH_DEPTH));
-    }
+        bestMove = search.performSearch(SEARCH_DEPTH); //Calc best move.
 
+        //Debugging / Analyse
+        long endTime = System.currentTimeMillis();
+        int nps = (int)(search.getNodesSearched() / ((endTime-startTime)/1000.0 ));
+        Log.d(TAG,"DEPTH: "+SEARCH_DEPTH + "  Time it took: " + (endTime-startTime) +" NPS: " + nps);
+        Background.ai_debug_info ="DEPTH: "+SEARCH_DEPTH + " Time " + (endTime-startTime)/1000.0 +"s NPS:" + nps + " Bran: " + Math.pow(search.getNodesSearched(),(1.0/SEARCH_DEPTH));
+    }
 }

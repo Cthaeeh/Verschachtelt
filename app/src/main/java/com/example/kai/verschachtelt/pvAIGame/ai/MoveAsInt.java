@@ -8,9 +8,10 @@ package com.example.kai.verschachtelt.pvAIGame.ai;
  * bit  0-7     = start position
  *      8-14    = destination position
  *      15-23   = captured Piece encoded as a Byte
- *      24-32   = en Passant, Promotion, Castling.
+ *      24-27   = promoted Piece
+ *      25-32   = en Passant, Castling.
  */
-public final class MoveAsInteger {
+public final class MoveAsInt {
 
     private static final int startShift = 0;
     private static final int START_MASK = 0b1111111 << startShift;
@@ -21,9 +22,34 @@ public final class MoveAsInteger {
     private static final int captureShift = 14;
     private static final int CAPTURE_MASK = 0b11111111 << captureShift;
 
+    private static final int promotedPieceShift = 23;
+    private static final int PROMOTED_PIECE_MASK = 0b111 << promotedPieceShift;
+
+    /**
+     * Returns a standart Move encoded as an int
+     * @param start the start position
+     * @param dest  the destination position
+     * @param capture the captured piece and if non 0
+     * @return the move encoded as int.
+     */
     public static int getMoveAsInt(int start, int dest, byte capture){
         start|= dest<<destShift;
         start|= (capture&0xFF)<<captureShift;
+        return start;
+    }
+
+    /**
+     *
+     * @param start the start position
+     * @param dest the destination position
+     * @param capture the captured piede and if non 0
+     * @param newPiece the promotion piece ONLY POSITIVE VALUES 0-6
+     * @return the move encoded as int.
+     */
+    public static int getPromotionMoveAsInt(int start, int dest, byte capture, byte newPiece){
+        start|= dest<<destShift;
+        start|= (capture&0xFF)<<captureShift;
+        start|= (newPiece&0xFF)<<promotedPieceShift;
         return start;
     }
 
@@ -37,6 +63,10 @@ public final class MoveAsInteger {
 
     public static byte getCapture(int move){
         return (byte)((move & CAPTURE_MASK) >>> captureShift);
+    }
+
+    public static byte getPromotedPiece(int move){
+        return (byte)((move & PROMOTED_PIECE_MASK) >>> promotedPieceShift);
     }
 
     /**
@@ -77,5 +107,18 @@ public final class MoveAsInteger {
         moveAsString+=" Capture:";
         moveAsString+=getCapture(move);
         return moveAsString;
+    }
+
+    /**
+     * A method that turns an array of moves encoded as ints into a human readable String.
+     * @param moves
+     * @return
+     */
+    public static String toReadableString(int[] moves) {
+        String movesAsString = "best Line: ";
+        for(int i = 0; i< moves.length;i++){
+            movesAsString+=toReadableString(moves[i])+"  ";
+        }
+        return movesAsString;
     }
 }

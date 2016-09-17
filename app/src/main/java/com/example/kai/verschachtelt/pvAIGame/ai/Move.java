@@ -1,9 +1,11 @@
 package com.example.kai.verschachtelt.pvAIGame.ai;
 
+import com.example.kai.verschachtelt.chessLogic.Chessman;
+
 /**
  * Created by Kai on 04.09.2016.
  * This class represents a Move. It can be simple move from one to another place. But it
- * also can be a pawn promotion (later maybe castling, en passant).
+ * also can be a pawn promotion or TODO en passant
  */
 public class Move {
     //For transferring a 10x12 to a 8x8 board. See: https://chessprogramming.wikispaces.com/10x12+Board
@@ -26,15 +28,8 @@ public class Move {
     public int from = 0;
     public int to   = 0;
 
-    private int from10x12Val = 0;
-    private int to10x12Val = 0;
-
     private boolean isPromotion = false;
-
-    public Move(int from, int to) {
-        this.from = from;
-        this.to = to;
-    }
+    private Chessman.Piece promotedPiece = null;
 
     /**
      * This constructor creates a Move-Object from two byteBoards
@@ -44,11 +39,35 @@ public class Move {
         if(move == 0){
             return;
         }
-        from10x12Val = MoveAsInteger.getStart(move);
-        to10x12Val = MoveAsInteger.getDest(move);
+        int from10x12Val = MoveAsInt.getStart(move);
+        int to10x12Val = MoveAsInt.getDest(move);
         from = mailbox[from10x12Val ];
         to = mailbox[to10x12Val];
-        //TODO handle promotion, en passant, castling
+        isPromotion = (MoveAsInt.getPromotedPiece(move)!=0);
+        if(isPromotion){
+            promotedPiece = extractPromotedPiece(move);
+        }
+        //TODO handle en passant,
+    }
+
+    /**
+     * Takes a move encoded as an int and extracts the promoted Piece as an enum.0
+     * @param move  the move as an int.
+     * @return  piece as enum
+     */
+    private Chessman.Piece extractPromotedPiece(int move) {
+        switch (MoveAsInt.getPromotedPiece(move)){
+            case MoveGen.QUEEN_WHITE:
+                return Chessman.Piece.QUEEN;
+            case MoveGen.KNIGHT_WHITE:
+                return Chessman.Piece.KNIGHT;
+            case MoveGen.BISHOP_WHITE:
+                return Chessman.Piece.BISHOP;
+            case MoveGen.ROOK_WHITE:
+                return Chessman.Piece.ROOK;
+            default:
+                return null;
+        }
     }
 
     /**
@@ -59,4 +78,10 @@ public class Move {
         return isPromotion;
     }
 
+    /**
+     *  @return the promoted piece if the move was a promotion otherwise null.
+     */
+    public Chessman.Piece getPromotedPiece() {
+        return promotedPiece;
+    }
 }

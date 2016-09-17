@@ -2,15 +2,13 @@ package com.example.kai.verschachtelt.pvAIGame.ai;
 
 /**
  * Created by Kai on 15.09.2016.
- * Like a MoveAsInteger the additional info to describe a chessboard, such as castling rights and en passant
+ * Like a MoveAsInt the additional info to describe a chessboard, such as castling rights and en passant
  * and the half Move clock are encoded here as an int.
  * bit  0-4     = castling rights
  *      5-15    = half-move clock
  *      16-31   = en Passant
  */
-public final class ExtraInfoAsInt {
-
-
+public final class BoardInfoAsInt {
 
     private static final int castlingQueenBlackShift = 0;
     private static final int CASTLING_QUEEN_BLACK_MASK = 0b1 << castlingQueenBlackShift;
@@ -26,9 +24,7 @@ public final class ExtraInfoAsInt {
 
     private static final int halfMoveClockShift = 5;
     private static final int HALF_MOVE_CLOCK_MASK = 0b1111111111 << halfMoveClockShift;
-
     //TODO en passant
-
 
     /**
      * creates an extra info int, that encodes castling rights, halfmoveClock.
