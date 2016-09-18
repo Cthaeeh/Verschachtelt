@@ -52,7 +52,7 @@ public class MoveGen {
 
     private static byte    moveCounter = 0;             //The number of moves we found for the current position.
     private static byte[] board;                        //HERE HAPPENS EVERYTHING
-    private static boolean[] attackMap = new boolean[99];
+    private static boolean[] attackMap = new boolean[120];
 
     private static IntStack extraInfoStack;
     private static int currentDepth = 0;
@@ -134,10 +134,9 @@ public class MoveGen {
      * @return returns true if the move was legal in view of the follwing moves. false if not.
      */
     public static boolean wasLegalMove(int previousMove, int depth) {   //TODO make this work
-        attackMap = new boolean[99];                //Reset attack map
+        attackMap = new boolean[120];                //Reset attack map
         präCalcMoves = generatePossibleMoves();     //generate pseudo legal Possible Moves.
         wasPreCalculated = true;
-        /*
         if(abs(board[MoveAsInt.getDest(previousMove)]) == KING_WHITE){  //If the moving piece is a King;
             if (MoveAsInt.getDest(previousMove) - MoveAsInt.getStart(previousMove) == 2) {   //And he did a jump to the right, e.g moved 2 pieces
                 if(attackMap[MoveAsInt.getStart(previousMove)])return false;
@@ -148,14 +147,21 @@ public class MoveGen {
                 if(attackMap[MoveAsInt.getStart(previousMove)-1])return false;
             }
         }
-
         for(int i = 0; i< 99;i++){
-            if(abs(board[i])*-PLAYER_ON_TURN== KING_WHITE && attackMap[i]){
+            if((board[i]*(-board[PLAYER_ON_TURN]) == KING_WHITE) && (attackMap[i])){
+                int x = 0;
                 return false;
             }
         }
-        */
         return true;
+    }
+
+    private static byte abs(byte b) {
+        byte value;
+        if(b<0){
+            return (byte) (b*-1);
+        }
+        return b;
     }
 
     /**
@@ -190,11 +196,10 @@ public class MoveGen {
             if(destinationValue<=0&&destinationValue!=INACCESSIBLE){    //Cant move to INACCESSIBLE Fields or friendly fire(Because white is always >=0).
                 addMove(startPos,destinationPos);
             }
+            attackMap[destinationPos]=true;
         }
-        /*
         generateKingSideCastlingMoves(startPos);
         generateQueenSideCastlingMoves(startPos);
-        */
     }
 
     private static void generateBlackKingMoves(int startPos) {
@@ -204,11 +209,10 @@ public class MoveGen {
             if(destinationValue>=0&&destinationValue!=INACCESSIBLE){    //Cant move to INACCESSIBLE Fields or friendly fire(Because white is always >=0).
                 addMove(startPos,destinationPos);
             }
+            attackMap[destinationPos]=true;
         }
-        /*
         generateKingSideCastlingMoves(startPos);
         generateQueenSideCastlingMoves(startPos);
-        */
     }
 
     //Castling
@@ -219,21 +223,13 @@ public class MoveGen {
      * @param startPos position of the king
      */
     private static void generateQueenSideCastlingMoves(int startPos) {
-        /*
         //Two neighboring fields must be empty.
         if(board[startPos-1]!=EMPTY)return;
         if(board[startPos-2]!=EMPTY)return;
         if(board[startPos-3]!=EMPTY)return;
         //Castling must be allowed (chessman have not been moved before.)
-        if(BoardInfoAsInt.getQueenSideWhiteCastlingRight(extraInfoStack.peek())){
-            moves[moveCounter] = MoveAsInt.getMoveAsInt(startPos,startPos-2,board[startPos-2]);
-            moveCounter++;
-        }
-        if(BoardInfoAsInt.getQueenSideBlackCastlingRight(extraInfoStack.peek())){
-            moves[moveCounter] = MoveAsInt.getMoveAsInt(startPos,startPos-2,board[startPos-2]);
-            moveCounter++;
-        }
-        */
+        if(BoardInfoAsInt.getQueenSideWhiteCastlingRight(extraInfoStack.peek())) addMove(startPos,startPos-2);
+        if(BoardInfoAsInt.getQueenSideBlackCastlingRight(extraInfoStack.peek())) addMove(startPos,startPos-2);
     }
 
     /**
@@ -243,17 +239,12 @@ public class MoveGen {
      * @param startPos position of the king
      */
     private static void generateKingSideCastlingMoves(int startPos) {
-        /*
         //Two neighboring fields must be empty.
         if(board[startPos+1]!=EMPTY)return;
         if(board[startPos+2]!=EMPTY)return;
         //Castling must be allowed (chessman have not been moved before.)
-        if(BoardInfoAsInt.getKingSideWhiteCastlingRight(extraInfoStack.peek())){
-            addMove(startPos,startPos+2);
-
-        }
+        if(BoardInfoAsInt.getKingSideWhiteCastlingRight(extraInfoStack.peek())) addMove(startPos,startPos+2);
         if(BoardInfoAsInt.getKingSideBlackCastlingRight(extraInfoStack.peek())) addMove(startPos,startPos+2);
-        */
     }
 
     //Knight
@@ -264,6 +255,7 @@ public class MoveGen {
             if(destinationValue>=0&&destinationValue!=INACCESSIBLE){    //Cant move to INACCESSIBLE Fields or friendly fire(Because white is always >=0).
                 addMove(startPos,destinationPos);
             }
+            attackMap[destinationPos]=true;
         }
     }
 
@@ -274,6 +266,7 @@ public class MoveGen {
             if(destinationValue<=0&&destinationValue!=INACCESSIBLE){    //Cant move to INACCESSIBLE Fields or friendly fire(Because white is always >=0).
                 addMove(startPos,destinationPos);
             }
+            attackMap[destinationPos]=true;
         }
     }
 
@@ -285,7 +278,10 @@ public class MoveGen {
                 int destinationPos = startPos+QUEEN_OFFSETS[direction]*distance;
                 byte destinationValue = board[destinationPos];
                 if(destinationValue==INACCESSIBLE)break;    //Stop when you hit a Wall
-                if(destinationValue>0)break;                //Stop when you hit friendly chessman
+                if(destinationValue>0){
+                    attackMap[destinationPos]=true;
+                    break;                //Stop when you hit friendly chessman
+                }
                 if(destinationValue<0){
                     addMove(startPos,destinationPos);//Stop when you hit a enemy but add the kill move.
                     break;
@@ -301,7 +297,10 @@ public class MoveGen {
                 int destinationPos = startPos+QUEEN_OFFSETS[direction]*distance;
                 byte destinationValue = board[destinationPos];
                 if(destinationValue==INACCESSIBLE)break;    //Stop when you hit a Wall
-                if(destinationValue<0)break;                //Stop when you hit friendly chessman
+                if(destinationValue<0){
+                    attackMap[destinationPos]=true;
+                    break;                //Stop when you hit friendly chessman
+                }
                 if(destinationValue>0){
                     addMove(startPos,destinationPos);//Stop when you hit a enemy but add the kill move.
                     break;
@@ -319,7 +318,10 @@ public class MoveGen {
                 int destinationPos = startPos+ROOK_OFFSETS[direction]*distance;
                 byte destinationValue = board[destinationPos];
                 if(destinationValue==INACCESSIBLE)break;    //Stop when you hit a Wall
-                if(destinationValue>0)break;                //Stop when you hit friendly chessman
+                if(destinationValue>0){
+                    attackMap[destinationPos]=true;
+                    break;                //Stop when you hit friendly chessman
+                }
                 if(destinationValue<0){
                     addMove(startPos,destinationPos);//Stop when you hit a enemy but add the kill move.
                     break;
@@ -335,7 +337,10 @@ public class MoveGen {
                 int destinationPos = startPos+ROOK_OFFSETS[direction]*distance;
                 byte destinationValue = board[destinationPos];
                 if(destinationValue==INACCESSIBLE)break;    //Stop when you hit a Wall
-                if(destinationValue<0)break;                //Stop when you hit friendly chessman
+                if(destinationValue<0){
+                    attackMap[destinationPos]=true;
+                    break;                //Stop when you hit friendly chessman
+                }
                 if(destinationValue>0){
                     addMove(startPos,destinationPos);//Stop when you hit a enemy but add the kill move.
                     break;
@@ -353,7 +358,10 @@ public class MoveGen {
                 int destinationPos = startPos+ BISHOP_OFFSETS[direction]*distance;
                 byte destinationValue = board[destinationPos];
                 if(destinationValue==INACCESSIBLE)break;    //Stop when you hit a Wall
-                if(destinationValue>0)break;                //Stop when you hit friendly chessman
+                if(destinationValue>0){
+                    attackMap[destinationPos]=true;
+                    break;                //Stop when you hit friendly chessman
+                }
                 if(destinationValue<0){
                     addMove(startPos,destinationPos);
                     break;
@@ -369,7 +377,10 @@ public class MoveGen {
                 int destinationPos = startPos+ BISHOP_OFFSETS[direction]*distance;
                 byte destinationValue = board[destinationPos];
                 if(destinationValue==INACCESSIBLE)break;    //Stop when you hit a Wall
-                if(destinationValue<0)break;                //Stop when you hit friendly chessman
+                if(destinationValue<0){
+                    attackMap[destinationPos]=true;
+                    break;                //Stop when you hit friendly chessman
+                }
                 if(destinationValue>0){
                     addMove(startPos,destinationPos);
                     break;
@@ -384,12 +395,14 @@ public class MoveGen {
         if(startPos/10==8){             //Baseline
             if(board[startPos-10]==EMPTY&&board[startPos-20]==EMPTY){   //If fields in front are empty
                 addMove(startPos,startPos-20);               //Add the Move.
+                attackMap[startPos-20]=false;
             }
         }
         if(startPos/10==3){                                             //If pawn is near promotion
             if(board[startPos-10]==EMPTY){                              //If empty field ahead can move.
                 addPromotionMove(startPos,startPos-10,QUEEN_WHITE);
                 addPromotionMove(startPos,startPos-10,KNIGHT_WHITE);
+                attackMap[startPos-10]=false;
             }
             if(board[startPos-11]<0&&board[startPos-11]!=INACCESSIBLE){ //If a enemy is diagonal can kill.
                 addPromotionMove(startPos,startPos-11,QUEEN_WHITE);
@@ -400,7 +413,10 @@ public class MoveGen {
                 addPromotionMove(startPos,startPos-9,KNIGHT_WHITE);
             }
         }else{
-            if(board[startPos-10]==EMPTY)                                  addMove(startPos,startPos-10);//If empty field ahead can move.
+            if(board[startPos-10]==EMPTY){
+                addMove(startPos,startPos-10);//If empty field ahead can move.
+                attackMap[startPos-10]=false;
+            }
             if(board[startPos-11]<0&&board[startPos-11]!=INACCESSIBLE)     addMove(startPos,startPos-11);//If a enemy is diagonal can kill.
             if(board[startPos-9]<0 &&board[startPos-9]!=INACCESSIBLE)      addMove(startPos,startPos-9);
         }
@@ -410,12 +426,14 @@ public class MoveGen {
         if(startPos/10==3){             //Baseline
             if(board[startPos+10]==EMPTY&&board[startPos+20]==EMPTY){   //If fields in front are empty
                 addMove(startPos,startPos+20);               //Add the "jump" Move.
+                attackMap[startPos+20]=false;
             }
         }
         if(startPos/10==8){                                             //If pawn is near promotion
             if(board[startPos+10]==EMPTY){                              //If empty field ahead can move.
                 addPromotionMove(startPos,startPos+10,QUEEN_WHITE);
                 addPromotionMove(startPos,startPos+10,KNIGHT_WHITE);
+                attackMap[startPos+10]=false;
             }
             if(board[startPos+11]>0){                                   //If a enemy is diagonal can kill.
                 addPromotionMove(startPos,startPos+11,QUEEN_WHITE);
@@ -426,7 +444,10 @@ public class MoveGen {
                 addPromotionMove(startPos,startPos+9,KNIGHT_WHITE);
             }
         }else{
-            if(board[startPos+10]==EMPTY)addMove(startPos,startPos+10);//If empty field ahead can move.
+            if(board[startPos+10]==EMPTY){
+                addMove(startPos,startPos+10);//If empty field ahead can move.
+                attackMap[startPos+10]=false;
+            }
             if(board[startPos+11]>0)     addMove(startPos,startPos+11);//If a enemy is diagonal can kill.
             if(board[startPos+9]>0)      addMove(startPos,startPos+9);
         }
@@ -459,7 +480,7 @@ public class MoveGen {
                 moveValues[moveCounter] = 80;
             }
         }
-        attackMap[destinationPos]=true;
+        attackMap[destinationPos]=true;     //Normally the square is attacked then
         moveCounter++;
     }
 
@@ -473,7 +494,6 @@ public class MoveGen {
         }
         board[MoveAsInt.getStart(move)] = EMPTY;
         //Make castling
-        /*
         if(board[MoveAsInt.getDest(move)]*PLAYER_ON_TURN == KING_WHITE){  //If the moving piece is a King (*PLAYER_ON_TURN always gives the positive value;
             if(MoveAsInt.getDest(move)-MoveAsInt.getStart(move)==2) {   //And he did a jump to the right, e.g moved 2 pieces
                 board[MoveAsInt.getDest(move)-1] = board[MoveAsInt.getDest(move)+1];    //Move the rook accordingly
@@ -499,13 +519,7 @@ public class MoveGen {
             if(MoveAsInt.getStart(move)==28)BoardInfoAsInt.setKingSideBlackCastlingRight(false,newExtraInfo);
             if(MoveAsInt.getStart(move)==21)BoardInfoAsInt.setKingSideBlackCastlingRight(false,newExtraInfo);
         }
-        */
-
-
         //TODO  en passant
-
-
-
         //Change player on turn.
         board[PLAYER_ON_TURN]*=-1;
         extraInfoStack.push(newExtraInfo);
@@ -522,7 +536,6 @@ public class MoveGen {
         }
         board[MoveAsInt.getDest(move)] = MoveAsInt.getCapture(move);        //Take eventually captured piece back.
         //Unmake eventual castling
-        /*
         if(board[MoveAsInt.getStart(move)]*PLAYER_ON_TURN == KING_WHITE){  //If the moving piece is a King (*PLAYER_ON_TURN always gives the positive value;
             if(MoveAsInt.getDest(move)-MoveAsInt.getStart(move)==2) {   //And he did a jump to the right, e.g moved 2 pieces
                 board[MoveAsInt.getDest(move)+1] = board[MoveAsInt.getDest(move)-1];    //Move the rook accordingly
@@ -533,7 +546,6 @@ public class MoveGen {
                 board[MoveAsInt.getDest(move)+1] = EMPTY;                                   //Let him jump over the King
             }
         }
-        */
         //TODO en passant
         board[PLAYER_ON_TURN]*=-1;  //Change player on turn.
     }

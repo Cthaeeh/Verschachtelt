@@ -39,6 +39,7 @@ public class Search {
             for (int move : MoveGen.generatePossibleMoves()) {      //Get all Moves
                 MoveGen.makeMove(move);
                 if (!MoveGen.wasLegalMove(move, depth)) {           //Illegal Move
+                    Background.ai_debug_info2 = MoveAsInt.toReadableString(move) +  "was illegal";
                     MoveGen.unMakeMove(move);
                     continue;
                 }
@@ -60,6 +61,7 @@ public class Search {
             for (int move : MoveGen.generatePossibleMoves()) {
                 MoveGen.makeMove(move);
                 if (!MoveGen.wasLegalMove(move, depth)) {
+                    Background.ai_debug_info2 = MoveAsInt.toReadableString(move) +  "was illegal";
                     MoveGen.unMakeMove(move);
                     continue;
                 }
@@ -78,7 +80,6 @@ public class Search {
                 }
             }
         }
-        Background.ai_debug_info2 = MoveAsInt.toReadableString(bestLine);
         return bestMove;
     }
 
