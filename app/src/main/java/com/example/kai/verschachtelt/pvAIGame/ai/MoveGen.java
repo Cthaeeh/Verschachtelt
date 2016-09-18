@@ -494,7 +494,7 @@ public class MoveGen {
         }
         board[MoveAsInt.getStart(move)] = EMPTY;
         //Make castling
-        if(board[MoveAsInt.getDest(move)]*PLAYER_ON_TURN == KING_WHITE){  //If the moving piece is a King (*PLAYER_ON_TURN always gives the positive value;
+        if(abs(board[MoveAsInt.getDest(move)]) == KING_WHITE){  //If the moving piece is a King (*PLAYER_ON_TURN always gives the positive value;
             if(MoveAsInt.getDest(move)-MoveAsInt.getStart(move)==2) {   //And he did a jump to the right, e.g moved 2 pieces
                 board[MoveAsInt.getDest(move)-1] = board[MoveAsInt.getDest(move)+1];    //Move the rook accordingly
                 board[MoveAsInt.getDest(move)+1] = EMPTY;                                   //Let him jump over the King

@@ -25,6 +25,7 @@ public class Move {
                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1
     };
 
+    private boolean nullMove = false;
     public int from = 0;
     public int to   = 0;
 
@@ -37,12 +38,16 @@ public class Move {
      */
     public Move(int move) {
         if(move == 0){
+            nullMove = true;
             return;
         }
         int from10x12Val = MoveAsInt.getStart(move);
         int to10x12Val = MoveAsInt.getDest(move);
         from = mailbox[from10x12Val ];
         to = mailbox[to10x12Val];
+        if(from == -1 || to == -1){
+            nullMove = true;
+        }
         isPromotion = (MoveAsInt.getPromotedPiece(move)!=0);
         if(isPromotion){
             promotedPiece = extractPromotedPiece(move);
@@ -68,6 +73,9 @@ public class Move {
             default:
                 return null;
         }
+    }
+    public boolean isNullMove(){
+        return nullMove;
     }
 
     /**

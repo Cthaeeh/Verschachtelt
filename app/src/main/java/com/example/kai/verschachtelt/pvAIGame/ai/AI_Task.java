@@ -48,6 +48,7 @@ public class AI_Task extends AsyncTask<byte[], Integer, Move> {
         long endTime = System.currentTimeMillis();
         int nps = (int)(search.getNodesSearched() / ((endTime-startTime)/1000.0 ));
         Log.d(TAG,"DEPTH: "+SEARCH_DEPTH + "  Time it took: " + (endTime-startTime) +" NPS: " + nps);
+        Log.d(TAG, "Move" + MoveAsInt.toReadableString(bestMove));
         Background.ai_debug_info ="DEPTH: "+SEARCH_DEPTH + " Time " + (endTime-startTime)/1000.0 +"s NPS:" + nps + " Bran: " + Math.pow(search.getNodesSearched(),(1.0/SEARCH_DEPTH));
     }
 }

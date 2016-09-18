@@ -108,6 +108,10 @@ public class ChessBoardComplex extends ChessBoardSimple {
      */
     public void handleMoveByAI(Move move) {
         if(move.from>=0 && chessmen[move.from]!=null){        //If we try to move from a legit position
+            if(move.isNullMove()){
+                switchPlayerOnTurn();
+                return;
+            }
             chessmen[move.from].notifyMove();                 //Tell the chessman that he was moved (Important for Castling)
             chessmen[move.to]= chessmen[move.from];           //Set the chessman to its new position.
             chessmen[move.from]=null;                         //Remove the chessman from its originally squareStates.

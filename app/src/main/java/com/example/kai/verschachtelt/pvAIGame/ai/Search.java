@@ -28,7 +28,7 @@ public class Search {
      */
     public int performSearch(int depth){
         killerMoves = new int[depth][2];
-        bestLine = new int[depth];
+        bestLine = new int[depth+1];
         MoveGen.setCurrentDepth(depth);
         nodesSearched = 0;
         short α = -32760;       //Maximizer
@@ -45,9 +45,10 @@ public class Search {
                 }
                 short val = alphabeta(depth - 1, α, β);             //Go deeper
                 MoveGen.unMakeMove(move);
-                if (α < val) {
+                if (α < val || bestMove == 0) {
                     α = val;
                     bestMove = move;
+                    bestLine[depth] = move;
                 }
                 if (β <= α){                                        // Beta cut-off *)
                     if(MoveAsInt.getCapture(move)==0){              // Safe the move, could be useful later
@@ -67,9 +68,10 @@ public class Search {
                 }
                 short val = alphabeta(depth - 1, α, β);
                 MoveGen.unMakeMove(move);
-                if (β > val) {
+                if (β > val || bestMove == 0) {
                     β = val;
                     bestMove = move;
+                    bestLine[depth] = move;
                 }
                 if (β <= α){                                        // Alpha cut-off *)
                     if(MoveAsInt.getCapture(move)==0){
@@ -80,6 +82,7 @@ public class Search {
                 }
             }
         }
+        Log.d(TAG,"Best Line:" + MoveAsInt.toReadableString(bestLine));
         return bestMove;
     }
 
@@ -104,7 +107,9 @@ public class Search {
                     MoveGen.unMakeMove(move);
                     continue;
                 }
-                α = max(α, alphabeta(depth - 1, α, β));
+                short val = alphabeta(depth - 1, α, β);
+                if(val > α) bestLine[depth] = move;
+                α = max(α, val);
                 MoveGen.unMakeMove(move);
                 if (β <= α){                                // Beta cut-off *)
                     if(MoveAsInt.getCapture(move)==0){
@@ -122,7 +127,9 @@ public class Search {
                     MoveGen.unMakeMove(move);
                     continue;
                 }
-                β = min(β, alphabeta(depth - 1, α, β));
+                short val = alphabeta(depth - 1, α, β);
+                if (val < β) bestLine[depth] = move;
+                β = min(β, val);
                 MoveGen.unMakeMove(move);
                 if (β <= α){                                  // Alpha cut-off *)
                     if(MoveAsInt.getCapture(move)==0){
