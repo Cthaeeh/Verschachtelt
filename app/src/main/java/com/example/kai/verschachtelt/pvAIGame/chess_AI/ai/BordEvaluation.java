@@ -146,6 +146,8 @@ public class BordEvaluation {
     private static final int  EAST  = 1;
     private static final int  WEST  = -1;
 
+    private static int pieceNumber;
+    private static boolean isEndgame;
 
 
     /**
@@ -163,11 +165,12 @@ public class BordEvaluation {
 
     private static short getMaterialValue(byte[] board) {
         short boardValue = 0;
-        int pieceNumber = 0;
         for(int position = 21;position<99;position++){   //Iterate through board.
             switch (board[position]){      //TODO make this if else because little faster!
                 case MoveGenerator.KING_BLACK:
                     boardValue += KING_BLACK_VALUE;
+                    if(isEndgame) boardValue -= KingTableEndGame[119 - position];
+                    else boardValue -= KingTableMiddleGame[119 - position];
                     pieceNumber++;
                     break;
                 case MoveGenerator.QUEEN_BLACK:
@@ -198,6 +201,8 @@ public class BordEvaluation {
                     break;
                 case MoveGenerator.KING_WHITE:
                     boardValue += KING_WHITE_VALUE;
+                    if(isEndgame) boardValue += KingTableEndGame[position];
+                    else boardValue += KingTableMiddleGame[position];
                     pieceNumber++;
                     break;
                 case MoveGenerator.QUEEN_WHITE:
@@ -228,6 +233,9 @@ public class BordEvaluation {
                     break;
             }
         }
+        if(pieceNumber < 10) isEndgame = true;
+        else isEndgame = false;
+        pieceNumber = 0; // reset the pieceNumber!
         return boardValue;
     }
 

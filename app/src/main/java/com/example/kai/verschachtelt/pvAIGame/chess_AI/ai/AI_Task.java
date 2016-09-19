@@ -18,7 +18,7 @@ public class AI_Task extends AsyncTask<byte[], Integer, Move> {
 
     public AI_Task(AI_Listener listener, int difficulty) {
         this.listener = listener;
-        SEARCH_DEPTH = difficulty+3;
+        SEARCH_DEPTH = difficulty+2;
     }
 
     @Override
