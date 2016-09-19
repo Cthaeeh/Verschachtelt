@@ -129,11 +129,10 @@ public class MoveGen {
 
     /**
      *
-     * @param previousMove
-     * @param depth
+     * @param previousMove  the move we check if it was legal
      * @return returns true if the move was legal in view of the follwing moves. false if not.
      */
-    public static boolean wasLegalMove(int previousMove, int depth) {   //TODO make this work
+    public static boolean wasLegalMove(int previousMove) {   //TODO make this work
         attackMap = new boolean[120];                //Reset attack map
         präCalcMoves = generatePossibleMoves();     //generate pseudo legal Possible Moves.
         wasPreCalculated = true;
@@ -512,12 +511,12 @@ public class MoveGen {
             }
         }
         if(board[MoveAsInt.getDest(move)] == ROOK_WHITE){
-            if(MoveAsInt.getStart(move)==98)BoardInfoAsInt.setKingSideWhiteCastlingRight(false,newExtraInfo);
-            if(MoveAsInt.getStart(move)==91)BoardInfoAsInt.setKingSideWhiteCastlingRight(false,newExtraInfo);
+            if(MoveAsInt.getStart(move)==98)newExtraInfo = BoardInfoAsInt.setKingSideWhiteCastlingRight(false,newExtraInfo);
+            if(MoveAsInt.getStart(move)==91)newExtraInfo = BoardInfoAsInt.setKingSideWhiteCastlingRight(false,newExtraInfo);
         }
         if(board[MoveAsInt.getDest(move)] == ROOK_BLACK){
-            if(MoveAsInt.getStart(move)==28)BoardInfoAsInt.setKingSideBlackCastlingRight(false,newExtraInfo);
-            if(MoveAsInt.getStart(move)==21)BoardInfoAsInt.setKingSideBlackCastlingRight(false,newExtraInfo);
+            if(MoveAsInt.getStart(move)==28)newExtraInfo = BoardInfoAsInt.setKingSideBlackCastlingRight(false,newExtraInfo);
+            if(MoveAsInt.getStart(move)==21)newExtraInfo = BoardInfoAsInt.setKingSideBlackCastlingRight(false,newExtraInfo);
         }
         //TODO  en passant
         //Change player on turn.
@@ -552,6 +551,10 @@ public class MoveGen {
 
     public static byte[] getBoard() {
         return board;
+    }
+
+    public static int    getExtraInfo(){
+        return extraInfoStack.peek();
     }
 
     public static void setCurrentDepth(int depth){

@@ -4,6 +4,8 @@ import org.junit.Test;
 
 /**
  * Created by Kai on 16.09.2016.
+ * Here we test if the boolean values e.g castling states
+ * can be set correctly, extracted correctly and manipulated correctly.
  */
 public class BoardInfoAsIntTest {
     @Test
@@ -14,39 +16,29 @@ public class BoardInfoAsIntTest {
         boolean queenSideWhiteResult = BoardInfoAsInt.getQueenSideWhiteCastlingRight(testExtraInfo);
         boolean kingSideWhiteResult = BoardInfoAsInt.getKingSideWhiteCastlingRight(testExtraInfo);
 
-        assert(queenSideBlackResult==true);
+        if (queenSideBlackResult != true) throw new AssertionError();
 
-        assert(kingSideBlackResult==true);
+        if (kingSideBlackResult != true) throw new AssertionError();
 
-        assert(queenSideWhiteResult==false);
+        if (queenSideWhiteResult != false) throw new AssertionError();
 
-        assert(kingSideWhiteResult==false);
+        if (kingSideWhiteResult != false) throw new AssertionError();
 
-        assert(BoardInfoAsInt.getHalfMoveClock(testExtraInfo)==220);
+        if (BoardInfoAsInt.getHalfMoveClock(testExtraInfo) != 220) throw new AssertionError();
     }
 
     @Test
-    public void testGetQueenSideBlackCastlingRight() throws Exception {
-
+    public void testChangingCastlingRights() throws Exception {
+        int testExtraInfo = BoardInfoAsInt.encodeExtraInfo(true,true,true,true,220);    //Everything true
+        testExtraInfo = BoardInfoAsInt.setKingSideWhiteCastlingRight(false, testExtraInfo); //One false
+        boolean kingSideWhiteResult = BoardInfoAsInt.getKingSideWhiteCastlingRight(testExtraInfo);
+        boolean queenSideBlackResult = BoardInfoAsInt.getQueenSideBlackCastlingRight(testExtraInfo);
+        boolean kingSideBlackResult = BoardInfoAsInt.getKingSideBlackCastlingRight(testExtraInfo);
+        boolean queenSideWhiteResult = BoardInfoAsInt.getQueenSideWhiteCastlingRight(testExtraInfo);
+        if (kingSideWhiteResult != false) throw new AssertionError();
+        if (queenSideBlackResult != true) throw new AssertionError();
+        if (kingSideBlackResult != true) throw new AssertionError();
+        if (queenSideWhiteResult != true) throw new AssertionError();
     }
 
-    @Test
-    public void testGetKingSideBlackCastlingRight() throws Exception {
-
-    }
-
-    @Test
-    public void testGetQueenSideWhiteCastlingRight() throws Exception {
-
-    }
-
-    @Test
-    public void testGetKingSideWhiteCastlingRight() throws Exception {
-
-    }
-
-    @Test
-    public void testGetHalfMoveClock() throws Exception {
-
-    }
 }

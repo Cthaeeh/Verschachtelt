@@ -14,8 +14,7 @@ public class Search {
     private final byte[] root;  //Or first plie if you want so.
     private AI_Task task;       
     private int nodesSearched = 0;
-    private int[] bestLine = new int[10];
-    private String TAG = "GAMETREE";
+    private String TAG = "SEARCH";
     protected static int[][] killerMoves;
     
     public Search(byte[] root, AI_Task task, int extraInfo){
@@ -28,7 +27,6 @@ public class Search {
      */
     public int performSearch(int depth){
         killerMoves = new int[depth][2];
-        bestLine = new int[depth+1];
         MoveGen.setCurrentDepth(depth);
         nodesSearched = 0;
         short α = -32760;       //Maximizer
@@ -38,7 +36,7 @@ public class Search {
         if (player == MoveGen.WHITE) {
             for (int move : MoveGen.generatePossibleMoves()) {      //Get all Moves
                 MoveGen.makeMove(move);
-                if (!MoveGen.wasLegalMove(move, depth)) {           //Illegal Move
+                if (!MoveGen.wasLegalMove(move)) {           //Illegal Move
                     Background.ai_debug_info2 = MoveAsInt.toReadableString(move) +  "was illegal";
                     MoveGen.unMakeMove(move);
                     continue;
@@ -48,7 +46,6 @@ public class Search {
                 if (α < val || bestMove == 0) {
                     α = val;
                     bestMove = move;
-                    bestLine[depth] = move;
                 }
                 if (β <= α){                                        // Beta cut-off *)
                     if(MoveAsInt.getCapture(move)==0){              // Safe the move, could be useful later
@@ -61,7 +58,7 @@ public class Search {
         } else {
             for (int move : MoveGen.generatePossibleMoves()) {
                 MoveGen.makeMove(move);
-                if (!MoveGen.wasLegalMove(move, depth)) {
+                if (!MoveGen.wasLegalMove(move)) {
                     Background.ai_debug_info2 = MoveAsInt.toReadableString(move) +  "was illegal";
                     MoveGen.unMakeMove(move);
                     continue;
@@ -71,7 +68,6 @@ public class Search {
                 if (β > val || bestMove == 0) {
                     β = val;
                     bestMove = move;
-                    bestLine[depth] = move;
                 }
                 if (β <= α){                                        // Alpha cut-off *)
                     if(MoveAsInt.getCapture(move)==0){
@@ -82,15 +78,14 @@ public class Search {
                 }
             }
         }
-        Log.d(TAG,"Best Line:" + MoveAsInt.toReadableString(bestLine));
         return bestMove;
     }
 
     /**
      * See: https://en.wikipedia.org/wiki/Alpha%E2%80%93beta_pruning
      * @param depth the number of plies the alg needs to go deeper down the tree.
-     * @param α
-     * @param β
+     * @param α current maximizer value
+     * @param β current minimizer value
      * @return      //TODO comment this really well.
      */
     private short alphabeta(int depth,short α,short β){
@@ -103,13 +98,11 @@ public class Search {
         if (player == MoveGen.WHITE){
             for(int move : MoveGen.generatePossibleMoves()){
                 MoveGen.makeMove(move);
-                if(depth>1&& !MoveGen.wasLegalMove(move,depth)){
+                if(depth>1&& !MoveGen.wasLegalMove(move)){
                     MoveGen.unMakeMove(move);
                     continue;
                 }
-                short val = alphabeta(depth - 1, α, β);
-                if(val > α) bestLine[depth] = move;
-                α = max(α, val);
+                α = max(α, alphabeta(depth - 1, α, β));
                 MoveGen.unMakeMove(move);
                 if (β <= α){                                // Beta cut-off *)
                     if(MoveAsInt.getCapture(move)==0){
@@ -123,13 +116,11 @@ public class Search {
         } else {
             for(int move : MoveGen.generatePossibleMoves()){
                 MoveGen.makeMove(move);
-                if(depth>1&& !MoveGen.wasLegalMove(move, depth)){
+                if(depth>1&& !MoveGen.wasLegalMove(move)){
                     MoveGen.unMakeMove(move);
                     continue;
                 }
-                short val = alphabeta(depth - 1, α, β);
-                if (val < β) bestLine[depth] = move;
-                β = min(β, val);
+                β = min(β, alphabeta(depth - 1, α, β));
                 MoveGen.unMakeMove(move);
                 if (β <= α){                                  // Alpha cut-off *)
                     if(MoveAsInt.getCapture(move)==0){

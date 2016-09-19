@@ -10,8 +10,8 @@ package com.example.kai.verschachtelt.pvAIGame.ai;
  */
 public final class BoardInfoAsInt {
 
-    private static final int castlingQueenBlackShift = 0;
-    private static final int CASTLING_QUEEN_BLACK_MASK = 0b1 << castlingQueenBlackShift;
+    private static final int castlingQueenBlackShift = 0;   //Position of the value
+    private static final int CASTLING_QUEEN_BLACK_MASK = 0b1 << castlingQueenBlackShift; //Mask for access
 
     private static final int castlingKingBlackShift = 1;
     private static final int CASTLING_KING_BLACK_MASK = 0b1 << castlingKingBlackShift;
@@ -39,8 +39,8 @@ public final class BoardInfoAsInt {
                                       boolean castlingQueenWhite, boolean castlingKingWhite,
                                       int halfMoveClock){
 
-        int extraInfo  = 0;
-        extraInfo|= (castlingQueenBlack? 1 : 0)<<castlingQueenBlackShift;
+        int extraInfo  = 0; //Start with a 0 e.g a blank canvas
+        extraInfo|= (castlingQueenBlack? 1 : 0)<<castlingQueenBlackShift;   //Set the bits "|" works because extraInfo is completly 0.
         extraInfo|= (castlingKingBlack ? 1 : 0)<<castlingKingBlackShift;
         extraInfo|= (castlingQueenWhite? 1 : 0)<<castlingQueenWhiteShift;
         extraInfo|= (castlingKingWhite? 1 : 0)<<castlingKingWhiteShift;
@@ -49,17 +49,17 @@ public final class BoardInfoAsInt {
     }
 
     public static boolean getQueenSideBlackCastlingRight(int extraInfo){
-        return (extraInfo & CASTLING_QUEEN_BLACK_MASK)!= 0;
+        return (extraInfo & CASTLING_QUEEN_BLACK_MASK)!= 0; //No shifting needed because its the first bit
     }
 
     /**
      * Sets the castling right new.
-     * @param canCastle
-     * @param extraInfo
-     * @return
+     * @param canCastle if the king can castle queen side.
+     * @param extraInfo the int we want to manipulate and change the castling-right
+     * @return the manipulated int.
      */
     public static int     setQueenSideBlackCastlingRight(boolean canCastle, int extraInfo){
-        extraInfo|= (canCastle? 1 : 0)<<castlingQueenBlackShift;
+        extraInfo = (extraInfo & (~CASTLING_QUEEN_BLACK_MASK))|(canCastle? 1 : 0)<<castlingQueenBlackShift;
         return extraInfo;
     }
 
@@ -68,7 +68,7 @@ public final class BoardInfoAsInt {
     }
 
     public static int     setKingSideBlackCastlingRight(boolean canCastle, int extraInfo){
-        extraInfo|= (canCastle? 1 : 0)<<castlingKingBlackShift;
+        extraInfo = (extraInfo & (~CASTLING_KING_BLACK_MASK))|(canCastle? 1 : 0)<<castlingKingBlackShift;
         return extraInfo;
     }
 
@@ -77,7 +77,7 @@ public final class BoardInfoAsInt {
     }
 
     public static int     setQueenSideWhiteCastlingRight(boolean canCastle, int extraInfo){
-        extraInfo|= (canCastle? 1 : 0)<<castlingQueenWhiteShift;
+        extraInfo = (extraInfo & (~CASTLING_QUEEN_WHITE_MASK))|(canCastle? 1 : 0)<<castlingQueenWhiteShift;
         return extraInfo;
     }
 
@@ -86,7 +86,7 @@ public final class BoardInfoAsInt {
     }
 
     public static int     setKingSideWhiteCastlingRight(boolean canCastle, int extraInfo){
-        extraInfo|= (canCastle? 1 : 0)<<castlingKingWhiteShift;
+        extraInfo = (extraInfo & (~CASTLING_KING_WHITE_MASK))|(canCastle? 1 : 0)<<castlingKingWhiteShift;
         return extraInfo;
     }
 
@@ -94,22 +94,4 @@ public final class BoardInfoAsInt {
         return ((extraInfo & HALF_MOVE_CLOCK_MASK)>>>halfMoveClockShift);
     }
 
-    /**
-     * To test that this class really works correctly.
-     * @param extraInfo
-     * @return
-     */
-    public static String toString(int extraInfo){
-        String moveAsString = "Castling Rights: QueenBlack:";
-        moveAsString+=getQueenSideBlackCastlingRight(extraInfo);
-        moveAsString+=" KingBlack";
-        moveAsString+= getKingSideBlackCastlingRight(extraInfo);
-        moveAsString+=" QueenWhite";
-        moveAsString+= getQueenSideWhiteCastlingRight(extraInfo);
-        moveAsString+=" KingWhite";
-        moveAsString+= getKingSideWhiteCastlingRight(extraInfo);
-        moveAsString+=" HalfMoveClock";
-        moveAsString+= getHalfMoveClock(extraInfo);
-        return moveAsString;
-    }
 }

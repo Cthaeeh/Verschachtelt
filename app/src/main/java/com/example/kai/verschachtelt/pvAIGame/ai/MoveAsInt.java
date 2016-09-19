@@ -34,7 +34,7 @@ public final class MoveAsInt {
      */
     public static int getMoveAsInt(int start, int dest, byte capture){
         start|= dest<<destShift;
-        start|= (capture&0xFF)<<captureShift;
+        start|= (capture&0xFF)<<captureShift;   //&0xFF gives us an unsigned byte
         return start;
     }
 
@@ -48,8 +48,8 @@ public final class MoveAsInt {
      */
     public static int getPromotionMoveAsInt(int start, int dest, byte capture, byte newPiece){
         start|= dest<<destShift;
-        start|= (capture&0xFF)<<captureShift;
-        start|= (newPiece&0xFF)<<promotedPieceShift;
+        start|= (capture&0xFF)<<captureShift;       //&0xFF gives us an unsigned byte
+        start|= (newPiece&0xFF)<<promotedPieceShift;//
         return start;
     }
 
@@ -116,8 +116,8 @@ public final class MoveAsInt {
      */
     public static String toReadableString(int[] moves) {
         String movesAsString = "best Line: ";
-        for(int i = 0; i< moves.length;i++){
-            movesAsString+=toReadableString(moves[i])+"  ";
+        for (int move : moves) {
+            movesAsString += toReadableString(move) + "  ";
         }
         return movesAsString;
     }
