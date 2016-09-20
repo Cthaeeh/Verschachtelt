@@ -195,7 +195,7 @@ public class CastlingManager {
      */
     private boolean isPathFree(int from, int to) {
         boolean pathFree = true;
-        //TODO simplify this.
+        
         byte xDirection = (byte)Math.signum(to%8-from%8);
         byte yDirection = (byte)Math.signum(to/8-from/8);
 

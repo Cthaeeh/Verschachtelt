@@ -1,93 +1,182 @@
 [
 {
-  "Id": 4,
-  "Name": "Magnus super zug XY",
-  "Description": "töten sie einen bauern",
-  "DifficultyAsString": "leicht",
-  "DifficultyAsInt": 1,
-  "Positions": ["rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR b KQkq d3 0 1","rnbqkbnr/pppp1ppp/8/4p3/3P4/8/PPP1PPPP/RNBQKBNR w KQkq e6 0 2","rnbqkbnr/pppp1ppp/8/4P3/8/8/PPP1PPPP/RNBQKBNR b KQkq - 0 2"],
-  "Solved": false
-},
-{
-  "Id": 3,
-  "Name": "Ivo vs Carlson 2009",
-  "Description": "klauen sie die Dame",
-  "DifficultyAsString": "schwer",
-  "DifficultyAsInt": 3,
-  "Positions": ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1","rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1","rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2"],
-  "Solved": false
-},
-{
-  "Id": 2,
-  "Name": "Test 3",
-  "Description": "können Sie gar nicht schaffen",
-  "DifficultyAsString": "mittel",
-  "DifficultyAsInt": 2,
-  "Positions": ["rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1","rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq e3 0 1","rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2"],
-  "Solved": false
-},
-{
   "Id": 1,
-  "Name": "Erstes reales Puzzle",
-  "Description": "Machen sie den optimalen Move für Schwarz",
-  "DifficultyAsString": "leicht",
+  "Name": "Have a first try",
+  "Description": "Make the right decision for black",
+  "DifficultyAsString": "Beginner",
   "DifficultyAsInt": 1,
   "Positions": ["4r3/2PQ3R/pKn4P/3B1PP1/b7/5p2/pb4pB/1k6 b - - 0 1","4r3/2PQ3R/pKn4P/3B1PP1/b2b4/5p2/p5pB/1k6 w - - 0 1"],
   "Solved": false
 },
 {
-  "Id": 5 ,
+  "Id": 2 ,
   "Name": "Mate in one",
-  "Description": "Setzen Sie Schwarz Matt in einem Zug",
-  "DifficultyAsString": "leicht",
+  "Description": "White to mate in one",
+  "DifficultyAsString": "Beginner",
   "DifficultyAsInt": 1 ,
   "Positions": ["5K1k/7b/8/8/pr6/2P5/1B4p1/7R w - - 0 1" , "5K1k/7b/8/8/pP6/8/1B4p1/7R b - - 0 1"],
   "Solved": false
 },
  {
-   "Id": 6 ,
+   "Id": 3 ,
    "Name": "Blackburn vs Martin, 1876",
-   "Description": "Matt in zwei für Weiß",
+   "Description": "White to move and win in 2 moves",
    "DifficultyAsString": "Candidate Master",
    "DifficultyAsInt": 2 ,
    "Positions": ["1r1kr3/Nbppn1pp/1b6/8/6Q1/3B1P2/Pq3P1P/2BRR1K1 w - - 0 1", "1r1kr3/NbpQn1pp/1b6/8/8/3B1P2/Pq3P1P/2BRR1K1 b - - 0 1", "1r2r3/Nbpkn1pp/1b6/8/8/3B1P2/Pq3P1P/2BRR1K1 w - - 0 2","1r2r3/Nbpkn1pp/1b6/5B2/8/5P2/Pq3P1P/2BRR1K1 b - - 0 2"],
    "Solved": false
 },
  {
-   "Id": 7 ,
+   "Id": 4 ,
    "Name": "Mate in one",
-   "Description": "Setzen Sie Matt in einem Zug",
+   "Description": "Mate with Black",
    "DifficultyAsString": "Beginner",
    "DifficultyAsInt": 1 ,
    "Positions": ["1nkr2r1/2pn1p2/p7/8/P1NP2q1/6Pp/1P1Q1P1P/1BR1R1K1 w - - 0 1" , " 1nkr2r1/2pn1p2/p2N4/8/P2P2q1/6Pp/1P1Q1P1P/1BR1R1K1 b - - 0 1 "],
    "Solved": false
  },
  {
-   "Id": 8 ,
+   "Id": 5 ,
    "Name": "Byrne vs Fischer in 1956",
-   "Description": "Matt in drei Zügen für Schwarz",
+   "Description": "Black to move and mate in 3 moves",
    "DifficultyAsString": "FIDE-Master",
    "DifficultyAsInt": 3 ,
    "Positions": ["1Q6/5pk1/2p3p1/1p2N2p/1b5P/1b4n1/r5P1/2K5 b - - 0 1","1Q6/5pk1/2p3p1/1p2N2p/1b5P/1b6/r3n1P1/2K5 w - - 0 2","1Q6/5pk1/2p3p1/1p2N2p/1b5P/1b6/r3n1P1/1K6 b - - 0 2","1Q6/5pk1/2p3p1/1p2N2p/1b5P/1bn5/r5P1/1K6 w - - 0 3","1Q6/5pk1/2p3p1/1p2N2p/1b5P/1bn5/r5P1/2K5 b - - 0 3","1Q6/5pk1/2p3p1/1p2N2p/7P/bbn5/r5P1/2K5 w - - 0 4"],
    "Solved": false
   },
   {
-   "Id": 9 ,
-   "Name": "Monterinas vs Euwe, 1927",
-   "Description": "Matt in zwei Zügen für Schwarz",
-   "DifficultyAsString": "Candidate Master",
-   "DifficultyAsInt": 2 ,
-   "Positions": ["7r/p3ppk1/3p4/2p1P1Kp/2Pb4/3P1QPq/PP5P/R6R b - - 0 1" , "7r/p3ppk1/3p4/2p1P1Kp/2P5/3PbQPq/PP5P/R6R w - - 0 2" , "7r/p3ppk1/3p4/2p1P1Kp/2P5/3PQ1Pq/PP5P/R6R b - - 0 2", "7r/p3ppk1/3p4/2p1P1Kp/2P3q1/3PQ1P1/PP5P/R6R w - - 0 3"],
-   "Solved": false
+     "Id": 6 ,
+     "Name": "Monterinas vs Euwe, 1927",
+     "Description": "Black to move and mate in 2 moves",
+     "DifficultyAsString": "Candidate Master",
+     "DifficultyAsInt": 2 ,
+     "Positions": ["7r/p3ppk1/3p4/2p1P1Kp/2Pb4/3P1QPq/PP5P/R6R b - - 0 1" , "7r/p3ppk1/3p4/2p1P1Kp/2P5/3PbQPq/PP5P/R6R w - - 0 2" , "7r/p3ppk1/3p4/2p1P1Kp/2P5/3PQ1Pq/PP5P/R6R b - - 0 2", "7r/p3ppk1/3p4/2p1P1Kp/2P3q1/3PQ1P1/PP5P/R6R w - - 0 3"],
+     "Solved": false
   },
   {
-   "Id": 9 ,
-   "Name": "Monterinas vs Euwe, 1927",
-   "Description": "Matt in zwei Zügen für Schwarz",
-   "DifficultyAsString": "Candidate Master",
-   "DifficultyAsInt": 2 ,
-   "Positions": ["7r/p3ppk1/3p4/2p1P1Kp/2Pb4/3P1QPq/PP5P/R6R b - - 0 1" , "7r/p3ppk1/3p4/2p1P1Kp/2P5/3PbQPq/PP5P/R6R w - - 0 2" , "7r/p3ppk1/3p4/2p1P1Kp/2P5/3PQ1Pq/PP5P/R6R b - - 0 2", "7r/p3ppk1/3p4/2p1P1Kp/2P3q1/3PQ1P1/PP5P/R6R w - - 0 3"],
-   "Solved": false
-  }
-
+     "Id": 7 ,
+     "Name": "Brilliant Sacrifice by Alekhine",
+     "Description": "White to move and win in 2 moves",
+     "DifficultyAsString": "Candidate Master",
+     "DifficultyAsInt": 2 ,
+     "Positions": ["4r3/pbpn2n1/1p1prp1k/8/2PP2PB/P5N1/2B2R1P/R5K1 w - - 1 0  ", "4r3/pbpn2n1/1p1prR1k/8/2PP2PB/P6N/2B4P/R5K1 b - - 0 0 ","4r3/pbp3n1/1p1prn1k/8/2PP2PB/P6N/2B4P/R5K1 w - - 0 1", "4r3/pbp3n1/1p1prn1k/6P1/2PP3B/P6N/2B4P/R5K1 b - - 0 1 " ],
+     "Solved": false
+    },
+    {
+       "Id": 8 ,
+       "Name": "Nice Mate",
+       "Description": "White to move and win in 2 moves",
+       "DifficultyAsString": "Candidate Master",
+       "DifficultyAsInt": 2 ,
+       "Positions": ["1r3k2/2n1p1b1/3p2QR/p1pq1pN1/bp6/7P/2P2PP1/4RBK1 w - - 0 1" , "1r3k1R/2n1p1b1/3p2Q1/p1pq1pN1/bp6/7P/2P2PP1/4RBK1 b - - 0 1", "1r3k1b/2n1p3/3p2Q1/p1pq1pN1/bp6/7P/2P2PP1/4RBK1 w - - 0 2", "1r3k1b/2n1p2N/3p2Q1/p1pq1p2/bp6/7P/2P2PP1/4RBK1 b - - 0 2"],
+       "Solved": false
+    },
+     {
+       "Id": 9 ,
+       "Name": "Unexpected Mate in Tromsoe",
+       "Description": "Black to move and win in 2 moves",
+       "DifficultyAsString": "Candidate Master",
+       "DifficultyAsInt": 2 ,
+       "Positions": ["4r1k1/5ppp/pp6/2pp4/3b2bq/BQN5/PPP2PPP/5RK1 b - - 0 1","4r1k1/5ppp/pp6/2pp4/3b2b1/BQN5/PPP2qPP/5RK1 w - - 0 2","4r1k1/5ppp/pp6/2pp4/3b2b1/BQN5/PPP2RPP/6K1 b - - 0 2","6k1/5ppp/pp6/2pp4/3b2b1/BQN5/PPP2RPP/4r1K1 w - - 0 3" ],
+       "Solved": false
+     },
+     {
+        "Id": 10 ,
+        "Name": " Mate in Wuppertal",
+        "Description": "White to move and win in 2 moves",
+        "DifficultyAsString": "Candidate Master",
+        "DifficultyAsInt": 2 ,
+        "Positions":["1r3rk1/1pnnq1bR/p1pp2B1/P2P1p2/1PP1pP2/2B3P1/5PK1/2Q4R w - - 0 1", "1r3rkR/1pnnq1b1/p1pp2B1/P2P1p2/1PP1pP2/2B3P1/5PK1/2Q4R b - - 0 1", "1r3rkb/1pnnq3/p1pp2B1/P2P1p2/1PP1pP2/2B3P1/5PK1/2Q4R w - - 0 2", "1r3rkR/1pnnq3/p1pp2B1/P2P1p2/1PP1pP2/2B3P1/5PK1/2Q5 b - - 0 2"],
+        "Solved": false
+     },
+      {
+        "Id": 11,
+        "Name": "Ragozin vs Botvinik, 1936",
+        "Description": " Black to move and win in 3 moves",
+        "DifficultyAsString": "FIDE Master",
+        "DifficultyAsInt": 3 ,
+        "Positions":["1k1r2r1/ppq4p/4Q3/1B2np2/2P1p3/P7/2P1RPPR/2B1K3 b - - 0 1","1k1r2r1/ppq4p/4Q3/1B3p2/2P1p3/P4n2/2P1RPPR/2B1K3 w - - 0 2","1k1r2r1/ppq4p/4Q3/1B3p2/2P1p3/P4n2/2P1RPPR/2B2K2 b - - 0 2","1k4r1/ppq4p/4Q3/1B3p2/2P1p3/P4n2/2P1RPPR/2Br1K2 w - - 0 3", "1k4r1/ppq4p/4Q3/1B3p2/2P1p3/P4n2/2P2PPR/2BrRK2 b - - 0 3", "1k4r1/ppq4p/4Q3/1B3p2/2P1p3/P4n2/2P2PPR/2B1rK2 w - - 0 4"],
+        "Solved": false
+      },
+       {
+         "Id": 12,
+         "Name": "Alekhine vs. Goluvsky, 1930",
+         "Description": "White to move and win in 4 moves",
+         "DifficultyAsString": "Grandmaster",
+         "DifficultyAsInt": 5,
+         "Positions":["r1bn1k1r/ppp2ppp/1b1p3n/2qNp1N1/2B1P2Q/2PP4/PP4PP/R1BK1R2 w - - 0 1", "r1bn1k1r/ppp2ppp/1b1pN2n/2qNp3/2B1P2Q/2PP4/PP4PP/R1BK1R2 b - - 0 1", "r1b2k1r/ppp2ppp/1b1pn2n/2qNp3/2B1P2Q/2PP4/PP4PP/R1BK1R2 w - - 0 2","r1b2k1r/ppp1Qppp/1b1pn2n/2qNp3/2B1P3/2PP4/PP4PP/R1BK1R2 b - - 0 2","r1b3kr/ppp1Qppp/1b1pn2n/2qNp3/2B1P3/2PP4/PP4PP/R1BK1R2 w - - 0 3","r1b1Q1kr/ppp2ppp/1b1pn2n/2qNp3/2B1P3/2PP4/PP4PP/R1BK1R2 b - - 0 3", "r1b1Qnkr/ppp2ppp/1b1p3n/2qNp3/2B1P3/2PP4/PP4PP/R1BK1R2 w - - 0 4", "r1b1Qnkr/ppp1Nppp/1b1p3n/2q1p3/2B1P3/2PP4/PP4PP/R1BK1R2 b - - 0 4"],
+         "Solved": false
+       },
+       {
+          "Id": 13,
+          "Name": "Albert Becker vs. Eduard Glass,1928" ,
+          "Description": "White to move and win in 4 moves" ,
+          "DifficultyAsString": "International Master" ,
+          "DifficultyAsInt": 4,
+          "Positions":["rk6/N4ppp/Qp2q3/3p4/8/8/5PPP/2R3K1 w - - 0 1","rkR5/N4ppp/Qp2q3/3p4/8/8/5PPP/6K1 b - - 0 1","rkq5/N4ppp/Qp6/3p4/8/8/5PPP/6K1 w - - 0 2","rkq5/N4ppp/1Q6/3p4/8/8/5PPP/6K1 b - - 0 2","rk6/Nq3ppp/1Q6/3p4/8/8/5PPP/6K1 w - - 0 3","rk6/1q3ppp/1QN5/3p4/8/8/5PPP/6K1 b - - 0 3","r1k5/1q3ppp/1QN5/3p4/8/8/5PPP/6K1 w - - 0 4","r1kQ4/1q3ppp/2N5/3p4/8/8/5PPP/6K1 b - - 0 4"],
+          "Solved": false
+       },
+       {
+          "Id": 14,
+          "Name": "Polgar vs. Gocheva,1990",
+          "Description": "White to move and win in 4 moves",
+          "DifficultyAsString": "International Master",
+          "DifficultyAsInt": 4,
+          "Positions":["3r1kbR/1p1r2p1/2qp1n2/p3pPQ1/P1P1P3/BP6/2B5/6RK w - - 0 1","3r1kbR/1p1r2p1/2qp1Q2/p3pP2/P1P1P3/BP6/2B5/6RK b - - 0 1","3r1kbR/1p3rp1/2qp1Q2/p3pP2/P1P1P3/BP6/2B5/6RK w - - 1 2","3r1kbR/1p3rR1/2qp1Q2/p3pP2/P1P1P3/BP6/2B5/7K b - - 0 2","3r1kbR/1p3rR1/3p1Q2/p3pP2/P1P1q3/BP6/2B5/7K w - - 0 3","3r1kbR/1p3rR1/3p1Q2/p3pP2/P1P1B3/BP6/8/7K b - - 0 3","3r1kbR/1p4R1/3p1r2/p3pP2/P1P1B3/BP6/8/7K w - - 0 4", "3r1kR1/1p4R1/3p1r2/p3pP2/P1P1B3/BP6/8/7K b - - 0 4"],
+          "Solved": false
+       },
+        {
+          "Id": 15,
+          "Name": "Polgar vs Seirawan,Monte Carlo,1993" ,
+          "Description": "White to move and win in 4 moves" ,
+          "DifficultyAsString": "FIDE Master" ,
+          "DifficultyAsInt": 3,
+          "Positions":["rnb3kr/ppp4p/3b3B/3Pp2n/2BP4/4KRp1/PPP3q1/RN1Q4 w - - 0 1","rnb2Rkr/ppp4p/3b3B/3Pp2n/2BP4/4K1p1/PPP3q1/RN1Q4 b - - 1 1","rnb2bkr/ppp4p/7B/3Pp2n/2BP4/4K1p1/PPP3q1/RN1Q4 w - - 0 2","rnb2bkr/ppp4p/3P3B/4p2n/2BP4/4K1p1/PPP3q1/RN1Q4 b - - 1 2","rnb2bkr/ppp4p/3P3B/3qp2n/2BP4/4K1p1/PPP5/RN1Q4 w - - 2 3","rnb2bkr/ppp4p/3P3B/3Bp2n/3P4/4K1p1/PPP5/RN1Q4 b - - 0 3","rn3bkr/ppp4p/3Pb2B/3Bp2n/3P4/4K1p1/PPP5/RN1Q4 w - - 1 4","rn3bkr/ppp4p/3PB2B/4p2n/3P4/4K1p1/PPP5/RN1Q4 b - - 0 4"],
+          "Solved": false
+        },
+        {
+         "Id": 16,
+         "Name": "Becker vs Glass, 1928" ,
+         "Description": "Mate in 2 moves for White" ,
+         "DifficultyAsString": "Beginner" ,
+         "DifficultyAsInt": 1 ,
+         "Positions":["rk6/N4ppp/Qp2q3/3p4/8/8/5PPP/2R3K1 w - - 0 1", "rkR5/N4ppp/Qp2q3/3p4/8/8/5PPP/6K1 b - - 0 1", "rkq5/N4ppp/Qp6/3p4/8/8/5PPP/6K1 w - - 0 2", "rkQ5/N4ppp/1p6/3p4/8/8/5PPP/6K1 b - - 0 2"],
+         "Solved": false
+        },
+        {
+         "Id": 17,
+         "Name": "Richardson vs Delmar, 1887" ,
+         "Description": "White to move and win in 4 moves" ,
+         "DifficultyAsString": "International Master" ,
+         "DifficultyAsInt": 4,
+         "Positions":["rnb3kr/ppp2ppp/1b6/3q4/3pN3/Q4N2/PPP2KPP/R1B1R3 w - - 0 1","rnb3kr/ppp2ppp/1b3N2/3q4/3p4/Q4N2/PPP2KPP/R1B1R3 b - - 0 1","rnb3kr/ppp2p1p/1b3p2/3q4/3p4/Q4N2/PPP2KPP/R1B1R3 w - - 0 2","rnb2Qkr/ppp2p1p/1b3p2/3q4/3p4/5N2/PPP2KPP/R1B1R3 b - - 0 2","rnb2k1r/ppp2p1p/1b3p2/3q4/3p4/5N2/PPP2KPP/R1B1R3 w - - 0 3","rnb2k1r/ppp2p1p/1b3p1B/3q4/3p4/5N2/PPP2KPP/R3R3 b - - 0 3","rnb3kr/ppp2p1p/1b3p1B/3q4/3p4/5N2/PPP2KPP/R3R3 w - - 0 4","rnb1R1kr/ppp2p1p/1b3p1B/3q4/3p4/5N2/PPP2KPP/R7 b - - 0 4"],
+         "Solved": false
+         },
+        {
+        "Id": 18,
+        "Name": "Campbell vs Spigel, USA, 1989" ,
+        "Description": "White to move and win in 4 moves" ,
+        "DifficultyAsString": "International Master" ,
+        "DifficultyAsInt": 4,
+        "Positions":["r3rk2/6b1/q2pQBp1/1NpP4/1n2PP2/nP6/P3N1K1/R6R w - - 0 1", "r3rk2/6B1/q2pQ1p1/1NpP4/1n2PP2/nP6/P3N1K1/R6R b - - 0 1","r3r3/6k1/q2pQ1p1/1NpP4/1n2PP2/nP6/P3N1K1/R6R w - - 0 2","r3r3/6kR/q2pQ1p1/1NpP4/1n2PP2/nP6/P3N1K1/R7 b - - 0 2","r3r3/7k/q2pQ1p1/1NpP4/1n2PP2/nP6/P3N1K1/R7 w - - 0 3","r3r3/5Q1k/q2p2p1/1NpP4/1n2PP2/nP6/P3N1K1/R7 b - - 0 3","r3r3/5Q2/q2p2pk/1NpP4/1n2PP2/nP6/P3N1K1/R7 w - - 0 4","r3r3/5Q2/q2p2pk/1NpP4/1n2PP2/nP6/P3N1K1/7R b - - 0 4"],
+        "Solved": false
+        },
+        {
+        "Id": 19,
+        "Name": "Andreikin vs Edouard,2004",
+        "Description": "White to move and win in 4 moves" ,
+        "DifficultyAsString": "International Master" ,
+        "DifficultyAsInt": 4,
+        "Positions": ["1r3r2/2Q2q1k/p6p/8/8/8/PP6/K5RR w - - 0 1","1r3r2/2Q2q1k/p6R/8/8/8/PP6/K5R1 b - - 0 1","1r3r2/2Q2q2/p6k/8/8/8/PP6/K5R1 w - - 0 2","1r3r2/5q2/p1Q4k/8/8/8/PP6/K5R1 b - - 0 2","1r3r2/8/p1Q2q1k/8/8/8/PP6/K5R1 w - - 0 3","1r3r2/8/p4q1k/8/8/8/PP6/K5RQ b - - 0 3","1r3r2/8/p6k/8/7q/8/PP6/K5RQ w - - 0 4","1r3r2/8/p6k/8/7Q/8/PP6/K5R1 b - - 0 4"] ,
+        "Solved": false
+        },
+        {
+        "Id": 20,
+        "Name": "Marshall vs Rabinovich, 1925",
+        "Description": "White to move and win in 3 moves" ,
+        "DifficultyAsString": "FIDE Master" ,
+        "DifficultyAsInt": 3,
+        "Positions": ["5kqQ/1b1r2p1/ppn1p1Bp/2b5/2P2rP1/P4N2/1B6/4RR1K w - - 0 1","5kqQ/1b1r2p1/ppn1R1Bp/2b5/2P2rP1/P4N2/1B6/5R1K b - - 0 1","5kqQ/1b3rp1/ppn1R1Bp/2b5/2P2rP1/P4N2/1B6/5R1K w - - 0 2","5kqQ/1b3rB1/ppn1R1Bp/2b5/2P2rP1/P4N2/8/5R1K b - - 0 2","5kqQ/1b4r1/ppn1R1Bp/2b5/2P2rP1/P4N2/8/5R1K w - - 0 3","4RkqQ/1b4r1/ppn3Bp/2b5/2P2rP1/P4N2/8/5R1K b - - 0 3"] ,
+        "Solved": false
+        }
 ]

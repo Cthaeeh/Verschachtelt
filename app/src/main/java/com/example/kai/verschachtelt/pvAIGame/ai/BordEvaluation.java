@@ -163,7 +163,7 @@ public class BordEvaluation {
     private static short getMaterialValue(byte[] board) {
         short boardValue = 0;
         for(int position = 21;position<99;position++){   //Iterate through board.
-            switch (board[position]){      //TODO make this if else because little faster!
+            switch (board[position]){
                 case MoveGen.KING_BLACK:
                     boardValue += KING_BLACK_VALUE;
                     if(isEndgame) boardValue -= KingTableEndGame[119 - position];
