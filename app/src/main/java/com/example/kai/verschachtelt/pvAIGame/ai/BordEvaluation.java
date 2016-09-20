@@ -288,29 +288,29 @@ public class BordEvaluation {
      */
     private static short getKingSafety(int position, byte[] board){
         short boardValue = 0;
-        if(board[position] == MoveGenerator.PAWN_BLACK) boardValue += evaluateBlackPawnShield(position,board);
-        if(board[position] == MoveGenerator.PAWN_WHITE) boardValue += evaluateWhitePawnShield(position,board);
+        if(board[position] == MoveGen.PAWN_BLACK) boardValue += evaluateBlackPawnShield(position,board);
+        if(board[position] == MoveGen.PAWN_WHITE) boardValue += evaluateWhitePawnShield(position,board);
         return boardValue;
     }
 
     private static short evaluateBlackPawnShield(int kingPosition, byte[] board) {
         short shieldValue = 0;
-        if(board[kingPosition + SOUTH] == MoveGenerator.PAWN_BLACK){
+        if(board[kingPosition + SOUTH] == MoveGen.PAWN_BLACK){
             shieldValue -= 30;
         }
-        if(board[kingPosition+SOUTH + EAST] == MoveGenerator.PAWN_BLACK){
+        if(board[kingPosition+SOUTH + EAST] == MoveGen.PAWN_BLACK){
             shieldValue -= 30;
         }
-        if(board[kingPosition + SOUTH + WEST]== MoveGenerator.PAWN_BLACK){
+        if(board[kingPosition + SOUTH + WEST]== MoveGen.PAWN_BLACK){
             shieldValue -=30;
         }
-        if(board[kingPosition + SOUTH + SOUTH] == MoveGenerator.PAWN_BLACK){
+        if(board[kingPosition + SOUTH + SOUTH] == MoveGen.PAWN_BLACK){
             shieldValue -= 20;
         }
-        if(board[kingPosition + SOUTH + SOUTH + EAST] == MoveGenerator.PAWN_BLACK){
+        if(board[kingPosition + SOUTH + SOUTH + EAST] == MoveGen.PAWN_BLACK){
             shieldValue -= 20;
         }
-        if(board[kingPosition + SOUTH + SOUTH + WEST] == MoveGenerator.PAWN_BLACK){
+        if(board[kingPosition + SOUTH + SOUTH + WEST] == MoveGen.PAWN_BLACK){
             shieldValue -= 20;
         }
         // it is not good to have three pawns in a row in front of the king or no pawn in front
@@ -325,22 +325,22 @@ public class BordEvaluation {
     private static short evaluateWhitePawnShield(int kingPosition, byte[] board) {
         short shieldValue = 0;
 
-        if(board[kingPosition + NORTH] == MoveGenerator.PAWN_WHITE){
+        if(board[kingPosition + NORTH] == MoveGen.PAWN_WHITE){
             shieldValue += 30;
         }
-        if(board[kingPosition+NORTH + EAST] == MoveGenerator.PAWN_WHITE){
+        if(board[kingPosition+NORTH + EAST] == MoveGen.PAWN_WHITE){
             shieldValue += 30;
         }
-        if(board[kingPosition + NORTH + WEST]== MoveGenerator.PAWN_WHITE){
+        if(board[kingPosition + NORTH + WEST]== MoveGen.PAWN_WHITE){
             shieldValue +=30;
         }
-        if(board[kingPosition + NORTH + NORTH] == MoveGenerator.PAWN_WHITE){
+        if(board[kingPosition + NORTH + NORTH] == MoveGen.PAWN_WHITE){
             shieldValue += 20;
         }
-        if(board[kingPosition + NORTH + NORTH + EAST] == MoveGenerator.PAWN_WHITE){
+        if(board[kingPosition + NORTH + NORTH + EAST] == MoveGen.PAWN_WHITE){
             shieldValue += 20;
         }
-        if(board[kingPosition + NORTH + NORTH + WEST] == MoveGenerator.PAWN_WHITE){
+        if(board[kingPosition + NORTH + NORTH + WEST] == MoveGen.PAWN_WHITE){
             shieldValue += 20;
         }
         // it is not good to have three pawns in a row in front of the king or no pawn in front
