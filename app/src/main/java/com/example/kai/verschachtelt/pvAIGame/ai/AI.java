@@ -1,4 +1,4 @@
-package com.example.kai.verschachtelt.pvAIGame.chess_AI.ai;
+package com.example.kai.verschachtelt.pvAIGame.ai;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -7,7 +7,7 @@ import android.os.Vibrator;
 import com.example.kai.verschachtelt.activitys.MainActivity;
 import com.example.kai.verschachtelt.chessLogic.ChessBoardComplex;
 import com.example.kai.verschachtelt.chessLogic.Chessman;
-import com.example.kai.verschachtelt.pvAIGame.chess_AI.ChessGamePvAI;
+import com.example.kai.verschachtelt.pvAIGame.ChessGamePvAI;
 
 /**
  * Created by Kai on 10.08.2016.
@@ -15,8 +15,6 @@ import com.example.kai.verschachtelt.pvAIGame.chess_AI.ChessGamePvAI;
  *
  */
 public class AI implements AI_Listener {
-
-    private static final String TAG = "AI";
 
     private AsyncTask<byte[], Integer, Move> ai_task;
 
@@ -53,7 +51,22 @@ public class AI implements AI_Listener {
     public void calculateMove(ChessGamePvAI game) {
         this.boardComplex = game;
         byteBoard = toByteArray(game.getComplexBoard());
-        ai_task = new AI_Task(this,difficulty).execute(byteBoard);
+        int boardAdditionalInfo = extractExtraInfo(game.getComplexBoard());   //The AI needs to know about castling states and such.
+        ai_task = new AI_Task(this,difficulty,boardAdditionalInfo).execute(byteBoard);
+    }
+
+    /**
+     * The method takes a boardCurrent object and extracts the extra Info,
+     * such as Castling Rights, (later en passant ..) //TODO enpassant
+     * @return the extra Info encoded as a int.
+     */
+    private int extractExtraInfo(ChessBoardComplex complexBoard) {
+        boolean queenSideBlackCastling = complexBoard.getCastlingManager().getQueenSideBlack();
+        boolean kingSideBlackCastling = complexBoard.getCastlingManager().getKingSideBlack();
+        boolean queenSideWhiteCastling = complexBoard.getCastlingManager().getQueenSideWhite();
+        boolean kingSideWhiteCastling = complexBoard.getCastlingManager().getKingSideWhite();
+        int halfMoveClock = 0;  //TODO implement
+        return BoardInfoAsInt.encodeExtraInfo(queenSideBlackCastling,kingSideBlackCastling,queenSideWhiteCastling,kingSideWhiteCastling,halfMoveClock);
     }
 
     /**
@@ -72,35 +85,31 @@ public class AI implements AI_Listener {
                 switch (chessman.getColor()){
                     case BLACK:                         //Depending on the chessman a constant is choosen.
                         switch (chessman.getPiece()){
-                            case KING:  byteBoard[mailbox64[i]] = MoveGenerator.KING_BLACK;break;
-                            case QUEEN: byteBoard[mailbox64[i]] = MoveGenerator.QUEEN_BLACK;break;
-                            case ROOK:  byteBoard[mailbox64[i]] = MoveGenerator.ROOK_BLACK;break;
-                            case KNIGHT:byteBoard[mailbox64[i]] = MoveGenerator.KNIGHT_BLACK;break;
-                            case BISHOP:byteBoard[mailbox64[i]] = MoveGenerator.BISHOP_BLACK;break;
-                            case PAWN:  byteBoard[mailbox64[i]] = MoveGenerator.PAWN_BLACK;break;
+                            case KING:  byteBoard[mailbox64[i]] = MoveGen.KING_BLACK;break;
+                            case QUEEN: byteBoard[mailbox64[i]] = MoveGen.QUEEN_BLACK;break;
+                            case ROOK:  byteBoard[mailbox64[i]] = MoveGen.ROOK_BLACK;break;
+                            case KNIGHT:byteBoard[mailbox64[i]] = MoveGen.KNIGHT_BLACK;break;
+                            case BISHOP:byteBoard[mailbox64[i]] = MoveGen.BISHOP_BLACK;break;
+                            case PAWN:  byteBoard[mailbox64[i]] = MoveGen.PAWN_BLACK;break;
                         }
                         break;
                     case WHITE:
                         switch (chessman.getPiece()){
-                            case KING:  byteBoard[mailbox64[i]] = MoveGenerator.KING_WHITE;break;
-                            case QUEEN: byteBoard[mailbox64[i]] = MoveGenerator.QUEEN_WHITE;break;
-                            case ROOK:  byteBoard[mailbox64[i]] = MoveGenerator.ROOK_WHITE;break;
-                            case KNIGHT:byteBoard[mailbox64[i]] = MoveGenerator.KNIGHT_WHITE;break;
-                            case BISHOP:byteBoard[mailbox64[i]] = MoveGenerator.BISHOP_WHITE;break;
-                            case PAWN:  byteBoard[mailbox64[i]] = MoveGenerator.PAWN_WHITE;break;
+                            case KING:  byteBoard[mailbox64[i]] = MoveGen.KING_WHITE;break;
+                            case QUEEN: byteBoard[mailbox64[i]] = MoveGen.QUEEN_WHITE;break;
+                            case ROOK:  byteBoard[mailbox64[i]] = MoveGen.ROOK_WHITE;break;
+                            case KNIGHT:byteBoard[mailbox64[i]] = MoveGen.KNIGHT_WHITE;break;
+                            case BISHOP:byteBoard[mailbox64[i]] = MoveGen.BISHOP_WHITE;break;
+                            case PAWN:  byteBoard[mailbox64[i]] = MoveGen.PAWN_WHITE;break;
                         }
                         break;
                 }
             }else {
-                byteBoard[mailbox64[i]]= MoveGenerator.EMPTY;
+                byteBoard[mailbox64[i]]= MoveGen.EMPTY;
             }
         }
-        if(aiColor== Chessman.Color.WHITE)byteBoard[MoveGenerator.PLAYER_ON_TURN_EXTRA_FIELD]=MoveGenerator.WHITE;
-        else byteBoard[MoveGenerator.PLAYER_ON_TURN_EXTRA_FIELD]=MoveGenerator.BLACK;
-        byteBoard[MoveGenerator.BLACK_CASTLE_KING_SIDE_MOVE_EXTRA_FIELD]=MoveGenerator.TRUE;
-        byteBoard[MoveGenerator.WHITE_CASTLE_KING_SIDE_EXTRA_FIELD]=MoveGenerator.TRUE;
-        byteBoard[MoveGenerator.BLACK_CASTLE_QUEEN_SIDE_MOVE_EXTRA_FIELD]=MoveGenerator.TRUE;
-        byteBoard[MoveGenerator.WHITE_CASTLE_QUEEN_SIDE_EXTRA_FIELD]=MoveGenerator.TRUE;
+        if(aiColor== Chessman.Color.WHITE)byteBoard[MoveGen.PLAYER_ON_TURN]= MoveGen.WHITE;
+        else byteBoard[MoveGen.PLAYER_ON_TURN]= MoveGen.BLACK;
         return byteBoard;
     }
 
@@ -111,7 +120,7 @@ public class AI implements AI_Listener {
     private byte[] getEmptyByteBoard() {
         byte[] byteBoard = new byte[130];
         for(int i = 0;i<120;i++){
-            byteBoard[i] = MoveGenerator.INACCESSIBLE;
+            byteBoard[i] = MoveGen.INACCESSIBLE;
         }
         return byteBoard;
     }
@@ -150,9 +159,5 @@ public class AI implements AI_Listener {
     private void vibrate(int ms){
         Vibrator v = (Vibrator) MainActivity.getContext().getSystemService(Context.VIBRATOR_SERVICE);
         v.vibrate(ms);
-    }
-
-    public int getDifficulty(){
-        return difficulty;
     }
 }
