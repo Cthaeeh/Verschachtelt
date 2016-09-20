@@ -74,6 +74,7 @@ public class Move {
                 return null;
         }
     }
+
     public boolean isNullMove(){
         return nullMove;
     }

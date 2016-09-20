@@ -16,36 +16,36 @@ public class MoveAsIntTest {
     public void testGetMoveAsInt() throws Exception {
         int testMove = MoveAsInt.getMoveAsInt(start,dest,capture);
         String testResult = MoveAsInt.toString(testMove);
-        assert (testResult.equals("Start:12 Dest:23 Capture:-2"));
+        if (!testResult.equals("Start:12 Dest:23 Capture:-2")) throw new AssertionError();
     }
 
     @Test
     public void testGetStart() throws Exception {
         int testMove = MoveAsInt.getMoveAsInt(start,dest,capture);
-        assert (MoveAsInt.getStart(testMove)==start);
+        if (MoveAsInt.getStart(testMove) != start) throw new AssertionError();
     }
 
     @Test
     public void testGetDest() throws Exception {
         int testMove = MoveAsInt.getMoveAsInt(start,dest,capture);
-        assert (MoveAsInt.getDest(testMove)==dest);
+        if (MoveAsInt.getDest(testMove) != dest) throw new AssertionError();
     }
 
     @Test
     public void testGetCapture() throws Exception {
         int testMove = MoveAsInt.getMoveAsInt(start,dest,capture);
-        assert (MoveAsInt.getCapture(testMove)==capture);
+        if (MoveAsInt.getCapture(testMove) != capture) throw new AssertionError();
     }
 
     @Test
     public void testGetPromotedPiece() throws Exception {
         int testMove = MoveAsInt.getPromotionMoveAsInt(start,dest,capture,promotedPiece);
-        assert (MoveAsInt.getPromotedPiece(testMove) == promotedPiece);
+        if (MoveAsInt.getPromotedPiece(testMove) != promotedPiece) throw new AssertionError();
 
         int testMove2 = MoveAsInt.getPromotionMoveAsInt(start,dest,capture,(byte) 0);
-        assert (MoveAsInt.getPromotedPiece(testMove2) == 0);
+        if (MoveAsInt.getPromotedPiece(testMove2) != 0) throw new AssertionError();
 
         int testMove3 = MoveAsInt.getMoveAsInt(start,dest,capture);
-        assert (MoveAsInt.getPromotedPiece(testMove3) == 0);
+        if (MoveAsInt.getPromotedPiece(testMove3) != 0) throw new AssertionError();
     }
 }

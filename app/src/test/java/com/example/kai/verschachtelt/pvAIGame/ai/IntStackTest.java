@@ -9,13 +9,11 @@ import static org.junit.Assert.*;
  */
 public class IntStackTest {
 
-
-
     @Test
     public void testPush() throws Exception {
         IntStack testStack = new IntStack(10);
         testStack.push(13);
-        assert(testStack.peek() == 13);
+        if (testStack.peek() != 13) throw new AssertionError();
     }
 
     @Test
@@ -23,8 +21,8 @@ public class IntStackTest {
         IntStack testStack = new IntStack(10);
         testStack.push(13);
         int result = testStack.pop();
-        assert(result == 13);
-        assert(testStack.isEmpty()==true);
+        if (result != 13) throw new AssertionError();
+        if (testStack.isEmpty() != true) throw new AssertionError();
     }
 
     @Test

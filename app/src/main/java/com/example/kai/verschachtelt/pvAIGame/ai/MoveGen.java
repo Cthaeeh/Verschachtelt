@@ -39,6 +39,8 @@ public class MoveGen {
     protected static final int PLAYER_ON_TURN = 129;    //Don´t change unless you really know what your doing
     protected static final byte BLACK = -1;
     protected static final byte WHITE = 1;
+    protected static final int GAME_HAS_ENDED = 128;
+    protected static final byte TRUE = 1;
 
     private static int[]   moves = new int[100];        //The moves we will calculate .
     private static int[] moveValues =  new int[100];    //The interestingness of the moves
@@ -148,7 +150,6 @@ public class MoveGen {
         }
         for(int i = 0; i< 99;i++){
             if((board[i]*(-board[PLAYER_ON_TURN]) == KING_WHITE) && (attackMap[i])){
-                int x = 0;
                 return false;
             }
         }
@@ -187,6 +188,7 @@ public class MoveGen {
         return moves;
     }
 
+
     //King
     private static void generateWhiteKingMoves(int startPos) {
         for(int i = 0;i < 8;i++){   //Iterate through all 8 possible Moves
@@ -197,8 +199,8 @@ public class MoveGen {
             }
             attackMap[destinationPos]=true;
         }
-        generateKingSideCastlingMoves(startPos);
-        generateQueenSideCastlingMoves(startPos);
+        //generateKingSideCastlingMoves(startPos);
+        //generateQueenSideCastlingMoves(startPos);
     }
 
     private static void generateBlackKingMoves(int startPos) {
@@ -210,9 +212,10 @@ public class MoveGen {
             }
             attackMap[destinationPos]=true;
         }
-        generateKingSideCastlingMoves(startPos);
-        generateQueenSideCastlingMoves(startPos);
+        //generateKingSideCastlingMoves(startPos);
+        //generateQueenSideCastlingMoves(startPos);
     }
+
 
     //Castling
     /**
@@ -221,6 +224,7 @@ public class MoveGen {
      * BUT NOT if the king is in check or one of the fields are attacked.
      * @param startPos position of the king
      */
+    /*
     private static void generateQueenSideCastlingMoves(int startPos) {
         //Two neighboring fields must be empty.
         if(board[startPos-1]!=EMPTY)return;
@@ -237,6 +241,7 @@ public class MoveGen {
      * BUT NOT if the king is in check or one of the fields are attacked.
      * @param startPos position of the king
      */
+    /*
     private static void generateKingSideCastlingMoves(int startPos) {
         //Two neighboring fields must be empty.
         if(board[startPos+1]!=EMPTY)return;
@@ -245,6 +250,8 @@ public class MoveGen {
         if(BoardInfoAsInt.getKingSideWhiteCastlingRight(extraInfoStack.peek())) addMove(startPos,startPos+2);
         if(BoardInfoAsInt.getKingSideBlackCastlingRight(extraInfoStack.peek())) addMove(startPos,startPos+2);
     }
+
+    */
 
     //Knight
     private static void generateBlackKnightMoves(int startPos) {
@@ -452,6 +459,7 @@ public class MoveGen {
         }
     }
 
+
     private static void addPromotionMove(int startPos, int destinationPos, byte promotedPiece){
         moves[moveCounter] = MoveAsInt.getPromotionMoveAsInt(startPos,destinationPos,board[destinationPos],promotedPiece);
         moveValues[moveCounter] = 590;  //TODO remove magic number
@@ -485,6 +493,10 @@ public class MoveGen {
 
     public static byte[] makeMove(int move){
         int newExtraInfo =  extraInfoStack.peek();
+
+        if(board[MoveAsInt.getDest(move)] == KING_WHITE || board[MoveAsInt.getDest(move)] == KING_BLACK )
+            board[GAME_HAS_ENDED] = TRUE;
+
         if(MoveAsInt.getPromotedPiece(move)!=0){
             board[MoveAsInt.getDest(move)] = (byte) (MoveAsInt.getPromotedPiece(move)*board[PLAYER_ON_TURN]);
         }
@@ -528,6 +540,10 @@ public class MoveGen {
     public static void unMakeMove(int move){
         extraInfoStack.pop();       //Go back in the history of extra Info.
         wasPreCalculated = false;   //If we go back in "time" the präCalculated moves aren´t applicable anymore.
+        if(MoveAsInt.getCapture(move) == KING_WHITE || MoveAsInt.getCapture(move) == KING_BLACK ){
+            board[GAME_HAS_ENDED] = INACCESSIBLE;
+        }
+
         if(MoveAsInt.getPromotedPiece(move)!=0){
             board[MoveAsInt.getStart(move)] = (byte) (PAWN_WHITE*board[PLAYER_ON_TURN]);    //Unmake Promotion.
         }else {//Unmake regular movement
@@ -561,4 +577,304 @@ public class MoveGen {
         currentDepth = depth;
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //FOLLOWING CODE IS FOR QUIESCE-SEARCH.
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Method returns all captures and promotions at the current state of the board.
+     * E.g moves that change the material value.
+     */
+    public static int[] generateCaptureMoves(){
+        if(wasPreCalculated){
+            wasPreCalculated = false;
+            return präCalcMoves;
+        }
+        moveCounter = 0;
+        if(board[PLAYER_ON_TURN] == BLACK){     //TODO make this if else
+            for(int i = 21;i<99;i++){   //Iterate through board.
+                switch (board[i]){  //Find chessman of the player on turn
+                    case PAWN_BLACK:
+                        generateBlackPawnCaptures(i);
+                        break;
+                    case ROOK_BLACK:
+                        generateBlackRookCapture(i);
+                        break;
+                    case KNIGHT_BLACK:
+                        generateBlackKnightCaptures(i);
+                        break;
+                    case BISHOP_BLACK:
+                        generateBlackBishopCaptures(i);
+                        break;
+                    case KING_BLACK:
+                        generateBlackKingCaptures(i);
+                        break;
+                    case QUEEN_BLACK:
+                        generateBlackQueenCaptures(i);
+                        break;
+                }
+            }
+        }else{
+            for(int i = 21;i<99;i++){   //Iterate through board.
+                switch (board[i]){  //Find chessman of the player on turn
+                    case PAWN_WHITE:
+                        generateWhitePawnCaptures(i);
+                        break;
+                    case ROOK_WHITE:
+                        generateWhiteRookCaptures(i);
+                        break;
+                    case KNIGHT_WHITE:
+                        generateWhiteKnightCaptures(i);
+                        break;
+                    case BISHOP_WHITE:
+                        generateWhiteBishopCaptures(i);
+                        break;
+                    case KING_WHITE:
+                        generateWhiteKingCaptures(i);
+                        break;
+                    case QUEEN_WHITE:
+                        generateWhiteQueenCaptures(i);
+                        break;
+                }
+            }
+        }
+        return sortMoves(Arrays.copyOf(moves,moveCounter));
+    }
+
+    /**
+     *
+     * @param previousMove  the move we check if it was legal
+     * @return returns true if the move was legal in view of the follwing moves. false if not.
+     */
+    public static boolean wasLegalCapture(int previousMove) {   //TODO make this work
+        attackMap = new boolean[120];                //Reset attack map
+        präCalcMoves = generateCaptureMoves();     //generate pseudo legal Possible Moves.
+        wasPreCalculated = true;
+        for(int i = 0; i< 99;i++){
+            if((board[i]*(-board[PLAYER_ON_TURN]) == KING_WHITE) && (attackMap[i])){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    //King
+    private static void generateWhiteKingCaptures(int startPos) {
+        for(int i = 0;i < 8;i++){   //Iterate through all 8 possible Moves
+            int destinationPos = startPos + KING_OFFSETS[i];
+            byte destinationValue = board[destinationPos];
+            if(destinationValue<0&&destinationValue!=INACCESSIBLE){    //Can only move on fields with enemy on it.
+                addCapture(startPos,destinationPos);
+            }
+            attackMap[destinationPos]=true;
+        }
+    }
+
+    private static void generateBlackKingCaptures(int startPos) {
+        for(int i = 0;i < 8;i++){   //Iterate through all 8 possible Moves
+            int destinationPos = startPos + KING_OFFSETS[i];
+            byte destinationValue = board[destinationPos];
+            if(destinationValue>0&&destinationValue!=INACCESSIBLE){    //Can only move on fields with enemy on it.
+                addCapture(startPos,destinationPos);
+            }
+            attackMap[destinationPos]=true;
+        }
+    }
+
+
+    //Queen
+    private static void generateWhiteQueenCaptures(int startPos) {
+        for(int direction = 0;direction < 8;direction++){   //Iterate through all 8 possible Directions
+            for(int distance = 1; distance<8;distance++) {  //Iterate through distances starting with small distance (max distance is 8!)
+                int destinationPos = startPos+QUEEN_OFFSETS[direction]*distance;
+                byte destinationValue = board[destinationPos];
+                if(destinationValue==INACCESSIBLE)break;    //Stop when you hit a Wall
+                if(destinationValue>0){
+                    attackMap[destinationPos]=true;
+                    break;                //Stop when you hit friendly chessman
+                }
+                if(destinationValue<0){
+                    addCapture(startPos,destinationPos);//Stop when you hit a enemy but add the kill move.
+                    break;
+                }
+            }
+        }
+    }
+
+    private static void generateBlackQueenCaptures(int startPos) {
+        //Iterate through all 8 possible Directions
+        for(int direction = 0;direction < 8;direction++) {
+            for (int distance = 1; distance < 8; distance++) {  //Iterate through distances starting with small distance (max distance is 8!)
+                int destinationPos = startPos + QUEEN_OFFSETS[direction] * distance;
+                byte destinationValue = board[destinationPos];
+                if (destinationValue == INACCESSIBLE) break;    //Stop when you hit a Wall
+                if (destinationValue < 0) {
+                    attackMap[destinationPos] = true;
+                    break;                //Stop when you hit friendly chessman
+                }
+                if (destinationValue > 0) {
+                    addCapture(startPos, destinationPos);//Stop when you hit a enemy but add the kill move.
+                    break;
+                }
+            }
+        }
+    }
+
+
+    //Bishop
+    private static void generateWhiteBishopCaptures(int startPos) {
+        for(int direction = 0;direction < 4;direction++){   //Iterate through all 4 possible Directions
+            for(int distance = 1; distance<8;distance++) {  //Iterate through distances starting with small distance (max distance is 8!)
+                int destinationPos = startPos+ BISHOP_OFFSETS[direction]*distance;
+                byte destinationValue = board[destinationPos];
+                if(destinationValue==INACCESSIBLE)break;    //Stop when you hit a Wall
+                if(destinationValue>0){
+                    attackMap[destinationPos]=true;
+                    break;                //Stop when you hit friendly chessman
+                }
+                if(destinationValue<0){
+                    addCapture(startPos,destinationPos);
+                    break;
+                }
+            }
+        }
+    }
+
+    private static void generateBlackBishopCaptures(int startPos) {
+        for(int direction = 0;direction < 4;direction++){   //Iterate through all 4 possible Directions
+            for(int distance = 1; distance<8;distance++) {  //Iterate through distances starting with small distance (max distance is 8!)
+                int destinationPos = startPos+ BISHOP_OFFSETS[direction]*distance;
+                byte destinationValue = board[destinationPos];
+                if(destinationValue==INACCESSIBLE)break;    //Stop when you hit a Wall
+                if(destinationValue<0){
+                    attackMap[destinationPos]=true;
+                    break;                //Stop when you hit friendly chessman
+                }
+                if(destinationValue>0){
+                    addCapture(startPos,destinationPos);
+                    break;
+                }
+            }
+        }
+    }
+
+
+    //Knight
+    private static void generateBlackKnightCaptures(int startPos) {
+        for(int i = 0;i < 8;i++){   //Iterate through all 8 possible Moves
+            int destinationPos = startPos + KNIGHT_OFFSETS[i];
+            byte destinationValue = board[destinationPos];
+            if(destinationValue>0&&destinationValue!=INACCESSIBLE){    //Only Captures allowed
+                addCapture(startPos,destinationPos);
+            }
+            attackMap[destinationPos]=true;
+        }
+    }
+
+    private static void generateWhiteKnightCaptures(int startPos) {
+        for(int i = 0;i < 8;i++){   //Iterate through all 8 possible Moves
+            int destinationPos = startPos + KNIGHT_OFFSETS[i];
+            byte destinationValue = board[destinationPos];
+            if(destinationValue<0&&destinationValue!=INACCESSIBLE){    //Only captures allowed
+                addCapture(startPos,destinationPos);
+            }
+            attackMap[destinationPos]=true;
+        }
+    }
+
+
+    //Rook
+    private static void generateWhiteRookCaptures(int startPos) {
+        for(int direction = 0;direction < 4;direction++){   //Iterate through all 4 possible Directions
+            for(int distance = 1; distance<8;distance++) {  //Iterate through distances starting with small distance (max distance is 8!)
+                int destinationPos = startPos+ROOK_OFFSETS[direction]*distance;
+                byte destinationValue = board[destinationPos];
+                if(destinationValue==INACCESSIBLE)break;    //Stop when you hit a Wall
+                if(destinationValue>0){
+                    attackMap[destinationPos]=true;
+                    break;                //Stop when you hit friendly chessman
+                }
+                if(destinationValue<0){
+                    addCapture(startPos,destinationPos);//Stop when you hit a enemy but add the kill move.
+                    break;
+                }
+            }
+        }
+    }
+
+    private static void generateBlackRookCapture(int startPos) {
+        for(int direction = 0;direction < 4;direction++){   //Iterate through all 4 possible Directions
+            for(int distance = 1; distance<8;distance++) {  //Iterate through distances starting with small distance (max distance is 8!)
+                int destinationPos = startPos+ROOK_OFFSETS[direction]*distance;
+                byte destinationValue = board[destinationPos];
+                if(destinationValue==INACCESSIBLE)break;    //Stop when you hit a Wall
+                if(destinationValue<0){
+                    attackMap[destinationPos]=true;
+                    break;                //Stop when you hit friendly chessman
+                }
+                if(destinationValue>0){
+                    addCapture(startPos,destinationPos);//Stop when you hit a enemy but add the kill move.
+                    break;
+                }
+            }
+        }
+    }
+
+
+    //Pawn
+    private static void generateWhitePawnCaptures(int startPos) {
+        //Promotions count as captures because they change the material value as well.
+        if(startPos/10==3){                                             //If pawn is near promotion
+            if(board[startPos-10]==EMPTY){                              //If empty field ahead can move.
+                addPromotionMove(startPos,startPos-10,QUEEN_WHITE);
+                addPromotionMove(startPos,startPos-10,KNIGHT_WHITE);
+                attackMap[startPos-10]=false;
+            }
+            if(board[startPos-11]<0&&board[startPos-11]!=INACCESSIBLE){ //If a enemy is diagonal can kill.
+                addPromotionMove(startPos,startPos-11,QUEEN_WHITE);
+                addPromotionMove(startPos,startPos-11,KNIGHT_WHITE);
+            }
+            if(board[startPos-9]<0 &&board[startPos-9]!=INACCESSIBLE){
+                addPromotionMove(startPos,startPos-9,QUEEN_WHITE);
+                addPromotionMove(startPos,startPos-9,KNIGHT_WHITE);
+            }
+        }else{
+            if(board[startPos-11]<0&&board[startPos-11]!=INACCESSIBLE)     addCapture(startPos,startPos-11);//If a enemy is diagonal can kill.
+            if(board[startPos-9]<0 &&board[startPos-9]!=INACCESSIBLE)      addCapture(startPos,startPos-9);
+        }
+    }
+
+    private static void generateBlackPawnCaptures(int startPos) {
+        if(startPos/10==8){                                             //If pawn is near promotion
+            if(board[startPos+10]==EMPTY){                              //If empty field ahead can move.
+                addPromotionMove(startPos,startPos+10,QUEEN_WHITE);
+                addPromotionMove(startPos,startPos+10,KNIGHT_WHITE);
+                attackMap[startPos+10]=false;
+            }
+            if(board[startPos+11]>0){                                   //If a enemy is diagonal can kill.
+                addPromotionMove(startPos,startPos+11,QUEEN_WHITE);
+                addPromotionMove(startPos,startPos+11,KNIGHT_WHITE);
+            }
+            if(board[startPos+9]>0){
+                addPromotionMove(startPos,startPos+9,QUEEN_WHITE);
+                addPromotionMove(startPos,startPos+9,KNIGHT_WHITE);
+            }
+        }else{
+            if(board[startPos+11]>0)     addCapture(startPos,startPos+11);//If a enemy is diagonal can kill.
+            if(board[startPos+9]>0)      addCapture(startPos,startPos+9);
+        }
+    }
+
+    /**
+     * Method adds a Move to our possibleMovesList. Works for simple Moves, not En Passant, Pawn promoting.
+     * Castling is here considered a simple move, because its just a king that moves 2 pieces
+     * @param startPos the starting Position of a Move
+     * @param destinationPos  the destination Position of a Move
+     */
+    private static void addCapture(int startPos, int destinationPos) {
+        moves[moveCounter] = MoveAsInt.getMoveAsInt(startPos,destinationPos,board[destinationPos]);
+        moveValues[moveCounter] =mvvLVAScore[6+board[destinationPos]][6+board[startPos]];  //MVV-LVA Scores
+        attackMap[destinationPos]=true;     //Normally the square is attacked then
+        moveCounter++;
+    }
 }
