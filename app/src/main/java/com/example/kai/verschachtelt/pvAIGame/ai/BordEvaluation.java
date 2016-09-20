@@ -1,6 +1,4 @@
-package com.example.kai.verschachtelt.pvAIGame.chess_AI.ai;
-
-import android.support.v7.app.NotificationCompat;
+package com.example.kai.verschachtelt.pvAIGame.ai;
 
 /**
  * Created by Kai on 07.09.2016.
@@ -147,7 +145,6 @@ public class BordEvaluation {
     private static final int  WEST  = -1;
 
 
-
     /**
      * Evaluates a Board. E.g it looks for what player this board is favorable.
      * If it is favorable for BLACK the return value is NEGATIVE. Otherwise, if the board
@@ -166,61 +163,61 @@ public class BordEvaluation {
         int pieceNumber = 0;
         for(int position = 21;position<99;position++){   //Iterate through board.
             switch (board[position]){      //TODO make this if else because little faster!
-                case MoveGenerator.KING_BLACK:
+                case MoveGen.KING_BLACK:
                     boardValue += KING_BLACK_VALUE;
                     pieceNumber++;
                     break;
-                case MoveGenerator.QUEEN_BLACK:
+                case MoveGen.QUEEN_BLACK:
                     boardValue += QUEEN_BLACK_VALUE;
                     boardValue -= QueenTable[119 - position];
                     pieceNumber++;
                     break;
-                case MoveGenerator.ROOK_BLACK:
+                case MoveGen.ROOK_BLACK:
                     boardValue += ROOK_BLACK_VALUE;
                     boardValue -= RookTable[119 - position];
                     pieceNumber++;
                     break;
-                case MoveGenerator.KNIGHT_BLACK:
+                case MoveGen.KNIGHT_BLACK:
                     boardValue -= KnightTable[119-position];    //because the tables always adward positive values for better positions we need to use -=
                     boardValue += KNIGHT_BLACK_VALUE;
                     pieceNumber++;
                     break;
-                case MoveGenerator.BISHOP_BLACK:
+                case MoveGen.BISHOP_BLACK:
                     boardValue -= BishopTable[119-position];    //because the tables always adward positive values for better positions we need to use -=
                     boardValue += BISHOP_BLACK_VALUE;
                     pieceNumber++;
                     break;
-                case MoveGenerator.PAWN_BLACK:
+                case MoveGen.PAWN_BLACK:
                     boardValue -= PawnTable[119-position];      //because the tables always adward positive values for better positions we need to use -=
                     boardValue += PAWN_BLACK_VALUE;
                     boardValue += getBlackPawnValue(position,board);
                     pieceNumber++;
                     break;
-                case MoveGenerator.KING_WHITE:
+                case MoveGen.KING_WHITE:
                     boardValue += KING_WHITE_VALUE;
                     pieceNumber++;
                     break;
-                case MoveGenerator.QUEEN_WHITE:
+                case MoveGen.QUEEN_WHITE:
                     boardValue += QUEEN_WHITE_VALUE;
                     boardValue += QueenTable[position];
                     pieceNumber++;
                     break;
-                case MoveGenerator.ROOK_WHITE:
+                case MoveGen.ROOK_WHITE:
                     boardValue += ROOK_WHITE_VALUE;
                     boardValue += RookTable[position];
                     pieceNumber++;
                     break;
-                case MoveGenerator.KNIGHT_WHITE:
+                case MoveGen.KNIGHT_WHITE:
                     boardValue += KnightTable[position];
                     boardValue += KNIGHT_WHITE_VALUE;
                     pieceNumber++;
                     break;
-                case MoveGenerator.BISHOP_WHITE:
+                case MoveGen.BISHOP_WHITE:
                     boardValue += BishopTable[position];
                     boardValue += BISHOP_WHITE_VALUE;
                     pieceNumber++;
                     break;
-                case MoveGenerator.PAWN_WHITE:
+                case MoveGen.PAWN_WHITE:
                     boardValue += PawnTable[position];
                     boardValue += PAWN_WHITE_VALUE;
                     boardValue += getWhitePawnValue(position,board);
@@ -241,16 +238,16 @@ public class BordEvaluation {
      */
     private static short getWhitePawnValue(int position, byte[] board) {
         short pawnVal = 0;
-        if(board[position+NORTH]==MoveGenerator.PAWN_WHITE){    //double pawn
+        if(board[position+NORTH]== MoveGen.PAWN_WHITE){    //double pawn
             pawnVal-=PAWN_BLOCK_PENALTY;
         }
-        if(board[position+NORTH]==MoveGenerator.PAWN_BLACK){    //opposed by enemy
+        if(board[position+NORTH]== MoveGen.PAWN_BLACK){    //opposed by enemy
             pawnVal-=PAWN_BLOCK_PENALTY/2;
         }
-        if(board[position+SOUTH+EAST]==MoveGenerator.PAWN_WHITE){
+        if(board[position+SOUTH+EAST]== MoveGen.PAWN_WHITE){
             pawnVal+=PAWN_SUPPORT_BONUS;
         }
-        if(board[position+SOUTH+WEST]==MoveGenerator.PAWN_WHITE){
+        if(board[position+SOUTH+WEST]== MoveGen.PAWN_WHITE){
             pawnVal+=PAWN_SUPPORT_BONUS;
         }
         return pawnVal;
@@ -267,16 +264,16 @@ public class BordEvaluation {
      */
     private static short getBlackPawnValue(int position, byte[] board) {
         short pawnVal = 0;
-        if(board[position+NORTH]==MoveGenerator.PAWN_BLACK){    //double pawn
+        if(board[position+NORTH]== MoveGen.PAWN_BLACK){    //double pawn
             pawnVal+=PAWN_BLOCK_PENALTY;
         }
-        if(board[position+NORTH]==MoveGenerator.PAWN_WHITE){    //opposed by enemy
+        if(board[position+NORTH]== MoveGen.PAWN_WHITE){    //opposed by enemy
             pawnVal+=PAWN_BLOCK_PENALTY/2;
         }
-        if(board[position+NORTH+EAST]==MoveGenerator.PAWN_BLACK){
+        if(board[position+NORTH+EAST]== MoveGen.PAWN_BLACK){
             pawnVal-=PAWN_SUPPORT_BONUS;
         }
-        if(board[position+NORTH+WEST]==MoveGenerator.PAWN_BLACK){
+        if(board[position+NORTH+WEST]== MoveGen.PAWN_BLACK){
             pawnVal-=PAWN_SUPPORT_BONUS;
         }
         return pawnVal;

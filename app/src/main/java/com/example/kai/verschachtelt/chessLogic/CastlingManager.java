@@ -6,13 +6,14 @@ package com.example.kai.verschachtelt.chessLogic;
  * You can ask it if a selected chessman can castle.
  * And if the user decides to castle this class can move the King accordingly.
  * //TODO Bug test with FEN parser
+ * //TODO Rewrite please, its a mess
  */
-public class Castling {
+public class CastlingManager {
     //The castling state, e.g which player can still castle where. Only used for FENParsing.
-    private boolean queenSideWhite = true;
-    private boolean queenSideBlack = true;
-    private boolean kingSideWhite  = true;
-    private boolean kingSideBlack  = true;
+    private boolean queenSideWhiteFEN = true;
+    private boolean queenSideBlackFEN = true;
+    private boolean kingSideWhiteFEN = true;
+    private boolean kingSideBlackFEN = true;
 
     //Final positions where the king can castle.
     private final int KING_SIDE_BLACK_MOVE = 6;
@@ -28,7 +29,7 @@ public class Castling {
      * Standart constructor.
      * @param chessmen
      */
-    public Castling(Chessman[] chessmen){
+    public CastlingManager(Chessman[] chessmen){
         this.chessmen = chessmen;
     }
 
@@ -36,12 +37,12 @@ public class Castling {
      * Copy Constructor
      * @param toCopy the castling object you want to copy.
      */
-    public Castling(Castling toCopy){
+    public CastlingManager(CastlingManager toCopy){
         chessmen = Chessman.deepCopy(toCopy.chessmen);
-        kingSideBlack = toCopy.kingSideBlack;
-        queenSideBlack = toCopy.queenSideBlack;
-        kingSideWhite = toCopy.kingSideWhite;
-        queenSideBlack = toCopy.queenSideBlack;
+        kingSideBlackFEN = toCopy.kingSideBlackFEN;
+        queenSideBlackFEN = toCopy.queenSideBlackFEN;
+        kingSideWhiteFEN = toCopy.kingSideWhiteFEN;
+        queenSideBlackFEN = toCopy.queenSideBlackFEN;
     }
 
     /**
@@ -111,7 +112,7 @@ public class Castling {
      * @return true if possible, false if not.
      */
     private boolean getQueenSideBlackMove() {
-        if(!queenSideBlack) return false;
+        if(!queenSideBlackFEN) return false;
         if(!isPathFree(4,0))return false; //Nothing in between.
         if(chessmen[4] == null || chessmen[4].hasBeenMoved())return false; //King wasn´t moved.
         if(chessmen[0] == null || chessmen[0].hasBeenMoved())return false; //Tower wasn´t moved.
@@ -127,7 +128,7 @@ public class Castling {
      * @return true if possible, false if not.
      */
     private boolean getKingSideBlackMove() {
-        if(!kingSideBlack) return false;
+        if(!kingSideBlackFEN) return false;
         if(!isPathFree(4,7))return false; //Nothing in between.
         if(chessmen[4] == null || chessmen[4].hasBeenMoved())return false; //King wasn´t moved.
         if(chessmen[7] == null || chessmen[7].hasBeenMoved())return false; //Tower wasn´t moved.
@@ -143,7 +144,7 @@ public class Castling {
      * @return true if possible, false if not.
      */
     private boolean getKingSideWhiteMove() {
-        if(!kingSideWhite) return false;
+        if(!kingSideWhiteFEN) return false;
         if(!isPathFree(60,62))return false; //Nothing in between.
         if(chessmen[60] == null || chessmen[60].hasBeenMoved())return false; //King wasn´t moved.
         if(chessmen[63] == null || chessmen[63].hasBeenMoved())return false; //Tower wasn´t moved.
@@ -159,7 +160,7 @@ public class Castling {
      * @return true if possible, false if not.
      */
     private boolean getQueenSideWhiteMove() {
-        if(!queenSideWhite) return false;
+        if(!queenSideWhiteFEN) return false;
         if(!isPathFree(60,56))return false; //Nothing in between.
         if(chessmen[60] == null || chessmen[60].hasBeenMoved())return false; //King wasn´t moved.
         if(chessmen[56] == null || chessmen[56].hasBeenMoved())return false; //Tower wasn´t moved.
@@ -213,20 +214,20 @@ public class Castling {
     }
 
     //Some simple setters.
-    public void setKingSideWhite(boolean kingSideWhite) {
-        this.kingSideWhite = kingSideWhite;
+    public void setKingSideWhiteFEN(boolean kingSideWhiteFEN) {
+        this.kingSideWhiteFEN = kingSideWhiteFEN;
     }
 
-    public void setKingSideBlack(boolean kingSideBlack) {
-        this.kingSideBlack = kingSideBlack;
+    public void setKingSideBlackFEN(boolean kingSideBlackFEN) {
+        this.kingSideBlackFEN = kingSideBlackFEN;
     }
 
-    public void setQueenSideWhite(boolean queenSideWhite) {
-        this.queenSideWhite = queenSideWhite;
+    public void setQueenSideWhiteFEN(boolean queenSideWhiteFEN) {
+        this.queenSideWhiteFEN = queenSideWhiteFEN;
     }
 
-    public void setQueenSideBlack(boolean queenSideBlack) {
-        this.queenSideBlack = queenSideBlack;
+    public void setQueenSideBlackFEN(boolean queenSideBlackFEN) {
+        this.queenSideBlackFEN = queenSideBlackFEN;
     }
 
     /**
@@ -238,4 +239,32 @@ public class Castling {
         }
     }
 
+    public void setChessMen(Chessman[] chessmen) {
+        this.chessmen = chessmen;
+    }
+
+
+    public boolean getKingSideWhite() {
+        boolean whiteKingMoved = (chessmen[60] == null || chessmen[60].hasBeenMoved());
+        boolean whiteRookKingSideMoved = (chessmen[63] == null || chessmen[63].hasBeenMoved());
+        return kingSideWhiteFEN && !whiteKingMoved && !whiteRookKingSideMoved;
+    }
+
+    public boolean getQueenSideWhite() {
+        boolean whiteKingMoved = (chessmen[60] == null || chessmen[60].hasBeenMoved());
+        boolean whiteRookQueenSideMoved = (chessmen[56] == null || chessmen[56].hasBeenMoved());
+        return kingSideWhiteFEN && !whiteKingMoved && !whiteRookQueenSideMoved;
+    }
+
+    public boolean getKingSideBlack() {
+        boolean blackKingMoved = (chessmen[4] == null || chessmen[4].hasBeenMoved());
+        boolean blackRookKingSideMoved = (chessmen[7] == null || chessmen[7].hasBeenMoved());
+        return kingSideWhiteFEN && !blackKingMoved && !blackRookKingSideMoved;
+    }
+
+    public boolean getQueenSideBlack() {
+        boolean blackKingMoved = (chessmen[4] == null || chessmen[4].hasBeenMoved());
+        boolean blackRookQueenSideMoved = (chessmen[0] == null || chessmen[0].hasBeenMoved());
+        return kingSideWhiteFEN && !blackKingMoved && !blackRookQueenSideMoved;
+    }
 }

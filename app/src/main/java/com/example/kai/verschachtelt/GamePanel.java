@@ -15,7 +15,7 @@ import com.example.kai.verschachtelt.graphics.ChessmanGraphic;
 import com.example.kai.verschachtelt.graphics.PawnChangeGraphic;
 import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
 import com.example.kai.verschachtelt.puzzleGame.ChessGamePuzzle;
-import com.example.kai.verschachtelt.pvAIGame.chess_AI.ChessGamePvAI;
+import com.example.kai.verschachtelt.pvAIGame.ChessGamePvAI;
 import com.example.kai.verschachtelt.pvpGame.ChessGamePvP;
 
 /**
