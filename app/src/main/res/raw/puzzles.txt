@@ -331,6 +331,33 @@
           "DifficultyAsInt": 4,
           "Positions":["3r1r2/1pp2p1k/p5pp/4P3/2nP3R/2P3QP/P1B1q1P1/5RK1 w - - 0 1","3r1r2/1pp2R1k/p5pp/4P3/2nP3R/2P3QP/P1B1q1P1/6K1 b - - 0 1","3r4/1pp2r1k/p5pp/4P3/2nP3R/2P3QP/P1B1q1P1/6K1 w - - 0 2","3r4/1pp2r1k/p5Qp/4P3/2nP3R/2P4P/P1B1q1P1/6K1 b - - 0 2","3r3k/1pp2r2/p5Qp/4P3/2nP3R/2P4P/P1B1q1P1/6K1 w - - 0 3","3r3k/1pp2r2/p5QR/4P3/2nP4/2P4P/P1B1q1P1/6K1 b - - 0 3","3r3k/1pp4r/p5QR/4P3/2nP4/2P4P/P1B1q1P1/6K1 w - - 0 4","3r3k/1pp4Q/p6R/4P3/2nP4/2P4P/P1B1q1P1/6K1 b - - 0 4"],
           "Solved": false
+          },
+          {
+         "Id": 38,
+         "Name": "Keres vs. Petrosian, 1959",
+         "Description": "Black to move and win in 5" ,
+         "DifficultyAsString": "Grandmaster" ,
+         "DifficultyAsInt": 5,
+         "Positions":["6k1/3b3r/1p1p4/p1n2p2/1PPNpP1q/P3Q1p1/1R1RB1P1/5K2 b - - 0 1","6k1/3b3r/1p1p4/p1n2p2/1PPNpq2/P3Q1p1/1R1RB1P1/5K2 w - - 0 2","6k1/3b3r/1p1p4/p1n2p2/1PPNpq2/P3QBp1/1R1R2P1/5K2 b - - 0 2","6k1/3b3r/1p1p4/p1n2p2/1PPNp3/P3qBp1/1R1R2P1/5K2 w - - 0 3","6k1/3b3r/1p1p4/p1n2p1B/1PPNp3/P3q1p1/1R1R2P1/5K2 b - - 0 3","6k1/3b4/1p1p4/p1n2p1r/1PPNp3/P3q1p1/1R1R2P1/5K2 w - - 0 4","6k1/3b4/1p1p4/p1n2p1r/1PP1p3/P3qNp1/1R1R2P1/5K2 b - - 0 4","6k1/3b4/1p1p4/p1n2p2/1PP1p3/P3qNp1/1R1R2P1/5K1r w - - 0 5","6k1/3b4/1p1p4/p1n2p2/1PP1p3/P3q1p1/1R1R2P1/5KNr b - - 0 5","6k1/3b4/1p1p4/p1n2p2/1PP1p3/P3q1p1/1R1R2P1/5Kr1 w - - 0 6"],
+         "Solved": false
+          },
+          {
+         "Id": 39,
+         "Name": "Korchnoi vs. Peterson,1964",
+         "Description": "White to move and win in 4" ,
+         "DifficultyAsString": "Grandmaster" ,
+         "DifficultyAsInt": 5,
+         "Positions":["r2r1n2/pp2bk2/2p1p2p/3q4/3PN1QP/2P3R1/P4PP1/5RK1 w - - 0 1","r2r1n2/pp2bkQ1/2p1p2p/3q4/3PN2P/2P3R1/P4PP1/5RK1 b - - 0 1","r2rkn2/pp2b1Q1/2p1p2p/3q4/3PN2P/2P3R1/P4PP1/5RK1 w - - 0 2","r2rkn2/pp2Q3/2p1p2p/3q4/3PN2P/2P3R1/P4PP1/5RK1 b - - 0 2","r2r1n2/pp2k3/2p1p2p/3q4/3PN2P/2P3R1/P4PP1/5RK1 w - - 0 3","r2r1n2/pp2k1R1/2p1p2p/3q4/3PN2P/2P5/P4PP1/5RK1 b - - 0 3","r2rkn2/pp4R1/2p1p2p/3q4/3PN2P/2P5/P4PP1/5RK1 w - - 0 4","r2rkn2/pp4R1/2p1pN1p/3q4/3P3P/2P5/P4PP1/5RK1 b - - 0 4"],
+         "Solved": false
+          },
+          {
+         "Id": 40,
+         "Name": "Muisard vs Durufle",
+         "Description": "White to move and mate in 5 moves" ,
+         "DifficultyAsString": "Grandmaster" ,
+         "DifficultyAsInt": 5,
+         "Positions":["6r1/p3p1rk/1p1pPp1p/q3n2R/4P3/3BR2P/PPP2QP1/7K w - - 0 1","6r1/p3p1rk/1p1pPp1R/q3n3/4P3/3BR2P/PPP2QP1/7K b - - 0 1","6r1/p3p1r1/1p1pPp1k/q3n3/4P3/3BR2P/PPP2QP1/7K w - - 0 2","6r1/p3p1r1/1p1pPp1k/q3n3/4P2Q/3BR2P/PPP3P1/7K b - - 0 2","6r1/p3p1r1/1p1pPpk1/q3n3/4P2Q/3BR2P/PPP3P1/7K w - - 0 3","6r1/p3p1r1/1p1pPpk1/q3n3/4P2Q/3B2RP/PPP3P1/7K b - - 0 3","6r1/p3p1r1/1p1pPpk1/q7/4P1nQ/3B2RP/PPP3P1/7K w - - 0 4","6r1/p3p1r1/1p1pPpk1/q3P3/6nQ/3B2RP/PPP3P1/7K b - - 0 4","6r1/p3p1r1/1p1pP1k1/q3Pp2/6nQ/3B2RP/PPP3P1/7K w - - 0 5","6r1/p3p1r1/1p1pP1k1/q3Pp2/6RQ/3B3P/PPP3P1/7K b - - 0 5"],
+         "Solved": false
           }
 
 ]
