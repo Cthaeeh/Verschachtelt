@@ -178,5 +178,159 @@
         "DifficultyAsInt": 3,
         "Positions": ["5kqQ/1b1r2p1/ppn1p1Bp/2b5/2P2rP1/P4N2/1B6/4RR1K w - - 0 1","5kqQ/1b1r2p1/ppn1R1Bp/2b5/2P2rP1/P4N2/1B6/5R1K b - - 0 1","5kqQ/1b3rp1/ppn1R1Bp/2b5/2P2rP1/P4N2/1B6/5R1K w - - 0 2","5kqQ/1b3rB1/ppn1R1Bp/2b5/2P2rP1/P4N2/8/5R1K b - - 0 2","5kqQ/1b4r1/ppn1R1Bp/2b5/2P2rP1/P4N2/8/5R1K w - - 0 3","4RkqQ/1b4r1/ppn3Bp/2b5/2P2rP1/P4N2/8/5R1K b - - 0 3"] ,
         "Solved": false
-        }
+        },
+        {
+        "Id": 21,
+        "Name": "Rotlevi vs. Suchting, 1911",
+        "Description": "White to move and mate in 2 moves" ,
+        "DifficultyAsString": "Candidate Master" ,
+        "DifficultyAsInt": 2,
+        "Positions": ["6k1/1p1r1pp1/p1r3b1/3pPqB1/2pP4/Q1P4R/P3P2K/6R1 w - - 0 1","5Qk1/1p1r1pp1/p1r3b1/3pPqB1/2pP4/2P4R/P3P2K/6R1 b - - 0 1","5k2/1p1r1pp1/p1r3b1/3pPqB1/2pP4/2P4R/P3P2K/6R1 w - - 0 2","5k1R/1p1r1pp1/p1r3b1/3pPqB1/2pP4/2P5/P3P2K/6R1 b - - 0 2"],
+        "Solved": false
+        },
+        {
+        "Id": 22,
+        "Name": "Great play by Lasker in 1913",
+        "Description": "White to move and win in 2 moves" ,
+        "DifficultyAsString": "Candidate Master" ,
+        "DifficultyAsInt": 2,
+        "Positions":["2kr1b1r/pp3ppp/2p1b2q/4B3/4Q3/2PB2R1/PPP2PPP/3R2K1 w - - 0 1","2kr1b1r/pp3ppp/2Q1b2q/4B3/8/2PB2R1/PPP2PPP/3R2K1 b - - 0 1","2kr1b1r/p4ppp/2p1b2q/4B3/8/2PB2R1/PPP2PPP/3R2K1 w - - 0 2","2kr1b1r/p4ppp/B1p1b2q/4B3/8/2P3R1/PPP2PPP/3R2K1 b - - 0 2"],
+        "Solved": false
+        },
+        {
+        "Id": 23,
+        "Name": "Great mate by Benko in 1954",
+        "Description": "White to move and win in 2 moves" ,
+        "DifficultyAsString": "Candidate Master" ,
+        "DifficultyAsInt": 2,
+        "Positions":["1r2q3/1R6/3p1kp1/1ppBp1b1/p3Pp2/2PP4/PP3P2/5K1Q w - - 0 1","1r2q2Q/1R6/3p1kp1/1ppBp1b1/p3Pp2/2PP4/PP3P2/5K2 b - - 0 1","1r5q/1R6/3p1kp1/1ppBp1b1/p3Pp2/2PP4/PP3P2/5K2 w - - 0 2","1r5q/5R2/3p1kp1/1ppBp1b1/p3Pp2/2PP4/PP3P2/5K2 b - - 0 2"],
+        "Solved": false
+        },
+        {
+         "Id": 24,
+         "Name": "Velimirovic vs. Ciric, 1963",
+         "Description": "White to move and win in 2 moves" ,
+         "DifficultyAsString": "Candidate Master" ,
+         "DifficultyAsInt": 2,
+         "Positions":["4r3/p2r1p1k/3q1Bpp/4P3/1PppR3/P5P1/5P1P/2Q3K1 w - - 0 1","4r3/p2r1p1k/3q1BpQ/4P3/1PppR3/P5P1/5P1P/6K1 b - - 0 1","4r3/p2r1p2/3q1Bpk/4P3/1PppR3/P5P1/5P1P/6K1 w - - 0 2","4r3/p2r1p2/3q1Bpk/4P3/1Ppp3R/P5P1/5P1P/6K1 b - - 0 2"],
+         "Solved": false
+        },
+        {
+         "Id": 25,
+         "Name": "Polgar mate at Rapid Chess",
+         "Description": "White to move and mate in 2 moves" ,
+         "DifficultyAsString": "Candidate Master" ,
+         "DifficultyAsInt": 2,
+         "Positions":["5k1r/4npp1/p3p2p/3nP2P/3P3Q/3N4/qB2KPP1/2R5 w - - 0 1","2R2k1r/4npp1/p3p2p/3nP2P/3P3Q/3N4/qB2KPP1/8 b - - 0 1","2n2k1r/5pp1/p3p2p/3nP2P/3P3Q/3N4/qB2KPP1/8 w - - 0 2","2nQ1k1r/5pp1/p3p2p/3nP2P/3P4/3N4/qB2KPP1/8 b - - 0 2"],
+         "Solved": false
+        },
+        {
+         "Id": 26,
+         "Name": "Denker vs. Baker, 1937",
+         "Description": "White to move and mate in 3 moves" ,
+         "DifficultyAsString": "FIDE Master" ,
+         "DifficultyAsInt": 3,
+         "Positions": ["r4r1k/p5Rp/1p3pb1/2P4N/2B5/P7/6PP/B2n2K1 w - - 0 1","r4rRk/p6p/1p3pb1/2P4N/2B5/P7/6PP/B2n2K1 b - - 0 1","r5rk/p6p/1p3pb1/2P4N/2B5/P7/6PP/B2n2K1 w - - 0 2","r5rk/p6p/1p3Bb1/2P4N/2B5/P7/6PP/3n2K1 b - - 0 2","r6k/p5rp/1p3Bb1/2P4N/2B5/P7/6PP/3n2K1 w - - 0 3","r6k/p5Bp/1p4b1/2P4N/2B5/P7/6PP/3n2K1 b - - 0 3"],
+         "Solved": false
+        },
+        {
+         "Id": 27,
+         "Name": "Capablanca vs. Menchik, 1939",
+         "Description": "White to move and mate in 3 moves" ,
+         "DifficultyAsString": "FIDE Master" ,
+         "DifficultyAsInt": 3,
+         "Positions":["8/5R2/1p4pk/4N3/2n2P2/P5P1/6K1/2r5 w - - 0 1","8/5R2/1p4pk/8/2n2PN1/P5P1/6K1/2r5 b - - 0 1","8/5R2/1p4p1/7k/2n2PN1/P5P1/6K1/2r5 w - - 0 2","8/5R2/1p3Np1/7k/2n2P2/P5P1/6K1/2r5 b - - 0 2","8/5R2/1p3Npk/8/2n2P2/P5P1/6K1/2r5 w - - 0 3","8/7R/1p3Npk/8/2n2P2/P5P1/6K1/2r5 b - - 0 3"],
+         "Solved": false
+        },
+        {
+         "Id": 28,
+         "Name": "Mate from Belgrade, 1984",
+         "Description": "White to move and mate in 3 moves" ,
+         "DifficultyAsString": "FIDE Master" ,
+         "DifficultyAsInt": 3,
+         "Positions":["2r2bk1/pb3ppp/1p6/n7/q2P4/P1P1R2Q/B2B1PPP/R5K1 w - - 0 1","2r2bk1/pb3Bpp/1p6/n7/q2P4/P1P1R2Q/3B1PPP/R5K1 b - - 0 1","2r2b1k/pb3Bpp/1p6/n7/q2P4/P1P1R2Q/3B1PPP/R5K1 w - - 0 2","2r2b1k/pb3BpQ/1p6/n7/q2P4/P1P1R3/3B1PPP/R5K1 b - - 0 2","2r2b2/pb3Bpk/1p6/n7/q2P4/P1P1R3/3B1PPP/R5K1 w - - 0 3","2r2b2/pb3Bpk/1p6/n7/q2P4/P1P4R/3B1PPP/R5K1 b - - 0 3"],
+         "Solved": false
+        },
+        {
+         "Id": 29,
+         "Name": "Brilliant trap",
+         "Description": "White to move and mate in 3 moves" ,
+         "DifficultyAsString": "International Master" ,
+         "DifficultyAsInt": 4,
+         "Positions":["r1b1kb1r/p2n1ppp/2ppp3/6B1/2B1P3/q1N2Q2/P1P2PPP/RR4K1 w - - 0 1","r1b1kb1r/p2n1ppp/2ppp3/3N2B1/2B1P3/q4Q2/P1P2PPP/RR4K1 b - - 0 1","r1b1kb1r/p2n1ppp/2ppp3/q2N2B1/2B1P3/5Q2/P1P2PPP/RR4K1 w - - 0 2","r1b1kb1r/p2n1ppp/2ppp3/q2N2B1/2B1P3/Q7/P1P2PPP/RR4K1 b - - 0 2","r1b1kb1r/p2n1ppp/2ppp3/3N2B1/2B1P3/q7/P1P2PPP/RR4K1 w - - 0 3","r1b1kb1r/p1Nn1ppp/2ppp3/6B1/2B1P3/q7/P1P2PPP/RR4K1 b - - 0 3"],
+         "Solved": false
+         },
+         {
+          "Id": 30,
+          "Name": "Carlsen vs. Taylor, 2003",
+          "Description": "White to move and mate in 3 moves" ,
+          "DifficultyAsString": "FIDE Master" ,
+          "DifficultyAsInt": 3,
+          "Positions":["8/p4p2/kp1Np1p1/2r1q3/1Q6/3R4/PPP5/1K6 w - - 0 1","8/p4p2/kp1Np1p1/2r1q3/1Q6/R7/PPP5/1K6 b - - 0 1","8/p4p2/kp1Np1p1/r3q3/1Q6/R7/PPP5/1K6 w - - 0 2","8/p4p2/kp1Np1p1/r3q3/2Q5/R7/PPP5/1K6 b - - 0 2","8/p4p2/kp1Np1p1/rq6/2Q5/R7/PPP5/1K6 w - - 0 3","2Q5/p4p2/kp1Np1p1/rq6/8/R7/PPP5/1K6 b - - 0 3"],
+          "Solved": false
+         },
+         {
+         "Id": 31,
+         "Name": "Hindle vs. Sorensen, 1965",
+         "Description": "White to move and mate in 4 moves" ,
+         "DifficultyAsString": "International Master" ,
+         "DifficultyAsInt": 4,
+         "Positions":["rq3rk1/1p1bpp1p/3p2pQ/p2N3n/2BnP1P1/5P2/PPP5/2KR3R w - - 0 1","rq3rk1/1p1bpp1p/3p2pQ/p2N3R/2BnP1P1/5P2/PPP5/2KR4 b - - 0 1","rq3rk1/1p1bpp1p/3p2pQ/p2N3R/2B1P1P1/5P2/PPP1n3/2KR4 w - - 0 2","rq3rk1/1p1bpp1p/3p2pQ/p2N3R/2B1P1P1/5P2/PPPKn3/3R4 b - - 0 2","rq3rk1/1p1bpp1p/3p3Q/p2N3p/2B1P1P1/5P2/PPPKn3/3R4 w - - 0 3","rq3rk1/1p1bNp1p/3p3Q/p6p/2B1P1P1/5P2/PPPKn3/3R4 b - - 0 3","rq3r1k/1p1bNp1p/3p3Q/p6p/2B1P1P1/5P2/PPPKn3/3R4 w - - 0 4","rq3r1k/1p1bNp1p/3p1Q2/p6p/2B1P1P1/5P2/PPPKn3/3R4 b - - 0 4"],
+         "Solved": false
+         },
+         {
+         "Id": 32,
+         "Name": "Nitti vs. Ciocco, 1975",
+         "Description": "White to move and mate in 4 moves" ,
+         "DifficultyAsString": "International Master" ,
+         "DifficultyAsInt": 4,
+         "Positions":["rqr3k1/3bppBp/3p2P1/p7/1n2P3/1p3P2/1PPQ2P1/2KR3R w - - 0 1","rqr3k1/3bppBP/3p4/p7/1n2P3/1p3P2/1PPQ2P1/2KR3R b - - 0 1","rqr5/3bppkP/3p4/p7/1n2P3/1p3P2/1PPQ2P1/2KR3R w - - 0 2","rqr4Q/3bppk1/3p4/p7/1n2P3/1p3P2/1PPQ2P1/2KR3R b - - 0 2","rqr4Q/3bppk1/3p4/p7/1n2P3/1p3P2/1PPQ2P1/2KR3R w - - 0 3","rq5r/3bppk1/3p4/p5Q1/1n2P3/1p3P2/1PP3P1/2KR3R b - - 0 3","rq3k1r/3bpp2/3p4/p5Q1/1n2P3/1p3P2/1PP3P1/2KR3R w - - 0 4","rq3k1R/3bpp2/3p4/p5Q1/1n2P3/1p3P2/1PP3P1/2KR4 b - - 0 4"],
+         "Solved": false
+         },
+           {
+           "Id": 33,
+           "Name": "Nice combination",
+           "Description": "White to move and mate in 4 moves" ,
+           "DifficultyAsString": "International Master" ,
+           "DifficultyAsInt": 4,
+           "Positions":["2b3k1/r3q2p/4p1pB/p4r2/4N3/P1Q5/1P4PP/2R2R1K w - - 0 1","2b3kQ/r3q2p/4p1pB/p4r2/4N3/P7/1P4PP/2R2R1K b - - 0 1","2b4k/r3q2p/4p1pB/p4r2/4N3/P7/1P4PP/2R2R1K w - - 0 2","2R4k/r3q2p/4p1pB/p4r2/4N3/P7/1P4PP/5R1K b - - 0 2","2R2r1k/r3q2p/4p1pB/p7/4N3/P7/1P4PP/5R1K w - - 0 3","2R2R1k/r3q2p/4p1pB/p7/4N3/P7/1P4PP/7K b - - 0 3","2R2q1k/r6p/4p1pB/p7/4N3/P7/1P4PP/7K w - - 0 4","5R1k/r6p/4p1pB/p7/4N3/P7/1P4PP/7K b - - 0 4"],
+           "Solved": false
+           },
+          {
+          "Id": 34,
+          "Name": "Nunn vs. Short, 1986",
+          "Description": "White to move and win in 4 moves" ,
+          "DifficultyAsString": "International Master" ,
+          "DifficultyAsInt": 4,
+          "Positions":["1r3rk1/1nqb2n1/6R1/1p1Pp3/1Pp3p1/2P4P/2B2QP1/2B2RK1 w - - 0 1","1r3rk1/1nqb2R1/8/1p1Pp3/1Pp3p1/2P4P/2B2QP1/2B2RK1 b - - 0 1","1r3r2/1nqb2k1/8/1p1Pp3/1Pp3p1/2P4P/2B2QP1/2B2RK1 w - - 0 2","1r3r2/1nqb2k1/7B/1p1Pp3/1Pp3p1/2P4P/2B2QP1/5RK1 b - - 0 2","1r3r2/1nqb4/7k/1p1Pp3/1Pp3p1/2P4P/2B2QP1/5RK1 w - - 0 3","1r3r2/1nqb4/7k/1p1Pp3/1Pp3pQ/2P4P/2B3P1/5RK1 b - - 0 3","1r3r2/1nqb2k1/8/1p1Pp3/1Pp3pQ/2P4P/2B3P1/5RK1 w - - 0 4","1r3r2/1nqb2kQ/8/1p1Pp3/1Pp3p1/2P4P/2B3P1/5RK1 b - - 0 4"],
+          "Solved": false
+          },
+          {
+          "Id": 35,
+          "Name": "Topalov vs. Kasparov, 1994",
+          "Description": "White to move and win in 4 moves" ,
+          "DifficultyAsString": "International Master" ,
+          "DifficultyAsInt": 4,
+          "Positions":["4k2r/1R3R2/p3p1pp/4b3/1BnNr3/8/P1P5/5K2 w - - 0 1","4k2r/1R2R3/p3p1pp/4b3/1BnNr3/8/P1P5/5K2 b - - 0 1","3k3r/1R2R3/p3p1pp/4b3/1BnNr3/8/P1P5/5K2 w - - 0 2","3k3r/1R2R3/p1N1p1pp/4b3/1Bn1r3/8/P1P5/5K2 b - - 0 2","2k4r/1R2R3/p1N1p1pp/4b3/1Bn1r3/8/P1P5/5K2 w - - 0 3","2k4r/NR2R3/p3p1pp/4b3/1Bn1r3/8/P1P5/5K2 b - - 0 3","3k3r/NR2R3/p3p1pp/4b3/1Bn1r3/8/P1P5/5K2 w - - 0 4","3k3r/N2RR3/p3p1pp/4b3/1Bn1r3/8/P1P5/5K2 b - - 0 4"],
+          "Solved": false
+          },
+          {
+          "Id": 36,
+          "Name": "Giese vs. Alekhine, 1905",
+          "Description": "Black to move and win in 4 moves" ,
+          "DifficultyAsString": "International Master" ,
+          "DifficultyAsInt": 4,
+          "Positions":["2k4r/ppp2p2/2b2B2/7p/6pP/2P1q1bP/PP3N2/R4QK1 b - - 0 1","2k4r/ppp2p2/2b2B2/7p/6pP/2P1q2P/PP3N1b/R4QK1 w - - 0 2","2k4r/ppp2p2/2b2B2/7p/6pP/2P1q2P/PP3N1K/R4Q2 b - - 0 2","2k4r/ppp2p2/2b2B2/7p/5qpP/2P4P/PP3N1K/R4Q2 w - - 0 3","2k4r/ppp2p2/2b2B2/7p/5qpP/2P4P/PP3N2/R4QK1 b - - 0 3","2k4r/ppp2p2/2b2B2/7p/6pP/2P3qP/PP3N2/R4QK1 w - - 0 4","2k4r/ppp2p2/2b2B2/7p/6pP/2P3qP/PP3NQ1/R5K1 b - - 0 4","2k4r/ppp2p2/2b2B2/7p/6pP/2P4P/PP3Nq1/R5K1 w - - 0 5"],
+          "Solved": false
+          },
+          {
+          "Id": 37,
+          "Name": "Agdestein vs Al Qudaimi",
+          "Description": "White to move and win in 4 moves" ,
+          "DifficultyAsString": "International Master" ,
+          "DifficultyAsInt": 4,
+          "Positions":["3r1r2/1pp2p1k/p5pp/4P3/2nP3R/2P3QP/P1B1q1P1/5RK1 w - - 0 1","3r1r2/1pp2R1k/p5pp/4P3/2nP3R/2P3QP/P1B1q1P1/6K1 b - - 0 1","3r4/1pp2r1k/p5pp/4P3/2nP3R/2P3QP/P1B1q1P1/6K1 w - - 0 2","3r4/1pp2r1k/p5Qp/4P3/2nP3R/2P4P/P1B1q1P1/6K1 b - - 0 2","3r3k/1pp2r2/p5Qp/4P3/2nP3R/2P4P/P1B1q1P1/6K1 w - - 0 3","3r3k/1pp2r2/p5QR/4P3/2nP4/2P4P/P1B1q1P1/6K1 b - - 0 3","3r3k/1pp4r/p5QR/4P3/2nP4/2P4P/P1B1q1P1/6K1 w - - 0 4","3r3k/1pp4Q/p6R/4P3/2nP4/2P4P/P1B1q1P1/6K1 b - - 0 4"],
+          "Solved": false
+          }
+
 ]
