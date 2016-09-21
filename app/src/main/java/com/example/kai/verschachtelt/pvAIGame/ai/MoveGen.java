@@ -17,6 +17,7 @@ public class MoveGen {
     protected static final byte KNIGHT_WHITE    = 3;
     protected static final byte BISHOP_WHITE    = 2;
     protected static final byte PAWN_WHITE      = 1;
+
     //Following must be negative !
     protected static final byte KING_BLACK      = -KING_WHITE;
     protected static final byte QUEEN_BLACK     = -QUEEN_WHITE;
@@ -199,8 +200,8 @@ public class MoveGen {
             }
             attackMap[destinationPos]=true;
         }
-        //generateKingSideCastlingMoves(startPos);
-        //generateQueenSideCastlingMoves(startPos);
+        generateKingSideCastlingMoves(startPos);
+        generateQueenSideCastlingMoves(startPos);
     }
 
     private static void generateBlackKingMoves(int startPos) {
@@ -212,8 +213,8 @@ public class MoveGen {
             }
             attackMap[destinationPos]=true;
         }
-        //generateKingSideCastlingMoves(startPos);
-        //generateQueenSideCastlingMoves(startPos);
+        generateKingSideCastlingMoves(startPos);
+        generateQueenSideCastlingMoves(startPos);
     }
 
 
@@ -224,9 +225,10 @@ public class MoveGen {
      * BUT NOT if the king is in check or one of the fields are attacked.
      * @param startPos position of the king
      */
-    /*
+
     private static void generateQueenSideCastlingMoves(int startPos) {
         //Two neighboring fields must be empty.
+        if(!(startPos==25 || startPos == 95))return;
         if(board[startPos-1]!=EMPTY)return;
         if(board[startPos-2]!=EMPTY)return;
         if(board[startPos-3]!=EMPTY)return;
@@ -241,17 +243,20 @@ public class MoveGen {
      * BUT NOT if the king is in check or one of the fields are attacked.
      * @param startPos position of the king
      */
-    /*
     private static void generateKingSideCastlingMoves(int startPos) {
         //Two neighboring fields must be empty.
+        if(!(startPos==25 || startPos == 95))return;
         if(board[startPos+1]!=EMPTY)return;
         if(board[startPos+2]!=EMPTY)return;
         //Castling must be allowed (chessman have not been moved before.)
-        if(BoardInfoAsInt.getKingSideWhiteCastlingRight(extraInfoStack.peek())) addMove(startPos,startPos+2);
-        if(BoardInfoAsInt.getKingSideBlackCastlingRight(extraInfoStack.peek())) addMove(startPos,startPos+2);
+        if(BoardInfoAsInt.getKingSideWhiteCastlingRight(extraInfoStack.peek())){
+            addMove(startPos,startPos+2);
+        }
+        if(BoardInfoAsInt.getKingSideBlackCastlingRight(extraInfoStack.peek())){
+            addMove(startPos,startPos+2);
+        }
     }
 
-    */
 
     //Knight
     private static void generateBlackKnightMoves(int startPos) {
