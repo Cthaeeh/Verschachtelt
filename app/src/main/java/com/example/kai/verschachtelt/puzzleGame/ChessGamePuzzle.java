@@ -1,5 +1,6 @@
 package com.example.kai.verschachtelt.puzzleGame;
 
+import android.os.Handler;
 import android.widget.Toast;
 
 import com.example.kai.verschachtelt.InputHandler;
@@ -47,8 +48,14 @@ public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
         puzzleSteps++;
         puzzleSolved = isPuzzleSolved();
         if(!puzzleSolved){                                                      //If the puzzle isn´t already solved opponent make move.
-            boardCurrent = PUZZLE.getPosition(puzzleSteps+1);
-            puzzleSteps++;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    boardCurrent = PUZZLE.getPosition(puzzleSteps+1);
+                    puzzleSteps++;
+                }
+            }, 1500);
+
         }
         if(isPuzzleSolved())saveProgress();         //After the move see if the puzzle is solved.
     }
@@ -79,6 +86,7 @@ public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
     public VictoryScreenGraphic.VictoryState getWinner() {
         if(!isPuzzleSolved())return null;    //IF Puzzle isn´t solved don´t show the Victory screen.
         else return VictoryScreenGraphic.VictoryState.VICTORY;  //Otherwise show.
+
     }
 
     public String getPuzzleDescription() {
@@ -92,5 +100,6 @@ public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
     private void showWrongMoveInfo() {
         Toast.makeText(MainActivity.getContext(), MainActivity.getContext().getString(R.string.puzzle_wrong_move_toast), Toast.LENGTH_SHORT).show();
     }
+
 
 }

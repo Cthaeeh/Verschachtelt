@@ -544,7 +544,9 @@ public class MoveGen {
 
     public static void unMakeMove(int move){
         extraInfoStack.pop();       //Go back in the history of extra Info.
-        wasPreCalculated = false;   //If we go back in "time" the präCalculated moves aren´t applicable anymore.
+        wasPreCalculated = false;//If we go back in "time" the präCalculated moves aren´t applicable anymore.
+        board[PLAYER_ON_TURN]*=-1;
+
         if(MoveAsInt.getCapture(move) == KING_WHITE || MoveAsInt.getCapture(move) == KING_BLACK ){
             board[GAME_HAS_ENDED] = INACCESSIBLE;
         }
@@ -555,7 +557,7 @@ public class MoveGen {
             board[MoveAsInt.getStart(move)] = board[MoveAsInt.getDest(move)];   //Take chessman back
         }
         board[MoveAsInt.getDest(move)] = MoveAsInt.getCapture(move);        //Take eventually captured piece back.
-        //Unmake eventual castling
+        //Unmake eventual castling //TODO check carefully
         if(board[MoveAsInt.getStart(move)]*PLAYER_ON_TURN == KING_WHITE){  //If the moving piece is a King (*PLAYER_ON_TURN always gives the positive value;
             if(MoveAsInt.getDest(move)-MoveAsInt.getStart(move)==2) {   //And he did a jump to the right, e.g moved 2 pieces
                 board[MoveAsInt.getDest(move)+1] = board[MoveAsInt.getDest(move)-1];    //Move the rook accordingly
@@ -567,7 +569,6 @@ public class MoveGen {
             }
         }
         //TODO en passant
-        board[PLAYER_ON_TURN]*=-1;  //Change player on turn.
     }
 
     public static byte[] getBoard() {

@@ -84,12 +84,13 @@ public class ChessBoardComplex extends ChessBoardSimple {
             if(chessmen[position].getPiece() == Chessman.Piece.PAWN && Math.abs(position-selectedPosition) == 16){
                 enPassant.opponentPawn = selectedPosition;
                 enPassant.setEnPassantPossibilities(position); // activate en passant possibilities after double jump
-            }
-            if(chessmen[position].getPiece() == Chessman.Piece.PAWN && position == enPassant.opponentPawn + 8) {
+            } else enPassant.resetEnPassantPossibilities();
+
+            if(chessmen[position].getPiece() == Chessman.Piece.PAWN  && position == enPassant.opponentPawn + 8 &&  chessmen[position].getColor() == Chessman.Color.WHITE) {
                 chessmen[enPassant.opponentPawn + 16] = null;
                 enPassant.resetEnPassantPossibilities();// en passant removal for white
             }
-            if(chessmen[position].getPiece() == Chessman.Piece.PAWN && position == enPassant.opponentPawn - 8) {
+            if(chessmen[position].getPiece() == Chessman.Piece.PAWN && position == enPassant.opponentPawn - 8 && chessmen[position].getColor() == Chessman.Color.BLACK) {
                 chessmen[enPassant.opponentPawn - 16] = null;
                 enPassant.resetEnPassantPossibilities();// en passant removal for black
             }

@@ -1,5 +1,7 @@
 package com.example.kai.verschachtelt.chessLogic;
 
+import java.util.Arrays;
+
 /**
  * Created by ivayl on 12.09.2016.
  */
@@ -34,7 +36,7 @@ public class EnPassant {
      */
     public EnPassant(EnPassant toCopy){
         chessmen = Chessman.deepCopy(toCopy.chessmen);
-        enPassantPossibilities = toCopy.enPassantPossibilities;
+        enPassantPossibilities = Arrays.copyOf(toCopy.enPassantPossibilities, enPassantPossibilities.length);;
         opponentPawn = toCopy.opponentPawn;
     }
 

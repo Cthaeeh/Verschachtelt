@@ -66,46 +66,12 @@ public class MoveGenTest {
                     X, X  ,X  ,X  ,X  ,X  ,X  ,X  ,X  ,MoveGen.BLACK   //Black turn
             };
 
-    private static final byte[] testBoardCastle = new byte[]
-            {
-                    X, X  ,X  ,X  ,X  ,X  ,X  ,X  ,X  ,X,
-                    X, X  ,X  ,X  ,X  ,X  ,X  ,X  ,X  ,X,
-                    X, R  ,KN ,  B,  Q,  K,  B,KN ,R  ,X,
-                    X, P  ,P  ,  P,  P,  P,  P, P ,P  ,X,
-                    X, 0  ,0  ,  0,  0,  0,  0, 0 ,0  ,X,
-                    X, 0  ,0  ,  0,  0,  0,  0, 0 ,0  ,X,
-                    X, 0  ,0  ,  0,  0,  p,  0, 0 ,0  ,X,
-                    X, 0  ,0  ,  0,  0,  0,  0, 0 ,0  ,X,
-                    X, p  ,p  ,  p,  p,  0,  p, p ,p  ,X,
-                    X, r  ,kn ,  b, q,  k,  0,  0 ,r  ,X,
-                    X, X  ,X  ,X  ,X  ,X  ,X  ,X  ,X  ,X,
-                    X, X  ,X  ,X  ,X  ,X  ,X  ,X  ,X  ,X,
-                    X, X  ,X  ,X  ,X  ,X  ,X  ,X  ,X  ,MoveGen.WHITE   //Whites turn
-            };
-
-    private static final byte[] testBoardAfterCastle = new byte[]
-            {
-                    X, X  ,X  ,X  ,X  ,X  ,X  ,X  ,X  ,X,
-                    X, X  ,X  ,X  ,X  ,X  ,X  ,X  ,X  ,X,
-                    X, R  ,KN ,  B,  Q,  K,  B,KN ,R  ,X,
-                    X, P  ,P  ,  P,  P,  P,  P, P ,P  ,X,
-                    X, 0  ,0  ,  0,  0,  0,  0, 0 ,0  ,X,
-                    X, 0  ,0  ,  0,  0,  0,  0, 0 ,0  ,X,
-                    X, 0  ,0  ,  0,  0,  p,  0, 0 ,0  ,X,
-                    X, 0  ,0  ,  0,  0,  0,  0, 0 ,0  ,X,
-                    X, p  ,p  ,  p,  p,  0,  p, p ,p  ,X,
-                    X, r  ,kn ,  b, q,  0,  r,  k ,0  ,X,
-                    X, X  ,X  ,X  ,X  ,X  ,X  ,X  ,X  ,X,
-                    X, X  ,X  ,X  ,X  ,X  ,X  ,X  ,X  ,X,
-                    X, X  ,X  ,X  ,X  ,X  ,X  ,X  ,X  ,MoveGen.BLACK   //Blacks turn
-            };
-
     private static final byte[] testBoardPromotion = new byte[]
             {
                     X, X  ,X  ,X  ,X  ,X  ,X  ,X  ,X  ,X,
                     X, X  ,X  ,X  ,X  ,X  ,X  ,X  ,X  ,X,
-                    X, 0  ,0  ,  0,  0,  K,  0,0  ,0  ,X,
-                    X, 0  ,0  ,  0,  0,  0,  0, 0 ,p  ,X,
+                    X, 0  ,0  ,  0,  0,  K,  0,0  ,R  ,X,
+                    X, 0  ,0  ,  0,  0,  0,  0, p ,0  ,X,
                     X, 0  ,0  ,  0,  0,  0,  0, 0 ,0  ,X,
                     X, 0  ,0  ,  0,  0,  0,  0, 0 ,0  ,X,
                     X, 0  ,0  ,  0,  0,  p,  0, 0 ,0  ,X,
@@ -154,27 +120,17 @@ public class MoveGenTest {
     }
 
     @Test
-    public void testCastling() throws Exception {
-        int extraInfo = BoardInfoAsInt.encodeExtraInfo(true,true,true,true,0);
-        MoveGen.initialise(testBoardCastle,extraInfo);
-        int testCastleMove = MoveAsInt.getMoveAsInt(95,97,MoveGen.EMPTY); // castle white king side
-        MoveGen.makeMove(testCastleMove);
-        if (!equals(MoveGen.getBoard(), testBoardAfterCastle)) throw new AssertionError();
-        if (BoardInfoAsInt.getKingSideWhiteCastlingRight(MoveGen.getExtraInfo()) != false)
-            throw new AssertionError();
-        MoveGen.unMakeMove(testCastleMove);
-        if (!equals(MoveGen.getBoard(), testBoardCastle)) throw new AssertionError();
-    }
-
-    @Test
     public void testPromotion() throws Exception {
         int extraInfo = BoardInfoAsInt.encodeExtraInfo(false,false,false,false,50);
         MoveGen.initialise(testBoardPromotion,extraInfo);
-        int promotion = MoveAsInt.getPromotionMoveAsInt(38,28,MoveGen.EMPTY,MoveGen.QUEEN_WHITE); // promote queen
+        int promotion = MoveAsInt.getPromotionMoveAsInt(37,28,MoveGen.ROOK_BLACK,MoveGen.QUEEN_WHITE); // promote queen
         MoveGen.makeMove(promotion);
         if (!equals(MoveGen.getBoard(), testBoardAfterPromotion)) throw new AssertionError();
+        short valAfterPromo = BordEvaluation.evaluate(MoveGen.getBoard());
         MoveGen.unMakeMove(promotion);
         if (!equals(MoveGen.getBoard(), testBoardPromotion)) throw new AssertionError();
+        short valBeforPromo = BordEvaluation.evaluate(MoveGen.getBoard());
+        if(!(valAfterPromo>valBeforPromo))throw new AssertionError();
     }
 
     /**
