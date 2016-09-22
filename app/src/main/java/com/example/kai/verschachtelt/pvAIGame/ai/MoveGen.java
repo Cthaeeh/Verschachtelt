@@ -122,13 +122,6 @@ public class MoveGen {
         return sortMoves(Arrays.copyOf(moves,moveCounter));
     }
 
-    private static byte abs(byte b) {
-        if(b<0){
-            return (byte) (b*-1);
-        }
-        return b;
-    }
-
     /**
      * Very simple move ordering.
      * @param moves
@@ -438,18 +431,18 @@ public class MoveGen {
 
     public static void unMakeMove(int move){
         extraInfoStack.pop();       //Go back in the history of extra Info.
+        board[PLAYER_ON_TURN]*=-1;  //Change player on turn.
         if(MoveAsInt.getCapture(move) == KING_WHITE || MoveAsInt.getCapture(move) == KING_BLACK ){
             board[GAME_HAS_ENDED] = INACCESSIBLE;
         }
         if(MoveAsInt.getPromotedPiece(move)!=0){
-            board[MoveAsInt.getStart(move)] = (byte) (PAWN_WHITE*board[PLAYER_ON_TURN]);    //Unmake Promotion.
+            board[MoveAsInt.getStart(move)] = (byte) (PAWN_WHITE*board[PLAYER_ON_TURN]);    //Unmake Promotion. //Important Note, this way the choosen color is correct because the color is changed previously
         }else {//Unmake regular movement
             board[MoveAsInt.getStart(move)] = board[MoveAsInt.getDest(move)];               //Take chessman back
         }
         board[MoveAsInt.getDest(move)] = MoveAsInt.getCapture(move);                        //Take eventually captured piece back.
 
-        //TODO en passant
-        board[PLAYER_ON_TURN]*=-1;  //Change player on turn.
+        // TODO en passant, promotion . I work on that in another branch.
     }
 
     public static byte[] getBoard() {

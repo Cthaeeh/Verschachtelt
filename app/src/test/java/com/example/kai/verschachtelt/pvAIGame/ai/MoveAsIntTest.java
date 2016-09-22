@@ -47,5 +47,11 @@ public class MoveAsIntTest {
 
         int testMove3 = MoveAsInt.getMoveAsInt(start,dest,capture);
         if (MoveAsInt.getPromotedPiece(testMove3) != 0) throw new AssertionError();
+
+        int testMove4 = MoveAsInt.getPromotionMoveAsInt(start,dest,capture,MoveGen.QUEEN_WHITE);
+        if (MoveAsInt.getPromotedPiece(testMove4) != MoveGen.QUEEN_WHITE) throw new AssertionError();
+
+        int testMove5 = MoveAsInt.getPromotionMoveAsInt(start,dest,capture,MoveGen.KNIGHT_WHITE);
+        if (MoveAsInt.getPromotedPiece(testMove5) != MoveGen.KNIGHT_WHITE) throw new AssertionError();
     }
 }
