@@ -538,5 +538,96 @@
          "DifficultyAsInt": 2,
          "Positions":["1n6/p3q2p/2pNk3/1pP1p3/1P2P2Q/2P3P1/6K1/8 w - - 0 1","1n6/p3q2p/2pNk3/1pP1p3/1P2P3/2P3PQ/6K1/8 b - - 0 1","1n6/p3q2p/2pN1k2/1pP1p3/1P2P3/2P3PQ/6K1/8 w - - 0 2","1n6/p3q2p/2pN1k1Q/1pP1p3/1P2P3/2P3P1/6K1/8 b - - 0 2"],
          "Solved": false
+          },
+          {
+        "Id": 61,
+        "Name": "Steinitz vs. Sands, 1887",
+        "Description": "White to move and mate in 2 moves" ,
+        "DifficultyAsString": "Candidate Master" ,
+        "DifficultyAsInt": 2,
+        "Positions":["r4br1/3b1kpp/1q1P4/1pp1RP1N/p7/6Q1/PPB3PP/2KR4 w - - 0 1","r4br1/3b1kpp/1q1P2Q1/1pp1RP1N/p7/8/PPB3PP/2KR4 b - - 0 1","r4br1/3b1kp1/1q1P2p1/1pp1RP1N/p7/8/PPB3PP/2KR4 w - - 0 2","r4br1/3b1kp1/1q1P2P1/1pp1R2N/p7/8/PPB3PP/2KR4 b - - 0 2"],
+        "Solved": false
+          },
+          {
+        "Id": 62,
+        "Name": "Steinitz vs. Trenchard, 1898",
+        "Description": "White to move and mate in 2 moves" ,
+        "DifficultyAsString": "Candidate Master" ,
+        "DifficultyAsInt": 2,
+        "Positions":["r2qrb2/p1pn1Qp1/1p4Nk/4PR2/3n4/7N/P5PP/R6K w - - 0 1","r2qrb2/p1pnNQp1/1p5k/4PR2/3n4/7N/P5PP/R6K b - - 0 1","r2qrb2/p1pnNQp1/1p5k/4Pn2/8/7N/P5PP/R6K w - - 0 2","r2qrb2/p1pnN1p1/1p4Qk/4Pn2/8/7N/P5PP/R6K b - - 0 2"],
+        "Solved": false
+          },
+          {
+        "Id": 63,
+        "Name": "Schwartz vs. Samsonov, 1908",
+        "Description": "White to move and mate in 2 moves" ,
+        "DifficultyAsString": "Candidate Master" ,
+        "DifficultyAsInt": 2,
+        "Positions":["r2q1k1r/ppp1bB1p/2np4/6N1/3PP1bP/8/PPP5/RNB2RK1 w - - 0 1","r2q1k1r/ppp1bB1p/2npN3/8/3PP1bP/8/PPP5/RNB2RK1 b - - 0 1","r2q1k1r/ppp1bB1p/2npb3/8/3PP2P/8/PPP5/RNB2RK1 w - - 0 2","r2q1k1r/ppp1bB1p/2npb2B/8/3PP2P/8/PPP5/RN3RK1 b - - 0 2"],
+        "Solved": false
+          },
+          {
+         "Id": 64,
+         "Name": "Brunnemer vs. Patton, 1920",
+         "Description": "White to move and mate in 2 moves" ,
+         "DifficultyAsString": "Candidate Master" ,
+         "DifficultyAsInt": 2,
+         "Positions":["r1b1k2r/ppQ1q2n/2p2p2/P3p2p/N3P1pP/1B4P1/1PP2P2/3R1NK1 w - - 0 1","r1bRk2r/ppQ1q2n/2p2p2/P3p2p/N3P1pP/1B4P1/1PP2P2/5NK1 b - - 0 1","r1bqk2r/ppQ4n/2p2p2/P3p2p/N3P1pP/1B4P1/1PP2P2/5NK1 w - - 0 2","r1bqk2r/pp3Q1n/2p2p2/P3p2p/N3P1pP/1B4P1/1PP2P2/5NK1 b - - 0 2"],
+         "Solved": false
+          },
+          {
+         "Id": 65,
+         "Name": "Tartakower vs. Reti, 1920",
+         "Description": "White to move and mate in 2 moves" ,
+         "DifficultyAsString": "Candidate Master" ,
+         "DifficultyAsInt": 2,
+         "Positions":["8/1r5p/kpQ3p1/p3rp2/P6P/8/4bPPK/1R6 w - - 0 1","8/1r5p/kRQ3p1/p3rp2/P6P/8/4bPPK/8 b - - 0 1","8/7p/krQ3p1/p3rp2/P6P/8/4bPPK/8 w - - 0 2","Q7/7p/kr4p1/p3rp2/P6P/8/4bPPK/8 b - - 0 2"],
+         "Solved": false
+          },
+          {
+         "Id": 66,
+         "Name": "Celli vs. Incelli, 1970",
+         "Description": "White to move and mate in 4 moves" ,
+         "DifficultyAsString": "International Master" ,
+         "DifficultyAsInt": 4,
+         "Positions":["1qbk2nr/1pNp2Bp/2n1pp2/8/2P1P3/8/Pr3PPP/R2QKB1R w - - 0 1","1qbk2nr/1p1p2Bp/2n1Np2/8/2P1P3/8/Pr3PPP/R2QKB1R b - - 0 1","1qb3nr/1p1pk1Bp/2n1Np2/8/2P1P3/8/Pr3PPP/R2QKB1R w - - 0 2","1qb2Bnr/1p1pk2p/2n1Np2/8/2P1P3/8/Pr3PPP/R2QKB1R b - - 0 2","1qb2Bnr/1p1p1k1p/2n1Np2/8/2P1P3/8/Pr3PPP/R2QKB1R w - - 0 3","1qb2Bnr/1p1p1k1p/2n1Np2/7Q/2P1P3/8/Pr3PPP/R3KB1R b - - 0 3","1qb2Bnr/1p1p3p/2n1kp2/7Q/2P1P3/8/Pr3PPP/R3KB1R w - - 0 4","1qb2Bnr/1p1p3p/2n1kp2/3Q4/2P1P3/8/Pr3PPP/R3KB1R b - - 0 4"],
+         "Solved": false
+          },
+          {
+        "Id": 67,
+        "Name": "Alexopoulus vs. Ayaso, 1970",
+        "Description": "White to move and mate in 4 moves" ,
+        "DifficultyAsString": "Grandmaster" ,
+        "DifficultyAsInt": 5,
+        "Positions":["rnbqkb1r/np1p2pp/p1p1pp2/3PP3/2P2P2/P1NB4/1P4PP/R1BQK1NR w - - 0 1","rnbqkb1r/np1p2pp/p1p1pp2/3PP2Q/2P2P2/P1NB4/1P4PP/R1B1K1NR b - - 0 1","rnbqkb1r/np1p3p/p1p1ppp1/3PP2Q/2P2P2/P1NB4/1P4PP/R1B1K1NR w - - 0 2","rnbqkb1r/np1p3p/p1p1ppQ1/3PP3/2P2P2/P1NB4/1P4PP/R1B1K1NR b - - 0 2","rnbqkb1r/np1p4/p1p1ppp1/3PP3/2P2P2/P1NB4/1P4PP/R1B1K1NR w - - 0 3","rnbqkb1r/np1p4/p1p1ppB1/3PP3/2P2P2/P1N5/1P4PP/R1B1K1NR b - - 0 3","rnbq1b1r/np1pk3/p1p1ppB1/3PP3/2P2P2/P1N5/1P4PP/R1B1K1NR w - - 0 4","rnbq1b1r/np1pk3/p1pPppB1/4P3/2P2P2/P1N5/1P4PP/R1B1K1NR b - - 0 4"],
+        "Solved": false
+          },
+          {
+         "Id": 68,
+         "Name": "Ashley vs. Arnett, 1993",
+         "Description": "White to move and mate in 4 moves" ,
+         "DifficultyAsString": "International Master" ,
+         "DifficultyAsInt": 4,
+         "Positions":["4k3/2q2p2/4p3/3bP1Q1/p6R/r6P/6PK/5B2 w - - 0 1","4k3/2q2p2/4p3/1B1bP1Q1/p6R/r6P/6PK/8 b - - 0 1","4k3/2q2p2/2b1p3/1B2P1Q1/p6R/r6P/6PK/8 w - - 0 2","4k3/2q2p2/2B1p3/4P1Q1/p6R/r6P/6PK/8 b - - 0 2","4k3/5p2/2q1p3/4P1Q1/p6R/r6P/6PK/8 w - - 0 3","4k2R/5p2/2q1p3/4P1Q1/p7/r6P/6PK/8 b - - 0 3","7R/3k1p2/2q1p3/4P1Q1/p7/r6P/6PK/8 w - - 0 4","3Q3R/3k1p2/2q1p3/4P3/p7/r6P/6PK/8 b - - 0 4"],
+         "Solved": false
+          },
+          {
+        "Id": 69,
+        "Name": "Grant vs. Lazic, 1991",
+        "Description": "White to move and mate in 4 moves" ,
+        "DifficultyAsString": "International Master" ,
+        "DifficultyAsInt": 4,
+        "Positions":[" w - - 0 1"," b - - 0 1"," w - - 0 2"," b - - 0 2"," w - - 0 3"," b - - 0 3"," w - - 0 4"," b - - 0 4"],
+        "Solved": false
+          },
+          {
+         "Id": 70,
+         "Name": "Takle vs. Paasikangas, 1990",
+         "Description": "White to move and mate in 4 moves" ,
+         "DifficultyAsString": "International Master" ,
+         "DifficultyAsInt": 4,
+         "Positions":[" w - - 0 1"," b - - 0 1"," w - - 0 2"," b - - 0 2"," w - - 0 3"," b - - 0 3"," w - - 0 4"," b - - 0 4"],
+         "Solved": false
           }
+
 ]
