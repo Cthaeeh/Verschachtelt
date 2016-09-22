@@ -544,7 +544,7 @@ public class MoveGen {
 
     public static void unMakeMove(int move){
         extraInfoStack.pop();       //Go back in the history of extra Info.
-        wasPreCalculated = false;//If we go back in "time" the präCalculated moves aren´t applicable anymore.
+        wasPreCalculated = false;   //If we go back in "time" the präCalculated moves aren´t applicable anymore.
         board[PLAYER_ON_TURN]*=-1;
 
         if(MoveAsInt.getCapture(move) == KING_WHITE || MoveAsInt.getCapture(move) == KING_BLACK ){
@@ -558,7 +558,7 @@ public class MoveGen {
         }
         board[MoveAsInt.getDest(move)] = MoveAsInt.getCapture(move);        //Take eventually captured piece back.
         //Unmake eventual castling //TODO check carefully
-        if(board[MoveAsInt.getStart(move)]*PLAYER_ON_TURN == KING_WHITE){  //If the moving piece is a King (*PLAYER_ON_TURN always gives the positive value;
+        if(board[MoveAsInt.getStart(move)] == KING_WHITE || board[MoveAsInt.getStart(move)] == KING_BLACK){  //If the moving piece is a King;
             if(MoveAsInt.getDest(move)-MoveAsInt.getStart(move)==2) {   //And he did a jump to the right, e.g moved 2 pieces
                 board[MoveAsInt.getDest(move)+1] = board[MoveAsInt.getDest(move)-1];    //Move the rook accordingly
                 board[MoveAsInt.getDest(move)-1] = EMPTY;                                   //Let him jump over the King
