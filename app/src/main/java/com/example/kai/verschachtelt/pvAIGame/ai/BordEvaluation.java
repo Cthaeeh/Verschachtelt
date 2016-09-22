@@ -57,7 +57,7 @@ public class BordEvaluation {
             {
                     0,   0,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0,
                     0,   0,0  ,0  ,0  ,0  ,0  ,0  ,0  ,0,
-                    0,   0,  0,  0,  0,  0,  0,  0,0  ,0,
+                    0, 300,300,300,300,300,300,300,300,0,
                     0,  50, 50, 50, 50, 50, 50, 50, 50,0,
                     0,  10, 10, 20, 30, 30, 20, 10, 10,0,
                     0,   5,  5, 10, 27, 27, 10,  5,  5,0,
@@ -84,22 +84,6 @@ public class BordEvaluation {
                     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
                     0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 
-            };
-
-    private static final short[] QueenTable = new short[]
-            {
-                    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-                    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-                    0,-20,-10,-10, -5, -5,-10,-10,-20,  0,
-                    0,-10,  0,  0,  0,  0,  0,  0,-10,  0,
-                    0,-10,  0,  5,  5,  5,  5,  0,-10,  0,
-                    0, -5,  0,  5,  5,  5,  5,  0, -5,  0,
-                    0,  0,  0,  5,  5,  5,  5,  0, -5,  0,
-                    0,-10,  5,  5,  5,  5,  5,  0,-10,  0,
-                    0,-10,  0,  5,  0,  0,  0,  0,-10,  0,
-                    0,-20,-10,-10, -5, -5,-10,-10,-20,  0,
-                    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
-                    0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
             };
 
     private static final short[] KingTableMiddleGame = new short[]
@@ -172,7 +156,6 @@ public class BordEvaluation {
                     break;
                 case MoveGen.QUEEN_BLACK:
                     boardValue += QUEEN_BLACK_VALUE;
-                    boardValue -= QueenTable[119 - position];
                     pieceNumber++;
                     break;
                 case MoveGen.ROOK_BLACK:
@@ -204,7 +187,6 @@ public class BordEvaluation {
                     break;
                 case MoveGen.QUEEN_WHITE:
                     boardValue += QUEEN_WHITE_VALUE;
-                    boardValue += QueenTable[position];
                     pieceNumber++;
                     break;
                 case MoveGen.ROOK_WHITE:
@@ -230,7 +212,7 @@ public class BordEvaluation {
                     break;
             }
         }
-        if(pieceNumber < 10) isEndgame = true;
+        if(pieceNumber < 10) isEndgame = true;  //Endgame state is updated, for next search. Not 100% accurate but faster
         else isEndgame = false;
         pieceNumber = 0; // reset the pieceNumber!
         return boardValue;
@@ -287,14 +269,12 @@ public class BordEvaluation {
         return pawnVal;
     }
 
-
-
     /**
      * Evaluates the board for King-Safety.
      * @param board
      * @return
      */
-    private static short getKingSafety(int position, byte[] board){
+    private static short getKingSafety(int position, byte[] board){ //TODO implement
         short boardValue = 0;
         if(board[position] == MoveGen.PAWN_BLACK) boardValue += evaluateBlackPawnShield(position,board);
         if(board[position] == MoveGen.PAWN_WHITE) boardValue += evaluateWhitePawnShield(position,board);
@@ -325,8 +305,6 @@ public class BordEvaluation {
         if(board[kingPosition + SOUTH] == board[kingPosition + SOUTH + WEST] & board[kingPosition + SOUTH + WEST] == board[kingPosition + SOUTH + EAST]) {
             shieldValue += 45;
         }
-
-
         return shieldValue;
     }
 

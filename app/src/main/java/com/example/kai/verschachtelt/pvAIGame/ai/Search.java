@@ -80,7 +80,7 @@ public class Search {
      * @return      //TODO comment this really well.
      */
     private short alphabeta(int depth,short α,short β){
-        if(depth == 0 || MoveGen.getBoard()[MoveGen.GAME_HAS_ENDED] == MoveGen.TRUE){   //Found a Leaf
+        if(depth == 0 || MoveGen.getBoard()[MoveGen.GAME_HAS_ENDED] == MoveGen.TRUE){   //If depth = 0 -> found a Leaf
             leafsSearched++;
             return quiescence(depth-1,α, β);    //Try to find a stable position to evaluate.
         }
@@ -125,9 +125,9 @@ public class Search {
 
     /**
      * See: http://chessprogramming.wikispaces.com/Quiescence+Search
-     * @param depth
-     * @param α
-     * @param β
+     * @param depth we don´t want to go to deep, if we hit MAX_DEPTH stop
+     * @param α current maximizer value
+     * @param β current minimizer value
      * @return
      */
     private short quiescence(int depth,short α,short β){
@@ -174,9 +174,11 @@ public class Search {
         }
     }
 
+    //TODO delete when shipped
     public int getLeafsSearched(){
         return leafsSearched;
     }
+
 
     public int getNodesInQuiescence(){
         return nodesInQuiescence;
