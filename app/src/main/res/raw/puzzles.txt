@@ -628,5 +628,50 @@
          "DifficultyAsInt": 4,
          "Positions":["rq3rk1/1p3ppp/p2p1B2/2bNp2b/4P3/6P1/PPPQ1PBP/3R1RK1 w - - 0 1","rq3rk1/1p3ppp/p2p1B1Q/2bNp2b/4P3/6P1/PPP2PBP/3R1RK1 b - - 0 1","rq3rk1/1p3ppp/p2p1B1Q/3Np2b/4P3/6P1/PPP2bBP/3R1RK1 w - - 0 2","rq3rk1/1p3ppp/p2p1B1Q/3Np2b/4P3/6P1/PPP2bBP/3R1R1K b - - 0 2","rq3rk1/1p3p1p/p2p1p1Q/3Np2b/4P3/6P1/PPP2bBP/3R1R1K w - - 0 3","rq3rk1/1p3p1p/p2p1N1Q/4p2b/4P3/6P1/PPP2bBP/3R1R1K b - - 0 3","rq3r1k/1p3p1p/p2p1N1Q/4p2b/4P3/6P1/PPP2bBP/3R1R1K w - - 0 4","rq3r1k/1p3p1Q/p2p1N2/4p2b/4P3/6P1/PPP2bBP/3R1R1K b - - 0 4"],
          "Solved": false
+        },
+        {
+        "Id": 71,
+        "Name": "Leussen vs. Duras, 1905",
+        "Description": "White to move and mate in 3 moves" ,
+        "DifficultyAsString": "FIDE Master" ,
+        "DifficultyAsInt": 3,
+        "Positions":["rr3k2/pppq1pN1/1b1p1BnQ/1b2p1N1/4P3/2PP3P/PP3PP1/R4PK1 w - - 0 1","rr3k2/pppq1p2/1b1pNBnQ/1b2p1N1/4P3/2PP3P/PP3PP1/R4PK1 b - - 0 1","rr2k3/pppq1p2/1b1pNBnQ/1b2p1N1/4P3/2PP3P/PP3PP1/R4PK1 w - - 0 2","rr2kQ2/pppq1p2/1b1pNBn1/1b2p1N1/4P3/2PP3P/PP3PP1/R4PK1 b - - 0 2","rr2kn2/pppq1p2/1b1pNB2/1b2p1N1/4P3/2PP3P/PP3PP1/R4PK1 w - - 0 3","rr2kn2/pppq1pN1/1b1p1B2/1b2p1N1/4P3/2PP3P/PP3PP1/R4PK1 b - - 0 3"],
+        "Solved": false
+        },
+        {
+        "Id": 72,
+        "Name": "Chajes vs. Jaffe, 1911",
+        "Description": "White to move and mate in 3 moves" ,
+        "DifficultyAsString": "FIDE Master" ,
+        "DifficultyAsInt": 3,
+        "Positions":["4k3/r2bnn1r/1q2pR1p/p2pPp1B/2pP1N1P/PpP1B3/1P4Q1/5KR1 w - - 0 1","4k1Q1/r2bnn1r/1q2pR1p/p2pPp1B/2pP1N1P/PpP1B3/1P6/5KR1 b - - 0 1","4k1n1/r2b1n1r/1q2pR1p/p2pPp1B/2pP1N1P/PpP1B3/1P6/5KR1 w - - 0 2","4k1R1/r2b1n1r/1q2pR1p/p2pPp1B/2pP1N1P/PpP1B3/1P6/5K2 b - - 0 2","6R1/r2bkn1r/1q2pR1p/p2pPp1B/2pP1N1P/PpP1B3/1P6/5K2 w - - 0 3","6R1/r2bkn1r/1q2pRNp/p2pPp1B/2pP3P/PpP1B3/1P6/5K2 b - - 0 3"],
+        "Solved": false
+        },
+        {
+        "Id": 73,
+        "Name": "Ellerman vs. Sarracan, 1913",
+        "Description": "White to move and mate in 3 moves" ,
+        "DifficultyAsString": "FIDE Master" ,
+        "DifficultyAsInt": 3,
+        "Positions":["6rb/1p2k3/p2p1nQ1/q1p1p2r/B1P1P3/2N4P/PP4P1/1R3RK1 w - - 0 1","6rb/1p2k3/p2p1nQ1/q1pNp2r/B1P1P3/7P/PP4P1/1R3RK1 b - - 0 1","3k2rb/1p6/p2p1nQ1/q1pNp2r/B1P1P3/7P/PP4P1/1R3RK1 w - - 0 2","3k2Qb/1p6/p2p1n2/q1pNp2r/B1P1P3/7P/PP4P1/1R3RK1 b - - 0 2","3k2nb/1p6/p2p4/q1pNp2r/B1P1P3/7P/PP4P1/1R3RK1 w - - 0 3","3k1Rnb/1p6/p2p4/q1pNp2r/B1P1P3/7P/PP4P1/1R4K1 b - - 0 3"],
+        "Solved": false
+        },
+        {
+        "Id": 74,
+        "Name": "Loyd vs. Moore, 1906",
+        "Description": "White to move and mate in 3 moves" ,
+        "DifficultyAsString": "Grandmaster" ,
+        "DifficultyAsInt": 5,
+        "Positions":["2b2r2/1pn3pk/r7/p3N3/2Q2p1N/7R/Pq4PP/4R2K w - - 0 1","2b2r2/1pn3pk/r3Q3/p3N3/5p1N/7R/Pq4PP/4R2K b - - 0 1","5r2/1pn3pk/r3b3/p3N3/5p1N/7R/Pq4PP/4R2K w - - 0 2","5r2/1pn3pk/r3b3/p3NN2/5p2/7R/Pq4PP/4R2K b - - 0 2","5rk1/1pn3p1/r3b3/p3NN2/5p2/7R/Pq4PP/4R2K w - - 0 3","5rk1/1pn1N1p1/r3b3/p3N3/5p2/7R/Pq4PP/4R2K b - - 0 3"],
+        "Solved": false
+        },
+        {
+        "Id": 75,
+        "Name": "Portela vs. Acuna, 1927",
+        "Description": "White to move and mate in 3 moves" ,
+        "DifficultyAsString": "FIDE Master" ,
+        "DifficultyAsInt": 3,
+        "Positions":["r2q4/p2nR1bk/1p1Pb2p/4p2p/3nN3/B2B3P/PP1Q2P1/6K1 w - - 0 1","r2q4/p2nR1bk/1p1PbN1p/4p2p/3n4/B2B3P/PP1Q2P1/6K1 b - - 0 1","r2q3k/p2nR1b1/1p1PbN1p/4p2p/3n4/B2B3P/PP1Q2P1/6K1 w - - 0 2","r2q3k/p2nR1b1/1p1PbN1Q/4p2p/3n4/B2B3P/PP4P1/6K1 b - - 0 2","r2q3k/p2nR3/1p1PbN1b/4p2p/3n4/B2B3P/PP4P1/6K1 w - - 0 3","r2q3k/p2n3R/1p1PbN1b/4p2p/3n4/B2B3P/PP4P1/6K1 b - - 0 3"],
+        "Solved": false
         }
 ]
