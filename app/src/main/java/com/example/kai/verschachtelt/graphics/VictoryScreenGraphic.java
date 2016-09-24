@@ -1,8 +1,12 @@
 package com.example.kai.verschachtelt.graphics;
 
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+
+import com.example.kai.verschachtelt.R;
+import com.example.kai.verschachtelt.activitys.MainActivity;
 
 /**
  * Created by Kai on 12.08.2016.
@@ -41,7 +45,7 @@ public class VictoryScreenGraphic {
                 canvas.drawBitmap(Bitmap.createScaledBitmap(imageBlackWins, getShorterSide(canvas), getShorterSide(canvas), false),0,0,null);
                 break;
             case DRAW:
-                canvas.drawBitmap(Bitmap.createScaledBitmap(imageDraw, getShorterSide(canvas),getShorterSide(canvas),false),0,0,null);
+                canvas.drawBitmap(Bitmap.createScaledBitmap(imageDraw,getShorterSide(canvas), getShorterSide(canvas), false),0,0,null );
                 break;
         }
     }
@@ -51,7 +55,8 @@ public class VictoryScreenGraphic {
         imageDefeat  = Bitmap.createBitmap(image  ,1000,0   ,1000,1000);
         imageWhiteWins = Bitmap.createBitmap(image,0   ,1000,1000,1000);
         imageBlackWins = Bitmap.createBitmap(image,1000,1000,1000,1000);
-        imageDraw = Bitmap.createBitmap(image,2000,0,1000,1000);
+        imageDraw = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.drawpic);
+      //  imageDraw = Bitmap.createBitmap(image,2000,0,1000,1000);
     }
 
     private int getShorterSide(Canvas canvas){
