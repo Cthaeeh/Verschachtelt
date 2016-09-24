@@ -53,11 +53,6 @@ public class AISettings extends AppCompatActivity {
 
     private void setUpUI(){
         //Setup the UI-Elements of The AISettingsActivity
-
-        Drawable background = getResources().getDrawable(R.drawable.background_one);
-        if (background != null) {
-            background.setAlpha(30);
-        }
         TextView aboutAI = (TextView) findViewById(R.id.aboutAIInfoText);   //Make about ai text scrollable
         aboutAI.setMovementMethod(new ScrollingMovementMethod());
         aboutAI.setText(Html.fromHtml(getString(R.string.aboutAI)));
