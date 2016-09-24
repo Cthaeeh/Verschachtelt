@@ -66,6 +66,7 @@ public class AISettings extends AppCompatActivity {
         difficulty = (TextView) findViewById(R.id.textView_difficulty);
         difficulty.setText(getString(R.string.difficulty_text) + " 0/3");
         Button launchPvAI = (Button) findViewById(R.id.button_start_Game);
+        launchPvAI.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         launchPvAI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

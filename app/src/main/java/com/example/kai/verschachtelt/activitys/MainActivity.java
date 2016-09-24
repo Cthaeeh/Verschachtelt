@@ -2,6 +2,7 @@ package com.example.kai.verschachtelt.activitys;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private void setUpUI() {
         //Setup the UI-Elements of The MainActivity
         Button launchPVP = (Button) findViewById(R.id.launch_PvP_Button);
+        launchPVP.setBackgroundColor(getResources().getColor(R.color.buttonColor));
         launchPVP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button launchPuzzleSelection = (Button) findViewById(R.id.launch_Puzzle_Selection_Button);
+        launchPuzzleSelection.setBackgroundColor(getResources().getColor(R.color.buttonColor));
         launchPuzzleSelection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -52,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Button launchPvAI = (Button) findViewById(R.id.launch_PvAI_Button);
+        launchPvAI.setBackgroundColor(getResources().getColor(R.color.buttonColor));
         launchPvAI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
