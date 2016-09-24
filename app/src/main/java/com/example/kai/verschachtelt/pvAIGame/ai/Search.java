@@ -97,7 +97,7 @@ public class Search {
         if (player == MoveGen.WHITE){
             for(int move : MoveGen.generatePossibleMoves()){    //Go through available moves.
                 MoveGen.makeMove(move);
-                if(!MoveGen.wasLegalMove(move)){
+                if(depth>1 && !MoveGen.wasLegalMove(move)){
                     MoveGen.unMakeMove(move);
                     continue;
                 }
@@ -118,7 +118,7 @@ public class Search {
         } else {
             for(int move : MoveGen.generatePossibleMoves()){    //Go through available moves.
                 MoveGen.makeMove(move);
-                if(!MoveGen.wasLegalMove(move)){
+                if(depth>1 && !MoveGen.wasLegalMove(move)){
                     MoveGen.unMakeMove(move);
                     continue;
                 }
@@ -160,10 +160,12 @@ public class Search {
             if(moves.length==0) return α;
             for(int move : MoveGen.generateCaptureMoves()){
                 MoveGen.makeMove(move);
+                /*
                 if(!MoveGen.wasLegalCapture(move)){        //TODO Check if this is too slow
                     MoveGen.unMakeMove(move);
                     continue;
                 }
+                */
                 short val = quiescence(depth - 1, α, β);
                 MoveGen.unMakeMove(move);
                 if(val > α){
@@ -181,10 +183,12 @@ public class Search {
             if(moves.length==0)return β;
             for(int move : moves){
                 MoveGen.makeMove(move);
+                /*
                 if(!MoveGen.wasLegalCapture(move)){         //TODO Check if this is too slow
                     MoveGen.unMakeMove(move);
                     continue;
                 }
+                */
                 short val = quiescence(depth - 1, α, β);
                 MoveGen.unMakeMove(move);
                 if(val < β){
