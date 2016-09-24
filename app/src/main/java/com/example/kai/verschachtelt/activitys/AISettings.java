@@ -2,6 +2,8 @@ package com.example.kai.verschachtelt.activitys;
 
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Html;
@@ -51,9 +53,15 @@ public class AISettings extends AppCompatActivity {
 
     private void setUpUI(){
         //Setup the UI-Elements of The AISettingsActivity
+
+        Drawable background = getResources().getDrawable(R.drawable.background_one);
+        if (background != null) {
+            background.setAlpha(30);
+        }
         TextView aboutAI = (TextView) findViewById(R.id.aboutAIInfoText);   //Make about ai text scrollable
         aboutAI.setMovementMethod(new ScrollingMovementMethod());
         aboutAI.setText(Html.fromHtml(getString(R.string.aboutAI)));
+        aboutAI.setTextColor(Color.BLACK);
         seekBar = (SeekBar) findViewById(R.id.seekBar);
         difficulty = (TextView) findViewById(R.id.textView_difficulty);
         difficulty.setText(getString(R.string.difficulty_text) + " 0/3");
