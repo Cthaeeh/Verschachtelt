@@ -109,7 +109,7 @@
        },
        {
           "Id": 13,
-          "Name": "Albert Becker vs. Eduard Glass,1928" ,
+          "Name": "Becker vs. Glass,1928" ,
           "Description": "White to move and win in 4 moves" ,
           "DifficultyAsString": "International Master" ,
           "DifficultyAsInt": 4,
@@ -506,7 +506,7 @@
           {
          "Id": 57,
          "Name": "Hard mate in 2 moves",
-         "Description": "White to move and mate in  moves" ,
+         "Description": "White to move and mate in 2 moves" ,
          "DifficultyAsString": "FIDE Master" ,
          "DifficultyAsInt": 3,
          "Positions":["1b6/1B2pQ2/8/4k1B1/3r4/1N1R4/5n2/1K5b w - - 0 1","1b6/4pQ2/8/4k1B1/3rB3/1N1R4/5n2/1K5b b - - 0 1","1b6/4pQ2/8/6B1/3rk3/1N1R4/5n2/1K5b w - - 0 2","1b6/4pQ2/8/6B1/3rk3/1N2R3/5n2/1K5b b - - 0 2"],
@@ -515,7 +515,7 @@
           {
          "Id": 58,
          "Name": "Difficult win in 3 moves",
-         "Description": "White to move and mate in  moves" ,
+         "Description": "White to move and mate in 3 moves" ,
          "DifficultyAsString": "International Master" ,
          "DifficultyAsInt": 4,
          "Positions":["8/pk1B4/p7/2K1p3/8/8/4Q3/8 w - - 0 1","8/pk6/p7/2K1p3/8/7B/4Q3/8 b - - 0 1","8/pk6/p7/2K5/4p3/7B/4Q3/8 w - - 0 2","8/pk6/p7/2K5/4p1Q1/7B/8/8 b - - 0 2","8/pk6/8/p1K5/4p1Q1/7B/8/8 w - - 0 3","2Q5/pk6/8/p1K5/4p3/7B/8/8 b - - 0 3"],
@@ -524,7 +524,7 @@
            {
           "Id": 59,
           "Name": "Beautiful mate in 2 moves",
-          "Description": "White to move and mate in  moves" ,
+          "Description": "White to move and mate in 2 moves" ,
           "DifficultyAsString": "FIDE Master" ,
           "DifficultyAsInt": 3,
           "Positions":["2kr4/K1pp4/1p6/8/8/8/7Q/3R4 w - - 0 1","2kr4/K1pp4/1p1Q4/8/8/8/8/3R4 b - - 0 1","2kr4/K2p4/1p1p4/8/8/8/8/3R4 w - - 0 2","2kr4/K2p4/1p1p4/8/8/8/8/2R5 b - - 0 2"],
