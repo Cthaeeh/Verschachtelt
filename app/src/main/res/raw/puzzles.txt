@@ -59,7 +59,7 @@
      "Description": "White to move and win in 2 moves",
      "DifficultyAsString": "Candidate Master",
      "DifficultyAsInt": 2 ,
-     "Positions": ["4r3/pbpn2n1/1p1prp1k/8/2PP2PB/P5N1/2B2R1P/R5K1 w - - 1 0  ", "4r3/pbpn2n1/1p1prR1k/8/2PP2PB/P6N/2B4P/R5K1 b - - 0 0 ","4r3/pbp3n1/1p1prn1k/8/2PP2PB/P6N/2B4P/R5K1 w - - 0 1", "4r3/pbp3n1/1p1prn1k/6P1/2PP3B/P6N/2B4P/R5K1 b - - 0 1 " ],
+     "Positions": ["4r3/pbpn2n1/1p1prp1k/8/2PP2PB/P5N1/2B2R1P/R5K1 w - - 0 1","4r3/pbpn2n1/1p1prR1k/8/2PP2PB/P5N1/2B4P/R5K1 b - - 0 1","4r3/pbp3n1/1p1prn1k/8/2PP2PB/P5N1/2B4P/R5K1 w - - 0 2","4r3/pbp3n1/1p1prn1k/6P1/2PP3B/P5N1/2B4P/R5K1 b - - 0 2"],
      "Solved": false
     },
     {
@@ -672,6 +672,51 @@
         "DifficultyAsString": "FIDE Master" ,
         "DifficultyAsInt": 3,
         "Positions":["r2q4/p2nR1bk/1p1Pb2p/4p2p/3nN3/B2B3P/PP1Q2P1/6K1 w - - 0 1","r2q4/p2nR1bk/1p1PbN1p/4p2p/3n4/B2B3P/PP1Q2P1/6K1 b - - 0 1","r2q3k/p2nR1b1/1p1PbN1p/4p2p/3n4/B2B3P/PP1Q2P1/6K1 w - - 0 2","r2q3k/p2nR1b1/1p1PbN1Q/4p2p/3n4/B2B3P/PP4P1/6K1 b - - 0 2","r2q3k/p2nR3/1p1PbN1b/4p2p/3n4/B2B3P/PP4P1/6K1 w - - 0 3","r2q3k/p2n3R/1p1PbN1b/4p2p/3n4/B2B3P/PP4P1/6K1 b - - 0 3"],
+        "Solved": false
+        },
+        {
+        "Id": 76,
+        "Name": "Shamkovich vs. Trubman, 1990",
+        "Description": "White to move and mate in 2 moves" ,
+        "DifficultyAsString": "Candidate Master" ,
+        "DifficultyAsInt": 2,
+        "Positions":["5r1k/pp1n1p1p/5n1Q/3p1pN1/3P4/1P4RP/P1r1qPP1/R5K1 w - - 0 1","5Q1k/pp1n1p1p/5n2/3p1pN1/3P4/1P4RP/P1r1qPP1/R5K1 b - - 0 1","5n1k/pp3p1p/5n2/3p1pN1/3P4/1P4RP/P1r1qPP1/R5K1 w - - 0 2","5n1k/pp3N1p/5n2/3p1p2/3P4/1P4RP/P1r1qPP1/R5K1 b - - 0 2"],
+        "Solved": false
+        },
+        {
+        "Id": 77,
+        "Name": "Rogers vs. Klaric, 1984",
+        "Description": "White to move and mate in 2 moves" ,
+        "DifficultyAsString": "Candidate Master" ,
+        "DifficultyAsInt": 2,
+        "Positions":["1nbk1b1r/1r6/p2P2pp/1B2PpN1/2p2P2/2P1B3/7P/R3K2R w - - 0 1","1nbk1b1r/1r6/pB1P2pp/1B2PpN1/2p2P2/2P5/7P/R3K2R b - - 0 1","1nbk1b1r/8/pr1P2pp/1B2PpN1/2p2P2/2P5/7P/R3K2R w - - 0 2","1nbk1b1r/5N2/pr1P2pp/1B2Pp2/2p2P2/2P5/7P/R3K2R b - - 0 2"],
+        "Solved": false
+        },
+        {
+        "Id": 78,
+        "Name": "Ivanchuk vs. Ivanovic,1988",
+        "Description": "White to move and mate in 2 moves" ,
+        "DifficultyAsString": "International Master" ,
+        "DifficultyAsInt": 4,
+        "Positions":["3n4/1R6/p5k1/2B5/1P3PK1/r7/8/8 w - - 0 1","3n4/1R6/p5k1/2B2P2/1P4K1/r7/8/8 b - - 0 1","3n4/1R6/p4k2/2B2P2/1P4K1/r7/8/8 w - - 0 2","3n4/1R6/p4k2/5P2/1P1B2K1/r7/8/8 b - - 0 2"],
+        "Solved": false
+        },
+        {
+        "Id": 79,
+        "Name": "Distl vs. Rozsipal, 1900",
+        "Description": "White to move and mate in 3 moves" ,
+        "DifficultyAsString": "FIDE Master" ,
+        "DifficultyAsInt": 3,
+        "Positions":["r1b1kb1r/pp2nppp/2pQ4/8/2q1P3/8/P1PB1PPP/3RK2R w - - 0 1","r1bQkb1r/pp2nppp/2p5/8/2q1P3/8/P1PB1PPP/3RK2R b - - 0 1","r1bk1b1r/pp2nppp/2p5/8/2q1P3/8/P1PB1PPP/3RK2R w - - 0 2","r1bk1b1r/pp2nppp/2p5/B7/2q1P3/8/P1P2PPP/3RK2R b - - 0 2","r1b1kb1r/pp2nppp/2p5/B7/2q1P3/8/P1P2PPP/3RK2R w - - 0 3", "r1bRkb1r/pp2nppp/2p5/B7/2q1P3/8/P1P2PPP/4K2R b - - 0 3"],
+        "Solved": false
+        },
+        {
+        "Id": 80,
+        "Name": "Bannik vs. Kurass, 1963",
+        "Description": "White to move and mate in 3 moves" ,
+        "DifficultyAsString": "FIDE Master" ,
+        "DifficultyAsInt": 3,
+        "Positions":["5Q2/6r1/6pp/7k/2pq1P2/P5RP/1P4PK/8 w - - 0 1","5Q2/6r1/6pp/6Rk/2pq1P2/P6P/1P4PK/8 b - - 0 1","5Q2/6r1/6p1/6pk/2pq1P2/P6P/1P4PK/8 w - - 0 2","7Q/6r1/6p1/6pk/2pq1P2/P6P/1P4PK/8 b - - 0 2","7Q/7r/6p1/6pk/2pq1P2/P6P/1P4PK/8 w - - 0 3", "8/7Q/6p1/6pk/2pq1P2/P6P/1P4PK/8 b - - 0 3"],
         "Solved": false
         }
 ]

@@ -55,7 +55,7 @@ public class VictoryScreenGraphic {
         imageDefeat  = Bitmap.createBitmap(image  ,1000,0   ,1000,1000);
         imageWhiteWins = Bitmap.createBitmap(image,0   ,1000,1000,1000);
         imageBlackWins = Bitmap.createBitmap(image,1000,1000,1000,1000);
-        imageDraw = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.drawpic);
+        imageDraw = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.drawbackground);
       //  imageDraw = Bitmap.createBitmap(image,2000,0,1000,1000);
     }
 
