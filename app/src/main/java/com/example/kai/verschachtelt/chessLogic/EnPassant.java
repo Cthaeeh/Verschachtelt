@@ -4,6 +4,7 @@ import java.util.Arrays;
 
 /**
  * Created by ivayl on 12.09.2016.
+ * For managing en-passant possibilities, and moves
  */
 public class EnPassant {
 
@@ -19,7 +20,7 @@ public class EnPassant {
     public int opponentPawn;
 
     private static RuleBook ruleBook = new RuleBook(); // the one and only rulebook
-    boolean[] possibleMoves = new boolean[64];
+    private boolean[] possibleMoves = new boolean[64];
     private Chessman[] chessmen;
 
     /**
@@ -36,7 +37,7 @@ public class EnPassant {
      */
     public EnPassant(EnPassant toCopy){
         chessmen = Chessman.deepCopy(toCopy.chessmen);
-        enPassantPossibilities = Arrays.copyOf(toCopy.enPassantPossibilities, enPassantPossibilities.length);;
+        enPassantPossibilities = Arrays.copyOf(toCopy.enPassantPossibilities, enPassantPossibilities.length);
         opponentPawn = toCopy.opponentPawn;
     }
 

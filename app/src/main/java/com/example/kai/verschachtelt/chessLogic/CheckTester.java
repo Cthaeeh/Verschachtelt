@@ -98,7 +98,7 @@ public class CheckTester {
      * A method, which checks, if there are any possible moves, a certain figure can make
      * @return if the player has any possible move left with a figure
      */
-    public static boolean hasMoveLeft(boolean[] possibleDestinations){
+    private static boolean hasMoveLeft(boolean[] possibleDestinations){
         for(int i = 0; i < 64; i++){
             if(possibleDestinations[i]==true) return true;
         }

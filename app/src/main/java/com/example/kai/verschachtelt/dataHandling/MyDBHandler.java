@@ -25,16 +25,16 @@ import java.util.ArrayList;
 public class MyDBHandler extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "puzzles.db";
-    public static final String TABLE_PUZZLES  = "puzzles";
+    private static final String TABLE_PUZZLES  = "puzzles";
 
     //Column names
-    public static final String COL_1_ID = "_id";
-    public static final String COL_2_NAME = "NAME";
-    public static final String COL_3_DESCRIPTION = "DESCRIPTION";
-    public static final String COL_4_DiFFICULTY_INT = "DIFFICULTY_INT";
-    public static final String COL_5_DIFFICULTY_STRING = "DIFFICULTY_STRING";
-    public static final String COL_6_POSITIONS = "POSITIONS";
-    public static final String COL_7_SOLVED = "SOLVED";
+    private static final String COL_1_ID = "_id";
+    private static final String COL_2_NAME = "NAME";
+    private static final String COL_3_DESCRIPTION = "DESCRIPTION";
+    private static final String COL_4_DiFFICULTY_INT = "DIFFICULTY_INT";
+    private static final String COL_5_DIFFICULTY_STRING = "DIFFICULTY_STRING";
+    private static final String COL_6_POSITIONS = "POSITIONS";
+    private static final String COL_7_SOLVED = "SOLVED";
 
     public MyDBHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);

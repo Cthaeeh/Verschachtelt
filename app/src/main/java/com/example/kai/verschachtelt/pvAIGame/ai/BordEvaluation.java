@@ -129,7 +129,7 @@ public class BordEvaluation {
     private static final int  WEST  = -1;
 
     private static int pieceNumber;
-    public static boolean isEndgame;
+    private static boolean isEndgame;
 
     /**
      * Evaluates a Board. E.g it looks for what player this board is favorable.

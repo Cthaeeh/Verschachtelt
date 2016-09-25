@@ -84,7 +84,7 @@ public final class MoveAsInt {
         return moveAsString;
     }
 
-    final  static String mailBox[] = {
+    private final  static String mailBox[] = {
             "X", "X", "X", "X", "X", "X", "X", "X", "X","X",
             "X", "X", "X", "X", "X", "X", "X", "X", "X","X",
             "X","a8","b8","c8","d8","e8","f8","g8","h8","X",

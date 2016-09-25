@@ -7,7 +7,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * Created by Kai on 12.08.2016.
@@ -51,7 +50,7 @@ public class Puzzle implements Comparable<Puzzle>{
      *  Factory method to convert an array of JSON objects into a list of objects
      */
     public static ArrayList<Puzzle> fromJson(JSONArray jsonObjects) {
-        ArrayList<Puzzle> puzzles = new ArrayList<Puzzle>();
+        ArrayList<Puzzle> puzzles = new ArrayList<>();
         for (int i = 0; i < jsonObjects.length(); i++) {
             try {
                 puzzles.add(new Puzzle(jsonObjects.getJSONObject(i)));

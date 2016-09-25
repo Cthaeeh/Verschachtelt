@@ -24,9 +24,9 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private GamePanel gamePanel;
     private RetainedFragment dataFragment;      //A Fragment to store data, because this Activity is destroyed when the screen orientation changes
 
-    Button undoButton,redoButton,showNextMoveButton,surrenderButton;
-    TextView description;
-    GameType gameType;
+    private Button undoButton,redoButton,showNextMoveButton,surrenderButton;
+    private TextView description;
+    private GameType gameType;
 
     public enum GameType{
         CHESS_PvP,CHESS_PvAI,PUZZLE

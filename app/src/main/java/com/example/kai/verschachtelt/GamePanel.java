@@ -46,8 +46,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
     public InputHandler inputHandler;
 
     //Resolution of Background Image
-    public static final int WIDTH = 1080;
-    public static final int HEIGHT = 1920;
+    private static final int WIDTH = 1080;
+    private static final int HEIGHT = 1920;
 
     public GamePanel(Context context,AttributeSet attributeSet){
         super(context,attributeSet);

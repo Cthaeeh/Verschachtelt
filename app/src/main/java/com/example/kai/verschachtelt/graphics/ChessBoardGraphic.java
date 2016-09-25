@@ -26,9 +26,6 @@ public class ChessBoardGraphic {
         paint.setStrokeWidth(3);
     }
 
-    public void update(){
-
-    }
     public void draw(Canvas canvas){
         squareSize = GamePanel.squareSize;      //Very ugly must be changed ! TODO find a better solution than this
         float[] pts = getLinePts();             //Starting and end Points of all Lines
@@ -49,8 +46,6 @@ public class ChessBoardGraphic {
     //Ugly code ahead ;)
     private Rect[] getRects() {
         Rect[] rects = new Rect[32];//
-
-        int   rectCount = 0;          //Just a counter to go through the array
 
         for(int i = 0;i < 32; i++){
             int x = (i%4)*2;

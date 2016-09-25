@@ -2,7 +2,6 @@ package com.example.kai.verschachtelt.pvpGame;
 
 import com.example.kai.verschachtelt.ChessGame;
 import com.example.kai.verschachtelt.InputHandler;
-import com.example.kai.verschachtelt.chessLogic.Chessman;
 import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
 
 /**
