@@ -19,6 +19,7 @@ import java.util.ArrayList;
  * Created by Kai on 12.08.2016.
  */
 public class PuzzlesAdapter extends ArrayAdapter<Puzzle> {
+
     public PuzzlesAdapter(Context context, ArrayList<Puzzle> puzzles) {
         super(context,0,puzzles);
     }
