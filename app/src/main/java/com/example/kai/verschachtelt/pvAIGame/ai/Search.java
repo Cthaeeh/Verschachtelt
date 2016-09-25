@@ -210,4 +210,13 @@ public class Search {
     public int getNodesInQuiescence(){
         return nodesInQuiescence;
     }
+
+    /**
+     * Sets the MAX_DEPTH for the quiescence-search.
+     * This value heavily influences the playing strength an speed of the AI
+     * @param depth
+     */
+    public void setMAX_DEPTH(int depth){
+        MAX_DEPTH = depth;
+    }
 }

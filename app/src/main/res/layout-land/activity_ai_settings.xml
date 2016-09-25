@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/seekBar"
         android:layout_marginRight="20dp"
-        android:max="3"
+        android:max="6"
         android:layout_above="@+id/button_start_Game"
         android:layout_alignStart="@+id/button_start_Game" />
 
