@@ -36,6 +36,10 @@ public class Search {
             for (int move : MoveGen.generatePossibleMoves()) {      //Get all Moves
                 if(task.isCancelled()) break;
                 MoveGen.makeMove(move);
+                if (!MoveGen.wasLegalMove(move)) {           //Illegal Move
+                    MoveGen.unMakeMove(move);
+                    continue;
+                }
                 short val = alphabeta(depth - 1, α, β);             //Go deeper
                 MoveGen.unMakeMove(move);
                 if (α < val || bestMove == 0) {
@@ -54,6 +58,10 @@ public class Search {
             for (int move : MoveGen.generatePossibleMoves()) {
                 if(task.isCancelled()) break;
                 MoveGen.makeMove(move);
+                if (!MoveGen.wasLegalMove(move)) {
+                    MoveGen.unMakeMove(move);
+                    continue;
+                }
                 short val = alphabeta(depth - 1, α, β);
                 MoveGen.unMakeMove(move);
                 if (β > val || bestMove == 0) {
@@ -89,6 +97,10 @@ public class Search {
         if (player == MoveGen.WHITE){
             for(int move : MoveGen.generatePossibleMoves()){    //Go through available moves.
                 MoveGen.makeMove(move);
+                if(depth>1 && !MoveGen.wasLegalMove(move)){
+                    MoveGen.unMakeMove(move);
+                    continue;
+                }
                 short val = alphabeta(depth - 1, α, β);
                 MoveGen.unMakeMove(move);
                 if(α < val){
@@ -106,6 +118,10 @@ public class Search {
         } else {
             for(int move : MoveGen.generatePossibleMoves()){    //Go through available moves.
                 MoveGen.makeMove(move);
+                if(depth>1 && !MoveGen.wasLegalMove(move)){
+                    MoveGen.unMakeMove(move);
+                    continue;
+                }
                 short val = alphabeta(depth - 1, α, β);
                 MoveGen.unMakeMove(move);
                 if(val < β){
@@ -144,6 +160,12 @@ public class Search {
             if(moves.length==0) return α;
             for(int move : MoveGen.generateCaptureMoves()){
                 MoveGen.makeMove(move);
+                /*
+                if(!MoveGen.wasLegalCapture(move)){        //TODO Check if this is too slow
+                    MoveGen.unMakeMove(move);
+                    continue;
+                }
+                */
                 short val = quiescence(depth - 1, α, β);
                 MoveGen.unMakeMove(move);
                 if(val > α){
@@ -161,6 +183,12 @@ public class Search {
             if(moves.length==0)return β;
             for(int move : moves){
                 MoveGen.makeMove(move);
+                /*
+                if(!MoveGen.wasLegalCapture(move)){         //TODO Check if this is too slow
+                    MoveGen.unMakeMove(move);
+                    continue;
+                }
+                */
                 short val = quiescence(depth - 1, α, β);
                 MoveGen.unMakeMove(move);
                 if(val < β){
@@ -179,8 +207,16 @@ public class Search {
         return leafsSearched;
     }
 
-
     public int getNodesInQuiescence(){
         return nodesInQuiescence;
+    }
+
+    /**
+     * Sets the MAX_DEPTH for the quiescence-search.
+     * This value heavily influences the playing strength an speed of the AI
+     * @param depth
+     */
+    public void setMAX_DEPTH(int depth){
+        MAX_DEPTH = depth;
     }
 }

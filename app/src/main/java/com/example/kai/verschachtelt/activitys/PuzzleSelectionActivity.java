@@ -66,6 +66,7 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
         super.onRestart();
         puzzleArray.clear();
         puzzleArray.addAll(myDBHandler.getAllPuzzles()); //synchronise db with puzzleArray
+        Collections.sort(puzzleArray);
         adapter.notifyDataSetChanged();
     }
 

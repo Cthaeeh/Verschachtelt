@@ -22,7 +22,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="30dp"
-        android:max="3"/>
+        android:max="6"/>
 
 
     <TextView

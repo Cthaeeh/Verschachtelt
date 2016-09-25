@@ -15,12 +15,52 @@ public class AI_Task extends AsyncTask<byte[], Integer, Move> {
     private int bestMove;
     private static final String TAG = "AI_Task";
     private int SEARCH_DEPTH = 3;   //Default value
+    private int MAX_DEPTH = -3;     //quiesce search depth.
     private int extraInfo;          //Extra info like castling rights, en passant , half move clock.
 
     public AI_Task(AI_Listener listener, int difficulty, int extraInfo) {
         this.listener = listener;
         this.extraInfo = extraInfo;
-        SEARCH_DEPTH = difficulty+3;
+        setDepths(difficulty);
+    }
+
+    /**
+     * Sets the values of SEARCH_DEPTH and MAX_DEPTH,
+     * the only variables were we can control the AI-Strength to
+     * hand picked values.  //TODO move them to res/values/integers
+     * @param difficulty
+     */
+    private void setDepths(int difficulty) {
+        switch (difficulty){
+            case 0:
+                SEARCH_DEPTH = 1;       //Schäferzug is possible here
+                MAX_DEPTH = 0;
+                break;
+            case 1:
+                SEARCH_DEPTH = 2;
+                MAX_DEPTH = -2;
+                break;
+            case 2:
+                SEARCH_DEPTH = 3;
+                MAX_DEPTH = -2;
+                break;
+            case 3:
+                SEARCH_DEPTH = 3;
+                MAX_DEPTH = -3;
+                break;
+            case 4:
+                SEARCH_DEPTH = 4;
+                MAX_DEPTH = -3;
+                break;
+            case 5:
+                SEARCH_DEPTH = 5;
+                MAX_DEPTH = -3;
+                break;
+            case 6:
+                SEARCH_DEPTH = 6;
+                MAX_DEPTH = -3;
+                break;
+        }
     }
 
     @Override
@@ -41,6 +81,7 @@ public class AI_Task extends AsyncTask<byte[], Integer, Move> {
      */
     private void getBestMove(byte[] root) {
         Search search = new Search(root,this,extraInfo);
+        search.setMAX_DEPTH(MAX_DEPTH);
         long startTime = System.currentTimeMillis();            //For performance measurement
         bestMove = search.performSearch(SEARCH_DEPTH); //Calc best move.
 

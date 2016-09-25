@@ -59,7 +59,7 @@ public class AISettings extends AppCompatActivity {
         aboutAI.setTextColor(Color.BLACK);
         seekBar = (SeekBar) findViewById(R.id.seekBar);
         difficulty = (TextView) findViewById(R.id.textView_difficulty);
-        difficulty.setText(getString(R.string.difficulty_text) + " 0/3");
+        difficulty.setText(getString(R.string.difficulty_text) + " 0/6");
         Button launchPvAI = (Button) findViewById(R.id.button_start_Game);
         launchPvAI.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         launchPvAI.setOnClickListener(new View.OnClickListener() {
