@@ -17,6 +17,7 @@ public class MoveGen {
     protected static final byte KNIGHT_WHITE    = 3;
     protected static final byte BISHOP_WHITE    = 2;
     protected static final byte PAWN_WHITE      = 1;
+
     //Following must be negative !
     protected static final byte KING_BLACK      = -KING_WHITE;
     protected static final byte QUEEN_BLACK     = -QUEEN_WHITE;
@@ -49,6 +50,9 @@ public class MoveGen {
     private static final short[] victimScore = {600,500,400,300,200,100,0,100,200,300,400,500,600};
     private static short[][]     mvvLVAScore = new short[13][13];
 
+    private static int[]  präCalcMoves = new int[100];  //Sometimes we want to calc the follwing moves beforehand to see if castling / check was legal.
+    private static boolean wasPreCalculated = false;    //Then we can reuse them
+
     private static byte    moveCounter = 0;             //The number of moves we found for the current position.
     private static byte[] board;                        //HERE HAPPENS EVERYTHING
     private static boolean[] attackMap = new boolean[120];
@@ -71,6 +75,10 @@ public class MoveGen {
      * Method returns all possibleMoves at the current state of the board.
      */
     public static int[] generatePossibleMoves(){
+        if(wasPreCalculated){
+            wasPreCalculated = false;
+            return präCalcMoves;
+        }
         moveCounter = 0;
         if(board[PLAYER_ON_TURN] == BLACK){     //TODO make this if else
             for(int i = 21;i<99;i++){   //Iterate through board.
@@ -123,6 +131,41 @@ public class MoveGen {
     }
 
     /**
+     *
+     * @param previousMove  the move we check if it was legal
+     * @return returns true if the move was legal in view of the follwing moves. false if not.
+     */
+    public static boolean wasLegalMove(int previousMove) {   //TODO make this work
+        attackMap = new boolean[120];                //Reset attack map
+        präCalcMoves = generatePossibleMoves();     //generate pseudo legal Possible Moves.
+        wasPreCalculated = true;
+        if(abs(board[MoveAsInt.getDest(previousMove)]) == KING_WHITE){  //If the moving piece is a King;
+            if (MoveAsInt.getDest(previousMove) - MoveAsInt.getStart(previousMove) == 2) {   //And he did a jump to the right, e.g moved 2 pieces
+                if(attackMap[MoveAsInt.getStart(previousMove)])return false;
+                if(attackMap[MoveAsInt.getStart(previousMove)+1])return false;
+            }
+            if (MoveAsInt.getDest(previousMove) - MoveAsInt.getStart(previousMove) == -2) {   //And he did a jump to the left, e.g moved 2 pieces
+                if(attackMap[MoveAsInt.getStart(previousMove)])return false;
+                if(attackMap[MoveAsInt.getStart(previousMove)-1])return false;
+            }
+        }
+        for(int i = 0; i< 99;i++){
+            if((board[i]*(-board[PLAYER_ON_TURN]) == KING_WHITE) && (attackMap[i])){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static byte abs(byte b) {
+        byte value;
+        if(b<0){
+            return (byte) (b*-1);
+        }
+        return b;
+    }
+
+    /**
      * Very simple move ordering.
      * @param moves
      */
@@ -157,6 +200,8 @@ public class MoveGen {
             }
             attackMap[destinationPos]=true;
         }
+        generateKingSideCastlingMoves(startPos);
+        generateQueenSideCastlingMoves(startPos);
     }
 
     private static void generateBlackKingMoves(int startPos) {
@@ -167,6 +212,48 @@ public class MoveGen {
                 addMove(startPos,destinationPos);
             }
             attackMap[destinationPos]=true;
+        }
+        generateKingSideCastlingMoves(startPos);
+        generateQueenSideCastlingMoves(startPos);
+    }
+
+
+    //Castling
+    /**
+     * Adds pseudo legal castling moves queen side.
+     * Checks if the path is free and the pieces have been moved before,
+     * BUT NOT if the king is in check or one of the fields are attacked.
+     * @param startPos position of the king
+     */
+
+    private static void generateQueenSideCastlingMoves(int startPos) {
+        //Two neighboring fields must be empty.
+        if(!(startPos==25 || startPos == 95))return;
+        if(board[startPos-1]!=EMPTY)return;
+        if(board[startPos-2]!=EMPTY)return;
+        if(board[startPos-3]!=EMPTY)return;
+        //Castling must be allowed (chessman have not been moved before.)
+        if(BoardInfoAsInt.getQueenSideWhiteCastlingRight(extraInfoStack.peek())) addMove(startPos,startPos-2);
+        if(BoardInfoAsInt.getQueenSideBlackCastlingRight(extraInfoStack.peek())) addMove(startPos,startPos-2);
+    }
+
+    /**
+     * Adds pseudo legal castling moves king side.
+     * Checks if the path is free and the pieces have been moved before,
+     * BUT NOT if the king is in check or one of the fields are attacked.
+     * @param startPos position of the king
+     */
+    private static void generateKingSideCastlingMoves(int startPos) {
+        //Two neighboring fields must be empty.
+        if(!(startPos==25 || startPos == 95))return;
+        if(board[startPos+1]!=EMPTY)return;
+        if(board[startPos+2]!=EMPTY)return;
+        //Castling must be allowed (chessman have not been moved before.)
+        if(BoardInfoAsInt.getKingSideWhiteCastlingRight(extraInfoStack.peek())){
+            addMove(startPos,startPos+2);
+        }
+        if(BoardInfoAsInt.getKingSideBlackCastlingRight(extraInfoStack.peek())){
+            addMove(startPos,startPos+2);
         }
     }
 
@@ -422,6 +509,32 @@ public class MoveGen {
             board[MoveAsInt.getDest(move)] = board[MoveAsInt.getStart(move)];   //Make regular movement
         }
         board[MoveAsInt.getStart(move)] = EMPTY;
+        //Make castling
+        if(abs(board[MoveAsInt.getDest(move)]) == KING_WHITE){  //If the moving piece is a King (*PLAYER_ON_TURN always gives the positive value;
+            if(MoveAsInt.getDest(move)-MoveAsInt.getStart(move)==2) {   //And he did a jump to the right, e.g moved 2 pieces
+                board[MoveAsInt.getDest(move)-1] = board[MoveAsInt.getDest(move)+1];    //Move the rook accordingly
+                board[MoveAsInt.getDest(move)+1] = EMPTY;                                   //Let him jump over the King
+            }
+            if(MoveAsInt.getDest(move)-MoveAsInt.getStart(move)==-2) {   //And he did a jump to the left, e.g moved 2 pieces
+                board[MoveAsInt.getDest(move)+1] = board[MoveAsInt.getDest(move)-2];    //Move the rook accordingly
+                board[MoveAsInt.getDest(move)-2] = EMPTY;                                   //Let him jump over the King
+            }
+            if(board[PLAYER_ON_TURN]==WHITE){
+                newExtraInfo = BoardInfoAsInt.setQueenSideWhiteCastlingRight(false,newExtraInfo);
+                newExtraInfo = BoardInfoAsInt.setKingSideWhiteCastlingRight(false,newExtraInfo);
+            }else {
+                newExtraInfo = BoardInfoAsInt.setQueenSideBlackCastlingRight(false,newExtraInfo);
+                newExtraInfo = BoardInfoAsInt.setKingSideBlackCastlingRight(false,newExtraInfo);
+            }
+        }
+        if(board[MoveAsInt.getDest(move)] == ROOK_WHITE){
+            if(MoveAsInt.getStart(move)==98)newExtraInfo = BoardInfoAsInt.setKingSideWhiteCastlingRight(false,newExtraInfo);
+            if(MoveAsInt.getStart(move)==91)newExtraInfo = BoardInfoAsInt.setKingSideWhiteCastlingRight(false,newExtraInfo);
+        }
+        if(board[MoveAsInt.getDest(move)] == ROOK_BLACK){
+            if(MoveAsInt.getStart(move)==28)newExtraInfo = BoardInfoAsInt.setKingSideBlackCastlingRight(false,newExtraInfo);
+            if(MoveAsInt.getStart(move)==21)newExtraInfo = BoardInfoAsInt.setKingSideBlackCastlingRight(false,newExtraInfo);
+        }
         //TODO  en passant
         //Change player on turn.
         board[PLAYER_ON_TURN]*=-1;
@@ -431,18 +544,31 @@ public class MoveGen {
 
     public static void unMakeMove(int move){
         extraInfoStack.pop();       //Go back in the history of extra Info.
-        board[PLAYER_ON_TURN]*=-1;  //Change player on turn.
+        wasPreCalculated = false;   //If we go back in "time" the präCalculated moves aren´t applicable anymore.
+        board[PLAYER_ON_TURN]*=-1;
+
         if(MoveAsInt.getCapture(move) == KING_WHITE || MoveAsInt.getCapture(move) == KING_BLACK ){
             board[GAME_HAS_ENDED] = INACCESSIBLE;
         }
-        if(MoveAsInt.getPromotedPiece(move)!=0){
-            board[MoveAsInt.getStart(move)] = (byte) (PAWN_WHITE*board[PLAYER_ON_TURN]);    //Unmake Promotion. //Important Note, this way the choosen color is correct because the color is changed previously
-        }else {//Unmake regular movement
-            board[MoveAsInt.getStart(move)] = board[MoveAsInt.getDest(move)];               //Take chessman back
-        }
-        board[MoveAsInt.getDest(move)] = MoveAsInt.getCapture(move);                        //Take eventually captured piece back.
 
-        // TODO en passant, promotion . I work on that in another branch.
+        if(MoveAsInt.getPromotedPiece(move)!=0){
+            board[MoveAsInt.getStart(move)] = (byte) (PAWN_WHITE*board[PLAYER_ON_TURN]);    //Unmake Promotion.
+        }else {//Unmake regular movement
+            board[MoveAsInt.getStart(move)] = board[MoveAsInt.getDest(move)];   //Take chessman back
+        }
+        board[MoveAsInt.getDest(move)] = MoveAsInt.getCapture(move);        //Take eventually captured piece back.
+        //Unmake eventual castling //TODO check carefully
+        if(board[MoveAsInt.getStart(move)] == KING_WHITE || board[MoveAsInt.getStart(move)] == KING_BLACK){  //If the moving piece is a King;
+            if(MoveAsInt.getDest(move)-MoveAsInt.getStart(move)==2) {   //And he did a jump to the right, e.g moved 2 pieces
+                board[MoveAsInt.getDest(move)+1] = board[MoveAsInt.getDest(move)-1];    //Move the rook accordingly
+                board[MoveAsInt.getDest(move)-1] = EMPTY;                                   //Let him jump over the King
+            }
+            if(MoveAsInt.getDest(move)-MoveAsInt.getStart(move)==-2) {   //And he did a jump to the left, e.g moved 2 pieces
+                board[MoveAsInt.getDest(move)-2] = board[MoveAsInt.getDest(move)+1];    //Move the rook accordingly
+                board[MoveAsInt.getDest(move)+1] = EMPTY;                                   //Let him jump over the King
+            }
+        }
+        //TODO en passant
     }
 
     public static byte[] getBoard() {
@@ -466,6 +592,10 @@ public class MoveGen {
      * E.g moves that change the material value.
      */
     public static int[] generateCaptureMoves(){
+        if(wasPreCalculated){
+            wasPreCalculated = false;
+            return präCalcMoves;
+        }
         moveCounter = 0;
         if(board[PLAYER_ON_TURN] == BLACK){     //TODO make this if else
             for(int i = 21;i<99;i++){   //Iterate through board.
@@ -515,6 +645,23 @@ public class MoveGen {
             }
         }
         return sortMoves(Arrays.copyOf(moves,moveCounter));
+    }
+
+    /**
+     *
+     * @param previousMove  the move we check if it was legal
+     * @return returns true if the move was legal in view of the follwing moves. false if not.
+     */
+    public static boolean wasLegalCapture(int previousMove) {   //TODO make this work
+        attackMap = new boolean[120];                //Reset attack map
+        präCalcMoves = generateCaptureMoves();     //generate pseudo legal Possible Moves.
+        wasPreCalculated = true;
+        for(int i = 0; i< 99;i++){
+            if((board[i]*(-board[PLAYER_ON_TURN]) == KING_WHITE) && (attackMap[i])){
+                return false;
+            }
+        }
+        return true;
     }
 
     //King
