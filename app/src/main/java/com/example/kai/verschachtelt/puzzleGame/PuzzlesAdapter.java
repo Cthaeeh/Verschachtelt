@@ -43,9 +43,13 @@ public class PuzzlesAdapter extends ArrayAdapter<Puzzle> {
         puzzleName.setText(puzzle.getName());
         puzzleDescription.setText(puzzle.getDescription());
         puzzleDifficulty.setText(puzzle.getDifficultyAsText());
-        if(puzzle.getSolved()){
+        if(puzzle.getSolved()){ //If the puzzle is displayed set the solved icon to ic_done_black
             Bitmap bitmap = (BitmapFactory.decodeResource(MainActivity.getContext().getResources(),R.mipmap.ic_done_black_48dp));
             puzzleSolved.setImageBitmap(bitmap);
+        }else {
+            puzzleSolved.setImageResource(android.R.color.transparent);
+            //We always have to set the puzzleSolved ImageView because
+            // otherwise the ListView will recycle the one from the last screen (6/5 puzzles before)
         }
 
         // Return the completed view to render on screen
