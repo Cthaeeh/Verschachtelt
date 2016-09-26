@@ -8,10 +8,10 @@ import android.util.Log;
  * Creadits go to: http://www.tutorialspoint.com/javaexamples/data_stack.htm
  */
 public class IntStack {
-    private int maxSize;
+    private final int maxSize;
     private int[] stackArray;
     private int top;        //The pointer if you want so.
-    private String TAG = "IntStack";
+    private final String TAG = "IntStack";
 
     /**
      * Creates a new empty stack

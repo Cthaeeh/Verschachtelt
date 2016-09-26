@@ -133,13 +133,4 @@ public class PawnChangeGraphic {
             return canvas.getWidth();
         }
     }
-
-    public void activate(){
-        this.isActivated = true;
-    }
-
-    public void deactivate() {
-        this.isActivated = false;
-}
-
 }

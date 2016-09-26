@@ -9,7 +9,7 @@ import android.graphics.Paint;
  */
 public class Background {
 
-    private Bitmap image;
+    private final Bitmap image;
     private int x,y;        //Position of Background
     private String info;    //Dev info to display
     public static String ai_debug_info = "";

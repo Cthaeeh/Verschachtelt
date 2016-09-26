@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:text="@string/difficulty_text"
         android:textColor="@color/difficultyTextColor"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:id="@+id/textView_difficulty"
         android:layout_above="@+id/seekBar"
         android:layout_marginBottom="20dp"

@@ -11,7 +11,6 @@ import com.example.kai.verschachtelt.chessLogic.Chessman;
 public class InputHandler {
 
     private float squareSize;
-    private float figureChangeSize;
     private InputEvent inputEvent;
 
     public void processTouchEvent(MotionEvent event){

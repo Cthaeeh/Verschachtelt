@@ -20,10 +20,9 @@ public class AI implements AI_Listener {
 
     private final  int difficulty;
     private final  Chessman.Color aiColor;  //The color of the pieces the ai moves
-    private byte[] byteBoard ;              //Inside the ai a boardCurrent is represented by byte array
     private ChessGamePvAI boardComplex;
 
-    int mailbox64[] = {                 //For transferring a 8x8 to a 10x12 board. See: https://chessprogramming.wikispaces.com/10x12+Board
+    private final int mailbox64[] = {                 //For transferring a 8x8 to a 10x12 board. See: https://chessprogramming.wikispaces.com/10x12+Board
                 21, 22, 23, 24, 25, 26, 27, 28,
                 31, 32, 33, 34, 35, 36, 37, 38,
                 41, 42, 43, 44, 45, 46, 47, 48,
@@ -50,7 +49,7 @@ public class AI implements AI_Listener {
      */
     public void calculateMove(ChessGamePvAI game) {
         this.boardComplex = game;
-        byteBoard = toByteArray(game.getComplexBoard());
+        byte[] byteBoard = toByteArray(game.getComplexBoard()); //Inside the ai a boardCurrent is represented by byte array
         int boardAdditionalInfo = extractExtraInfo(game.getComplexBoard());   //The AI needs to know about castling states and such.
         ai_task = new AI_Task(this,difficulty,boardAdditionalInfo).execute(byteBoard);
     }
@@ -72,18 +71,18 @@ public class AI implements AI_Listener {
     /**
      * The method takes a boardCurrent object and translates it to a byte array of length 130.
      * See: https://chessprogramming.wikispaces.com/10x12+Board
-     * the 10 extra values are fore stroring the player on turn.
+     * the 10 extra values are fore storing the player on turn.
      * to represent different chessmen it uses constants.
      * @param board
      * @return
      */
-    public byte[] toByteArray(ChessBoardComplex board) {
+    private byte[] toByteArray(ChessBoardComplex board) {
         byte[] byteBoard = getEmptyByteBoard();
         for (int i = 0;i<64;i++){                       //Iterate over board.
             if(board.getChessManAt(i)!=null){
                 Chessman chessman = board.getChessManAt(i);
                 switch (chessman.getColor()){
-                    case BLACK:                         //Depending on the chessman a constant is choosen.
+                    case BLACK:                         //Depending on the chessman a constant is chosen.
                         switch (chessman.getPiece()){
                             case KING:  byteBoard[mailbox64[i]] = MoveGen.KING_BLACK;break;
                             case QUEEN: byteBoard[mailbox64[i]] = MoveGen.QUEEN_BLACK;break;
@@ -131,7 +130,7 @@ public class AI implements AI_Listener {
     }
 
     /**
-     * The AsyncTask calculating the moves can call this method when finnished with calculations.
+     * The AsyncTask calculating the moves can call this method when finished with calculations.
      * @param move  the move the asyncTask calculated.
      */
     @Override

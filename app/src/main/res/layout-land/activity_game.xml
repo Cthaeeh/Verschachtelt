@@ -6,7 +6,7 @@
     >
 
     <com.example.kai.verschachtelt.GamePanel
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
         android:id="@+id/surfaceViewForGame"
         android:layout_weight="1"

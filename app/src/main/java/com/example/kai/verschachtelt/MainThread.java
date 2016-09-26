@@ -1,7 +1,6 @@
 package com.example.kai.verschachtelt;
 
 import android.graphics.Canvas;
-import android.provider.Settings;
 import android.view.SurfaceHolder;
 
 
@@ -9,12 +8,12 @@ import android.view.SurfaceHolder;
  * Created by Kai on 08.08.2016.
  */
 public class MainThread extends Thread{
-    private int FPS = 30;                   //FPS Cap
+    private final int FPS = 30;                   //FPS Cap
     private double averageFPS;
     private final SurfaceHolder surfaceHolder;
     private GamePanel gamePanel;
     private boolean running;
-    public static Canvas canvas;
+    private static Canvas canvas;
 
     public MainThread(SurfaceHolder surfaceHolder, GamePanel gamePanel){
         super();
@@ -54,7 +53,7 @@ public class MainThread extends Thread{
             waitTime = targetTime -timeItTookMillis;                    //to cap the FPS we need to wait
 
             try{
-                this.sleep(waitTime);
+                sleep(waitTime);
             }catch (Exception e){
             }
             totalTime += System.nanoTime()-startTime;

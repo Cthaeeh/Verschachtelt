@@ -9,7 +9,7 @@ import com.example.kai.verschachtelt.chessLogic.Chessman;
  */
 public class Move {
     //For transferring a 10x12 to a 8x8 board. See: https://chessprogramming.wikispaces.com/10x12+Board
-    final int mailbox[] = {
+    private final int mailbox[] = {
         -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
                 -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
                 -1,  0,  1,  2,  3,  4,  5,  6,  7, -1,

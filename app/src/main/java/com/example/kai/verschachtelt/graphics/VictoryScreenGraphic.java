@@ -3,7 +3,6 @@ package com.example.kai.verschachtelt.graphics;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Paint;
 
 import com.example.kai.verschachtelt.R;
 import com.example.kai.verschachtelt.activitys.MainActivity;
@@ -14,7 +13,6 @@ import com.example.kai.verschachtelt.activitys.MainActivity;
 public class VictoryScreenGraphic {
 
     private Bitmap image, imageVictory, imageDefeat, imageWhiteWins, imageBlackWins, imageDraw;
-    private int x,y;        //Position of Background
     private VictoryState victoryState = null;
     public enum VictoryState {
         VICTORY,DEFEAT,WHITEWIN,BLACKWIN, DRAW

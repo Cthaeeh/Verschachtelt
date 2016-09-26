@@ -27,11 +27,11 @@ public class MoveGen {
     protected static final byte PAWN_BLACK      = -PAWN_WHITE;
 
     //Offsets are always the delta-values for a specific chessman on a 10x12-Board.
-    protected static final byte[] KING_OFFSETS =    { -11, -10, -9, -1, 1,  9, 10, 11 };
-    protected static final byte[] KNIGHT_OFFSETS =  { -21, -19,-12, -8, 8, 12, 19, 21 };
-    protected static final byte[] QUEEN_OFFSETS =   { -11, -10, -9, -1, 1,  9, 10, 11 };
-    protected static final byte[] ROOK_OFFSETS =    { -10,  -1,  1, 10};
-    protected static final byte[] BISHOP_OFFSETS =  { -11,  -9,  9, 11};
+    private static final byte[] KING_OFFSETS =    { -11, -10, -9, -1, 1,  9, 10, 11 };
+    private static final byte[] KNIGHT_OFFSETS =  { -21, -19,-12, -8, 8, 12, 19, 21 };
+    private static final byte[] QUEEN_OFFSETS =   { -11, -10, -9, -1, 1,  9, 10, 11 };
+    private static final byte[] ROOK_OFFSETS =    { -10,  -1,  1, 10};
+    private static final byte[] BISHOP_OFFSETS =  { -11,  -9,  9, 11};
 
     protected static final byte INACCESSIBLE = -111;
     protected static final byte EMPTY = 0;
@@ -158,7 +158,6 @@ public class MoveGen {
     }
 
     private static byte abs(byte b) {
-        byte value;
         if(b<0){
             return (byte) (b*-1);
         }
@@ -496,7 +495,7 @@ public class MoveGen {
         moveCounter++;
     }
 
-    public static byte[] makeMove(int move){
+    public static void makeMove(int move){
         int newExtraInfo =  extraInfoStack.peek();
 
         if(board[MoveAsInt.getDest(move)] == KING_WHITE || board[MoveAsInt.getDest(move)] == KING_BLACK )
@@ -539,7 +538,6 @@ public class MoveGen {
         //Change player on turn.
         board[PLAYER_ON_TURN]*=-1;
         extraInfoStack.push(newExtraInfo);
-        return board;
     }
 
     public static void unMakeMove(int move){

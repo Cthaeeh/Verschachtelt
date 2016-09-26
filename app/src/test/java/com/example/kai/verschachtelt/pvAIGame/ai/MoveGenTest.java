@@ -2,10 +2,6 @@ package com.example.kai.verschachtelt.pvAIGame.ai;
 
 import org.junit.Test;
 
-import java.util.Arrays;
-
-import static org.junit.Assert.*;
-
 /**
  * Created by Kai on 18.09.2016.
  * For testing the move generation.

@@ -14,10 +14,19 @@
 		</div>
 		<div id="content">
 			<p>
-				The AI uses Alpha–beta pruning to search the search tree and find the best move.
-			</p>
-			<p>
-				The Evaluation Class considers the Material Weight, the positions of knights and bishops and pawns, the pawn structure....
+				To decide on a move, the ai looks at all it´s available moves, and what move the human player can play in response. And then again what the ai can play in response… and so on.
+            </p>
+            <p>
+                In other words, the ai looks moves ahead, just like humans do. The playing strength is determined by the number of moves the computer looks ahead.
+            </p>
+            <p>
+                Despite the ai is able to look hundred thousands moves ahead, to find a good move in an acceptable time, it tries to looks at the more likely moves first and might ignore other moves, if it finds good moves before.
+            </p>
+            <p>
+                This technique is called Alpha–beta pruning and is used by most chess programs. This works the better the moves are sorted into likely and unlikely moves. To do that captures are ordered before quiet moves.
+            </p>
+            <p>
+                After the AI found a series of likely moves she will evaluate the board, to see how good the outcome was. Material Weight, positions, the pawn structure, and the king safety are evaluated.
 			</p>
 		</div>
 		<div id="footer">

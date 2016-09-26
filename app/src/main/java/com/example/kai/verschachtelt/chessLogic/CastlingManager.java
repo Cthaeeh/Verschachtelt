@@ -22,7 +22,7 @@ public class CastlingManager {
     private final int QUEEN_SIDE_WHITE_MOVE= 58;
 
     private static RuleBook ruleBook = new RuleBook();                  //There is just one Rulebook for every game of chess.
-    boolean[] possibleMoves = new boolean[64];
+    private boolean[] possibleMoves = new boolean[64];
     private Chessman[] chessmen;
 
     /**
