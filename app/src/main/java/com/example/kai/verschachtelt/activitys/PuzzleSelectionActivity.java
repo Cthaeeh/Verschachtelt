@@ -99,7 +99,7 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
     }
 
     /**
-     * when PuzzleDownloadTask is finnished downloading it calls back
+     * when PuzzleDownloadTask is finished downloading, it calls back
      * @param result a String e.g the HTML file from the Webaddress.
      */
     @Override
@@ -112,7 +112,7 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
                 puzzleArray.clear();    //Reasons can be found here: http://stackoverflow.com/questions/15422120/notifydatasetchange-not-working-from-custom-adapter
                 puzzleArray.addAll(myDBHandler.getAllPuzzles()); //synchronise db with puzzleArray
                 Collections.sort(puzzleArray); //Sort puzzleArray
-                adapter.notifyDataSetChanged(); //Inform adapter that shit changed.
+                adapter.notifyDataSetChanged(); //Inform adapter that something was changed.
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -131,7 +131,7 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
     }
 
     /**
-     * If someone touches an the refresh Button in the actionBar refresh puzzles.
+     * If someone touchesthe refresh Button in the actionBar, this method refreshes the puzzles.
      * @param item what item in the actionBar was touched.
      * @return if we took care of the touch.
      */
