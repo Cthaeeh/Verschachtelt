@@ -98,8 +98,6 @@ public class GameActivity extends Activity implements View.OnClickListener{
         menuButton.setText(R.string.menu_button);
         undoButton.setOnClickListener(this);
         menuButton.setOnClickListener(this);
-        // hide the button for now!
-        //menuButton.setVisibility(View.GONE);
     }
 
     @Override

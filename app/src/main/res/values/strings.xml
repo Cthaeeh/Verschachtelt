@@ -7,35 +7,136 @@
 
     <string name="puzzle_selection_headline">Select a Puzzle!</string>
     <string name="difficulty_text">Difficulty: </string>
-    <string name="aboutAI"><![CDATA[
-    <div id="page">
-		<div id="header">
-			<h1>About the AI</h1>
-		</div>
-		<div id="content">
-			<p>
-				To decide on a move, the AI looks at all its available possibilities and what move the human player could play in response. And then again the AI searches for a next own move ... and so on.
-            </p>
-            <p>
-                In other words, the AI looks moves ahead, just like humans do. The playing ability is determined by the number of moves the computer looks ahead.
-            </p>
-            <p>
-                Despite its ability to look hundreds of thousands moves ahead, to find a good continuation in an acceptable time, the AI tries to investigate the more likely moves first and might ignore others after finding a very good one before.
-            </p>
-            <p>
-                This technique is called Alpha–beta pruning and is used by most chess programs. The better the moves are sorted into likely and unlikely ones, the better it works. Therefore captures have a higher priority than quiet moves.
-            </p>
-            <p>
-                After finding a series of likely moves, the AI evaluates the board, to see how good the outcome was. Material weight, positions, the pawn structure, and the king safety come into account.
-			</p>
-		</div>
-		<div id="footer">
-			<p>
-				Programmed by <a href="/" target="_blank">Kai and Ivo</a>
-			</p>
-		</div>
-	</div>
-    ]]>
+    <string name="aboutAI"><![CDATA[<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type">
+</head>
+<body class="c12">
+<h1 class="c1 c11" id="h.ohq6na5gtdhr">
+<span class="c4">
+About the AI
+</span>
+</h1>
+<p class="c0">
+<span>
+</span>
+</p>
+<p class="c1">
+<span class="c6 c13">
+The following text tries to give an insight into how Chess-Engines work in general and especially how ours is set up.
+</span>
+</p>
+<p class="c0">
+<span>
+</span>
+</p>
+<p class="c1">
+<span class="c3">
+To decide on a move, our chess-AI looks at all
+</span>
+<span class="c3">
+its available
+</span>
+<span class="c3">
+&nbsp;possibilities and what move the human player could play in response. And then again the AI searches for a next own move ... and so on.
+</span>
+</p>
+<p class="c0">
+<span class="c3">
+</span>
+</p>
+<p class="c1">
+<span class="c3">
+In other words, the AI looks moves ahead, just like humans do. The playing ability is determined by the number of moves the computer looks ahead.
+</span>
+</p>
+<p class="c0">
+<span class="c3">
+</span></p>
+<p class="c1">
+<span class="c3">
+Despite its ability to look hundreds of thousands moves ahead, to find a good continuation in an acceptable time, the AI uses various techniques:
+</span>
+</p>
+<h2 class="c1 c11" id="h.s9n3ya92iw1g">
+<span class="c4">
+Alpha&ndash;beta pruning
+</span>
+</h2>
+<p class="c1"><span class="c3">
+Used by a majority of today&#39;s chess engines, this is the most important technique and a basis for the others. In general, more likely moves are investigated before unlikely ones. In this way the AI is searching for reasonable moves and therefore might ignore some possible continuations.
+</span>
+</p>
+<h2 class="c1 c11" id="h.ohq6na5gtdhr">
+<span class="c4">
+MVV-LVA Move Ordering
+</span>
+</h2>
+<p class="c1">
+<span class="c6 c7">
+(Most valuable Victim-Least valuable aggressor)
+</span>
+</p>
+<p class="c1">
+<span class="c3">
+This is the main procedure for determining the likelihood of a move.
+<br>
+Mostly, capture moves are more interesting than quiet moves.
+</span>
+</p>
+<p class="c1">
+<span class="c3">
+Further, within the capture moves there are more and less interesting ones, depending on how they change the game, e.g. capturing a queen with a pawn is way more valuable than capturing a pawn with a queen.
+</span>
+</p>
+<h2 class="c1 c11" id="h.swx82vspor5z">
+<span class="c4">
+Killer Heuristics
+</span>
+</h2>
+<p class="c1"><span class="c3">
+Even the quiet moves have an order of interestingness.
+<br>
+Since this depends on the particular game situation, the program looks at the history of moves that turned out to be interesting and if they are applicable again, it gives them a try again.
+</span>
+</p>
+<p class="c0">
+<span class="c3">
+</span>
+</p>
+<p class="c0">
+<span class="c3">
+</span>
+</p>
+<h2 class="c1 c11" id="h.992z97rbk2so">
+<span class="c4">
+Board Evaluation
+</span>
+</h2>
+<p class="c1">
+<span class="c3">
+After finding a series of likely moves, the AI evaluates the board, to see how good the outcome was. Material weight, positions, the pawn structure, and the king safety come into account.
+</span>
+</p>
+<p class="c0">
+<span class="c3">
+</span>
+</p>
+<p class="c1">
+<span class="c3">
+There are various other techniques, that can increase the playing strength of a chess program greatly but are not used in ours. &nbsp;
+</span>
+</p>
+<p class="c0">
+<span class="c3">
+</span>
+</p>
+<p class="c0">
+<span>
+</span>
+</p>
+<div class="c9">
+</div></body></html>]]>
     </string>
 
 
