@@ -14,7 +14,5 @@ public interface InputEvent {
 
     void handleUndoButton();
 
-    void handleRedoButton();
-
     void handleShowNextMoveButton();
 }

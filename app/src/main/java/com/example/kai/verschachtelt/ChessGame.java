@@ -1,5 +1,7 @@
 package com.example.kai.verschachtelt;
 
+import android.widget.Button;
+
 import com.example.kai.verschachtelt.chessLogic.ChessBoardComplex;
 import com.example.kai.verschachtelt.chessLogic.ChessBoardSimple;
 import com.example.kai.verschachtelt.chessLogic.ChessBoardSimple.SquareState;
@@ -97,10 +99,6 @@ public class ChessGame implements InputEvent {
         }
     }
 
-    @Override
-    public void handleRedoButton() {
-        //TODO implement this or delete the Button.
-    }
 
     @Override
     public void handleShowNextMoveButton() {

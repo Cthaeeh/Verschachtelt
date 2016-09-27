@@ -66,10 +66,6 @@ public class InputHandler {
         this.inputEvent = inputEvent;
     }
 
-    public void processRedoButton() {
-        inputEvent.handleRedoButton();
-    }
-
     public void processUndoButton() {
         inputEvent.handleUndoButton();
     }

@@ -24,7 +24,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     private GamePanel gamePanel;
     private RetainedFragment dataFragment;      //A Fragment to store data, because this Activity is destroyed when the screen orientation changes
 
-    private Button undoButton,redoButton,showNextMoveButton,surrenderButton;
+    private Button undoButton,menuButton,showNextMoveButton,surrenderButton;
     private TextView description;
     private GameType gameType;
 
@@ -93,13 +93,13 @@ public class GameActivity extends Activity implements View.OnClickListener{
      */
     private void setupUndoRedo() {
         undoButton = (Button) findViewById(R.id.button1);
-        redoButton = (Button) findViewById(R.id.button2);
+        menuButton = (Button) findViewById(R.id.button2);
         undoButton.setText(R.string.undo_button);
-        redoButton.setText(R.string.redo_button);
+        menuButton.setText(R.string.menu_button);
         undoButton.setOnClickListener(this);
-        redoButton.setOnClickListener(this);
+        menuButton.setOnClickListener(this);
         // hide the button for now!
-        redoButton.setVisibility(View.GONE);
+        //menuButton.setVisibility(View.GONE);
     }
 
     @Override
@@ -107,8 +107,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
         if(view == undoButton){
             gamePanel.inputHandler.processUndoButton();
         }
-        if(view == redoButton){
-            gamePanel.inputHandler.processRedoButton();
+        if(view == menuButton){
+            onMenuPressed();
         }
         if(view == showNextMoveButton){
             gamePanel.inputHandler.processShowNextMoveButton();
@@ -141,7 +141,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
         new AlertDialog.Builder(this)
                 .setIcon(R.mipmap.ic_warning_black_36dp)
                 .setTitle("Exit the Game")
-                .setMessage("Are you sure you want to quit this game?" +
+                .setMessage("Are you sure you want to quit this game and return to the main menu?" +
                             " It will not be saved!")
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener()
                 {
@@ -161,4 +161,23 @@ public class GameActivity extends Activity implements View.OnClickListener{
         dataFragment.setData(gamePanel.getGame());
     }
 
+
+    public void onMenuPressed(){
+        new AlertDialog.Builder(this)
+                .setIcon(R.mipmap.ic_warning_black_36dp)
+                .setTitle("Exit the Game")
+                .setMessage("Are you sure you want to quit this game?" +
+                        " It will not be saved!")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //launching the MainActivity after deciding for yes
+                        Intent startMain = new Intent(GameActivity.this, MainActivity.class);
+                        startActivity(startMain);
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
 }
