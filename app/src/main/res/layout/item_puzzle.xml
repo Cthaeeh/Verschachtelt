@@ -34,9 +34,9 @@
         android:layout_marginRight="10dp"
         android:textStyle="normal"
         android:textColor="@color/gameModeColor"
-        android:layout_alignParentBottom="true"
-        android:layout_alignStart="@+id/puzzleDescription"
-        android:layout_marginBottom="13dp" />
+        android:layout_marginTop="11dp"
+        android:layout_alignTop="@+id/doneIcon"
+        android:layout_alignStart="@+id/puzzleDescription" />
 
     <ImageView
         android:layout_width="48dp"
