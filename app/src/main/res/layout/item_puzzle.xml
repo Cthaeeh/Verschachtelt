@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="120dp"
     android:background="@drawable/border">
     <TextView
         android:layout_width="wrap_content"
@@ -19,11 +19,11 @@
         android:layout_height="wrap_content"
         android:text="Description"
         android:textSize="16dp"
-        android:layout_marginTop="8dp"
         android:id="@+id/puzzleDescription"
         android:layout_marginLeft="20dp"
-        android:layout_below="@+id/puzzleName"
-        android:layout_alignStart="@+id/puzzleName" />
+        android:layout_centerVertical="true"
+        android:layout_alignStart="@+id/puzzleName"
+        android:layout_marginStart="10dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -32,10 +32,10 @@
         android:textSize="16dp"
         android:id="@+id/puzzleDifficulty"
         android:layout_marginRight="10dp"
-        android:layout_marginBottom="8dp"
         android:textStyle="normal"
         android:textColor="@color/gameModeColor"
-        android:layout_alignParentBottom="true"
+        android:layout_marginTop="11dp"
+        android:layout_alignTop="@+id/doneIcon"
         android:layout_alignStart="@+id/puzzleDescription" />
 
     <ImageView
