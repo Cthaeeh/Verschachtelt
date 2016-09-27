@@ -14,19 +14,19 @@
 		</div>
 		<div id="content">
 			<p>
-				To decide on a move, the ai looks at all it´s available moves, and what move the human player can play in response. And then again what the ai can play in response… and so on.
+				To decide on a move, the AI looks at all its available possibilities and what move the human player could play in response. And then again the AI searches for a next own move ... and so on.
             </p>
             <p>
-                In other words, the ai looks moves ahead, just like humans do. The playing strength is determined by the number of moves the computer looks ahead.
+                In other words, the AI looks moves ahead, just like humans do. The playing ability is determined by the number of moves the computer looks ahead.
             </p>
             <p>
-                Despite the ai is able to look hundred thousands moves ahead, to find a good move in an acceptable time, it tries to looks at the more likely moves first and might ignore other moves, if it finds good moves before.
+                Despite its ability to look hundreds of thousands moves ahead, to find a good continuation in an acceptable time, the AI tries to investigate the more likely moves first and might ignore others after finding a very good one before.
             </p>
             <p>
-                This technique is called Alpha–beta pruning and is used by most chess programs. This works the better the moves are sorted into likely and unlikely moves. To do that captures are ordered before quiet moves.
+                This technique is called Alpha–beta pruning and is used by most chess programs. The better the moves are sorted into likely and unlikely ones, the better it works. Therefore captures have a higher priority than quiet moves.
             </p>
             <p>
-                After the AI found a series of likely moves she will evaluate the board, to see how good the outcome was. Material Weight, positions, the pawn structure, and the king safety are evaluated.
+                After finding a series of likely moves, the AI evaluates the board, to see how good the outcome was. Material weight, positions, the pawn structure, and the king safety come into account.
 			</p>
 		</div>
 		<div id="footer">
