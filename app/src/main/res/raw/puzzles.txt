@@ -29,7 +29,7 @@
  {
    "Id": 4 ,
    "Name": "Mate in one",
-   "Description": "Mate with Black",
+   "Description": "Mate with White",
    "DifficultyAsString": "Beginner",
    "DifficultyAsInt": 1 ,
    "Positions": ["1nkr2r1/2pn1p2/p7/8/P1NP2q1/6Pp/1P1Q1P1P/1BR1R1K1 w - - 0 1" , " 1nkr2r1/2pn1p2/p2N4/8/P2P2q1/6Pp/1P1Q1P1P/1BR1R1K1 b - - 0 1 "],
@@ -136,11 +136,11 @@
         },
         {
          "Id": 16,
-         "Name": "Becker vs Glass, 1928" ,
-         "Description": "Mate in 2 moves for White" ,
+         "Name": "Elegant mate in one" ,
+         "Description": "Mate in 1 move for White" ,
          "DifficultyAsString": "Beginner" ,
          "DifficultyAsInt": 1 ,
-         "Positions":["rk6/N4ppp/Qp2q3/3p4/8/8/5PPP/2R3K1 w - - 0 1", "rkR5/N4ppp/Qp2q3/3p4/8/8/5PPP/6K1 b - - 0 1", "rkq5/N4ppp/Qp6/3p4/8/8/5PPP/6K1 w - - 0 2", "rkQ5/N4ppp/1p6/3p4/8/8/5PPP/6K1 b - - 0 2"],
+         "Positions":["1n2R3/r1p2kpp/p2b4/6q1/8/5BB1/PPP3PP/5R1K w - - 0 1", "1n2R3/r1p2kpp/p2b4/6qB/8/6B1/PPP3PP/5R1K b - - 0 1"],
          "Solved": false
         },
         {
@@ -280,11 +280,11 @@
          },
          {
          "Id": 32,
-         "Name": "Nitti vs. Ciocco, 1975",
+         "Name": "Bohatirchuk vs Kopaev, 1938",
          "Description": "White to move and mate in 4 moves" ,
          "DifficultyAsString": "International Master" ,
          "DifficultyAsInt": 4,
-         "Positions":["rqr3k1/3bppBp/3p2P1/p7/1n2P3/1p3P2/1PPQ2P1/2KR3R w - - 0 1","rqr3k1/3bppBP/3p4/p7/1n2P3/1p3P2/1PPQ2P1/2KR3R b - - 0 1","rqr5/3bppkP/3p4/p7/1n2P3/1p3P2/1PPQ2P1/2KR3R w - - 0 2","rqr4Q/3bppk1/3p4/p7/1n2P3/1p3P2/1PPQ2P1/2KR3R b - - 0 2","rqr4Q/3bppk1/3p4/p7/1n2P3/1p3P2/1PPQ2P1/2KR3R w - - 0 3","rq5r/3bppk1/3p4/p5Q1/1n2P3/1p3P2/1PP3P1/2KR3R b - - 0 3","rq3k1r/3bpp2/3p4/p5Q1/1n2P3/1p3P2/1PP3P1/2KR3R w - - 0 4","rq3k1R/3bpp2/3p4/p5Q1/1n2P3/1p3P2/1PP3P1/2KR4 b - - 0 4"],
+         "Positions":["1qbr2k1/5ppp/pn2p3/1prN4/3N1b2/PP1R1BQ1/1BP3PP/3R3K w - - 0 1","1qbr2k1/5pQp/pn2p3/1prN4/3N1b2/PP1R1B2/1BP3PP/3R3K b - - 0 1","1qbr4/5pkp/pn2p3/1prN4/3N1b2/PP1R1B2/1BP3PP/3R3K w - - 0 2","1qbr4/5pkp/pn2N3/1prN4/5b2/PP1R1B2/1BP3PP/3R3K b - - 0 2","1qbr4/5p1p/pn2N1k1/1prN4/5b2/PP1R1B2/1BP3PP/3R3K w - - 0 3","1qbr4/4Np1p/pn2N1k1/1pr5/5b2/PP1R1B2/1BP3PP/3R3K b - - 0 3","1qbr4/4Np1p/pn2N2k/1pr5/5b2/PP1R1B2/1BP3PP/3R3K w - - 0 4","1qbr4/4NpBp/pn2N2k/1pr5/5b2/PP1R1B2/2P3PP/3R3K b - - 0 4"],
          "Solved": false
          },
            {
