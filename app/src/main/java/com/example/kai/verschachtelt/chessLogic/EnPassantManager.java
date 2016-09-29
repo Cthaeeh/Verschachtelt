@@ -6,7 +6,7 @@ import java.util.Arrays;
  * Created by ivayl on 12.09.2016.
  * For managing en-passant possibilities, and moves
  */
-public class EnPassant {
+public class EnPassantManager {
 
     /**
      *boolean array indicating, the pawns on which positions have the possibility of
@@ -17,9 +17,8 @@ public class EnPassant {
     /**
      *the position of the opponent´s pawn, which invoked the en passant possibility
      */
-    public int opponentPawn;
+    private int opponentPawn;
 
-    private static RuleBook ruleBook = new RuleBook(); // the one and only rulebook
     private boolean[] possibleMoves = new boolean[64];
     private Chessman[] chessmen;
 
@@ -27,7 +26,7 @@ public class EnPassant {
      * The standard en-passant constructor
      * @param chessmen
      */
-    public EnPassant(Chessman[] chessmen){
+    public EnPassantManager(Chessman[] chessmen){
         this.chessmen = chessmen;
     }
 
@@ -35,7 +34,7 @@ public class EnPassant {
      * A copy constructor
      * @param toCopy the constructor to be copied
      */
-    public EnPassant(EnPassant toCopy){
+    public EnPassantManager(EnPassantManager toCopy){
         chessmen = Chessman.deepCopy(toCopy.chessmen);
         enPassantPossibilities = Arrays.copyOf(toCopy.enPassantPossibilities, enPassantPossibilities.length);
         opponentPawn = toCopy.opponentPawn;
@@ -45,7 +44,7 @@ public class EnPassant {
      * A method, which checks, which en-passant moves are possible for a certain pawn
      * @param selectedPosition position of the pawn which is going to be moved
      * @param chessmen the current Chessman Array
-     * @return
+     * @return the possible EnPassant Moves
      */
     public boolean[] getPossibleMoves(int selectedPosition, Chessman[] chessmen) {
         this.chessmen = chessmen; //Save the new chessmen array, you got from ChessBoardComplex.
@@ -81,7 +80,7 @@ public class EnPassant {
      * after a pawn jump
      * @param pawnPosition the position of the opponent´s pawn after the jump
      */
-    public void setEnPassantPossibilities(int pawnPosition){
+    private void setEnPassantPossibilities(int pawnPosition){
         /*
         there are max. two fields, for which en passant has to be enabled after a pawn jump,
         but they have to be in a row with the pawn, that has fulfilled a jump of course
@@ -97,12 +96,29 @@ public class EnPassant {
      * resetting the en passant possibilities, which of course are possible only
      * within the one move after a pawn jump
      */
-    public void resetEnPassantPossibilities(){
+    private void resetEnPassantPossibilities(){
         for(int i = 0; i < 16;i++){
             enPassantPossibilities[i] = false;
         }
     }
 
+    /**
+     * For resetting en passant positions or enable a en passant possibility.
+     * @param position what piece moves.
+     */
+    public void handleEnPassant(int position, int selectedPosition, Chessman[] chessmen) {
+        if(chessmen[position].getPiece() == Chessman.Piece.PAWN && Math.abs(position-selectedPosition) == 16){
+            opponentPawn = selectedPosition;
+            setEnPassantPossibilities(position); // activate en passant possibilities after double jump
+        } else resetEnPassantPossibilities();
 
-
+        if(chessmen[position].getPiece() == Chessman.Piece.PAWN  && position == opponentPawn + 8 &&  chessmen[position].getColor() == Chessman.Color.WHITE) {
+            chessmen[opponentPawn + 16] = null;
+            resetEnPassantPossibilities();// en passant removal for white
+        }
+        if(chessmen[position].getPiece() == Chessman.Piece.PAWN && position == opponentPawn - 8 && chessmen[position].getColor() == Chessman.Color.BLACK) {
+            chessmen[opponentPawn - 16] = null;
+            resetEnPassantPossibilities();// en passant removal for black
+        }
+    }
 }

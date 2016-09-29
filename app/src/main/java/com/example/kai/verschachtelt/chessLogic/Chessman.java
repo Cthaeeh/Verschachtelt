@@ -2,12 +2,29 @@ package com.example.kai.verschachtelt.chessLogic;
 
 /**
  * Created by Kai on 10.08.2016.
+ * An instance of this class represents a single chessman.
  */
 public class Chessman {
 
     private final Piece piece;
     private final Color color;
     private boolean hasBeenMoved = false;
+
+    /**
+     Representation of all chess man as enums
+     **/
+    public enum Piece {
+        ROOK, KNIGHT,  BISHOP,  QUEEN,  KING,  PAWN
+    }
+
+    public enum Color {
+        WHITE, BLACK
+    }
+
+    public Chessman(Piece piece, Color color) {
+        this.piece = piece;
+        this.color = color;
+    }
 
     public static Chessman[] getStandartSetup() {
         return new Chessman[]{
@@ -60,22 +77,6 @@ public class Chessman {
                 chessmenCopy[i]=null;
         }
         return chessmenCopy;
-    }
-
-    /**
-     Representation of all chess man as enums
-     **/
-    public enum Piece {
-        ROOK, KNIGHT,  BISHOP,  QUEEN,  KING,  PAWN
-    }
-
-    public enum Color {
-        WHITE, BLACK
-    }
-
-    public Chessman(Piece piece, Color color) {
-        this.piece = piece;
-        this.color = color;
     }
 
     /**

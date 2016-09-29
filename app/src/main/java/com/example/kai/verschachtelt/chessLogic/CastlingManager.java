@@ -5,11 +5,9 @@ package com.example.kai.verschachtelt.chessLogic;
  * This class is for handling all castling moves.
  * You can ask it if a selected chessman can castle.
  * And if the user decides to castle this class can move the King accordingly.
- * //TODO Bug test with FEN parser
- * //TODO Rewrite please, its a mess
  */
 public class CastlingManager {
-    //The castling state, e.g which player can still castle where. Only used for FENParsing.
+    //The castling state, e.g which player can still castle where.
     private boolean queenSideWhiteFEN = true;
     private boolean queenSideBlackFEN = true;
     private boolean kingSideWhiteFEN = true;
@@ -34,7 +32,8 @@ public class CastlingManager {
     }
 
     /**
-     * Copy Constructor
+     * Copy Constructor. This is especially important for
+     * the Redo-Functionality because there are boards copied.
      * @param toCopy the castling object you want to copy.
      */
     public CastlingManager(CastlingManager toCopy){
@@ -72,8 +71,8 @@ public class CastlingManager {
 
     /**
      * Just takes a chessman from location "from" and takes it to location "to".
-     * @param from
-     * @param to
+     * @param from where to move from
+     * @param to where to move to
      */
     private void lightMoveFromTo(int from, int to) {
         if(from >=0 && chessmen[from]!=null){ //If we try to move from a legit position
@@ -104,7 +103,6 @@ public class CastlingManager {
         }
         return possibleMoves;
     }
-
 
     /**
      * Checks if is possible for black to castle queenside.

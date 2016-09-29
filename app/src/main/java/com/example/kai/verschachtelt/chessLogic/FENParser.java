@@ -9,7 +9,6 @@ import android.util.Log;
 public class FENParser {
 
     /**
-     *
      * @param fenNotation   See https://de.wikipedia.org/wiki/Forsyth-Edwards-Notation#Figurenstellung
      * @return              a Chessman array with the cheesmen on the position as in the notation.
      */
@@ -93,8 +92,8 @@ public class FENParser {
         return castlingManager;
     }
 
-    public static EnPassant getEnPassantState(String fenNotation) {
+    public static EnPassantManager getEnPassantState(String fenNotation) {
         //TODO write this
-        return new EnPassant(getChessmen(fenNotation));
+        return new EnPassantManager(getChessmen(fenNotation));
     }
 }

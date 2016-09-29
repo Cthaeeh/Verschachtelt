@@ -21,8 +21,8 @@ public class CheckTester {
     public static boolean[] removeSuicidalMoves(int startingPosition, final Chessman[] currentBoard,final boolean[] pseudoMoves) {
         boolean[] legalMoves = new boolean[64];
         final boolean[] pseudoLegalMoves = Arrays.copyOf(pseudoMoves,pseudoMoves.length);
-        for(int i = 0; i<64; i++){  //Iterate through fields.
-            if(pseudoLegalMoves[i]){   //If this is a possible move destination.
+        for(int i = 0; i<64; i++){      //Iterate through fields.
+            if(pseudoLegalMoves[i]){    //If this is a possible move destination.
                 legalMoves[i] = isLegalMove(startingPosition,i,currentBoard);    //check if its a suicidal move.
             }
         }

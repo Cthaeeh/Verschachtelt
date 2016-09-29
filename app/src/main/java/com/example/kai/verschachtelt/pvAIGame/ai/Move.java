@@ -75,6 +75,10 @@ public class Move {
         }
     }
 
+    /**
+     * TODO write JDoc here
+     * @return
+     */
     public boolean isNullMove(){
         return nullMove;
     }
