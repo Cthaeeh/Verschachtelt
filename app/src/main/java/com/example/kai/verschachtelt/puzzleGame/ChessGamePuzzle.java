@@ -16,9 +16,12 @@ import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
  * When the player makes a move it looks if it was a correct move, if so displays it.
  * When the player solves a puzzle this is saved in the DB.
  */
+
 public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
+
+    private static Toast wrongMoveToast;    //To be able to cancel the previous Toast see: http://stackoverflow.com/questions/10070108/can-i-cancel-previous-toast-when-i-want-to-show-an-other-toast
     public static Puzzle PUZZLE;
-    private int puzzleSteps = 0;          //The number of moves the player made to solve the puzzle.
+    private int puzzleSteps = 0;            //The number of moves the player made to solve the puzzle.
     private boolean puzzleSolved = false;
 
     public ChessGamePuzzle(InputHandler inputHandler) {
@@ -98,7 +101,9 @@ public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
      * That is what we do here.
      */
     private void showWrongMoveInfo() {
-        Toast.makeText(MainActivity.getContext(), MainActivity.getContext().getString(R.string.puzzle_wrong_move_toast), Toast.LENGTH_SHORT).show();
+        if(wrongMoveToast!=null)wrongMoveToast.cancel();
+        wrongMoveToast = Toast.makeText(MainActivity.getContext(), MainActivity.getContext().getString(R.string.puzzle_wrong_move_toast), Toast.LENGTH_SHORT);
+        wrongMoveToast.show();
     }
 
 

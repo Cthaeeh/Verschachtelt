@@ -10,32 +10,40 @@ public class FENParser {
 
     public static ChessNotationMapper mapper;
 
+    private final static String TAG = "FENParser";
+
     /**
      * @param fenNotation   See https://de.wikipedia.org/wiki/Forsyth-Edwards-Notation#Figurenstellung
      * @return              a Chessman array with the cheesmen on the position as in the notation.
      */
     public static Chessman[] getChessmen(String fenNotation) {
-        //TODO make this method a lot safer, because there could be a typo in the fenNoatation and the app should not crash then.
         Chessman[] chessmen = new Chessman[64];
         int boardPosition = 0;
         int charPosition = 0;
-        while(boardPosition<64){ //As long is we haven´t got for every square the piece
-            char ch = fenNotation.charAt(charPosition);
-            charPosition++;
-            //If there is a letter
-            if (Character.isLetter(ch)){
-                chessmen[boardPosition]= getChessmanFromChar(ch);
-                boardPosition++;
-            }
-            //If there is a digit.
-            if (Character.isDigit(ch)){
-                for (int i = boardPosition; i<boardPosition+Character.getNumericValue(ch);i++){
-                    chessmen[i]=null;
+        try {
+            while(boardPosition<64){ //As long is we haven´t got for every square the piece
+                char ch = fenNotation.charAt(charPosition);
+                charPosition++;
+                //If there is a letter
+                if (Character.isLetter(ch)){
+                    chessmen[boardPosition]= getChessmanFromChar(ch);
+                    boardPosition++;
                 }
-                boardPosition+=Character.getNumericValue(ch);
+                //If there is a digit.
+                if (Character.isDigit(ch)){
+                    for (int i = boardPosition; i<boardPosition+Character.getNumericValue(ch);i++){
+                        chessmen[i]=null;
+                    }
+                    boardPosition+=Character.getNumericValue(ch);
+                }
             }
+            return chessmen;
+        } catch (IndexOutOfBoundsException | IllegalArgumentException e){
+            e.printStackTrace();
+            Log.e(TAG , "failed parsing FEN:" + fenNotation);
+            Log.e(TAG , "Will return standardSetup");
+            return Chessman.getStandartSetup();
         }
-        return chessmen;
     }
 
     /**
@@ -44,14 +52,20 @@ public class FENParser {
      * @return              The color if the player that has to move.
      */
     public static Chessman.Color getColor(String fenNotation){
-        if(fenNotation.split(" ")[1].contains("w"))return Chessman.Color.WHITE;
-        else return Chessman.Color.BLACK;
+        try {
+            if(fenNotation.split(" ")[1].contains("w"))return Chessman.Color.WHITE;
+            else return Chessman.Color.BLACK;
+        }catch (IndexOutOfBoundsException e){
+            Log.e(TAG,"Could not parse color.");
+            return Chessman.Color.WHITE;
+        }
     }
 
     /**
      * See https://de.wikipedia.org/wiki/Forsyth-Edwards-Notation#Figurenstellung
      * @param ch    the character to check which chessman is correspondingly
      * @return      the chessman. or null if a invalid character was checked.
+     * @throws      IllegalArgumentException when the char is not recognized.
      */
     private static Chessman getChessmanFromChar(char ch) {
         switch (ch){
@@ -80,18 +94,24 @@ public class FENParser {
             case 'P':
                 return new Chessman(Chessman.Piece.PAWN, Chessman.Color.WHITE);
             default:
-                Log.v("FENParser","could not find chessman correspondingly to this character");
-                return null;
+                Log.e("FENParser","could not find chessman correspondingly to this character");
+                throw new IllegalArgumentException();
         }
     }
 
     public static CastlingManager getCastlingState(String fenNotation) {
-        CastlingManager castlingManager = new CastlingManager(getChessmen(fenNotation));
-        castlingManager.setKingSideWhiteFEN(fenNotation.split(" ")[2].contains("K"));
-        castlingManager.setQueenSideWhiteFEN(fenNotation.split(" ")[2].contains("Q"));
-        castlingManager.setKingSideBlackFEN(fenNotation.split(" ")[2].contains("k"));
-        castlingManager.setQueenSideBlackFEN(fenNotation.split(" ")[2].contains("q"));
-        return castlingManager;
+        try {
+            CastlingManager castlingManager = new CastlingManager(getChessmen(fenNotation));
+            castlingManager.setKingSideWhiteFEN(fenNotation.split(" ")[2].contains("K"));
+            castlingManager.setQueenSideWhiteFEN(fenNotation.split(" ")[2].contains("Q"));
+            castlingManager.setKingSideBlackFEN(fenNotation.split(" ")[2].contains("k"));
+            castlingManager.setQueenSideBlackFEN(fenNotation.split(" ")[2].contains("q"));
+            return castlingManager;
+        } catch (IndexOutOfBoundsException e){
+            e.printStackTrace();
+            Log.e(TAG,"could not parse castling state will return all true");
+            return new CastlingManager(getChessmen(fenNotation));
+        }
     }
 
     public static EnPassantManager getEnPassantState(String fenNotation) {
