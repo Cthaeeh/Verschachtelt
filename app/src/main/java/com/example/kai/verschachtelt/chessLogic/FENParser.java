@@ -8,6 +8,8 @@ import android.util.Log;
  */
 public class FENParser {
 
+    public static ChessNotationMapper mapper;
+
     /**
      * @param fenNotation   See https://de.wikipedia.org/wiki/Forsyth-Edwards-Notation#Figurenstellung
      * @return              a Chessman array with the cheesmen on the position as in the notation.
@@ -93,7 +95,22 @@ public class FENParser {
     }
 
     public static EnPassantManager getEnPassantState(String fenNotation) {
-        //TODO write this
-        return new EnPassantManager(getChessmen(fenNotation));
+        if(fenNotation.split(" ").length < 3) {
+            Log.e("FEN Parser", "Wrong FEN-Notation ");
+            return new EnPassantManager(getChessmen(fenNotation));
+        }
+        EnPassantManager manager = new EnPassantManager(getChessmen(fenNotation));
+        //if the pawn jumped over a third-row field
+        if(mapper.getEnPassantPosition(fenNotation.split(" ")[3]) < 9) {
+            manager.setEnPassantPossibilities(mapper.getEnPassantPosition(fenNotation.split(" ")[3]) + 23);
+            manager.setOpponentPawn(mapper.getEnPassantPosition(fenNotation.split(" ")[3]) + 7);
+        }
+        //if the pawn jumped over a sixth-row field
+        else {
+            manager.setEnPassantPossibilities(mapper.getEnPassantPosition(fenNotation.split(" ")[3]) + 31);
+            manager.setOpponentPawn(mapper.getEnPassantPosition(fenNotation.split(" ")[3]) + 47);
+        }
+
+        return manager;
     }
 }

@@ -15,7 +15,7 @@ public class EnPassantManager {
      */
     private boolean[] enPassantPossibilities = new boolean[16];
     /**
-     *the position of the opponent´s pawn, which invoked the en passant possibility
+     *the initial position of the opponent´s pawn, which invoked the en passant possibility
      */
     private int opponentPawn;
 
@@ -24,10 +24,20 @@ public class EnPassantManager {
 
     /**
      * The standard en-passant constructor
-     * @param chessmen
+     * @param chessmen the current chessman-array
      */
     public EnPassantManager(Chessman[] chessmen){
         this.chessmen = chessmen;
+    }
+
+    /**
+     * additional constructor, which is only for the FENParser for now
+     * @param chessmen the current chessman-array
+     * @param opponentPawn the initial position of the opponent´s pawn, which invoked the en passant possibility
+     */
+    public EnPassantManager(Chessman[] chessmen, int opponentPawn){
+        this.chessmen = chessmen;
+        this.opponentPawn = opponentPawn;
     }
 
     /**
@@ -80,7 +90,7 @@ public class EnPassantManager {
      * after a pawn jump
      * @param pawnPosition the position of the opponent´s pawn after the jump
      */
-    private void setEnPassantPossibilities(int pawnPosition){
+    public void setEnPassantPossibilities(int pawnPosition){
         /*
         there are max. two fields, for which en passant has to be enabled after a pawn jump,
         but they have to be in a row with the pawn, that has fulfilled a jump of course
@@ -120,5 +130,13 @@ public class EnPassantManager {
             chessmen[opponentPawn - 16] = null;
             resetEnPassantPossibilities();// en passant removal for black
         }
+    }
+
+    /**
+     * setter for the opponentPawn value
+     * @param newInt the new value of the variable
+     */
+    public void setOpponentPawn(int newInt){
+        opponentPawn = newInt;
     }
 }
