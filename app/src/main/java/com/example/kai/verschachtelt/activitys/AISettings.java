@@ -20,8 +20,8 @@ import com.example.kai.verschachtelt.R;
  */
 public class AISettings extends AppCompatActivity {
 
-    private SeekBar seekBar;
-    private TextView difficulty;
+    private SeekBar difficultySeekBar;
+    private TextView difficultyText;
     private int difficultyValue = 0;
 
     @Override
@@ -32,19 +32,22 @@ public class AISettings extends AppCompatActivity {
         setUpSeekBar();
     }
 
+    /**
+     * Sets up a SeekBar that is used to choose the difficulty of the ai.
+     */
     private void setUpSeekBar() {
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+        difficultySeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) {
                 difficultyValue = progresValue;
-                difficulty.setText(getString(R.string.difficulty_text) +" "+ difficultyValue + "/" + seekBar.getMax());
+                difficultyText.setText(getString(R.string.difficulty_text) +" "+ difficultyValue + "|" + seekBar.getMax());
             }
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
             }
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                difficulty.setText(getString(R.string.difficulty_text) +" "+ difficultyValue + "/" + seekBar.getMax());
+                difficultyText.setText(getString(R.string.difficulty_text) +" "+ difficultyValue + "|" + seekBar.getMax());
             }
         });
 
@@ -52,13 +55,12 @@ public class AISettings extends AppCompatActivity {
 
     private void setUpUI(){
         //Setup the UI-Elements of The AISettingsActivity
-        TextView aboutAI = (TextView) findViewById(R.id.aboutAIInfoText);   //Make about ai text scrollable
-        aboutAI.setMovementMethod(new ScrollingMovementMethod());
-        aboutAI.setText(Html.fromHtml(getString(R.string.aboutAI)));
-        aboutAI.setTextColor(Color.BLACK);
-        seekBar = (SeekBar) findViewById(R.id.seekBar);
-        difficulty = (TextView) findViewById(R.id.textView_difficulty);
-        difficulty.setText(getString(R.string.difficulty_text) + " 0/6");
+        setUpInfoText();
+
+        difficultySeekBar = (SeekBar) findViewById(R.id.seekBar);
+        difficultyText = (TextView) findViewById(R.id.textView_difficulty);
+        difficultyText.setText(getString(R.string.difficulty_text) + " 0|6");
+
         Button launchPvAI = (Button) findViewById(R.id.button_start_Game);
         launchPvAI.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
         launchPvAI.setOnClickListener(new View.OnClickListener() {
@@ -71,5 +73,16 @@ public class AISettings extends AppCompatActivity {
                 startActivity(startPvAIGame);
             }
         });
+    }
+
+    /**
+     * Sets up the Info-Text about the AI.
+     * We have to use fromHtml-Method here because the newer one is not compatible with our min-sdk.
+     */
+    private void setUpInfoText() {
+        TextView aboutAI = (TextView) findViewById(R.id.aboutAIInfoText);   //Make about ai text scrollable
+        aboutAI.setMovementMethod(new ScrollingMovementMethod());
+        aboutAI.setText(Html.fromHtml(getString(R.string.aboutAI)));
+        aboutAI.setTextColor(Color.BLACK);
     }
 }

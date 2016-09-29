@@ -21,7 +21,6 @@
     <color name="pawnChangeFrameColor">#311b92</color>
     <color name="pawnChangeBackgroundColor">#ffffff</color>
 
-    <color name="buttonColor">#f2e3d4</color>
+    <color name="mainActivityButtonsColor">#f2e3d4</color>
 
-    <color name="white">#FFFFFF</color>
 </resources>

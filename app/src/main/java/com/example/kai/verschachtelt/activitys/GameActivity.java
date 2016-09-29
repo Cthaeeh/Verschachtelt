@@ -16,13 +16,13 @@ import com.example.kai.verschachtelt.puzzleGame.ChessGamePuzzle;
 
 /**
  * Created by Kai on 28.07.2016.
- * This class is for showing the chessBoard and surrounding UI-Elements
+ * This class is for showing the chessBoard and surrounding UI-Elements.
  *
  */
 public class GameActivity extends Activity implements View.OnClickListener{
 
     private GamePanel gamePanel;
-    private RetainedFragment dataFragment;      //A Fragment to store data, because this Activity is destroyed when the screen orientation changes
+    private RetainedFragment dataFragment;      //A Fragment to store data, because this Activity is destroyed when the screen orientation changes, back Button is pressed
 
     private Button undoButton,menuButton,showNextMoveButton,surrenderButton;
     private TextView description;
@@ -38,8 +38,8 @@ public class GameActivity extends Activity implements View.OnClickListener{
         setContentView(R.layout.activity_game); //Use an (way better) xml layout, instead of in code layout
         createDataFragment();
         gamePanel = (GamePanel) findViewById(R.id.surfaceViewForGame); //Now get the GamePanel UI-Element just like a Button.
-        Intent intent = getIntent();
-        gameType = (GameType) intent.getSerializableExtra("GameType");
+
+        gameType = (GameType) getIntent().getSerializableExtra("GameType");
         switch (gameType){  //depeding on the type of game different UIs are created
             case CHESS_PvP:
                 setupPvP();
@@ -62,7 +62,7 @@ public class GameActivity extends Activity implements View.OnClickListener{
     }
 
     private void setupPuzzle() {
-        gamePanel.setGame(GameType.PUZZLE, getIntent().getIntExtra("Difficulty", 1)); //Tell the gamePanel what mode we want to play in.
+        gamePanel.setGame(GameType.PUZZLE, 0); //Tell the gamePanel what mode we want to play in.
         showNextMoveButton = (Button) findViewById(R.id.button1);
         showNextMoveButton.setText(R.string.show_next_move_button);
         showNextMoveButton.setOnClickListener(this);
@@ -75,23 +75,22 @@ public class GameActivity extends Activity implements View.OnClickListener{
 
     private void setupPvAI() {
         gamePanel.setGame(GameType.CHESS_PvAI,getIntent().getIntExtra("Difficulty",1)); //Tell the gamePanel what mode we want to play in.
-        setupUndoRedo();
+        setupUndoMenuButtons();
         description = (TextView) findViewById(R.id.gameDescription);
         description.setText(R.string.ai_mode_description);
     }
 
     private void setupPvP() {
-        gamePanel.setGame(GameType.CHESS_PvP, getIntent().getIntExtra("Difficulty", 1)); //Tell the gamePanel what mode we want to play in.
-        setupUndoRedo();
+        gamePanel.setGame(GameType.CHESS_PvP, 0); //Tell the gamePanel what mode we want to play in.
+        setupUndoMenuButtons();
         description = (TextView) findViewById(R.id.gameDescription);
         description.setText(R.string.pvp_mode_description);
     }
 
-
     /**
-     * sets up two Buttons, undo and redo namely
+     * sets up two Buttons, undo and menu-button namely
      */
-    private void setupUndoRedo() {
+    private void setupUndoMenuButtons() {
         undoButton = (Button) findViewById(R.id.button1);
         menuButton = (Button) findViewById(R.id.button2);
         undoButton.setText(R.string.undo_button);
@@ -152,14 +151,9 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 .show();
     }
 
-    @Override
-    public void onStop(){
-        super.onStop();
-        // store the data in the fragment
-        dataFragment.setData(gamePanel.getGame());
-    }
-
-
+    /**
+     *  Warns the user if he really wants to leave the game and go to main activity
+     */
     public void onMenuPressed(){
         new AlertDialog.Builder(this)
                 .setIcon(R.mipmap.ic_warning_black_36dp)
@@ -178,4 +172,13 @@ public class GameActivity extends Activity implements View.OnClickListener{
                 .setNegativeButton("No", null)
                 .show();
     }
+
+    @Override
+    public void onStop(){
+        super.onStop();
+        // store the data in the fragment
+        dataFragment.setData(gamePanel.getGame());
+    }
+
+
 }

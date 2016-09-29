@@ -29,7 +29,7 @@ public class IntStack {
      */
     public void push(int val) {
         stackArray[++top] = val;
-        if(top>8)Log.d(TAG,"i was pushed to much");
+        if(top>9)Log.d(TAG,"i was pushed to much");
     }
 
     /**

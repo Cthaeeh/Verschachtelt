@@ -10,6 +10,7 @@ import com.example.kai.verschachtelt.ChessGame;
  * This class is for storing the ChessGame Object in the GameActivity.
  * This Fragment will not be destroyed when the screen Orientation is changed.
  * See: https://developer.android.com/guide/topics/resources/runtime-changes.html
+ * //TODO handle Lifecycle correctly, because even this Fragment can be killed by Android.
  */
 public class RetainedFragment extends Fragment {
 

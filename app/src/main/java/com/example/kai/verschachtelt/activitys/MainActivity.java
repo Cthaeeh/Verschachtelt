@@ -31,8 +31,34 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpUI() {
         //Setup the UI-Elements of The MainActivity
+        setUpPvPButton();
+
+        setUpPuzzleButton();
+
+        setUpPvAIButton();
+    }
+
+    /**
+     * Sets up a Button that launches a Game vs AI.
+     */
+    private void setUpPvAIButton() {
+        Button launchPvAI = (Button) findViewById(R.id.launch_PvAI_Button);
+        launchPvAI.setBackgroundColor(getResources().getColor(R.color.mainActivityButtonsColor));
+        launchPvAI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent startAIGame = new Intent(MainActivity.this, AISettings.class);
+                startActivity(startAIGame);
+            }
+        });
+    }
+
+    /**
+     * Sets up a Button that launches a PvP-Game
+     */
+    private void setUpPvPButton() {
         Button launchPVP = (Button) findViewById(R.id.launch_PvP_Button);
-        launchPVP.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+        launchPVP.setBackgroundColor(getResources().getColor(R.color.mainActivityButtonsColor));  //The suggested alternative method is minsdk 23 ...
         launchPVP.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,24 +68,19 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(startPvPGame);
             }
         });
+    }
 
+    /**
+     * Sets up a Button that launches the Puzzle Selection
+     */
+    private void setUpPuzzleButton(){
         Button launchPuzzleSelection = (Button) findViewById(R.id.launch_Puzzle_Selection_Button);
-        launchPuzzleSelection.setBackgroundColor(getResources().getColor(R.color.buttonColor));
+        launchPuzzleSelection.setBackgroundColor(getResources().getColor(R.color.mainActivityButtonsColor));
         launchPuzzleSelection.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent showPuzzleSelection = new Intent(MainActivity.this, PuzzleSelectionActivity.class);
                 startActivity(showPuzzleSelection);
-            }
-        });
-
-        Button launchPvAI = (Button) findViewById(R.id.launch_PvAI_Button);
-        launchPvAI.setBackgroundColor(getResources().getColor(R.color.buttonColor));
-        launchPvAI.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent startAIGame = new Intent(MainActivity.this, AISettings.class);
-                startActivity(startAIGame);
             }
         });
     }

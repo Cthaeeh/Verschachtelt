@@ -148,5 +148,6 @@ There are various other techniques, that can increase the playing strength of a 
     <string name="puzzle_wrong_move_toast">Try Again!</string>
     <string name="ai_mode_description">Player vs. Phone Mode</string>
     <string name="pvp_mode_description">Player vs. Player Mode</string>
+    <string name="inetConnectionFail">Something with the Internet went wrong :(</string>
 
 </resources>

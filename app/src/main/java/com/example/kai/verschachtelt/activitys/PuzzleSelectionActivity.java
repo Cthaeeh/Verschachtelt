@@ -38,7 +38,7 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
     private MyDBHandler myDBHandler;
 
     //Web Address where you can find new puzzles
-    private final static String WEBADRESS = "http://verschachtelt.bplaced.net/puzzles.html";
+    private final static String WEB_ADDRESS = "http://verschachtelt.bplaced.net/puzzles.html";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +104,7 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
      */
     @Override
     public void onDownloadFinished(String result) {
-        if(result.equals("")){
+        if(result.equals("") || result == null){
             showNoInetToast();
         }else{
             try {
@@ -123,7 +123,7 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
      * Shows a toast that informs the user that something with the Internet went wrong.
      */
     private void showNoInetToast() {
-        CharSequence text = "Something with the Internet went wrong :(";
+        CharSequence text = getString(R.string.inetConnectionFail);
         int duration = Toast.LENGTH_LONG;
 
         Toast toast = Toast.makeText(this, text, duration);
@@ -138,7 +138,7 @@ public class PuzzleSelectionActivity extends AppCompatActivity implements Downlo
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         if(item.getItemId() == R.id.update_puzzles){
-            new PuzzleDownloadTask(this).execute(WEBADRESS);
+            new PuzzleDownloadTask(this).execute(WEB_ADDRESS);
         }
         return true;
     }
