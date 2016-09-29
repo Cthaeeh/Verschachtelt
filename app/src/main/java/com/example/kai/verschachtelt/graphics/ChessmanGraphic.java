@@ -18,15 +18,15 @@ import com.example.kai.verschachtelt.chessLogic.Chessman;
  */
 public class ChessmanGraphic {
 
-    private int squareSize;                              //The length / width of a squareStates on the boardCurrent.
+    private int squareSize;                              //The length / width of a square on the board.
     private boolean drawnFirstTime = true;
     //The thickness of the frame around a squareStates in hundredth of squareSize.
     private final int STROKE_WIDTH = (int) MainActivity.getContext().getResources().getDimension(R.dimen.frameThickness);
-    private final int normalFrameColor = ContextCompat.getColor(MainActivity.getContext(), R.color.normalFrameColor);
-    private final int selectedSquareFrameColor = ContextCompat.getColor(MainActivity.getContext(), R.color.selectedFrameColor);
-    private final int possibleMoveFrameColor = ContextCompat.getColor(MainActivity.getContext(), R.color.possibleMoveFrameColor);
-    private final int killMoveFrameColor = ContextCompat.getColor(MainActivity.getContext(), R.color.possibleKillFrameColor);
-    private final int aiMoveFrameColor = ContextCompat.getColor(MainActivity.getContext(), R.color.aiMoveFrameColor);
+    private final int NORMAL_FRAME_COLOR = ContextCompat.getColor(MainActivity.getContext(), R.color.normalFrameColor);
+    private final int SELECTED_SQUARE_FRAME_COLOR = ContextCompat.getColor(MainActivity.getContext(), R.color.selectedFrameColor);
+    private final int POSSIBLE_MOVE_FRAME_COLOR = ContextCompat.getColor(MainActivity.getContext(), R.color.possibleMoveFrameColor);
+    private final int CAPTURE_MOVE_FRAME_COLOR = ContextCompat.getColor(MainActivity.getContext(), R.color.possibleKillFrameColor);
+    private final int AI_MOVE_FRAME_COLOR = ContextCompat.getColor(MainActivity.getContext(), R.color.aiMoveFrameColor);
     private Paint paint;
 
     //The images of all chessmen
@@ -38,7 +38,6 @@ public class ChessmanGraphic {
         paint = new Paint();
         paint.setStyle(Paint.Style.STROKE);
         extractImages();
-
         chessBoardSimple = new ChessBoardSimple();
     }
 
@@ -55,31 +54,66 @@ public class ChessmanGraphic {
         paint.setStrokeWidth(STROKE_WIDTH);
         //draw all pieces and their frames
         for(int i = 0;i < 64; i++){
-            int x = getX(i);
-            int y = getY(i);
             if(chessBoardSimple.getSquareStateAt(i)== ChessBoardSimple.SquareState.POSSIBLE){    //If you can move to this squareStates highlight it.
-                paint.setColor(possibleMoveFrameColor);                             //Special Color for this type pf squareStates.
-                canvas.drawRect(x+STROKE_WIDTH/2,y+STROKE_WIDTH/2,
-                        x+ squareSize -STROKE_WIDTH/2,y+ squareSize -STROKE_WIDTH/2,paint);
+                drawEmptySquareFrame(canvas,i);
             }
             if(chessBoardSimple.getChessManAt(i)!=null){
-                canvas.drawBitmap(getChessManImage(chessBoardSimple.getChessManAt(i)),x,y,null);
-                paint.setStrokeWidth(STROKE_WIDTH);
-                //Draw a matching frame arround the current squareStates
-                if(chessBoardSimple.getSquareStateAt(i)== ChessBoardSimple.SquareState.NORMAL)paint.setColor(normalFrameColor);
-                if(chessBoardSimple.getSquareStateAt(i)== ChessBoardSimple.SquareState.SELECTED)paint.setColor(selectedSquareFrameColor);
-                if(chessBoardSimple.getSquareStateAt(i)== ChessBoardSimple.SquareState.POSSIBLE_KILL)paint.setColor(killMoveFrameColor);
-                canvas.drawRect(x+STROKE_WIDTH/2,y+STROKE_WIDTH/2,
-                                x+ squareSize -STROKE_WIDTH/2,y+ squareSize - STROKE_WIDTH/2,paint);
+                drawPiece(canvas,i);
             }
             if(chessBoardSimple.getSquareStateAt(i)== ChessBoardSimple.SquareState.AI_MOVE){
-                paint.setColor(aiMoveFrameColor);
-                canvas.drawRect(x+STROKE_WIDTH/2,y+STROKE_WIDTH/2,
-                        x+ squareSize -STROKE_WIDTH/2,y+ squareSize -STROKE_WIDTH/2,paint);
+                drawAIMoveFrame(canvas,i);
             }
         }
     }
-    //Calculate the X position on the screen where a chessPiece must be drawn.
+
+    /**
+     * Draws the Frame around an empty square
+     * @param canvas The canvas to draw the frame on.
+     * @param pos the position on the board where the frame has to be drawn.
+     */
+    private void drawEmptySquareFrame(Canvas canvas, int pos){
+        int x = getX(pos);
+        int y = getY(pos);
+        paint.setColor(POSSIBLE_MOVE_FRAME_COLOR);                             //Special Color for this type pf squareStates.
+        canvas.drawRect(x+STROKE_WIDTH/2,y+STROKE_WIDTH/2,
+                x+ squareSize -STROKE_WIDTH/2,y+ squareSize -STROKE_WIDTH/2,paint);
+    }
+
+    /**
+     * Draws the piece oat the Position pos according to the ChessBoardSimple.
+     * And the correct Frame around it.
+     * @param canvas The canvas to draw the frame on.
+     * @param pos the pos where the piece should be drawn.
+     */
+    private void drawPiece(Canvas canvas, int pos){
+        int x = getX(pos);
+        int y = getY(pos);
+        canvas.drawBitmap(getChessManImage(chessBoardSimple.getChessManAt(pos)),x,y,null);
+        paint.setStrokeWidth(STROKE_WIDTH);
+        //Draw a matching frame arround the current squareStates
+        if(chessBoardSimple.getSquareStateAt(pos)== ChessBoardSimple.SquareState.NORMAL)paint.setColor(NORMAL_FRAME_COLOR);
+        if(chessBoardSimple.getSquareStateAt(pos)== ChessBoardSimple.SquareState.SELECTED)paint.setColor(SELECTED_SQUARE_FRAME_COLOR);
+        if(chessBoardSimple.getSquareStateAt(pos)== ChessBoardSimple.SquareState.POSSIBLE_KILL)paint.setColor(CAPTURE_MOVE_FRAME_COLOR);
+        canvas.drawRect(x+STROKE_WIDTH/2,y+STROKE_WIDTH/2,
+                x+ squareSize -STROKE_WIDTH/2,y+ squareSize - STROKE_WIDTH/2,paint);
+    }
+
+    /**
+     * Draws a Frame with the AI_MOVE_FRAME_COLOR around the square at position x,y
+     * This indicates from what square to which square the AI moved.
+     * @param canvas The canvas to draw the frame on.
+     */
+    private void drawAIMoveFrame(Canvas canvas, int pos) {
+        int x = getX(pos);
+        int y = getY(pos);
+        paint.setColor(AI_MOVE_FRAME_COLOR);
+        canvas.drawRect(x+STROKE_WIDTH/2,y+STROKE_WIDTH/2,  //Draw the Frame
+                x+ squareSize -STROKE_WIDTH/2,y+ squareSize -STROKE_WIDTH/2,paint);
+    }
+
+    /**
+     *  Calculate the X position on the screen where a chessPiece must be drawn.
+     */
     private int getX(int position){
         return (position%8)* squareSize;
     }
@@ -113,7 +147,8 @@ public class ChessmanGraphic {
         return null;
     }
 
-    /**From a larger image, smaller images of the chessmen are cropped out.
+    /**
+     * Extract them from the Ressources.
      */
     private void extractImages(){
         imageBlackRook = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.black_rook);

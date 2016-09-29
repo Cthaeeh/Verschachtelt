@@ -12,18 +12,21 @@ import com.example.kai.verschachtelt.activitys.MainActivity;
 
 /**
  * Created by Kai on 08.08.2016.
- * This class is for drawing the chess boardCurrent on the canvas.
+ * This class is for drawing the chess board on the canvas.
  */
+
 public class ChessBoardGraphic {
 
     private Paint paint;
     private float squareSize;              //length and width of a field of the boardCurrent
 
-    private final int darkSquareColor = ContextCompat.getColor(MainActivity.getContext(), R.color.darkSquareColor);
+    private final int STROKE_WIDTH = MainActivity.getContext().getResources().getInteger(R.integer.strokeWidthChessBoard);
+    private final int DARK_SQUARE_COLOR = ContextCompat.getColor(MainActivity.getContext(), R.color.darkSquareColor);
+    private final int LINE_COLOR = ContextCompat.getColor(MainActivity.getContext(), R.color.lineColor);
 
     public ChessBoardGraphic(){
         paint = new Paint();
-        paint.setStrokeWidth(3);
+        paint.setStrokeWidth(STROKE_WIDTH);
     }
 
     public void draw(Canvas canvas){
@@ -31,21 +34,23 @@ public class ChessBoardGraphic {
         float[] pts = getLinePts();             //Starting and end Points of all Lines
         Rect[]  rects = getRects();             //All rectangulars around squares that must be filled with color.
 
-        paint.setStyle(Paint.Style.STROKE);
-        paint.setColor(Color.BLACK);
+        paint.setStyle(Paint.Style.STROKE);     //Paint the lines
+        paint.setColor(LINE_COLOR);
         canvas.drawLines(pts,paint);
 
-        paint.setStyle(Paint.Style.FILL);
-        paint.setColor(darkSquareColor);
+        paint.setStyle(Paint.Style.FILL);       //Paint the dark squares
+        paint.setColor(DARK_SQUARE_COLOR);
         for(int i = 0; i<32;i++){
             canvas.drawRect(rects[i],paint);
         }
     }
 
-    //Calculate all Rectangulars of the Chessboard that need to be filled with color
-    //Ugly code ahead ;)
+    /**
+     * Calculate all Rectangulars of the Chessboard that need to be filled with color
+     * Ugly code ahead, but its wrapped and pretty easy to see if it works ;)
+     */
     private Rect[] getRects() {
-        Rect[] rects = new Rect[32];//
+        Rect[] rects = new Rect[32]; //32 dark squares on a chess board
 
         for(int i = 0;i < 32; i++){
             int x = (i%4)*2;
@@ -59,13 +64,15 @@ public class ChessBoardGraphic {
 
             rects[i] = new Rect(left,top,right,bottom);
         }
-
-
         return rects;
     }
 
-    //Calculates all points of the Chessboard, which connected make up the boardCurrent
-    //Ugly code ahead ;)
+    /**
+     * Calculates all points of the Chessboard, which connected make up the boardCurrent
+     * Ugly code ahead ;)
+     */
+
+    //
     private float[] getLinePts() {
         float[] pts = new float[72];//8*8 fields so 9+9=18 lines. To define a line it needs 4 values -> 18*4=72
         int   ptCount = 0;          //Just a counter to go through the array

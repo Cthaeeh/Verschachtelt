@@ -9,6 +9,8 @@ import com.example.kai.verschachtelt.activitys.MainActivity;
 
 /**
  * Created by Kai on 12.08.2016.
+ * This class is for drawing large images on top of the board.
+ * These show the user of he lost,won, there is a draw, solved the puzzle.
  */
 public class VictoryScreenGraphic {
 
@@ -17,7 +19,6 @@ public class VictoryScreenGraphic {
     public enum VictoryState {
         VICTORY,DEFEAT,WHITEWIN,BLACKWIN, DRAW
     }
-
 
     public VictoryScreenGraphic(Bitmap res){
         image = res;
@@ -54,7 +55,6 @@ public class VictoryScreenGraphic {
         imageWhiteWins = Bitmap.createBitmap(image,0   ,1000,1000,1000);
         imageBlackWins = Bitmap.createBitmap(image,1000,1000,1000,1000);
         imageDraw = BitmapFactory.decodeResource(MainActivity.getContext().getResources(), R.drawable.drawbackground);
-      //  imageDraw = Bitmap.createBitmap(image,2000,0,1000,1000);
     }
 
     private int getShorterSide(Canvas canvas){

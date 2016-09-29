@@ -12,6 +12,9 @@ import com.example.kai.verschachtelt.chessLogic.Chessman;
 
 /**
  * Created by ivayl on 14.08.2016.
+ * This class is for drawing four large images of chessman(Rook,Queen,Knight,Bishop)
+ * on top of everything if a player is promoting a pawn. The detection what chessman was selected
+ * and the update of the ChessboardComplex and Simple happens elsewhere (InputHandler)
  */
 public class PawnChangeGraphic {
 
