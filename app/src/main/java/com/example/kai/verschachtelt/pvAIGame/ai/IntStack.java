@@ -4,8 +4,8 @@ import android.util.Log;
 
 /**
  * Created by Kai on 16.09.2016.
- * Since java doesnt support stack of primitives but i want one:
- * Creadits go to: http://www.tutorialspoint.com/javaexamples/data_stack.htm
+ * Since java doesn´t support stack of primitives but i want one:
+ * Credits go to: http://www.tutorialspoint.com/javaexamples/data_stack.htm
  */
 public class IntStack {
     private final int maxSize;

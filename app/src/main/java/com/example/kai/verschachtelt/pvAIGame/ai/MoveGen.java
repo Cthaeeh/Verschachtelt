@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 /**
  * Created by Kai on 04.09.2016.
- * A speed relevant Class for generating possible ChessMoves.
+ * A especially speed relevant Class for generating possible ChessMoves.
  * See also: https://chessprogramming.wikispaces.com/10x12+Board
  * The code there (at the link) is really crazy short, but does the same what this Class does.
  */
@@ -646,7 +646,7 @@ public class MoveGen {
     }
 
     /**
-     *
+     * Currently not used for speed-reasons.
      * @param previousMove  the move we check if it was legal
      * @return returns true if the move was legal in view of the follwing moves. false if not.
      */

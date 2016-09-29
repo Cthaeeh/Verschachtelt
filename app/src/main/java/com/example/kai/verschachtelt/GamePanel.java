@@ -39,10 +39,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     public static int squareSize;               //The only global variable kind of. It represents the length and width of a square on the boardCurrent.
 
-    //The position of the touch/ for development
-    private int xTouch = 0;
-    private int yTouch = 0;
-
     public InputHandler inputHandler;
 
     //Resolution of Background Image
@@ -89,9 +85,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     @Override
     public boolean onTouchEvent (MotionEvent event){
-        xTouch = (int)event.getX();
-        yTouch = (int)event.getY();
-
         // Depending on whether the pawnChangeGraphic is activated a different inputHandler method is choosen.
         if(pawnChangeGraphic.isActivated){
             inputHandler.processPawnChangeEvent(event);
@@ -103,7 +96,6 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback{
 
     public void update(double avgFPS){
         //Show some dev info
-        background.update(String.valueOf(avgFPS)+" fps " + String.valueOf(xTouch)+"|" +String.valueOf(yTouch) );
         chessmanGraphic.update(game.getSimpleBoard());
         victoryScreenGraphic.update(game.getWinner());
         pawnChangeGraphic.update(game.getComplexBoard().pawnPromotionPossible());

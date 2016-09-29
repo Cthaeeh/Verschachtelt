@@ -18,5 +18,4 @@ public class ChessGamePvP extends ChessGame {
         return boardCurrent.getWinner();
     }
 
-
 }

@@ -29,7 +29,6 @@ public class ChessGamePvAI extends ChessGame {
         }
     }
 
-
     /**
      * Why override this ? Because the AI wants to know beforehand with which chessman you want to replace the pawn.
      * @param chessman the chessman that was selected to replace the pawn.
@@ -39,7 +38,6 @@ public class ChessGamePvAI extends ChessGame {
         super.handlePromotion(chessman);
         if(boardCurrent.getWinner()==null)ai.calculateMove(this);
     }
-
 
     @Override
     protected void moveByHuman(int position){

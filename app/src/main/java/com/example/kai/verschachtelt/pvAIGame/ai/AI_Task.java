@@ -11,9 +11,9 @@ import com.example.kai.verschachtelt.graphics.Background;
  */
 public class AI_Task extends AsyncTask<byte[], Integer, Move> {
 
+    private static final String TAG = "AI_Task";
     private final AI_Listener listener;
     private int bestMove;
-    private static final String TAG = "AI_Task";
     private int SEARCH_DEPTH = 3;   //Default value
     private int MAX_DEPTH = -3;     //quiesce search depth.
     private int extraInfo;          //Extra info like castling rights, en passant , half move clock.
@@ -82,14 +82,6 @@ public class AI_Task extends AsyncTask<byte[], Integer, Move> {
     private void getBestMove(byte[] root) {
         Search search = new Search(root,this,extraInfo);
         search.setMAX_DEPTH(MAX_DEPTH);
-        long startTime = System.currentTimeMillis();            //For performance measurement
         bestMove = search.performSearch(SEARCH_DEPTH); //Calc best move.
-
-        //Debugging / Analyse
-        long endTime = System.currentTimeMillis();
-        int nps = (int)(search.getLeafsSearched() / ((endTime-startTime)/1000.0 ));
-        Log.d(TAG,"DEPTH: "+SEARCH_DEPTH + "  Time it took: " + (endTime-startTime) +" NPS: " + nps);
-        Log.d(TAG, "Move" + MoveAsInt.toReadableString(bestMove));
-        Background.ai_debug_info ="DEPTH: "+SEARCH_DEPTH + " Time " + (endTime-startTime)/1000.0 +"s NPS:" + nps + " Bran: " + Math.pow(search.getLeafsSearched(),(1.0/SEARCH_DEPTH)) + " qNodes: " +search.getNodesInQuiescence() + "leafs: " + search.getLeafsSearched();
     }
 }

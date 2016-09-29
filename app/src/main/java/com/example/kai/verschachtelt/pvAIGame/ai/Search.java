@@ -6,11 +6,9 @@ package com.example.kai.verschachtelt.pvAIGame.ai;
  */
 public class Search {
 
-    private final byte[] root;      //Or first plie if you want so.
-    private AI_Task task;       
-    private int leafsSearched = 0;  //For Analyse
-    private int nodesInQuiescence = 0;
-    private int MAX_DEPTH = -3;     // For quiescence-search
+    private final byte[] root;              //Or first plie if you want so.
+    private AI_Task task;
+    private int MAX_DEPTH = -3;             // For quiescence-search
     protected static int[][] killerMoves;   //See: https://chessprogramming.wikispaces.com/Killer+Move
 
     public Search(byte[] root, AI_Task task, int extraInfo){
@@ -26,8 +24,6 @@ public class Search {
     public int performSearch(int depth){
         killerMoves = new int[depth][2];
         MoveGen.setCurrentDepth(depth);
-        leafsSearched = 0;
-        nodesInQuiescence = 0;
         short α = -32760;       //Maximizer
         short β = 32760;        //Minimizer
         byte player = root[MoveGen.PLAYER_ON_TURN];
@@ -36,7 +32,7 @@ public class Search {
             for (int move : MoveGen.generatePossibleMoves()) {      //Get all Moves
                 if(task.isCancelled()) break;
                 MoveGen.makeMove(move);
-                if (!MoveGen.wasLegalMove(move)) {           //Illegal Move
+                if (!MoveGen.wasLegalMove(move)) {                  //If it was an illegal Move ignore it.
                     MoveGen.unMakeMove(move);
                     continue;
                 }
@@ -58,7 +54,7 @@ public class Search {
             for (int move : MoveGen.generatePossibleMoves()) {
                 if(task.isCancelled()) break;
                 MoveGen.makeMove(move);
-                if (!MoveGen.wasLegalMove(move)) {
+                if (!MoveGen.wasLegalMove(move)) {                  //If it was an illegal Move ignore it.
                     MoveGen.unMakeMove(move);
                     continue;
                 }
@@ -70,8 +66,8 @@ public class Search {
                 }
                 if (β <= α){                                        // Alpha cut-off *)
                     if(MoveAsInt.getCapture(move)==0){              // Update Killer Moves if it was a quiet move.
-                        killerMoves[depth-1][1] = killerMoves[depth-1][0];
-                        killerMoves[depth-1][0] = move;
+                        killerMoves[depth-1][1] = killerMoves[depth-1][0];  //set secondary killer
+                        killerMoves[depth-1][0] = move;                     //set primary killer.
                     }
                     break;
                 }
@@ -85,29 +81,28 @@ public class Search {
      * @param depth the number of plies the alg needs to go deeper down the tree.
      * @param α current maximizer value
      * @param β current minimizer value
-     * @return      //TODO comment this really well.
+     * @return the value for this branch
      */
     private short alphabeta(int depth,short α,short β){
         if(depth == 0 || MoveGen.getBoard()[MoveGen.GAME_HAS_ENDED] == MoveGen.TRUE){   //If depth = 0 -> found a Leaf
-            leafsSearched++;
-            return quiescence(depth-1,α, β);    //Try to find a stable position to evaluate.
+            return quiescence(depth-1,α, β);                //Try to find a stable position to evaluate.
         }
         MoveGen.setCurrentDepth(depth);
         byte player = MoveGen.getBoard()[MoveGen.PLAYER_ON_TURN];
         if (player == MoveGen.WHITE){
             for(int move : MoveGen.generatePossibleMoves()){    //Go through available moves.
                 MoveGen.makeMove(move);
-                if(depth>1 && !MoveGen.wasLegalMove(move)){
+                if(depth>1 && !MoveGen.wasLegalMove(move)){     //If it was an illegal Move ignore it.
                     MoveGen.unMakeMove(move);
                     continue;
                 }
-                short val = alphabeta(depth - 1, α, β);
+                short val = alphabeta(depth - 1, α, β);         //Go deeper down the search tree
                 MoveGen.unMakeMove(move);
                 if(α < val){
                     α = val;
                 }
-                if (β <= α){                                // Beta cut-off *)
-                    if(MoveAsInt.getCapture(move)==0){
+                if (β <= α){                                    // Beta cut-off *)
+                    if(MoveAsInt.getCapture(move)==0){          //Save eventual Killer-Moves.
                         killerMoves[depth-1][1] = killerMoves[depth-1][0];
                         killerMoves[depth-1][0] = move;
                     }
@@ -118,17 +113,17 @@ public class Search {
         } else {
             for(int move : MoveGen.generatePossibleMoves()){    //Go through available moves.
                 MoveGen.makeMove(move);
-                if(depth>1 && !MoveGen.wasLegalMove(move)){
+                if(depth>1 && !MoveGen.wasLegalMove(move)){     //If it was an illegal Move ignore it.
                     MoveGen.unMakeMove(move);
                     continue;
                 }
-                short val = alphabeta(depth - 1, α, β);
+                short val = alphabeta(depth - 1, α, β);         //Go deeper down the search tree
                 MoveGen.unMakeMove(move);
                 if(val < β){
                     β = val;
                 }
-                if (β <= α){                                  // Alpha cut-off *)
-                    if(MoveAsInt.getCapture(move)==0){
+                if (β <= α){                                    // Alpha cut-off *)
+                    if(MoveAsInt.getCapture(move)==0){          //Save eventual Killer-Moves.
                         killerMoves[depth-1][1] = killerMoves[depth-1][0];
                         killerMoves[depth-1][0] = move;
                     }
@@ -148,7 +143,6 @@ public class Search {
      */
     private short quiescence(int depth,short α,short β){
         short score = BordEvaluation.evaluate(MoveGen.getBoard());
-        nodesInQuiescence++;
         if(depth < MAX_DEPTH || MoveGen.getBoard()[MoveGen.GAME_HAS_ENDED] == MoveGen.TRUE){
             return score;
         }
@@ -160,12 +154,7 @@ public class Search {
             if(moves.length==0) return α;
             for(int move : MoveGen.generateCaptureMoves()){
                 MoveGen.makeMove(move);
-                /*
-                if(!MoveGen.wasLegalCapture(move)){        //TODO Check if this is too slow
-                    MoveGen.unMakeMove(move);
-                    continue;
-                }
-                */
+                //For speed reasons we don´t do a legality check here.
                 short val = quiescence(depth - 1, α, β);
                 MoveGen.unMakeMove(move);
                 if(val > α){
@@ -183,12 +172,7 @@ public class Search {
             if(moves.length==0)return β;
             for(int move : moves){
                 MoveGen.makeMove(move);
-                /*
-                if(!MoveGen.wasLegalCapture(move)){         //TODO Check if this is too slow
-                    MoveGen.unMakeMove(move);
-                    continue;
-                }
-                */
+                //For speed reasons we don´t do a legality check here.
                 short val = quiescence(depth - 1, α, β);
                 MoveGen.unMakeMove(move);
                 if(val < β){
@@ -200,15 +184,6 @@ public class Search {
             }
             return β;
         }
-    }
-
-    //TODO delete when shipped
-    public int getLeafsSearched(){
-        return leafsSearched;
-    }
-
-    public int getNodesInQuiescence(){
-        return nodesInQuiescence;
     }
 
     /**

@@ -2,9 +2,8 @@ package com.example.kai.verschachtelt.pvAIGame.ai;
 
 /**
  * Created by Kai on 15.09.2016.
- * Here you can see the third attempt to make the Move-Generation faster.
- * This Time by Encoding a Move in single Integer (thats just 32 bit)
- *
+ * This class is for encoding a Move in a single primitive int as quickly as possible.
+ * Since this can easily be implemented wrong there are JUNIT-Tests to cover that.
  * bit  0-7     = start position
  *      8-14    = destination position
  *      15-23   = captured Piece encoded as a Byte
@@ -26,7 +25,7 @@ public final class MoveAsInt {
     private static final int PROMOTED_PIECE_MASK = 0b111 << promotedPieceShift;
 
     /**
-     * Returns a standart Move encoded as an int
+     * Returns a standard Move encoded as an int
      * @param start the start position
      * @param dest  the destination position
      * @param capture the captured piece and if non 0
@@ -39,7 +38,7 @@ public final class MoveAsInt {
     }
 
     /**
-     *
+     * Returns a promotion move encoded as an int
      * @param start the start position
      * @param dest the destination position
      * @param capture the captured piede and if non 0
@@ -84,6 +83,7 @@ public final class MoveAsInt {
         return moveAsString;
     }
 
+    //For dev Purposes:
     private final  static String mailBox[] = {
             "X", "X", "X", "X", "X", "X", "X", "X", "X","X",
             "X", "X", "X", "X", "X", "X", "X", "X", "X","X",

@@ -12,17 +12,17 @@ import com.example.kai.verschachtelt.pvAIGame.ChessGamePvAI;
 /**
  * Created by Kai on 10.08.2016.
  * This is the starting point for all AI development.
- *
  */
+
 public class AI implements AI_Listener {
 
     private AsyncTask<byte[], Integer, Move> ai_task;
 
     private final  int difficulty;
-    private final  Chessman.Color aiColor;  //The color of the pieces the ai moves
+    private final  Chessman.Color aiColor;          //The color of the pieces the ai moves
     private ChessGamePvAI boardComplex;
 
-    private final int mailbox64[] = {                 //For transferring a 8x8 to a 10x12 board. See: https://chessprogramming.wikispaces.com/10x12+Board
+    private final int mailbox64[] = {               //For transferring a 8x8 to a 10x12 board. See: https://chessprogramming.wikispaces.com/10x12+Board
                 21, 22, 23, 24, 25, 26, 27, 28,
                 31, 32, 33, 34, 35, 36, 37, 38,
                 41, 42, 43, 44, 45, 46, 47, 48,
@@ -124,7 +124,6 @@ public class AI implements AI_Listener {
         return byteBoard;
     }
 
-
     public Chessman.Color getColor() {
         return aiColor;
     }
@@ -137,7 +136,7 @@ public class AI implements AI_Listener {
     public void onMoveCalculated(Move move) {
         if(move == null) return;
         boardComplex.moveByAi(move);
-        if(difficulty >= 2) vibrate(300);   //TODO make this a setting
+        if(difficulty >= 3) vibrate(300);   //TODO make this a setting
     }
 
     /**

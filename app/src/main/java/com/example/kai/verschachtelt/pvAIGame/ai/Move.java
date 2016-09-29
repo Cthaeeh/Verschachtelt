@@ -76,7 +76,9 @@ public class Move {
     }
 
     /**
-     * TODO write JDoc here
+     * It could happen that the AI fails to calculate a move.
+     * To "catch" this possibility the AI returns a "NullMove".
+     * We can take care of that in the ChessBoard.
      * @return
      */
     public boolean isNullMove(){

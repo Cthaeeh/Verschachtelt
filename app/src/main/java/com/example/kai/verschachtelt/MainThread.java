@@ -1,6 +1,7 @@
 package com.example.kai.verschachtelt;
 
 import android.graphics.Canvas;
+import android.util.Log;
 import android.view.SurfaceHolder;
 
 
@@ -69,6 +70,5 @@ public class MainThread extends Thread{
     public void setRunning(boolean running){
         this.running = running;
     }
-
 
 }

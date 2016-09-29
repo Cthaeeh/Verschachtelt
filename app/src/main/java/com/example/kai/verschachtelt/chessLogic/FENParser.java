@@ -2,6 +2,8 @@ package com.example.kai.verschachtelt.chessLogic;
 
 import android.util.Log;
 
+import java.util.HashMap;
+
 /**
  * Created by Kai on 14.08.2016.
  * This class is for translating Forsyth-Edwards-Notations to Java-Objects.
@@ -96,4 +98,5 @@ public class FENParser {
         //TODO write this
         return new EnPassantManager(getChessmen(fenNotation));
     }
+
 }
