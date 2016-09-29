@@ -36,16 +36,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New Button"
-            android:layout_margin="10dp"
             android:layout_below="@id/gameDescription"
-            android:id="@+id/button1" />
+            android:id="@+id/button1"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="New Button"
-            android:layout_toEndOf="@id/button1"
-            android:layout_alignTop="@id/button1"
-            android:id="@+id/button2" />
+            android:id="@+id/button2"
+            android:layout_alignTop="@+id/button1"
+            android:layout_toEndOf="@+id/button1" />
     </RelativeLayout>
 
 </LinearLayout>

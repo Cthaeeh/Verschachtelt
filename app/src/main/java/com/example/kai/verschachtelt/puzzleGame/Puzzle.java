@@ -22,7 +22,7 @@ public class Puzzle implements Comparable<Puzzle>{
     private boolean isSolved = false; //By default not solved.
 
     private ChessBoardComplex[] positions;
-    private JSONArray JSONPositions;
+    private JSONArray JSONPositions;        //If a puzzle is transformed back into JSON-Format its easier to just reuse this JSONArray with the FEN-Strings
 
     /**
      * creates a Puzzle from a JSONObject

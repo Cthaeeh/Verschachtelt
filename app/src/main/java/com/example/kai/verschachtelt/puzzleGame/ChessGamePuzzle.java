@@ -16,9 +16,10 @@ import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
  * When the player makes a move it looks if it was a correct move, if so displays it.
  * When the player solves a puzzle this is saved in the DB.
  */
+
 public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
     public static Puzzle PUZZLE;
-    private int puzzleSteps = 0;          //The number of moves the player made to solve the puzzle.
+    private int puzzleSteps = 0;            //The number of moves the player made to solve the puzzle.
     private boolean puzzleSolved = false;
 
     public ChessGamePuzzle(InputHandler inputHandler) {
