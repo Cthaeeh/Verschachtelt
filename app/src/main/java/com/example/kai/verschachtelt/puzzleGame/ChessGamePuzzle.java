@@ -23,6 +23,7 @@ public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
     public static Puzzle PUZZLE;
     private int puzzleSteps = 0;            //The number of moves the player made to solve the puzzle.
     private boolean puzzleSolved = false;
+    private final static int NEXT_MOVE_DELAY = MainActivity.getContext().getResources().getInteger(R.integer.puzzleNextMoveDelayMs);
 
     public ChessGamePuzzle(InputHandler inputHandler) {
         super(inputHandler);
@@ -57,7 +58,7 @@ public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
                     boardCurrent = PUZZLE.getPosition(puzzleSteps+1);
                     puzzleSteps++;
                 }
-            }, 1500);
+            }, NEXT_MOVE_DELAY);
 
         }
         if(isPuzzleSolved())saveProgress();         //After the move see if the puzzle is solved.

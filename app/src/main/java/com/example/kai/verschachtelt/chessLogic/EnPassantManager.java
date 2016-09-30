@@ -1,27 +1,15 @@
 package com.example.kai.verschachtelt.chessLogic;
 
-import java.util.Arrays;
-
 /**
- * Created by ivayl on 12.09.2016.
- * For managing en-passant possibilities, and moves
+ * Created by Kai on 30.09.2016.
  */
 public class EnPassantManager {
 
-    /**
-     *boolean array indicating, the pawns on which positions have the possibility of
-     *an en-passant move.
-     * 0-15 are standing for the positions 24-39 on the Chessman-Array
-     */
-    private boolean[] enPassantPossibilities = new boolean[16];
-    /**
-     *the initial position of the opponent´s pawn, which invoked the en passant possibility
-     */
-    private int opponentPawn;
-
+    private int enPassantPossibility = -1; // a square a pawn jumped over in the last move, e.g a possibility for an en passant move.
     private boolean[] possibleMoves = new boolean[64];
     private Chessman[] chessmen;
 
+    //Constructors
     /**
      * The standard en-passant constructor
      * @param chessmen the current chessman-array
@@ -31,13 +19,13 @@ public class EnPassantManager {
     }
 
     /**
-     * additional constructor, which is only for the FENParser for now
+     * A constructor to be used if the game has already begun, like in puzzles or when you save a game.
      * @param chessmen the current chessman-array
-     * @param opponentPawn the initial position of the opponent´s pawn, which invoked the en passant possibility
+     * @param enPassantPossibility a square a pawn jumped over in the last move, e.g a possibility for an en passant move.
      */
-    public EnPassantManager(Chessman[] chessmen, int opponentPawn){
+    public EnPassantManager(Chessman[] chessmen, int enPassantPossibility) {
         this.chessmen = chessmen;
-        this.opponentPawn = opponentPawn;
+        this.enPassantPossibility = enPassantPossibility;
     }
 
     /**
@@ -46,34 +34,51 @@ public class EnPassantManager {
      */
     public EnPassantManager(EnPassantManager toCopy){
         chessmen = Chessman.deepCopy(toCopy.chessmen);
-        enPassantPossibilities = Arrays.copyOf(toCopy.enPassantPossibilities, enPassantPossibilities.length);
-        opponentPawn = toCopy.opponentPawn;
+        enPassantPossibility = toCopy.enPassantPossibility;
     }
 
+    //Methods
     /**
-     * A method, which checks, which en-passant moves are possible for a certain pawn
-     * @param selectedPosition position of the pawn which is going to be moved
-     * @param chessmen the current Chessman Array
-     * @return the possible EnPassant Moves
+     * Gets the possible en passant moves for the piece at selectedPosition on the current board.
+     * @param selectedPosition
+     * @param chessmen
+     * @return the possible en passant movement possibilitys
      */
     public boolean[] getPossibleMoves(int selectedPosition, Chessman[] chessmen) {
         this.chessmen = chessmen; //Save the new chessmen array, you got from ChessBoardComplex.
-        resetPossibleMoves();     //Clean up the return board.
-
-        if (chessmen[selectedPosition].getColor() == Chessman.Color.WHITE) {
-            if (chessmen[selectedPosition].getPiece() == Chessman.Piece.PAWN & selectedPosition < 40 & selectedPosition > 23) {
-                if (enPassantPossibilities[selectedPosition - 24]) {
-                    possibleMoves[opponentPawn + 8] = true;
-                }
-            }
-        } else {
-            if (chessmen[selectedPosition].getPiece() == Chessman.Piece.PAWN & selectedPosition < 40 & selectedPosition > 23) {
-                if (enPassantPossibilities[selectedPosition - 24]) {
-                    possibleMoves[opponentPawn - 8] = true;
-                }
+        resetPossibleMoves();
+        if(chessmen[selectedPosition].getPiece() == Chessman.Piece.PAWN){       //If its a pawn
+            if (chessmen[selectedPosition].getColor() == Chessman.Color.WHITE) {
+                if(selectedPosition-9>=0&&selectedPosition-9==enPassantPossibility)possibleMoves[selectedPosition-9]=true;    //If a pawn can reach the enPassantPossibility field
+                if(selectedPosition-7>=0&&selectedPosition-7==enPassantPossibility)possibleMoves[selectedPosition-7]=true;
+            } else {
+                if(selectedPosition+9<64&&selectedPosition+9==enPassantPossibility)possibleMoves[selectedPosition+9]=true;
+                if(selectedPosition+7<64&&selectedPosition+7==enPassantPossibility)possibleMoves[selectedPosition+7]=true;
             }
         }
-        return possibleMoves;
+        return CheckTester.removeSuicidalMoves(selectedPosition,Chessman.deepCopy(chessmen),possibleMoves);
+    }
+
+    /**
+     * To be called after every move (by human), handles en passant stuff.
+     * Like opening an en passant possibility or removing a pawn if an en passant capture happend.
+     *
+     * @param destPos   destination of the move
+     * @param startPos  starting Point of the move
+     * @param chessmen  current chessman array
+     */
+    public void handleEnPassant(int destPos, int startPos, Chessman[] chessmen) {
+        //If an en passant Capture happend :
+        if(chessmen[destPos].getPiece() == Chessman.Piece.PAWN && destPos == enPassantPossibility){
+            //is the move direction south or north ?
+            int capturedPawnPos = (destPos>startPos) ? destPos -8 : destPos + 8 ;
+            chessmen[capturedPawnPos] = null;
+        }
+        enPassantPossibility = -1;  //Reset en Passant Possibility
+        //Maybe invoke a new Possibility
+        if(chessmen[destPos].getPiece() == Chessman.Piece.PAWN && Math.abs(destPos-startPos) == 16){
+            enPassantPossibility = (destPos>startPos) ? destPos -8 : startPos - 8 ; //The larger number -8 gives the square over which the pawn jumped
+        }
     }
 
     /**
@@ -83,60 +88,5 @@ public class EnPassantManager {
         for (int i=0;i<64;i++){
             possibleMoves[i]=false;
         }
-    }
-
-    /**
-     * setting the positions from which an en-passant move is possible, if any pawn is on them
-     * after a pawn jump
-     * @param pawnPosition the position of the opponent´s pawn after the jump
-     */
-    public void setEnPassantPossibilities(int pawnPosition){
-        /*
-        there are max. two fields, for which en passant has to be enabled after a pawn jump,
-        but they have to be in a row with the pawn, that has fulfilled a jump of course
-        this is, what this method is looking for
-        */
-        int one = pawnPosition - 1;
-        int two = pawnPosition + 1;
-        if(pawnPosition/8 == one/8) enPassantPossibilities[one - 24] = true;
-        if(pawnPosition/8 == two/8) enPassantPossibilities[two - 24] = true;
-    }
-
-    /**
-     * resetting the en passant possibilities, which of course are possible only
-     * within the one move after a pawn jump
-     */
-    private void resetEnPassantPossibilities(){
-        for(int i = 0; i < 16;i++){
-            enPassantPossibilities[i] = false;
-        }
-    }
-
-    /**
-     * For resetting en passant positions or enable a en passant possibility.
-     * @param position what piece moves.
-     */
-    public void handleEnPassant(int position, int selectedPosition, Chessman[] chessmen) {
-        if(chessmen[position].getPiece() == Chessman.Piece.PAWN && Math.abs(position-selectedPosition) == 16){
-            opponentPawn = selectedPosition;
-            setEnPassantPossibilities(position); // activate en passant possibilities after double jump
-        } else resetEnPassantPossibilities();
-
-        if(chessmen[position].getPiece() == Chessman.Piece.PAWN  && position == opponentPawn + 8 &&  chessmen[position].getColor() == Chessman.Color.WHITE) {
-            chessmen[opponentPawn + 16] = null;
-            resetEnPassantPossibilities();// en passant removal for white
-        }
-        if(chessmen[position].getPiece() == Chessman.Piece.PAWN && position == opponentPawn - 8 && chessmen[position].getColor() == Chessman.Color.BLACK) {
-            chessmen[opponentPawn - 16] = null;
-            resetEnPassantPossibilities();// en passant removal for black
-        }
-    }
-
-    /**
-     * setter for the opponentPawn value
-     * @param newInt the new value of the variable
-     */
-    public void setOpponentPawn(int newInt){
-        opponentPawn = newInt;
     }
 }

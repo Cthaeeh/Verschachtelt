@@ -9,50 +9,50 @@ import java.util.HashMap;
  */
 public class ChessNotationMapper {
 
-    private static HashMap <String,Integer> map = new HashMap<>();
+    private HashMap <String,Integer> map = new HashMap<>();
 
     public ChessNotationMapper(){
-        map = createEnPassantHashMap();
-    }
-
-
-
-    /**
-     * creating a hashMap for all the fields, a pawn can jump over and invoke enPassant - possibilities
-     * @return hashmap with all the possible fields over which a pawn can jump to invoke an enPassant possibility
-     */
-    private static HashMap createEnPassantHashMap(){
-        map.put("a3",1);
-        map.put("b3",2);
-        map.put("c3",3);
-        map.put("d3",4);
-        map.put("e3",5);
-        map.put("f3",6);
-        map.put("g3",7);
-        map.put("h3",8);
-
-        map.put("a6",9);
-        map.put("b6",10);
-        map.put("c6",11);
-        map.put("d6",12);
-        map.put("e6",13);
-        map.put("f6",14);
-        map.put("g6",15);
-        map.put("h6",16);
-
-        return map;
+        createEnPassantHashMap();
     }
 
     /**
-     * method for evaluating the part of a FEN-String involving EnPassant
-     * @param position the position over which the pawn jumped as a string in the official notation
-     * @return the position over which the pawn jumped on our 8 x 8 board
+     * Creates a hashmap that connects normal chess notation with addresses in a array of length 64
+     * z.B. a8->0 or h1->63
+     * Warning: currently only supports en passant fields.
      */
-    public static int getEnPassantPosition(String position) {
+    private void createEnPassantHashMap(){
+        map.put("a3",48);
+        map.put("b3",49);
+        map.put("c3",50);
+        map.put("d3",51);
+        map.put("e3",52);
+        map.put("f3",53);
+        map.put("g3",54);
+        map.put("h3",55);
 
-        if(!map.containsKey(position)) Log.e("ChessNotationMapper", "No such HashMap-Entry!");
-        if(map.get(position) < 9) return map.get(position) + 15;
-        else return map.get(position) + 39;
+        map.put("a6",16);
+        map.put("b6",17);
+        map.put("c6",18);
+        map.put("d6",19);
+        map.put("e6",20);
+        map.put("f6",21);
+        map.put("g6",22);
+        map.put("h6",23);
+    }
+
+    /**
+     * method for translating chess noation to the position in a array with length 64
+     *
+     * Warning ! Currently only enPassant Fields supported!
+     * @param positionAsString the position over which the pawn jumped as a string in the official notation
+     * @return the position on in a array of length 64
+     */
+    public int getEnPassantPosition(String positionAsString) {
+        if(!map.containsKey(positionAsString)){
+            Log.e("ChessNotationMapper", "No such HashMap-Entry!");
+            return -1;
+        }
+        return map.get(positionAsString);
     }
 
 

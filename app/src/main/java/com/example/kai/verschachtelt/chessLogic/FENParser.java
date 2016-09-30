@@ -8,7 +8,7 @@ import android.util.Log;
  */
 public class FENParser {
 
-    public static ChessNotationMapper mapper;
+    private static ChessNotationMapper mapper = new ChessNotationMapper();
 
     private final static String TAG = "FENParser";
 
@@ -114,23 +114,12 @@ public class FENParser {
         }
     }
 
-    public static EnPassantManager getEnPassantState(String fenNotation) {
-        if(fenNotation.split(" ").length < 3) {
+    public static EnPassantManager getEnPassantState(String fenNotation){
+        if(fenNotation.split(" ").length < 4) {
             Log.e("FEN Parser", "Wrong FEN-Notation ");
             return new EnPassantManager(getChessmen(fenNotation));
         }
-        EnPassantManager manager = new EnPassantManager(getChessmen(fenNotation));
-        //if the pawn jumped over a third-row field
-        if(mapper.getEnPassantPosition(fenNotation.split(" ")[3]) < 9) {
-            manager.setEnPassantPossibilities(mapper.getEnPassantPosition(fenNotation.split(" ")[3]) + 23);
-            manager.setOpponentPawn(mapper.getEnPassantPosition(fenNotation.split(" ")[3]) + 7);
-        }
-        //if the pawn jumped over a sixth-row field
-        else {
-            manager.setEnPassantPossibilities(mapper.getEnPassantPosition(fenNotation.split(" ")[3]) + 31);
-            manager.setOpponentPawn(mapper.getEnPassantPosition(fenNotation.split(" ")[3]) + 47);
-        }
-
-        return manager;
+        int enPassantPossibility = mapper.getEnPassantPosition(fenNotation.split(" ")[3]);
+        return new EnPassantManager(getChessmen(fenNotation),enPassantPossibility);
     }
 }
