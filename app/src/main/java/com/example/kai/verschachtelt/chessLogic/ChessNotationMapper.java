@@ -6,6 +6,9 @@ import java.util.HashMap;
 
 /**
  * Created by ivayl on 29.09.2016.
+ * This class if for mapping human readable chess notatio, like e4 to positions used in the chessLogicPackage
+ * e.g addresses in a length 64 array.
+ * For now just the enPassant-Fields are supported !
  */
 public class ChessNotationMapper {
 
@@ -54,7 +57,6 @@ public class ChessNotationMapper {
         }
         return map.get(positionAsString);
     }
-
 
 }
 
