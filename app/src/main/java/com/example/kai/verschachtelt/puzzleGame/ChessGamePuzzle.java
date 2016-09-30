@@ -18,9 +18,12 @@ import com.example.kai.verschachtelt.graphics.VictoryScreenGraphic;
  */
 
 public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
+
+    private static Toast wrongMoveToast;    //To be able to cancel the previous Toast see: http://stackoverflow.com/questions/10070108/can-i-cancel-previous-toast-when-i-want-to-show-an-other-toast
     public static Puzzle PUZZLE;
     private int puzzleSteps = 0;            //The number of moves the player made to solve the puzzle.
     private boolean puzzleSolved = false;
+    private final static int NEXT_MOVE_DELAY = MainActivity.getContext().getResources().getInteger(R.integer.puzzleNextMoveDelayMs);
 
     public ChessGamePuzzle(InputHandler inputHandler) {
         super(inputHandler);
@@ -55,7 +58,7 @@ public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
                     boardCurrent = PUZZLE.getPosition(puzzleSteps+1);
                     puzzleSteps++;
                 }
-            }, 1500);
+            }, NEXT_MOVE_DELAY);
 
         }
         if(isPuzzleSolved())saveProgress();         //After the move see if the puzzle is solved.
@@ -99,7 +102,9 @@ public class ChessGamePuzzle extends com.example.kai.verschachtelt.ChessGame {
      * That is what we do here.
      */
     private void showWrongMoveInfo() {
-        Toast.makeText(MainActivity.getContext(), MainActivity.getContext().getString(R.string.puzzle_wrong_move_toast), Toast.LENGTH_SHORT).show();
+        if(wrongMoveToast!=null)wrongMoveToast.cancel();
+        wrongMoveToast = Toast.makeText(MainActivity.getContext(), MainActivity.getContext().getString(R.string.puzzle_wrong_move_toast), Toast.LENGTH_SHORT);
+        wrongMoveToast.show();
     }
 
 

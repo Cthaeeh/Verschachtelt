@@ -20,6 +20,7 @@ public class CheckTester {
      */
     public static boolean[] removeSuicidalMoves(int startingPosition, final Chessman[] currentBoard,final boolean[] pseudoMoves) {
         boolean[] legalMoves = new boolean[64];
+        if(currentBoard[startingPosition]==null)return legalMoves;  //Some crash protection here.
         final boolean[] pseudoLegalMoves = Arrays.copyOf(pseudoMoves,pseudoMoves.length);
         for(int i = 0; i<64; i++){      //Iterate through fields.
             if(pseudoLegalMoves[i]){    //If this is a possible move destination.
@@ -38,6 +39,12 @@ public class CheckTester {
      */
     private static boolean isLegalMove(int startingPosition, int endPosition, Chessman[] currentBoard) {
         Chessman[] hypotheticalBoard = Chessman.deepCopy(currentBoard);
+        //If a pawn moved diagonal on an empty square e.g an en passant move
+        if( ( hypotheticalBoard[startingPosition].getPiece() == Chessman.Piece.PAWN) && (endPosition-startingPosition)%8!=0 && (hypotheticalBoard[endPosition] == null)) {
+            // Do the en passant capture
+            int capturedPawnPos = (endPosition>startingPosition) ? endPosition -8 : endPosition + 8 ;
+            hypotheticalBoard[capturedPawnPos] = null;
+        }
         hypotheticalBoard[endPosition] = hypotheticalBoard[startingPosition];
         hypotheticalBoard[startingPosition] = null;                             // Make the move on a hypothetical ChessBoard.
         Chessman.Color colorOfMovingPlayer = hypotheticalBoard[endPosition].getColor();

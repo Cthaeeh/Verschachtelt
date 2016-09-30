@@ -98,25 +98,25 @@ public class ChessBoardComplex extends ChessBoardSimple {
 
     /**
      * If there is a selectedPosition we can directly move the chessman on that square to position.
-     * @param position  The position to move to.
+     * @param destPos  The position to move to.
      */
-    public void handleMoveTo(int position){
+    public void handleMoveTo(int destPos){
+        resetFrames();
         if(selectedPosition >=0 && chessmen[selectedPosition]!=null){                    //If we try to move from a legit position
             chessmen[selectedPosition].notifyMove();  //Tell the chessman that he was moved (Important for Castling)
-            chessmen[position]= chessmen[selectedPosition];//Set the chessman to its new position.
+            chessmen[destPos]= chessmen[selectedPosition];//Set the chessman to its new position.
             chessmen[selectedPosition]=null;           //Remove the chessman from its originally squareStates.
             //Castling extension
-            if(chessmen[position].getPiece()== Chessman.Piece.KING&&Math.abs(position-selectedPosition)==2){//If a King did a jump
-                castlingManager.handleCastling(chessmen,position);//The corresponding tower needs to move as well.
+            if(chessmen[destPos].getPiece()== Chessman.Piece.KING&&Math.abs(destPos-selectedPosition)==2){//If a King did a jump
+                castlingManager.handleCastling(chessmen,destPos);//The corresponding tower needs to move as well.
             }
             //En-Passant extension
-            enPassantManager.handleEnPassant(position,selectedPosition,chessmen);
+            enPassantManager.handleEnPassant(destPos,selectedPosition,chessmen);
             if(pawnPromotionPossible()==null){
                 switchPlayerOnTurn();  //Only switch Player on turn if it was not a pawn promotion move.
                 winner = ruleBook.getWinner(chessmen, playerOnTurn);
             }
         }
-        resetFrames();
     }
 
     /**
